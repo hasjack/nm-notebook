@@ -4,6 +4,7 @@ const links = [
   { to: "/", label: "Walk", end: true },
   { to: "/lock-i", label: "Lock i" },
   { to: "/lock-pi", label: "Lock π" },
+  { to: "/basel", label: "Basel" },
   { to: "/solve", label: "Solve" },
   { to: "/catalogue", label: "Catalogue" },
   { to: "/notes", label: "Notes" },
