@@ -5,6 +5,7 @@ const links = [
   { to: "/lock-i", label: "Lock i" },
   { to: "/lock-pi", label: "Lock π" },
   { to: "/basel", label: "Basel" },
+  { to: "/analysis-1", label: "Analysis 1" },
   { to: "/solve", label: "Solve" },
   { to: "/catalogue", label: "Catalogue" },
   { to: "/notes", label: "Notes" },
