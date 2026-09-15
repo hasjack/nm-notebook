@@ -72,7 +72,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     videoBeat: "Raise i to itself and π and e fall out: a real answer from imaginary bases.",
   },
   {
-    id: "zeta2",
+    id: "basel-sum",
     title: "Basel — Basel (1+1/4+1/9+…)",
     classical: "1 + 1/4 + 1/9 + … = π²/6",
     rewrite: "1 + 1/4 + 1/9 + … = π²/6",
@@ -122,7 +122,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     videoBeat: "−1 is what you get when you rotate by π using e and i.",
   },
   {
-    id: "zeta3",
+    id: "cube-sum",
     title: "The cube reciprocal sum",
     classical: "1 + 1/8 + 1/27 + …",
     rewrite: "no simple closed form in {e, i, π} known",
