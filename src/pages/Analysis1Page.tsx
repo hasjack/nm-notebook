@@ -212,6 +212,16 @@ export function Analysis1Page() {
           casual mistake — it throws away the β lever after evaluating the
           exponential.
         </p>
+        <p className="hint">
+          <strong>Why not base 1?</strong> The slider skips a hole around 1 on
+          purpose. ln(1)=0 ⇒ α·β·ln(base)=0 for every α,β — nest becomes 0 and
+          the −1 peg never fires. That is a singularity, not a UI bug.
+        </p>
+        <p className="hint">
+          <strong>Green hacks:</strong> any triple with α·β·ln(base)=±1 (nest
+          hits π²/6 and the peg is an odd ±1). Same nest if you trade α against
+          β or move base against β while keeping the product.
+        </p>
         <div className="actions">
           <button
             type="button"
@@ -221,17 +231,27 @@ export function Analysis1Page() {
               setBeta(1);
             }}
           >
-            classical e · α=1 · β=1
+            green · e · α=1 · β=1
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setT(sliderFromBase(Math.E));
+              setAlpha(2);
+              setBeta(0.5);
+            }}
+          >
+            green · e · α=2 · β=½
           </button>
           <button
             type="button"
             onClick={() => {
               setT(sliderFromBase(Math.E));
               setAlpha(1);
-              setBeta(2);
+              setBeta(-1);
             }}
           >
-            β=2 (compare structured vs collapsed)
+            green · e · β=−1
           </button>
           <button
             type="button"
@@ -241,7 +261,37 @@ export function Analysis1Page() {
               setBeta(1 / 3);
             }}
           >
-            base e³ · β=⅓ (same αβln=1)
+            green · e³ · β=⅓
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setT(sliderFromBase(Math.E ** -1));
+              setAlpha(1);
+              setBeta(-1);
+            }}
+          >
+            green · 1/e · β=−1
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setT(sliderFromBase(Math.E ** 5));
+              setAlpha(1);
+              setBeta(0.2);
+            }}
+          >
+            green · e⁵ · β=⅕
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setT(sliderFromBase(Math.E));
+              setAlpha(1);
+              setBeta(2);
+            }}
+          >
+            not green · β=2 (structured 4π²/6)
           </button>
         </div>
       </div>
