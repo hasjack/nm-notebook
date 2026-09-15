@@ -56,3 +56,8 @@ The 7/8 odd/even series split is the arithmetic face; Li_s(−1) is the closed f
 
 This does not invent a new closed form for the cube sum — it places both heights on the peg.
 Next dig: deform the argument away from −1 with the three levers and watch Li₂ vs Li₃.
+
+## Analysis 3 — deform off the peg
+Route `/analysis-3`: z = base^(α i β π) on the unit circle; watch Li₂(z) vs Li₃(z).
+On peg z=−1: −2 Re Li₂ → π²/6 (exits to π); −(4/3) Re Li₃ → cube sum (costume).
+Deformation moves both; does not force Li₃(−1) into {e,i,π}.
