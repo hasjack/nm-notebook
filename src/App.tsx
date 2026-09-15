@@ -5,6 +5,7 @@ import { LockIPage } from "./pages/LockIPage";
 import { LockPiPage } from "./pages/LockPiPage";
 import { BaselPage } from "./pages/BaselPage";
 import { Analysis1Page } from "./pages/Analysis1Page";
+import { Analysis2Page } from "./pages/Analysis2Page";
 import { SolvePage } from "./pages/SolvePage";
 import { CataloguePage } from "./pages/CataloguePage";
 import { NotesPage } from "./pages/NotesPage";
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/lock-pi" element={<LockPiPage />} />
         <Route path="/basel" element={<BaselPage />} />
         <Route path="/analysis-1" element={<Analysis1Page />} />
+        <Route path="/analysis-2" element={<Analysis2Page />} />
         <Route path="/solve" element={<SolvePage />} />
         <Route path="/catalogue" element={<CataloguePage />} />
         <Route path="/notes" element={<NotesPage />} />
