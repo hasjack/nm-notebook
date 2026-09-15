@@ -1,27 +1,31 @@
 /**
  * e-walk: a number line spoken only in e, i, and π.
  *
- * Identity held fixed: base^(k · i · π) = −1
- *   ⇔  cos(k π ln base) + i sin(k π ln base) = −1
- *   ⇔  k · ln(base) = odd integer  (±1, ±3, ±5, …)
+ * Expression: base^(α · i · βπ)
+ * Angle: α · β · π · ln(base)
  *
- * Free mode: pick k, walk over base.
- * Lock mode: pick base (and branch odd), solve k = odd / ln(base).
- * Split mode: write k = α·β so base^(α · i · βπ); lock −1 ⇒ αβ·ln(base)=odd.
+ * Landing on −1 requires α · β · ln(base) = odd integer (±1, ±3, ±5, …).
+ *
+ * Walk: α = β = 1 (classical iπ), vary base.
+ * Lock i: α = 1 fixed; retune π-factor β (or free-β).
+ * Lock π: β = 1 fixed; retune i-factor α (or free-α).
+ *
+ * Internal code may use a product variable (= α·β). UI never names that product "k".
  */
 
 export type Pt = { x: number; y: number; z: number };
 
 export const ODDS = [-5, -3, -1, 1, 3, 5] as const;
 
-export function curve(k: number, base: number): Pt {
-  const ang = k * Math.PI * Math.log(base);
+/** product = α·β enters the angle as base^(product · i · π). */
+export function curve(product: number, base: number): Pt {
+  const ang = product * Math.PI * Math.log(base);
   return { x: base, y: Math.cos(ang), z: Math.sin(ang) };
 }
 
-/** base^(k i π) as a readable complex string. */
-export function resultAt(k: number, base: number): string {
-  const ang = k * Math.PI * Math.log(base);
+/** base^(product · i · π) as a readable complex string. */
+export function resultAt(product: number, base: number): string {
+  const ang = product * Math.PI * Math.log(base);
   const re = Math.cos(ang);
   const im = Math.sin(ang);
   if (Math.abs(im) < 1e-8 && Math.abs(re + 1) < 1e-8) return "−1";
@@ -31,14 +35,15 @@ export function resultAt(k: number, base: number): string {
   return `${re.toFixed(4)} ${sign} ${Math.abs(im).toFixed(4)} i`;
 }
 
-/** Classic Euler readout at base e. */
-export function resultAtE(k: number): string {
-  return resultAt(k, Math.E);
+/** Classic Euler readout at base e with product = 1 → e^(iπ). */
+export function resultAtE(product: number = 1): string {
+  return resultAt(product, Math.E);
 }
 
 /**
- * k that keeps base^(k i π) = −1 on a chosen odd branch.
+ * Product α·β that keeps base^(α i βπ) = −1 on a chosen odd branch.
  * Undefined at base = 1 (ln 1 = 0).
+ * Prefer piFactorForMinusOne / iFactorForMinusOne in UI-facing call sites.
  */
 export function kForMinusOne(base: number, odd: number = 1): number | null {
   if (!(odd % 2)) return null;
@@ -47,47 +52,77 @@ export function kForMinusOne(base: number, odd: number = 1): number | null {
   return odd / u;
 }
 
-/** Bases where a fixed k still gives −1: base = e^(odd / k). */
-export function basesForMinusOne(k: number, odds: readonly number[] = ODDS): number[] {
-  if (Math.abs(k) < 1e-12) return [];
-  return odds.map((odd) => Math.exp(odd / k));
+/**
+ * π-factor β that locks −1 when i-factor α = 1:
+ *   β = odd / ln(base)
+ */
+export function piFactorForMinusOne(base: number, odd: number = 1): number | null {
+  return kForMinusOne(base, odd);
+}
+
+/**
+ * i-factor α that locks −1 when π-factor β = 1:
+ *   α = odd / ln(base)
+ */
+export function iFactorForMinusOne(base: number, odd: number = 1): number | null {
+  return kForMinusOne(base, odd);
+}
+
+/**
+ * Base that locks −1 for a free factor when its partner is 1:
+ *   base = e^(odd / factor)
+ * Use with factor = β under lock-i (α=1), or factor = α under lock-π (β=1).
+ */
+export function baseForMinusOne(factor: number, odd: number = 1): number | null {
+  if (!(odd % 2)) return null;
+  if (!Number.isFinite(factor) || Math.abs(factor) < 1e-15) return null;
+  return Math.exp(odd / factor);
+}
+
+/** Bases where a fixed product still gives −1: base = e^(odd / product). */
+export function basesForMinusOne(
+  product: number,
+  odds: readonly number[] = ODDS
+): number[] {
+  if (Math.abs(product) < 1e-12) return [];
+  return odds.map((odd) => Math.exp(odd / product));
 }
 
 /**
  * Sample the walk uniformly in ln(base) so angle advances evenly.
- * Point count scales with |k| to avoid lumpy straight-chord artefacts.
+ * Point count scales with |product| to avoid lumpy straight-chord artefacts.
  */
-export function walk(k: number, baseMin = 0.05, baseMax = 22): Pt[] {
+export function walk(product: number, baseMin = 0.05, baseMax = 22): Pt[] {
   const uMin = Math.log(baseMin);
   const uMax = Math.log(baseMax);
-  const turns = Math.abs(k) * (uMax - uMin);
+  const turns = Math.abs(product) * (uMax - uMin);
   const n = Math.min(12000, Math.max(2500, Math.ceil(turns * 180)));
   const pts: Pt[] = [];
   for (let i = 0; i <= n; i++) {
     const u = uMin + ((uMax - uMin) * i) / n;
-    pts.push(curve(k, Math.exp(u)));
+    pts.push(curve(product, Math.exp(u)));
   }
   return pts;
 }
 
-/** Sample the −1 locus in (ln base, k) for one odd branch. */
+/** Sample the −1 locus in (ln base, factor) for one odd branch: factor · ln(base) = odd. */
 export function locusMinusOne(
   odd: number,
   uMin = Math.log(0.05),
   uMax = Math.log(22),
   n = 400
-): { u: number[]; k: number[]; base: number[] } {
+): { u: number[]; factor: number[]; base: number[]; /** @deprecated alias */ k: number[] } {
   const u: number[] = [];
-  const k: number[] = [];
+  const factor: number[] = [];
   const base: number[] = [];
   for (let i = 0; i <= n; i++) {
     const ui = uMin + ((uMax - uMin) * i) / n;
     if (Math.abs(ui) < 0.02) continue; // skip the singularity at base = 1
     u.push(ui);
-    k.push(odd / ui);
+    factor.push(odd / ui);
     base.push(Math.exp(ui));
   }
-  return { u, k, base };
+  return { u, factor, base, k: factor };
 }
 
 export const MARKS = [
@@ -99,30 +134,18 @@ export const MARKS = [
   { base: Math.E ** 3, label: "e³", ln: 3 },
 ] as const;
 
-/* ── α / β split (k = α·β) ─────────────────────────────────────────── */
+/* ── α / β factors (product = α·β) ─────────────────────────────────── */
 
 export type AlphaBeta = {
   alpha: number;
   beta: number;
-  /** α·β — same role as free-mode k */
+  /** α·β — composite strength in the angle */
   product: number;
 };
 
 /**
- * Split a fixed product (= α·β = k) into (α, β) with share ∈ [0, 1].
- *
- * Geometric, sign-aware rule:
- *   α = sign(product) · |product|^share
- *   β = product / α   (= |product|^(1−share) ≥ 0 when product ≠ 0)
- *
- * Endpoints (product ≠ 0):
- *   share = 0 → α = ±1,           β = |product|
- *   share = ½ → |α| = |β| = √|P|, α carries the sign
- *   share = 1 → α = product,      β = 1
- *
- * So the dial trades magnitude between the “i” factor (α) and the “π”
- * factor (β) while keeping α·β = product exactly. Near product = 0 both
- * collapse toward 0.
+ * Split a fixed product (= α·β) into (α, β) with share ∈ [0, 1].
+ * Kept for internal maths; UI no longer exposes a share dial named around k.
  */
 export function productToAlphaBeta(product: number, share: number): AlphaBeta {
   const s = Math.min(1, Math.max(0, share));
@@ -136,7 +159,6 @@ export function productToAlphaBeta(product: number, share: number): AlphaBeta {
   return { alpha, beta, product };
 }
 
-/** α·β — the composite strength that enters the angle as k. */
 export function productFromAlphaBeta(alpha: number, beta: number): number {
   return alpha * beta;
 }
@@ -144,8 +166,6 @@ export function productFromAlphaBeta(alpha: number, beta: number): number {
 /**
  * Lock −1 with a free α: choose α ≠ 0, then
  *   β = odd / (α · ln(base))
- * so that α·β·ln(base) = odd.
- * Returns null at base→1 or α→0.
  */
 export function betaForMinusOne(
   alpha: number,
@@ -160,9 +180,21 @@ export function betaForMinusOne(
 }
 
 /**
- * Lock −1 via product: product = k = odd / ln(base), then split with share.
- * Convenience wrapper used by the Split view.
+ * Lock −1 with a free β: choose β ≠ 0, then
+ *   α = odd / (β · ln(base))
  */
+export function alphaForMinusOne(
+  beta: number,
+  base: number,
+  odd: number = 1
+): number | null {
+  if (!(odd % 2)) return null;
+  if (!Number.isFinite(beta) || Math.abs(beta) < 1e-15) return null;
+  const u = Math.log(base);
+  if (Math.abs(u) < 1e-12) return null;
+  return odd / (beta * u);
+}
+
 export function alphaBetaForMinusOne(
   base: number,
   odd: number,
@@ -173,7 +205,6 @@ export function alphaBetaForMinusOne(
   return productToAlphaBeta(product, share);
 }
 
-/** Angle for base^(α · i · βπ): same as curve(α·β, base). */
 export function curveSplit(alpha: number, beta: number, base: number): Pt {
   return curve(alpha * beta, base);
 }

@@ -1,62 +1,80 @@
 import { useMemo, useState } from "react";
 import Plot from "../components/Plot";
-import { fmt } from "../lib/format";
+import { baseFromSlider, fmt, fmtBase, sliderFromBase } from "../lib/format";
 import { layout3d, plotConfig, traces3d } from "../lib/plotTheme";
-import { resultAtE } from "../lib/walk";
+import { resultAt } from "../lib/walk";
+
+/** Classical exponent: i-factor = 1, π-factor = 1 ⇒ product = 1. */
+const PRODUCT = 1;
 
 export function WalkPage() {
-  const [k, setK] = useState(1);
+  const [t, setT] = useState(() => sliderFromBase(Math.E));
+  const base = baseFromSlider(t);
 
-  const data = useMemo(() => traces3d(k, Math.E), [k]);
-  const value = resultAtE(k);
-  const prod = k * 1;
+  const data = useMemo(() => traces3d(PRODUCT, base), [base]);
+  const value = resultAt(PRODUCT, base);
+  const angFactor = Math.log(base); // product · ln(base) with product = 1
   const oddEnough =
-    Math.abs(Math.abs(prod) % 2 - 1) < 0.02 && Math.abs(prod) >= 0.98;
+    Math.abs(Math.abs(angFactor) % 2 - 1) < 0.02 && Math.abs(angFactor) >= 0.98;
 
   return (
     <main className="page">
-      <h1>Walk — favourite 3D ribbon</h1>
+      <h1>Walk — variable base, classical iπ</h1>
       <p className="lede">
-        Free <strong>k</strong> at base <strong>e</strong>. The walk is sampled
-        densely in ln-space so windings stay smooth. Marks sit at 1/e³, 1/e, 1,
-        e, e², e³.
+        Hold the classical exponent <strong>iπ</strong> fixed (i-factor = 1,
+        π-factor = 1) and walk the <strong>base</strong> in ln-space. Orange
+        diamond marks the current base; navy marks sit at powers of e. Exploring,
+        not claiming.
       </p>
 
       <div className="value">{value}</div>
       <div className="expr">
-        at base e, e ^ ({fmt(k, 2)} × i × π)
+        {fmtBase(base)} ^ (i × π)
       </div>
       <div className="rule">
-        k · ln(e) = {fmt(prod, 3)}
+        ln({fmtBase(base)}) = {fmt(angFactor, 3)}
         {oddEnough
           ? "  → odd enough for −1"
           : "  (need an odd integer for −1)"}
       </div>
 
       <div className="graph3d">
-        <Plot data={data} layout={layout3d} config={plotConfig} style={{ width: "100%", height: "100%" }} useResizeHandler />
+        <Plot
+          data={data}
+          layout={layout3d}
+          config={plotConfig}
+          style={{ width: "100%", height: "100%" }}
+          useResizeHandler
+        />
       </div>
 
       <div className="panel">
         <label className="row">
-          <span>k (the “i” slider)</span>
-          <span>{fmt(k, 2)}</span>
+          <span>base (ln-space)</span>
+          <span>{fmtBase(base)}</span>
         </label>
         <input
           type="range"
-          min={-2}
-          max={4}
-          step={0.01}
-          value={k}
-          onChange={(e) => setK(parseFloat(e.target.value))}
+          min={0}
+          max={1}
+          step={0.001}
+          value={t}
+          onChange={(e) => setT(parseFloat(e.target.value))}
         />
         <p className="hint">
-          At base e, k = 1 recovers e<sup>iπ</sup> = −1. k = ½ lands on i. Even
-          integers land on +1.
+          At base e you recover e<sup>iπ</sup> = −1. At base e³ the angle is
+          3π and you land on −1 again on the odd branch 3. Near base = 1 the
+          walk sits at +1 with no winding.
         </p>
         <div className="actions">
-          <button type="button" onClick={() => setK(1)}>
-            reset to Euler (−1)
+          <button type="button" onClick={() => setT(sliderFromBase(Math.E))}>
+            snap base → e (−1)
+          </button>
+          <button
+            type="button"
+            onClick={() => setT(sliderFromBase(Math.E ** 3))}
+          >
+            snap base → e³
           </button>
         </div>
       </div>

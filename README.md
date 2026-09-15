@@ -2,9 +2,9 @@
 
 Jack’s local explorer for a number line spoken only in **e**, **i**, and **π**.
 
-Identity held fixed:
+Envisage base^(iπ) when the base is free. Then lock i and watch π; lock π and watch i. Exploring, not claiming breakthroughs.
 
-> base^(k · i · π) = −1  ⇔  k · ln(base) = odd integer
+Landing on −1 (with one factor held at 1) means the free factor times ln(base) is an odd integer.
 
 ## Run
 
@@ -13,20 +13,23 @@ npm install
 npm run dev
 ```
 
-Then open the URL Vite prints (usually http://localhost:5173/).
+Then open http://127.0.0.1:5173/.
 
 ## Routes
 
 | Path | View |
 |------|------|
-| `/` | **Walk** — free k, favourite Plotly 3D ribbon at base e |
-| `/lock` | **Lock −1** — base in ln-space, odd branch, 3D + 2D locus |
-| `/split` | **Split i & π** — base^(α·i·βπ), share dial trades α vs β |
-| `/notes` | **Benefits & notes** — prose on the e/i/π line |
+| `/` | **Walk** — variable base (ln slider), classical iπ (α=β=1) |
+| `/lock-i` | **Lock i** — α=1; retune π-factor β (or free-β) |
+| `/lock-pi` | **Lock π** — β=1; retune i-factor α (or free-α) |
+| `/solve` | **Solve** — odd + free factor → base = e^(odd/factor) |
+| `/notes` | **Notes** — benefits in e/i/π language |
+
+Legacy `/lock` redirects to `/lock-i`; `/split` redirects to `/`.
 
 ## Maths
 
-Ported from the reference `walk.ts` into `src/lib/walk.ts`.
+Helpers in `src/lib/walk.ts`: `curve`, `resultAt`, `walk`, `piFactorForMinusOne`, `iFactorForMinusOne`, `baseForMinusOne`. UI says i-factor / π-factor / base — never **k**.
 
 ## Build
 

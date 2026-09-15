@@ -225,3 +225,21 @@ select {
   max-width: 46em;
   line-height: 1.5;
 }
+
+.solve-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.solve-panel {
+  background: #fffaf3;
+  border: 1px solid #e2d8c8;
+  border-radius: 12px;
+  padding: 0.9rem 1rem 1.1rem;
+}
+
+.solve-panel h2 {
+  margin-top: 0;
+}

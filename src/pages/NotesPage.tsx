@@ -4,24 +4,38 @@ export function NotesPage() {
       <h1>Benefits &amp; notes</h1>
       <p className="lede">
         A number line spoken only in <strong>e</strong>, <strong>i</strong>, and{" "}
-        <strong>π</strong>. Core identity:
+        <strong>π</strong>. Jack is exploring — not claiming breakthroughs. Core
+        picture:
       </p>
       <blockquote>
-        base^(k · i · π) = −1 ⇔ k · ln(base) = odd integer (±1, ±3, ±5, …)
+        Envisage base<sup>iπ</sup> when the base is free (not held at e). Then
+        lock i and see what happens to π; lock π and see what happens to i.
+        Landing on −1 means the free factor times ln(base) hits an odd integer.
       </blockquote>
       <p>
-        In the split view we write the same strength as <strong>k = α·β</strong>,
-        so the expression becomes base^(α · i · βπ), with the lock−1 rule{" "}
-        <strong>αβ · ln(base) = odd</strong>.
+        Write the exponent as <strong>α · i · βπ</strong>. Walk holds α = β = 1
+        and varies base. Lock i holds α = 1 and retunes the π-factor β. Lock π
+        holds β = 1 and retunes the i-factor α. Solve recovers the base from an
+        odd branch and the free factor.
       </p>
 
       <h2>Benefits of this number-line view</h2>
       <ol className="benefits">
         <li>
           <strong>Makes Euler’s −1 a constraint, not a slogan.</strong> The famous
-          landing is not a magic sticker on e; it is the statement that the
-          composite strength k (or αβ) times ln(base) must hit an odd integer. You
-          can <em>see</em> when you are on −1 and when you are not.
+          landing is not a magic sticker on e; it is the statement that (with one
+          factor locked at 1) the free factor times ln(base) must hit an odd
+          integer. You can <em>see</em> when you are on −1 and when you are not.
+        </li>
+        <li>
+          <strong>Variable base first.</strong> The favourite walk is classical
+          iπ with the base dial in ln-space — powers of e as marks — so e is one
+          point on a continuous ribbon, not the only allowed world.
+        </li>
+        <li>
+          <strong>Lock i vs lock π as two experiments.</strong> Holding the
+          i-factor fixed and retuning π (or the reverse) is the whole point of
+          the explorer: watch one constant move while the other stays named.
         </li>
         <li>
           <strong>ln(base) as “how many e-steps.”</strong> Spacing the walk in
@@ -32,30 +46,21 @@ export function NotesPage() {
         <li>
           <strong>Odd integers as the only landings for −1.</strong> Cosine equals
           −1 only at odd multiples of π. That is why the locus is a family of
-          hyperbolas k · ln(base) = ±1, ±3, ±5… — discrete branches, not a
-          continuum of −1 answers.
+          hyperbolas — discrete branches, not a continuum of −1 answers.
         </li>
         <li>
-          <strong>Singularity at base = 1.</strong> ln(1) = 0, so no finite k (or
-          αβ) can satisfy the lock. The demo’s base slider skips a hole around 1;
-          the 2D locus has a vertical asymptote there. Base 1 is not “almost e” —
-          it is a different kind of point.
-        </li>
-        <li>
-          <strong>k (or αβ) as retuning “i·π strength” when base changes.</strong>{" "}
-          Grow the base and the lock automatically shrinks k so the product with
-          ln(base) stays on the chosen odd branch. The Split dial then trades that
-          same product between α and β without leaving −1.
+          <strong>Singularity at base = 1.</strong> ln(1) = 0, so no finite
+          i-factor or π-factor can satisfy the lock. The base slider skips a hole
+          around 1; the 2D locus has a vertical asymptote there.
         </li>
         <li>
           <strong>
             3D walk shows the continuous story; locus shows the discrete
             constraint.
           </strong>{" "}
-          The cream Plotly ribbon is every base, one fixed k — a continuous complex
-          journey. The 2D locus is the thin set of (ln base, k) pairs that actually
-          land on −1. Together they separate “what the walk does” from “where −1 is
-          allowed.”
+          The cream Plotly ribbon is every base at a fixed product of factors —
+          a continuous complex journey. The 2D locus is the thin set of
+          (ln base, free-factor) pairs that actually land on −1.
         </li>
       </ol>
 
@@ -63,25 +68,18 @@ export function NotesPage() {
       <ul>
         <li>
           <strong>Smooth sampling matters.</strong> Uniform steps in base look
-          lumpy once |k| grows; sampling uniformly in ln(base) and scaling point
-          count with |k| keeps the 3D walk a clean ribbon instead of a chord
-          polygon.
+          lumpy once the winding grows; sampling uniformly in ln(base) keeps the
+          3D walk a clean ribbon instead of a chord polygon.
         </li>
         <li>
           <strong>Euler is one point on a hyperbola.</strong> At base e and odd = 1
-          you get k = 1 again — but the same branch also passes through (e³, k =
-          ⅓), (e⁵, k = ⅕), and so on. Snap buttons make that tangible.
+          with either factor locked at 1 you recover the classical landing — but
+          the same branch also passes through (e³, free-factor = ⅓), and so on.
         </li>
         <li>
-          <strong>Even integers land on +1</strong>, not −1. Sliding free k through
-          0, 1, 2 shows the readout flip between 1, −1, and the imaginary axis (k =
-          ½ → i at base e).
-        </li>
-        <li>
-          <strong>α/β split is cosmetic for the angle, useful for storytelling.</strong>{" "}
-          Because the angle depends only on the product αβ, the share dial does not
-          change the complex value under lock−1 — it only redistributes the same
-          strength between the “i” and “π” factors.
+          <strong>Even integers land on +1</strong>, not −1. Freeing a factor and
+          sliding through 0, 1, 2 shows the readout flip between 1, −1, and the
+          imaginary axis.
         </li>
         <li>
           <strong>Negative bases of the log are excluded</strong> here (real
@@ -92,8 +90,8 @@ export function NotesPage() {
 
       <h2>Adjacent curiosity (not a claim)</h2>
       <p>
-        Jack arrived at this explorer via ζ(3) and the Riemann hypothesis. The
-        kinship is thematic, not a derivation:
+        Jack arrived at this explorer via ζ(2), ζ(3), and the Riemann hypothesis.
+        The kinship is thematic, not a derivation — a light shoreline touch:
       </p>
       <ul>
         <li>
@@ -106,9 +104,9 @@ export function NotesPage() {
           analogous in spirit to a continuous walk constrained by odd integers.
         </li>
         <li>
-          <strong>Special heights</strong> (ordinates of zeros, or Apéry’s ζ(3))
-          feel nearby when you are already staring at distinguished real parameters
-          on a log-scaled axis.
+          <strong>Special heights</strong> (ordinates of zeros, or Apéry’s ζ(3) /
+          the Basel ζ(2) shoreline) feel nearby when you are already staring at
+          distinguished real parameters on a log-scaled axis.
         </li>
       </ul>
       <p className="hint">

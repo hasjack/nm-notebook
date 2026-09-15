@@ -16,14 +16,15 @@ export function ptsToXYZ(pts: Pt[]) {
   };
 }
 
-export function traces3d(k: number, focusBase: number | null): Data[] {
-  const w = ptsToXYZ(walk(k));
+/** 3D ribbon for a fixed product α·β; orange diamond at focusBase. */
+export function traces3d(product: number, focusBase: number | null): Data[] {
+  const w = ptsToXYZ(walk(product));
   const mx: number[] = [];
   const my: number[] = [];
   const mz: number[] = [];
   const mt: string[] = [];
   MARKS.forEach((m) => {
-    const p = curve(k, m.base);
+    const p = curve(product, m.base);
     mx.push(p.x);
     my.push(p.y);
     mz.push(p.z);
@@ -53,7 +54,7 @@ export function traces3d(k: number, focusBase: number | null): Data[] {
     },
   ];
   if (focusBase && focusBase > 0) {
-    const f = curve(k, focusBase);
+    const f = curve(product, focusBase);
     traces.push({
       type: "scatter3d",
       mode: "markers",
@@ -82,36 +83,51 @@ export const layout3d: Partial<Layout> = {
   },
 };
 
+export type FactorAxis = "pi-factor" | "i-factor" | "product";
+
+const factorAxisLabel: Record<FactorAxis, string> = {
+  "pi-factor": "π-factor β",
+  "i-factor": "i-factor α",
+  product: "α · β",
+};
+
+/**
+ * −1 locus: factor · ln(base) = odd.
+ * y-axis is the free factor (β under lock-i, α under lock-π).
+ */
 export function traces2d(
   activeOdd: number,
   curU: number | null,
-  curK: number | null
+  curFactor: number | null,
+  axis: FactorAxis = "product"
 ): Data[] {
+  const yName = factorAxisLabel[axis];
   const traces: Data[] = ODDS.map((odd) => {
     const L = locusMinusOne(odd);
     return {
       type: "scatter",
       mode: "lines",
       x: L.u,
-      y: L.k,
+      y: L.factor,
       line: {
         width: odd === activeOdd ? 3 : 1.2,
         color: odd === activeOdd ? MAROON : "#c4b8a4",
       },
       name: "odd " + odd,
       hovertemplate:
-        "ln base=%{x:.3f}<br>k=%{y:.3f}<extra>odd " + odd + "</extra>",
+        "ln base=%{x:.3f}<br>" + yName + "=%{y:.3f}<extra>odd " + odd + "</extra>",
     };
   });
-  if (curU != null && curK != null && Number.isFinite(curK)) {
+  if (curU != null && curFactor != null && Number.isFinite(curFactor)) {
     traces.push({
       type: "scatter",
       mode: "markers",
       x: [curU],
-      y: [curK],
+      y: [curFactor],
       marker: { size: 11, color: ORANGE, symbol: "diamond" },
       name: "now",
-      hovertemplate: "ln base=%{x:.3f}<br>k=%{y:.3f}<extra>now</extra>",
+      hovertemplate:
+        "ln base=%{x:.3f}<br>" + yName + "=%{y:.3f}<extra>now</extra>",
     });
   }
   traces.push({
@@ -126,34 +142,37 @@ export function traces2d(
   return traces;
 }
 
-export const layout2d: Partial<Layout> = {
-  paper_bgcolor: CREAM,
-  plot_bgcolor: PAPER,
-  margin: { l: 50, r: 20, t: 28, b: 45 },
-  title: {
-    text: "−1 locus: k · ln(base) = odd",
-    font: { size: 13, family: "Georgia, serif" },
-  },
-  xaxis: {
-    title: { text: "ln(base)  (powers of e)" },
-    range: [Math.log(0.05), Math.log(22)],
-    zeroline: true,
-  },
-  yaxis: { title: { text: "k" }, range: [-4, 4], zeroline: true },
-  showlegend: false,
-  font: { family: "Georgia, Palatino, serif" },
-  annotations: [
-    {
-      x: 1,
-      y: 1,
-      text: "Euler point",
-      showarrow: true,
-      arrowhead: 2,
-      ax: 40,
-      ay: -30,
-      font: { size: 11, color: NAVY },
+export function layout2d(axis: FactorAxis = "product"): Partial<Layout> {
+  const yTitle = factorAxisLabel[axis];
+  return {
+    paper_bgcolor: CREAM,
+    plot_bgcolor: PAPER,
+    margin: { l: 50, r: 20, t: 28, b: 45 },
+    title: {
+      text: `−1 locus: ${yTitle} · ln(base) = odd`,
+      font: { size: 13, family: "Georgia, serif" },
     },
-  ],
-};
+    xaxis: {
+      title: { text: "ln(base)  (powers of e)" },
+      range: [Math.log(0.05), Math.log(22)],
+      zeroline: true,
+    },
+    yaxis: { title: { text: yTitle }, range: [-4, 4], zeroline: true },
+    showlegend: false,
+    font: { family: "Georgia, Palatino, serif" },
+    annotations: [
+      {
+        x: 1,
+        y: 1,
+        text: "Euler point",
+        showarrow: true,
+        arrowhead: 2,
+        ax: 40,
+        ay: -30,
+        font: { size: 11, color: NAVY },
+      },
+    ],
+  };
+}
 
 export const plotConfig = { responsive: true, displayModeBar: false as const };

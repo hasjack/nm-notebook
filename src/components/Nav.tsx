@@ -2,8 +2,9 @@ import { NavLink } from "react-router-dom";
 
 const links = [
   { to: "/", label: "Walk", end: true },
-  { to: "/lock", label: "Lock −1" },
-  { to: "/split", label: "Split i & π" },
+  { to: "/lock-i", label: "Lock i" },
+  { to: "/lock-pi", label: "Lock π" },
+  { to: "/solve", label: "Solve" },
   { to: "/notes", label: "Notes" },
 ] as const;
 
