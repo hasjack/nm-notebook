@@ -243,3 +243,89 @@ select {
 .solve-panel h2 {
   margin-top: 0;
 }
+
+
+.catalogue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.catalogue-card {
+  background: #fffaf3;
+  border: 1px solid #e2d8c8;
+  border-radius: 12px;
+  padding: 1rem 1.1rem 1.1rem;
+}
+
+.catalogue-card.grade-clean {
+  border-left: 4px solid #1f4e79;
+}
+.catalogue-card.grade-calligraphy {
+  border-left: 4px solid #c45c26;
+}
+.catalogue-card.grade-refuses {
+  border-left: 4px solid #9a2f38;
+}
+
+.catalogue-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.catalogue-card-head h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+}
+
+.grade-pill {
+  font-size: 0.8rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid #e2d8c8;
+  background: #f4efe6;
+}
+.grade-pill.grade-clean { color: #1f4e79; border-color: #1f4e79; }
+.grade-pill.grade-calligraphy { color: #c45c26; border-color: #c45c26; }
+.grade-pill.grade-refuses { color: #9a2f38; border-color: #9a2f38; }
+
+.catalogue-forms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+}
+@media (max-width: 700px) {
+  .catalogue-forms { grid-template-columns: 1fr; }
+}
+
+.catalogue-formula {
+  font-size: 1.05rem;
+  color: #9a2f38;
+  word-break: break-word;
+}
+
+.catalogue-alphabet {
+  color: #7a7468;
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem;
+}
+
+.catalogue-beat {
+  margin: 0.6rem 0 0;
+  padding-top: 0.55rem;
+  border-top: 1px dashed #e2d8c8;
+  color: #1f4e79;
+  font-size: 0.95rem;
+}
+
+.modes {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
