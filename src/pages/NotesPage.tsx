@@ -100,7 +100,7 @@ export function NotesPage() {
         </li>
         <li>
           The <strong>critical strip</strong> is another place where a continuous
-          complex object (ζ(s)) is constrained by discrete arithmetic (zeros),
+          complex object along a line is constrained by discrete arithmetic (zeros),
           analogous in spirit to a continuous walk constrained by odd integers.
         </li>
         <li>

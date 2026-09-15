@@ -17,7 +17,7 @@ import type { Data, Layout } from "plotly.js";
 
 const PI2_OVER_6 = (Math.PI * Math.PI) / 6;
 
-function partialZeta2(n: number): number {
+function partialSquareSum(n: number): number {
   let s = 0;
   for (let k = 1; k <= n; k++) s += 1 / (k * k);
   return s;
@@ -37,7 +37,7 @@ export function BaselPage() {
   const mag = 1;
   const gap = PI2_OVER_6 - mag;
 
-  const partial = partialZeta2(nTerms);
+  const partial = partialSquareSum(nTerms);
   const calligraphy = (() => {
     // principal Log(-1) = iπ → −i Log(-1) = π → squared / 6
     const logMinusOne = { re: 0, im: Math.PI }; // iπ
@@ -118,7 +118,7 @@ export function BaselPage() {
     const ys: number[] = [];
     for (let n = 1; n <= 80; n++) {
       xs.push(n);
-      ys.push(partialZeta2(n));
+      ys.push(partialSquareSum(n));
     }
     return [
       {
@@ -177,7 +177,7 @@ export function BaselPage() {
       <div className="value">{PI2_OVER_6.toFixed(6)}</div>
       <div className="expr">π² / 6 · the Basel constant</div>
       <div className="rule">
-        alphabet home: clean in π (even zeta) · proofs live in the i / Fourier /
+        alphabet home: clean in π · proofs live in the i / Fourier /
         sine-product room
       </div>
 

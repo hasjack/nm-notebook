@@ -79,7 +79,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     alphabet: ["π"],
     grade: "clean",
     why: "Even reciprocal-power sums like this are π-native. Proofs live in the Fourier / sin-product / complex-analysis room where i is furniture. This is what ‘clean’ looks like for constants.",
-    videoBeat: "Infinite sum of squares → π²/6. The even zetas already live on your island.",
+    videoBeat: "Infinite sum of squares → π²/6. Even reciprocal-power sums already live on your island.",
   },
   {
     id: "gaussian",
@@ -128,7 +128,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     rewrite: "no simple closed form in {e, i, π} known",
     alphabet: [],
     grade: "refuses",
-    why: "Irrational (Apéry), but not known to be a tidy π-package like Basel (1+1/4+1/9+…). The shoreline of the island: odd zetas mostly refuse the alphabet.",
+    why: "Irrational (Apéry), but not known to be a tidy π-package like Basel (1+1/4+1/9+…). The shoreline of the island: odd reciprocal-power sums mostly refuse the alphabet.",
     videoBeat: "Same shape of sum as 1+1/4+… — but π won’t finish the sentence.",
   },
   {
