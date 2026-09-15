@@ -41,6 +41,54 @@ export function resultAtE(product: number = 1): string {
 }
 
 /**
+ * Magnitude dial σ: base^(σ + α·i·βπ) = base^σ · (cos θ + i sin θ),
+ * θ = α·β·π·ln(base). σ = 0 recovers the unit-cylinder ribbon.
+ */
+export function curveMag(product: number, base: number, sigma = 0): Pt {
+  const ang = product * Math.PI * Math.log(base);
+  const mag = base === 0 ? 0 : Math.pow(base, sigma);
+  return { x: base, y: mag * Math.cos(ang), z: mag * Math.sin(ang) };
+}
+
+export function walkMag(
+  product: number,
+  sigma = 0,
+  baseMin = 0.05,
+  baseMax = 22
+): Pt[] {
+  const uMin = Math.log(baseMin);
+  const uMax = Math.log(baseMax);
+  const turns = Math.abs(product) * (uMax - uMin);
+  const n = Math.min(12000, Math.max(2500, Math.ceil(turns * 180)));
+  const pts: Pt[] = [];
+  for (let i = 0; i <= n; i++) {
+    const u = uMin + ((uMax - uMin) * i) / n;
+    pts.push(curveMag(product, Math.exp(u), sigma));
+  }
+  return pts;
+}
+
+export function resultAtMag(product: number, base: number, sigma = 0): string {
+  const ang = product * Math.PI * Math.log(base);
+  const mag = Math.pow(base, sigma);
+  const re = mag * Math.cos(ang);
+  const im = mag * Math.sin(ang);
+  if (Math.abs(im) < 1e-8 * Math.max(1, mag) && Math.abs(re + mag) < 1e-8 * Math.max(1, mag) && Math.abs(mag - 1) < 1e-8)
+    return "−1";
+  if (Math.abs(im) < 1e-8 * Math.max(1, mag) && Math.abs(re - mag) < 1e-8 * Math.max(1, mag) && Math.abs(mag - 1) < 1e-8)
+    return "1";
+  if (Math.abs(im) < 1e-10) return re.toFixed(4);
+  if (Math.abs(re) < 1e-10) return `${im.toFixed(4)} i`;
+  const sign = im >= 0 ? "+" : "−";
+  return `${re.toFixed(4)} ${sign} ${Math.abs(im).toFixed(4)} i`;
+}
+
+export function magnitudeAt(base: number, sigma: number): number {
+  return Math.pow(base, sigma);
+}
+
+
+/**
  * Product α·β that keeps base^(α i βπ) = −1 on a chosen odd branch.
  * Undefined at base = 1 (ln 1 = 0).
  * Prefer piFactorForMinusOne / iFactorForMinusOne in UI-facing call sites.

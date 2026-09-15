@@ -1,5 +1,5 @@
 import type { Data, Layout } from "plotly.js";
-import { MARKS, ODDS, curve, locusMinusOne, walk, type Pt } from "./walk";
+import { MARKS, ODDS, curve, curveMag, locusMinusOne, walk, walkMag, type Pt } from "./walk";
 
 export const CREAM = "#f4efe6";
 export const MAROON = "#9a2f38";
@@ -82,6 +82,75 @@ export const layout3d: Partial<Layout> = {
     aspectratio: { x: 1.4, y: 0.85, z: 0.85 },
   },
 };
+
+
+/** 3D ribbon with magnitude dial σ (leaves unit cylinder when σ ≠ 0). */
+export function traces3dMag(
+  product: number,
+  focusBase: number | null,
+  sigma = 0
+): Data[] {
+  const w = ptsToXYZ(walkMag(product, sigma));
+  const mx: number[] = [];
+  const my: number[] = [];
+  const mz: number[] = [];
+  const mt: string[] = [];
+  MARKS.forEach((m) => {
+    const p = curveMag(product, m.base, sigma);
+    mx.push(p.x);
+    my.push(p.y);
+    mz.push(p.z);
+    mt.push(m.label);
+  });
+  const traces: Data[] = [
+    {
+      type: "scatter3d",
+      mode: "lines",
+      x: w.x,
+      y: w.y,
+      z: w.z,
+      line: { color: MAROON, width: 5 },
+      hoverinfo: "skip",
+      name: "walk",
+    },
+    {
+      type: "scatter3d",
+      mode: "text+markers",
+      x: mx,
+      y: my,
+      z: mz,
+      text: mt,
+      textposition: "top center",
+      marker: { size: 5, color: NAVY },
+      name: "marks",
+    },
+  ];
+  if (focusBase && focusBase > 0) {
+    const f = curveMag(product, focusBase, sigma);
+    traces.push({
+      type: "scatter3d",
+      mode: "markers",
+      x: [f.x],
+      y: [f.y],
+      z: [f.z],
+      marker: { size: 9, color: ORANGE, symbol: "diamond" },
+      name: "focus",
+    });
+  }
+  return traces;
+}
+
+export function layout3dMag(radius = 1.2): Partial<Layout> {
+  const r = Math.max(1.2, radius * 1.15);
+  return {
+    ...layout3d,
+    scene: {
+      ...layout3d.scene,
+      yaxis: { title: { text: "real part" }, range: [-r, r] },
+      zaxis: { title: { text: "i piece" }, range: [-r, r] },
+    },
+  };
+}
 
 export type FactorAxis = "pi-factor" | "i-factor" | "product";
 
