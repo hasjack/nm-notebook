@@ -172,6 +172,20 @@ export function MagnitudePage() {
               <p className="catalogue-beat">You are in the wind now.</p>
             )}
           </article>
+
+          <article className="catalogue-card grade-calligraphy">
+            <header className="catalogue-card-head">
+              <h2>The cup of numbers</h2>
+              <span className="grade-pill grade-calligraphy">named view</span>
+            </header>
+            <p>
+              Turn up the phase winding (larger |α·β|) on the cylinder (σ = 0) and
+              look along the base: tight coils near the wind (base → 0), opening
+              toward larger e-powers — a bowl of phase. Same unit ribbon; new
+              posture. Jack&apos;s name for it.
+            </p>
+          </article>
+
           <article
             className={`catalogue-card ${Math.abs(sigma) < 1e-6 ? "grade-clean" : ""}`}
           >
@@ -216,6 +230,28 @@ export function MagnitudePage() {
             }}
           >
             toward the wind
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setSigma(0);
+              setAlpha(1);
+              setBeta(2);
+              setT(sliderFromBase(0.15));
+            }}
+          >
+            cup of numbers
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setSigma(-0.5);
+              setAlpha(0);
+              setBeta(0);
+              setT(sliderFromBase(Math.E ** -3));
+            }}
+          >
+            real ray (α=0)
           </button>
         </div>
       </div>
