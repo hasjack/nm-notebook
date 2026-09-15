@@ -73,12 +73,12 @@ export const CATALOGUE: CatalogueEntry[] = [
   },
   {
     id: "zeta2",
-    title: "Basel — ζ(2)",
+    title: "Basel — Basel (1+1/4+1/9+…)",
     classical: "1 + 1/4 + 1/9 + … = π²/6",
-    rewrite: "ζ(2) = π²/6",
+    rewrite: "1 + 1/4 + 1/9 + … = π²/6",
     alphabet: ["π"],
     grade: "clean",
-    why: "Even zetas are π-native. Proofs live in the Fourier / sin-product / complex-analysis room where i is furniture. This is what ‘clean’ looks like for constants.",
+    why: "Even reciprocal-power sums like this are π-native. Proofs live in the Fourier / sin-product / complex-analysis room where i is furniture. This is what ‘clean’ looks like for constants.",
     videoBeat: "Infinite sum of squares → π²/6. The even zetas already live on your island.",
   },
   {
@@ -123,13 +123,13 @@ export const CATALOGUE: CatalogueEntry[] = [
   },
   {
     id: "zeta3",
-    title: "Apéry — ζ(3)",
+    title: "The cube reciprocal sum",
     classical: "1 + 1/8 + 1/27 + …",
     rewrite: "no simple closed form in {e, i, π} known",
     alphabet: [],
     grade: "refuses",
-    why: "Irrational (Apéry), but not known to be a tidy π-package like ζ(2). The shoreline of the island: odd zetas mostly refuse the alphabet.",
-    videoBeat: "Same shape of sum as Basel — but π won’t finish the sentence.",
+    why: "Irrational (Apéry), but not known to be a tidy π-package like Basel (1+1/4+1/9+…). The shoreline of the island: odd zetas mostly refuse the alphabet.",
+    videoBeat: "Same shape of sum as 1+1/4+… — but π won’t finish the sentence.",
   },
   {
     id: "euler-mascheroni",

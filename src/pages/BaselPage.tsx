@@ -165,12 +165,13 @@ export function BaselPage() {
 
   return (
     <main className="page">
-      <h1>Basel — π²/6 in this number system</h1>
+      <h1>π²/6 — the square reciprocal sum in this number system</h1>
       <p className="lede">
-        ζ(2) = 1 + 1/4 + 1/9 + … = <strong>π²/6 ≈ {PI2_OVER_6.toFixed(6)}</strong>.
-        Play the approaches below. The honest headline: the Walk ribbon’s complex
-        values always have length <strong>1</strong>; π²/6 does not sit on that
-        ribbon — it sits on the real line outside the unit circle.
+        1 + 1/4 + 1/9 + … = <strong>π²/6 ≈ {PI2_OVER_6.toFixed(6)}</strong>.
+        Peg the landing <strong>e^(iπ) = −1</strong>, then play base / i-factor / π-factor and watch growth.
+        Honest headline: the ribbon’s complex values always have length <strong>1</strong>;
+        π²/6 does not sit on that ribbon — it sits on the real line outside the unit circle.
+        No named special functions — just the sum, the dials, and π²/6.
       </p>
 
       <div className="value">{PI2_OVER_6.toFixed(6)}</div>
@@ -424,7 +425,7 @@ export function BaselPage() {
               </li>
               <li>
                 <strong>Sine product / Fourier</strong> — the classical workshop
-                where i and π earn ζ(2); best “why π²?” story.
+                where i and π earn the Basel sum; best “why π²?” story.
               </li>
               <li>
                 <strong>Calligraphy</strong> — (−i Log(−1))²/6 for the font

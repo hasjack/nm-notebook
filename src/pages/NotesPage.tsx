@@ -90,7 +90,7 @@ export function NotesPage() {
 
       <h2>Adjacent curiosity (not a claim)</h2>
       <p>
-        Jack arrived at this explorer via ζ(2), ζ(3), and the Riemann hypothesis.
+        Jack arrived at this explorer via the square reciprocal sum, the cube reciprocal sum, and the growth along a critical line.
         The kinship is thematic, not a derivation — a light shoreline touch:
       </p>
       <ul>
@@ -104,8 +104,8 @@ export function NotesPage() {
           analogous in spirit to a continuous walk constrained by odd integers.
         </li>
         <li>
-          <strong>Special heights</strong> (ordinates of zeros, or Apéry’s ζ(3) /
-          the Basel ζ(2) shoreline) feel nearby when you are already staring at
+          <strong>Special heights</strong> (ordinates of zeros, or Apéry’s the cube reciprocal sum /
+          the Basel the square reciprocal sum shoreline) feel nearby when you are already staring at
           distinguished real parameters on a log-scaled axis.
         </li>
       </ul>

@@ -33,7 +33,7 @@ export function CataloguePage() {
         in the alphabet <strong>{"{e, i, π}"}</strong>.{" "}
         <em>Clean</em> means the letters earn their keep.{" "}
         <em>Calligraphy</em> means we renamed π (usually via Log(−1)).{" "}
-        <em>Refuses</em> means the island has no tidy answer yet — ζ(3) lives
+        <em>Refuses</em> means the island has no tidy answer yet — 1+1/8+… lives
         here.
       </p>
 
@@ -101,13 +101,13 @@ export function CataloguePage() {
         <ol className="benefits">
           <li>Open on Euler’s identity — the alphabet in one line.</li>
           <li>Show Walk: don’t treat e as constant; base moves, iπ fixed.</li>
-          <li>Clean hits: i^i, ζ(2), Gaussian, 2πi — letters earning rent.</li>
+          <li>Clean hits: i^i, 1+1/4+…, Gaussian, 2πi — letters earning rent.</li>
           <li>
             Calligraphy twist: circle area as −i Log(−1) r² — same pizza, new
             font.
           </li>
           <li>
-            Shoreline: ζ(3) refuses. Odd vs even as landscape, not lottery.
+            Shoreline: 1+1/8+… refuses. Odd vs even as landscape, not lottery.
           </li>
           <li>Close on Lock i / Lock π: freeze one letter, watch the other move.</li>
         </ol>
