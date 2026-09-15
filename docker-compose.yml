@@ -1,0 +1,17 @@
+services:
+  e-walk:
+    build: .
+    container_name: e-walk-app
+    ports:
+      - "5173:5173"
+    volumes:
+      # hot reload: live source from the host
+      - ./:/app
+      # keep container node_modules (don't overwrite with host empty/partial)
+      - e_walk_node_modules:/app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    restart: unless-stopped
+volumes:
+  e_walk_node_modules:
