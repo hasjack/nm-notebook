@@ -43,3 +43,16 @@ c = π³ / (cube sum) ≈ 25.794350 — not a small integer.
 Route `/analysis-2`: two-observable lock.
 - A: structured nest on spine (flat) + −1 peg
 - B: odd/even split of cube reciprocal sum → ratio → 7/8
+
+## Hinge dig (continued) — polilog at the peg
+
+At the joint-beacon value z = e^(iπ) = −1 (every spine point with αβln=odd evaluates here):
+
+- π²/6 = −2 Li₂(e^(iπ)) = −2 Li₂(−1)
+- 1+1/8+1/27+… = −(4/3) Li₃(e^(iπ)) = −(4/3) Li₃(−1)
+
+So Analysis 2’s two observables sit in one family: polylog order s=2 vs s=3 at the same peg.
+The 7/8 odd/even series split is the arithmetic face; Li_s(−1) is the closed face.
+
+This does not invent a new closed form for the cube sum — it places both heights on the peg.
+Next dig: deform the argument away from −1 with the three levers and watch Li₂ vs Li₃.

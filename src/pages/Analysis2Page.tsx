@@ -270,12 +270,43 @@ export function Analysis2Page() {
           </table>
         </div>
 
+        <h2 style={{ marginTop: "1.4rem" }}>Hinge dig — same peg, polilog order</h2>
+        <p>
+          Every joint beacon evaluates the exponential to <strong>−1</strong>.
+          At that point both heights have a polilog face (still the same alphabet
+          peg e^(iπ)):
+        </p>
+        <div className="split-readout">
+          <div>
+            <div className="kv-label">square height</div>
+            <div className="kv-value" style={{ fontSize: "0.95rem" }}>
+              π²/6 = −2 Li₂(e^(iπ))
+            </div>
+          </div>
+          <div>
+            <div className="kv-label">cube height</div>
+            <div className="kv-value" style={{ fontSize: "0.95rem" }}>
+              1+1/8+… = −(4/3) Li₃(e^(iπ))
+            </div>
+          </div>
+          <div>
+            <div className="kv-label">−2 Li₂(−1)</div>
+            <div className="kv-value" style={{ fontSize: "0.95rem" }}>
+              {fmt(-2 * (-(Math.PI * Math.PI) / 12), 6)}
+            </div>
+          </div>
+          <div>
+            <div className="kv-label">−(4/3) Li₃(−1)</div>
+            <div className="kv-value" style={{ fontSize: "0.95rem" }}>
+              {fmt(-(4 / 3) * (-0.75 * CUBE_SUM), 6)}
+            </div>
+          </div>
+        </div>
         <p className="hint" style={{ marginTop: "1rem" }}>
           Read: A is blind to which spine beacon you’re on; B cares about odd vs
-          even denominators in the cube sum — the same odd lattice. Two-lock
-          green means both stories are on the table together. It does{" "}
-          <em>not</em> mean we have (−i Ln(e^(iπ)))³ / something for the cube
-          sum — only that the hinge is real enough to dig further.
+          even denominators in the cube sum — the same odd lattice. The deeper
+          hinge: order s=2 vs s=3 of Li_s at the peg. Two-lock green puts both on
+          the table; it is not yet a new cube closed form in nested Ln costume.
         </p>
         <div className="actions">
           <button
