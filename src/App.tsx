@@ -3,6 +3,7 @@ import { Nav } from "./components/Nav";
 import { WalkPage } from "./pages/WalkPage";
 import { LockIPage } from "./pages/LockIPage";
 import { LockPiPage } from "./pages/LockPiPage";
+import { FreePage } from "./pages/FreePage";
 import { BaselPage } from "./pages/BaselPage";
 import { Analysis1Page } from "./pages/Analysis1Page";
 import { Analysis2Page } from "./pages/Analysis2Page";
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/" element={<WalkPage />} />
         <Route path="/lock-i" element={<LockIPage />} />
         <Route path="/lock-pi" element={<LockPiPage />} />
+        <Route path="/free" element={<FreePage />} />
         <Route path="/basel" element={<BaselPage />} />
         <Route path="/analysis-1" element={<Analysis1Page />} />
         <Route path="/analysis-2" element={<Analysis2Page />} />
@@ -27,7 +29,7 @@ export default function App() {
         <Route path="/catalogue" element={<CataloguePage />} />
         <Route path="/notes" element={<NotesPage />} />
         <Route path="/lock" element={<Navigate to="/lock-i" replace />} />
-        <Route path="/split" element={<Navigate to="/" replace />} />
+        <Route path="/split" element={<Navigate to="/free" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
