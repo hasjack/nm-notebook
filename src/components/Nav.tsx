@@ -3,24 +3,27 @@ import { NavLink, useLocation } from "react-router-dom";
 
 type LinkItem = { to: string; label: string; end?: boolean };
 
+type NavSub = { id: string; label: string; links: LinkItem[] };
+
 type NavGroup = {
   id: string;
   label: string;
   blurb?: string;
   links?: LinkItem[];
-  /** Nested drill-downs inside a top section (used for Lab). */
-  subs?: { id: string; label: string; links: LinkItem[] }[];
+  subs?: NavSub[];
 };
 
 const tree: NavGroup[] = [
   {
+    id: "hire",
+    label: "Hire",
+    blurb: "3-free door and hire-graph dials.",
+    links: [{ to: "/hire", label: "Dials" }],
+  },
+  {
     id: "issue",
     label: "Issue",
-    blurb: "Lead article and hire dials.",
-    links: [
-      { to: "/", label: "Lead", end: true },
-      { to: "/hire", label: "Hire" },
-    ],
+    blurb: "Main-line trail — commit hashes to land here.",
   },
   {
     id: "alphabet",
@@ -40,7 +43,7 @@ const tree: NavGroup[] = [
   {
     id: "lab",
     label: "Lab",
-    blurb: "Probe pages — open a shelf.",
+    blurb: "Probe pages — one shelf at a time.",
     subs: [
       {
         id: "lab-field",
@@ -100,6 +103,17 @@ function pathInLinks(pathname: string, links: LinkItem[]): boolean {
   );
 }
 
+/** Exclusive accordion keys for the current route. Default shelf: Hire. */
+function accordionFor(pathname: string): Set<string> {
+  for (const g of tree) {
+    if (g.links && pathInLinks(pathname, g.links)) return new Set([g.id]);
+    for (const s of g.subs ?? []) {
+      if (pathInLinks(pathname, s.links)) return new Set([g.id, s.id]);
+    }
+  }
+  return new Set(["hire"]);
+}
+
 function Links({
   links,
   onNavigate,
@@ -136,6 +150,7 @@ function Brand({ onNavigate }: { onNavigate?: () => void }) {
  * Burger/close stay fixed in one spot.
  * Logo lives in the menu; a docked twin covers the closed state so mobile
  * transform on the drawer cannot drag the wordmark off-screen.
+ * Shelves are exclusive: one top section (and at most one Lab sub) open.
  */
 export function AppLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(() =>
@@ -143,30 +158,16 @@ export function AppLayout({ children }: { children: ReactNode }) {
   );
   const location = useLocation();
 
-  const activeIds = useMemo(() => {
-    const ids = new Set<string>();
-    for (const g of tree) {
-      if (g.links && pathInLinks(location.pathname, g.links)) ids.add(g.id);
-      for (const s of g.subs ?? []) {
-        if (pathInLinks(location.pathname, s.links)) {
-          ids.add(g.id);
-          ids.add(s.id);
-        }
-      }
-    }
-    if (ids.size === 0) ids.add("issue");
-    return ids;
-  }, [location.pathname]);
+  const routeAccordion = useMemo(
+    () => accordionFor(location.pathname),
+    [location.pathname],
+  );
 
-  const [expanded, setExpanded] = useState<Set<string>>(() => new Set(activeIds));
+  const [expanded, setExpanded] = useState<Set<string>>(() => routeAccordion);
 
   useEffect(() => {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      for (const id of activeIds) next.add(id);
-      return next;
-    });
-  }, [activeIds]);
+    setExpanded(routeAccordion);
+  }, [routeAccordion]);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 901px)");
@@ -194,11 +195,17 @@ export function AppLayout({ children }: { children: ReactNode }) {
     if (!isDesktop()) setOpen(false);
   };
 
-  const toggle = (id: string) => {
+  const toggleTop = (id: string) => {
     setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
+      if (prev.has(id)) return new Set(); // allow all closed
+      return new Set([id]);
+    });
+  };
+
+  const toggleLabSub = (id: string) => {
+    setExpanded((prev) => {
+      const next = new Set<string>(["lab"]);
+      if (!prev.has(id)) next.add(id);
       return next;
     });
   };
@@ -256,14 +263,16 @@ export function AppLayout({ children }: { children: ReactNode }) {
                   type="button"
                   className={isOpen ? "nav-drill on" : "nav-drill"}
                   aria-expanded={isOpen}
-                  onClick={() => toggle(g.id)}
+                  onClick={() => toggleTop(g.id)}
                 >
                   <span className="nav-drill-label">{g.label}</span>
                   <span className="nav-drill-chevron" aria-hidden="true" />
                 </button>
                 {isOpen ? (
                   <div className="nav-drill-body">
-                    {g.blurb ? <p className="nav-section-blurb">{g.blurb}</p> : null}
+                    {g.blurb ? (
+                      <p className="nav-section-blurb">{g.blurb}</p>
+                    ) : null}
                     {g.links ? (
                       <Links links={g.links} onNavigate={closeIfMobile} />
                     ) : null}
@@ -273,12 +282,17 @@ export function AppLayout({ children }: { children: ReactNode }) {
                         <div key={s.id} className="nav-sub">
                           <button
                             type="button"
-                            className={subOpen ? "nav-drill sub on" : "nav-drill sub"}
+                            className={
+                              subOpen ? "nav-drill sub on" : "nav-drill sub"
+                            }
                             aria-expanded={subOpen}
-                            onClick={() => toggle(s.id)}
+                            onClick={() => toggleLabSub(s.id)}
                           >
                             <span className="nav-drill-label">{s.label}</span>
-                            <span className="nav-drill-chevron" aria-hidden="true" />
+                            <span
+                              className="nav-drill-chevron"
+                              aria-hidden="true"
+                            />
                           </button>
                           {subOpen ? (
                             <Links links={s.links} onNavigate={closeIfMobile} />
