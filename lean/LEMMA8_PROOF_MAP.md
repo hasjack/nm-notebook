@@ -29,11 +29,11 @@ GoldFree  ──►  G = Gstar  ──►  1 ∈ spectrum, n ∈ spectrum, Conne
 Layer B footholds (proved):
   • lapMatrix_toLinearMap₂'_sup_edge
       xᵀ L' x = xᵀ L x + (x_a - x_b)²
-  • star_plus_leaf_edge_raises_second_eigenvalue  (card V = 3 only)
+  • three_vertex_star_leaf_edge_not_second_one  (card V = 3 only)
       star + leaf edge = K₃; 1 ∉ spectrum; ¬ HasSecondLaplacianEigenvalueOne
 
 lemma8_converse_sketch : HasSecondLaplacianEigenvalueOne ⇒ GoldFree
-    ├── card = 3: wired to star_plus_leaf_edge_raises_second_eigenvalue
+    ├── card = 3: wired to three_vertex_star_leaf_edge_not_second_one
     └── card ≥ 4: sorry (ordered λ₂ / Courant–Fischer / Cauchy interlacing)
         Honesty: one leaf chord on ≥3 leaves does not kill eigenvalue 1
 

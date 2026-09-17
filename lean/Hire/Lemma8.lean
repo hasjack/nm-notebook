@@ -347,7 +347,7 @@ the triangle (`K₃`); Laplacian spectrum `{0,3}`, so the weak
 `HasSecondLaplacianEigenvalueOne` fails.
 
 Honesty: on ≥3 leaves a single leaf chord does **not** kill eigenvalue `1`. -/
-theorem star_plus_leaf_edge_raises_second_eigenvalue
+theorem three_vertex_star_leaf_edge_not_second_one
     {V : Type*} [Fintype V] [DecidableEq V]
     (r a b : V) (ha : a ≠ r) (hb : b ≠ r) (hab : a ≠ b)
     (hcard : Fintype.card V = 3)
@@ -446,7 +446,7 @@ theorem lemma8_forward {X : ℕ} (h : GoldFree (owners X))
 /-- **Lemma 8 (⇐ spectral sketch at `GoldFree` strength):** gold leaf chord reduces
 to the star-plus-edge setting.
 
-* Three-vertex windows: discharged by `star_plus_leaf_edge_raises_second_eigenvalue`.
+* Three-vertex windows: discharged by `three_vertex_star_leaf_edge_not_second_one`.
 * Larger windows: one honest `sorry` — Mathlib gap is ordered `λ₂` /
   Courant–Fischer / Cauchy interlacing. Still undershoots Layer D. -/
 theorem lemma8_converse_sketch {X : ℕ}
@@ -458,7 +458,7 @@ theorem lemma8_converse_sketch {X : ℕ}
   obtain ⟨hu, hv, huv⟩ := ne_seed_of_GoldEdge hg
   by_cases hcard : Fintype.card (HireVertex (owners X)) = 3
   · have hG := GX_eq_star_sup_edge_of_gold_card_three hg hcard
-    exact (star_plus_leaf_edge_raises_second_eigenvalue
+    exact (three_vertex_star_leaf_edge_not_second_one
       (seedVertex (owners X)) u v hu hv huv hcard
       (SimpleGraph.starGraph (seedVertex (owners X))) rfl
       (GX X) hG) hspec
