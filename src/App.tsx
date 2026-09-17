@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Nav } from "./components/Nav";
+import { AppLayout } from "./components/Nav";
 import { HomePage } from "./pages/HomePage";
 import { WalkPage } from "./pages/WalkPage";
 import { LockIPage } from "./pages/LockIPage";
@@ -33,8 +33,7 @@ import { CountPage } from "./pages/CountPage";
 
 export default function App() {
   return (
-    <div className="app-shell">
-      <Nav />
+    <AppLayout>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/walk" element={<WalkPage />} />
@@ -70,6 +69,6 @@ export default function App() {
         <Route path="/split" element={<Navigate to="/free" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </div>
+    </AppLayout>
   );
 }

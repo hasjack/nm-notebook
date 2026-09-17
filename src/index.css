@@ -14,22 +14,53 @@ body,
   color: #1a1a1a;
 }
 
+
 .app-shell {
+  display: flex;
   min-height: 100vh;
+  align-items: stretch;
 }
 
+.app-sidebar {
+  flex: 0 0 0;
+  width: 0;
+  overflow: hidden;
+  background: #fffaf3;
+  border-right: 1px solid transparent;
+  transition: flex-basis 0.28s ease, width 0.28s ease, border-color 0.28s ease;
+}
 
+.app-shell.menu-open .app-sidebar {
+  flex-basis: 16.5rem;
+  width: 16.5rem;
+  border-right-color: #e2d8c8;
+}
 
-/* —— Nav: desktop expanded groups + mobile drawer (halfasecond-style) —— */
+.app-sidebar-inner {
+  width: 16.5rem;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 1rem 1rem 2rem;
+  box-sizing: border-box;
+}
+
+.app-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .nav-bar {
   display: flex;
   align-items: center;
   gap: 0.85rem;
-  max-width: 1100px;
-  margin: 0 auto;
   padding: 0.75rem 1.25rem 0.5rem;
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 40;
+  background: #f4efe6;
 }
 
 .nav-brand {
@@ -37,11 +68,10 @@ body,
   font-size: 1.05rem;
   letter-spacing: 0.02em;
   text-decoration: none;
-  margin-right: auto;
 }
 
 .nav-burger {
-  display: none;
+  display: inline-flex;
   flex-shrink: 0;
   width: 2.5rem;
   height: 2.5rem;
@@ -85,38 +115,19 @@ body,
   transform: rotate(-45deg);
 }
 
-.nav-desktop {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem 1.35rem;
-  align-items: flex-start;
-  justify-content: flex-end;
-}
-
-.nav-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  align-items: flex-start;
-}
-
 .nav-group-label {
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #6b5e4e;
   font-weight: 600;
-}
-
-.nav-links {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
 }
 
 .nav-links.stacked {
+  display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.1rem;
   width: 100%;
 }
 
@@ -124,8 +135,11 @@ body,
   border: none;
   background: transparent;
   border-radius: 0;
-  padding: 0.45rem 0;
+  padding: 0.4rem 0;
   text-align: left;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  text-decoration: none;
 }
 
 .nav-links.stacked .nav-link.on {
@@ -153,65 +167,63 @@ body,
   border-color: #1f4e79;
 }
 
-.nav-scrim {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  background: rgba(0, 0, 0, 0.35);
-  border: none;
-  padding: 0;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s;
-}
-
-.nav-scrim.on {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.nav-drawer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 60;
-  height: 100dvh;
-  width: min(20rem, 88vw);
-  background: #fff;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-  transform: translateX(-105%);
-  transition: transform 0.28s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.nav-drawer.on {
-  transform: translateX(0);
-}
-
-.nav-drawer-inner {
-  padding: 4.5rem 1.25rem 2rem;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
 .nav-drawer-section {
   margin-bottom: 1.25rem;
 }
 
-.nav-drawer-section .nav-group-label {
-  margin-bottom: 0.35rem;
+.nav-scrim {
+  display: none;
 }
 
 @media (max-width: 900px) {
-  .nav-burger { display: inline-flex; }
-  .nav-desktop { display: none; }
-  .nav-bar { padding-left: 0.85rem; }
+  .app-shell {
+    display: block;
+  }
+
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    height: 100dvh;
+    width: min(20rem, 88vw) !important;
+    flex-basis: auto !important;
+    border-right: 1px solid #e2d8c8;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    transform: translateX(-105%);
+    transition: transform 0.28s ease;
+    overflow: hidden;
+  }
+
+  .app-shell.menu-open .app-sidebar {
+    transform: translateX(0);
+    width: min(20rem, 88vw) !important;
+  }
+
+  .app-sidebar-inner {
+    width: 100%;
+    padding-top: 1.25rem;
+  }
+
+  .nav-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.35);
+    border: none;
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+  }
+
+  .nav-scrim.on {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
-@media (min-width: 901px) {
-  .nav-scrim, .nav-drawer { display: none; }
-}
 
 .page {
   max-width: 980px;

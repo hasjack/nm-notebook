@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 type LinkItem = { to: string; label: string; end?: boolean };
@@ -48,17 +48,19 @@ const sections: { label: string; links: LinkItem[] }[] = [
   { label: "Lab", links: lab },
 ];
 
+function isDesktop(): boolean {
+  return window.matchMedia("(min-width: 901px)").matches;
+}
+
 function Links({
   links,
   onNavigate,
-  stacked,
 }: {
   links: LinkItem[];
   onNavigate?: () => void;
-  stacked?: boolean;
 }) {
   return (
-    <div className={stacked ? "nav-links stacked" : "nav-links"}>
+    <div className="nav-links stacked">
       {links.map((l) => (
         <NavLink
           key={l.to}
@@ -74,51 +76,73 @@ function Links({
   );
 }
 
-export function Nav() {
-  const [open, setOpen] = useState(false);
+/** Burger always visible. Desktop: push sidebar (default open). Mobile: overlay. */
+export function AppLayout({ children }: { children: ReactNode }) {
+  const [open, setOpen] = useState(() =>
+    typeof window !== "undefined" ? isDesktop() : true,
+  );
   const location = useLocation();
 
   useEffect(() => {
-    setOpen(false);
+    const mq = window.matchMedia("(min-width: 901px)");
+    const onChange = () => setOpen(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop()) setOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (open && !isDesktop()) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
 
+  const closeIfMobile = () => {
+    if (!isDesktop()) setOpen(false);
+  };
+
   return (
-    <>
-      <header className="nav-bar">
-        <button
-          type="button"
-          className="nav-burger"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className={open ? "burger-lines open" : "burger-lines"}>
-            <span />
-            <span />
-            <span />
-          </span>
-        </button>
-
-        <NavLink to="/" end className="nav-brand">
-          NM notebook
-        </NavLink>
-
-        <nav className="nav-desktop" aria-label="Primary">
+    <div className={open ? "app-shell menu-open" : "app-shell"}>
+      <aside className="app-sidebar" aria-hidden={!open} aria-label="Site menu">
+        <div className="app-sidebar-inner">
           {sections.map((s) => (
-            <div key={s.label} className="nav-group">
-              <span className="nav-group-label">{s.label}</span>
-              <Links links={s.links} />
+            <div key={s.label} className="nav-drawer-section">
+              <div className="nav-group-label">{s.label}</div>
+              <Links links={s.links} onNavigate={closeIfMobile} />
             </div>
           ))}
-        </nav>
-      </header>
+        </div>
+      </aside>
+
+      <div className="app-main">
+        <header className="nav-bar">
+          <button
+            type="button"
+            className="nav-burger"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className={open ? "burger-lines open" : "burger-lines"}>
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+          <NavLink to="/" end className="nav-brand">
+            NM notebook
+          </NavLink>
+        </header>
+        {children}
+      </div>
 
       <button
         type="button"
@@ -127,20 +151,6 @@ export function Nav() {
         tabIndex={open ? 0 : -1}
         onClick={() => setOpen(false)}
       />
-
-      <aside
-        className={open ? "nav-drawer on" : "nav-drawer"}
-        aria-hidden={!open}
-      >
-        <div className="nav-drawer-inner">
-          {sections.map((s) => (
-            <div key={s.label} className="nav-drawer-section">
-              <div className="nav-group-label">{s.label}</div>
-              <Links links={s.links} stacked onNavigate={() => setOpen(false)} />
-            </div>
-          ))}
-        </div>
-      </aside>
-    </>
+    </div>
   );
 }
