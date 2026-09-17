@@ -895,12 +895,110 @@ export function HirePage() {
     <main className="page">
       <h1>Hire — growth, degrees, discrete H</h1>
       <p className="lede">
-        Standing ±1 theorem only: unique 3-free even neighbour, hiring into S
-        from 2, finished S = every prime except 3. This page measures{" "}
-        <strong>how fast |S| grows</strong>, <strong>where gold wires land</strong>,
-        and the <strong>graph Laplacian</strong> on the hire-sun. Not a zeta
-        machine. Island reading: bottom gap ≈ 1 is the tone (2); top gap is where
-        the door shows; seat 3 stays silent (never a vertex).
+        A walk that starts at 2 and hires primes through a unique ±1 door.
+        Paper (text only):{" "}
+        <a href="/paper/two_doors.pdf">two_doors.pdf</a>. Lab dials below
+        measure growth, gold wires, and the hire-sun Laplacian <em>H</em>.
+      </p>
+
+      <section className="hire-intro">
+        <h2>What this is</h2>
+        <p>
+          A <strong>door</strong> for an odd prime <em>p</em> ≠ 3 is one of its
+          even neighbours — <em>p</em>−1 or <em>p</em>+1. Exactly one of those is
+          free of the factor 3; call it <em>m</em>₀(<em>p</em>). The other
+          neighbour is always divisible by 6. That 3-free even neighbour is the
+          standing door.
+        </p>
+        <p>
+          <strong>Hire</strong> means: seed a set <em>S</em> with 2, then walk
+          odd primes and pull in the odd prime factors of each door. Those new
+          names join <em>S</em>. Three never joins — it&apos;s the silent seat
+          of the recipe — so the finished hire set is every prime except 3. How
+          fast that fills is open; that it fills is the standing theorem.
+        </p>
+        <p>
+          Directed <strong>gold</strong> arcs run <em>p</em> → <em>q</em> when{" "}
+          <em>q</em> divides the door of <em>p</em>. For Laplacians we forget
+          direction: <em>H</em> = <em>D</em> − <em>A</em> on the undirected
+          hire-sun (spokes to 2, plus those gold chords). The paper proves the
+          door law and the standing finish of <em>S</em>. This page measures
+          growth, where gold lands, and the spectrum of <em>H</em> on finite
+          windows.
+        </p>
+      </section>
+
+      <figure className="figure-block">
+        <img
+          src="/figures/hire/basins.png"
+          alt="Basins: Fermat sinks, Mersenne sinks, and the first join"
+        />
+        <figcaption className="figure-caption">
+          Basins / sinks / first join. Fermat sinks sit at 2<sup>k</sup>+1,
+          Mersenne at 2<sup>k</sup>−1; the sink lemma splits them by{" "}
+          <em>p</em> mod 3. Most of the pack drains toward 5; forks are the
+          early joins that braid basins together.
+        </figcaption>
+      </figure>
+
+      <section className="hire-intro">
+        <h2>Hire-sun H</h2>
+        <p>
+          Three recipes, same Laplacian idea. <strong>A</strong> is standing
+          3-free (5 in the chair; 3 never a vertex). <strong>E</strong> sacks{" "}
+          {"{5}"} — when the free door would carry 5, flip to the ×3 neighbour
+          and let 3 stand in. <strong>F</strong> sacks {"{5,7}"} and punches
+          holes: some covers get stuck (red rims) and only re-enter if a later
+          factor uses them.
+        </p>
+      </section>
+
+      <figure className="figure-block">
+        <img
+          src="/figures/hire/H_recipes_sun100.png"
+          alt="Hire-sun H recipes A, E, and F through 100"
+        />
+        <figcaption className="figure-caption">
+          A / E / F hire-sun recipes through 100. White hub is 2; orange is early
+          crew; blue later hires; gold chords are the undirected hire wires in{" "}
+          <em>H</em>.
+        </figcaption>
+      </figure>
+
+      <div className="figure-grid">
+        <figure className="figure-block">
+          <img
+            src="/figures/hire/H_standing_sun100.png"
+            alt="Standing recipe A hire-sun H through 100"
+          />
+          <figcaption className="figure-caption">
+            A · standing 3-free door (5 in the chair), H through 100.
+          </figcaption>
+        </figure>
+        <figure className="figure-block">
+          <img
+            src="/figures/hire/H_sack5_sun100.png"
+            alt="Sack-5 recipe E hire-sun H through 100"
+          />
+          <figcaption className="figure-caption">
+            E · sack {"{5}"} — 3 stands in for 5, H through 100.
+          </figcaption>
+        </figure>
+        <figure className="figure-block">
+          <img
+            src="/figures/hire/H_sack57_sun100.png"
+            alt="Sack-5-and-7 recipe F hire-sun H through 100"
+          />
+          <figcaption className="figure-caption">
+            F · sack {"{5,7}"} — holes show as stuck covers, H through 100.
+          </figcaption>
+        </figure>
+      </div>
+
+      <h2>Lab dials</h2>
+      <p className="hint" style={{ marginTop: 0 }}>
+        Interactive growth, staircase, schedule, hire-sun, and E · sack {"{5}"}{" "}
+        spectra. Scrub N and the view window; readouts update live.
       </p>
 
       <div className="split-readout">

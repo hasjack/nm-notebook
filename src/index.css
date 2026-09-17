@@ -660,3 +660,58 @@ code.pow sup {
   align-items: center;
   margin: 0.85rem 0 0;
 }
+
+/* Hire page curated figures (dark PNGs on cream page) */
+.hire-intro {
+  margin: 1rem 0 0.35rem;
+  max-width: 42rem;
+}
+.hire-intro h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.55rem;
+  color: #1f4e79;
+}
+.hire-intro p {
+  margin: 0 0 0.75rem;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+
+.figure-block {
+  margin: 1.1rem 0 1.4rem;
+  padding: 0;
+  max-width: 100%;
+}
+
+.figure-block img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #c8bfb0;
+  background: #0f1c2e; /* ink behind dark hire figures */
+}
+
+.figure-caption {
+  margin: 0.55rem 0 0;
+  padding: 0 0.15rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #6b5e4e;
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.85rem;
+  margin: 0.85rem 0 1.4rem;
+}
+
+.figure-grid .figure-block {
+  margin: 0;
+}
+
+.figure-grid img {
+  border-radius: 6px;
+}
