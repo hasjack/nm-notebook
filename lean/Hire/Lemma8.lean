@@ -22,13 +22,15 @@ as Mathlib reaches without a full interlacing development:
 * `GoldFree` ⇒ hire graph equals the pure star;
 * pure star with two leaves has Laplacian eigenvalue `1` (from `StarLap`);
 * `GoldLeavesDisconnected` names the paper money line separately from `GoldFree`;
-* Layer B footholds (proved): quadratic-form bump; star on three vertices plus
-  the leaf edge is the triangle, so `1 ∉ spectrum` / weak
-  `HasSecondLaplacianEigenvalueOne` fails;
-* converse sketch wires gold leaf chords to that foothold for `card = 3`; larger
+* Layer B footholds (proved): quadratic-form bump; on a three-vertex window the
+  star plus the leaf edge is the triangle, so `1 ∉ spectrum` and the weak
+  `HasSecondLaplacianEigenvalueOne` fails; on a four-vertex window the star plus
+  one leaf chord keeps eigenvalue `1` and stays connected, so the weak predicate
+  survives;
+* converse sketch wires a gold leaf chord to the three-vertex foothold; larger
   windows keep one honest `sorry` (ordered `λ₂` / Courant–Fischer / Cauchy
-  interlacing). A single leaf chord on ≥3 leaves does **not** kill eigenvalue
-  `1`, so Layer B still undershoots Layer D (forests / money line).
+  interlacing, not `1 ∉ spectrum`). A single leaf chord does not reach the
+  money line.
 
 Public voice: doors, hire set, gold edges, finite windows.
 -/
@@ -130,9 +132,10 @@ theorem card_mem_spectrum_GX_of_goldFree {X : ℕ}
 
 Paper money line: `λ₂(H) = 1` iff gold leaves are disconnected.
 
-Layer B (proved): quadratic-form bump; star on three vertices plus the leaf edge
-is `K₃`, so `1 ∉ spectrum` and the weak `HasSecondLaplacianEigenvalueOne` fails.
-A single leaf chord on ≥3 leaves does **not** kill eigenvalue `1`.
+Layer B (proved): quadratic-form bump; three-vertex star plus the leaf edge is
+`K₃`, so `1 ∉ spectrum` and the weak predicate fails; four-vertex star plus one
+leaf chord keeps eigenvalue `1` and stays connected, so the weak predicate
+survives. Ordered `λ₂` is still open. A single leaf chord does not reach Layer D.
 -/
 
 /-- Placeholder for “second Laplacian eigenvalue is `1`”.
@@ -369,6 +372,237 @@ theorem three_vertex_star_leaf_edge_not_second_one
     rw [← hlap]; exact hspec.1
   exact (one_not_mem_spectrum_lapMatrix_top hn) h1
 
+
+private theorem card_quadruple_eq_four {V : Type*} [DecidableEq V]
+    {r a b c : V} (ha : a ≠ r) (hb : b ≠ r) (hc : c ≠ r)
+    (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) :
+    ({r, a, b, c} : Finset V).card = 4 := by
+  have hbc' : b ∉ ({c} : Finset V) := by simpa [mem_singleton] using hbc
+  have ha' : a ∉ ({b, c} : Finset V) := by
+    intro h
+    simp only [mem_insert, mem_singleton] at h
+    exact h.elim hab hac
+  have hr : r ∉ ({a, b, c} : Finset V) := by
+    intro h
+    simp only [mem_insert, mem_singleton] at h
+    rcases h with h | h | h
+    · exact ha.symm h
+    · exact hb.symm h
+    · exact hc.symm h
+  rw [card_insert_of_notMem hr, card_insert_of_notMem ha',
+    card_insert_of_notMem hbc', card_singleton]
+
+/-- Eigenvector on four doors: center `0`, joined leaves `1`, hanging leaf `-2`. -/
+private def fourVertexLeafChordEigenvec {V : Type*} [DecidableEq V] (a b c : V) : V → ℝ :=
+  fun v => if v = a then (1 : ℝ) else if v = b then (1 : ℝ) else if v = c then (-2 : ℝ) else 0
+
+private theorem fourVertexLeafChordEigenvec_center
+    {V : Type*} [DecidableEq V] {r a b c : V}
+    (ha : a ≠ r) (hb : b ≠ r) (hc : c ≠ r) :
+    fourVertexLeafChordEigenvec a b c r = 0 := by
+  unfold fourVertexLeafChordEigenvec
+  rw [ite_eq_right (Ne.symm ha), ite_eq_right (Ne.symm hb), ite_eq_right (Ne.symm hc)]
+
+private theorem fourVertexLeafChordEigenvec_a
+    {V : Type*} [DecidableEq V] (a b c : V) :
+    fourVertexLeafChordEigenvec a b c a = 1 := by
+  unfold fourVertexLeafChordEigenvec
+  rw [ite_eq_left rfl]
+
+private theorem fourVertexLeafChordEigenvec_b
+    {V : Type*} [DecidableEq V] {a b c : V} (hab : a ≠ b) :
+    fourVertexLeafChordEigenvec a b c b = 1 := by
+  unfold fourVertexLeafChordEigenvec
+  rw [ite_eq_right (Ne.symm hab), ite_eq_left rfl]
+
+private theorem fourVertexLeafChordEigenvec_c
+    {V : Type*} [DecidableEq V] {a b c : V} (hac : a ≠ c) (hbc : b ≠ c) :
+    fourVertexLeafChordEigenvec a b c c = -2 := by
+  unfold fourVertexLeafChordEigenvec
+  rw [ite_eq_right (Ne.symm hac), ite_eq_right (Ne.symm hbc), ite_eq_left rfl]
+
+private theorem fourVertexLeafChordEigenvec_ne_zero
+    {V : Type*} [DecidableEq V] (a b c : V) :
+    fourVertexLeafChordEigenvec a b c ≠ 0 := by
+  intro h
+  have := congrFun h a
+  rw [fourVertexLeafChordEigenvec_a a b c] at this
+  exact absurd this (by norm_num)
+
+private theorem neighborFinset_edge_left
+    {V : Type*} [Fintype V] [DecidableEq V] {s t : V} (hne : s ≠ t) :
+    (SimpleGraph.edge s t).neighborFinset s = {t} := by
+  ext u
+  rw [SimpleGraph.mem_neighborFinset, mem_singleton, SimpleGraph.edge_adj]
+  constructor
+  · rintro ⟨hor, _⟩
+    rcases hor with ⟨_, hut⟩ | ⟨hs, _⟩
+    · exact hut
+    · exact (hne hs).elim
+  · rintro rfl
+    exact ⟨Or.inl ⟨rfl, rfl⟩, hne⟩
+
+private theorem neighborFinset_edge_right
+    {V : Type*} [Fintype V] [DecidableEq V] {s t : V} (hne : s ≠ t) :
+    (SimpleGraph.edge s t).neighborFinset t = {s} := by
+  ext u
+  rw [SimpleGraph.mem_neighborFinset, mem_singleton, SimpleGraph.edge_adj]
+  constructor
+  · rintro ⟨hor, _⟩
+    rcases hor with ⟨hs, _⟩ | ⟨_, hus⟩
+    · exact (hne hs.symm).elim
+    · exact hus
+  · rintro rfl
+    exact ⟨Or.inr ⟨rfl, rfl⟩, hne.symm⟩
+
+private theorem neighborFinset_edge_off
+    {V : Type*} [Fintype V] [DecidableEq V] {s t v : V} (hs : v ≠ s) (ht : v ≠ t) :
+    (SimpleGraph.edge s t).neighborFinset v = ∅ := by
+  ext u
+  constructor
+  · intro hu
+    rw [SimpleGraph.mem_neighborFinset, SimpleGraph.edge_adj] at hu
+    rcases hu with ⟨hor, _⟩
+    rcases hor with ⟨hv, _⟩ | ⟨hv, _⟩
+    · exact (hs hv).elim
+    · exact (ht hv).elim
+  · intro hu
+    exact (notMem_empty u hu).elim
+
+private theorem neighborFinset_star_sup_edge_center
+    {V : Type*} [Fintype V] [DecidableEq V] {r a b : V}
+    (ha : a ≠ r) (hb : b ≠ r) :
+    (SimpleGraph.starGraph r ⊔ SimpleGraph.edge a b).neighborFinset r = univ.erase r := by
+  rw [SimpleGraph.neighborFinset_sup, neighborFinset_starGraph_center,
+    neighborFinset_edge_off (Ne.symm ha) (Ne.symm hb)]
+  ext u
+  simp
+
+private theorem neighborFinset_star_sup_edge_joined
+    {V : Type*} [Fintype V] [DecidableEq V] {r a b : V}
+    (ha : a ≠ r) (hab : a ≠ b) :
+    (SimpleGraph.starGraph r ⊔ SimpleGraph.edge a b).neighborFinset a = {r, b} := by
+  rw [SimpleGraph.neighborFinset_sup, neighborFinset_starGraph_leaf ha,
+    neighborFinset_edge_left hab]
+  ext u
+  simp
+
+private theorem neighborFinset_star_sup_edge_joined_right
+    {V : Type*} [Fintype V] [DecidableEq V] {r a b : V}
+    (hb : b ≠ r) (hab : a ≠ b) :
+    (SimpleGraph.starGraph r ⊔ SimpleGraph.edge a b).neighborFinset b = {r, a} := by
+  rw [SimpleGraph.neighborFinset_sup, neighborFinset_starGraph_leaf hb,
+    neighborFinset_edge_right hab]
+  ext u
+  simp
+
+private theorem neighborFinset_star_sup_edge_hanging
+    {V : Type*} [Fintype V] [DecidableEq V] {r a b c : V}
+    (hc : c ≠ r) (hac : a ≠ c) (hbc : b ≠ c) :
+    (SimpleGraph.starGraph r ⊔ SimpleGraph.edge a b).neighborFinset c = {r} := by
+  rw [SimpleGraph.neighborFinset_sup, neighborFinset_starGraph_leaf hc,
+    neighborFinset_edge_off hac.symm hbc.symm]
+  ext u
+  simp
+
+/-- On four vertices the star's `1`-eigenvector with equal values on the joined
+leaves survives the leaf chord: the rank-one bump `(x a - x b)²` is zero. -/
+private theorem lapMatrix_mulVec_fourVertexLeafChordEigenvec
+    {V : Type*} [Fintype V] [DecidableEq V]
+    {r a b c : V}
+    (ha : a ≠ r) (hb : b ≠ r) (hc : c ≠ r)
+    (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c)
+    (hcard : Fintype.card V = 4) :
+    (SimpleGraph.starGraph r ⊔ SimpleGraph.edge a b).lapMatrix ℝ *ᵥ
+        fourVertexLeafChordEigenvec a b c =
+      (1 : ℝ) • fourVertexLeafChordEigenvec a b c := by
+  classical
+  set vec := fourVertexLeafChordEigenvec a b c
+  have vec_r : vec r = 0 := fourVertexLeafChordEigenvec_center ha hb hc
+  have vec_a : vec a = 1 := fourVertexLeafChordEigenvec_a a b c
+  have vec_b : vec b = 1 := fourVertexLeafChordEigenvec_b hab
+  have vec_c : vec c = -2 := fourVertexLeafChordEigenvec_c hac hbc
+  have univ_eq : (univ : Finset V) = {r, a, b, c} :=
+    (eq_univ_of_card _
+      (by rw [card_quadruple_eq_four ha hb hc hab hac hbc, hcard])).symm
+  have mem4 (x : V) : x = r ∨ x = a ∨ x = b ∨ x = c := by
+    have hx : x ∈ ({r, a, b, c} : Finset V) := by simp [← univ_eq]
+    simpa [mem_insert, mem_singleton, or_assoc] using hx
+  have hsum : ∑ u ∈ ({a, b, c} : Finset V), (vec r - vec u) = 0 := by
+    have ha' : a ∉ ({b, c} : Finset V) := by
+      intro h
+      simp only [mem_insert, mem_singleton] at h
+      exact h.elim hab hac
+    have hb' : b ∉ ({c} : Finset V) := by simpa [mem_singleton] using hbc
+    rw [sum_insert ha', sum_insert hb', sum_singleton, vec_r, vec_a, vec_b, vec_c]
+    norm_num
+  ext v
+  rcases mem4 v with hv | hv | hv | hv
+  · rw [hv]
+    rw [SimpleGraph.lapMatrix_mulVec_apply', neighborFinset_star_sup_edge_center ha hb]
+    have hr_not : r ∉ ({a, b, c} : Finset V) := by
+      intro h
+      simp only [mem_insert, mem_singleton] at h
+      rcases h with h | h | h
+      · exact ha.symm h
+      · exact hb.symm h
+      · exact hc.symm h
+    rw [univ_eq, erase_insert hr_not, hsum, Pi.smul_apply, one_smul, vec_r]
+  · rw [hv]
+    have hrn : r ∉ ({b} : Finset V) := by simpa [mem_singleton] using Ne.symm hb
+    rw [SimpleGraph.lapMatrix_mulVec_apply', neighborFinset_star_sup_edge_joined ha hab,
+      sum_insert hrn, sum_singleton, Pi.smul_apply, one_smul, vec_a, vec_r, vec_b]
+    norm_num
+  · rw [hv]
+    have hrn : r ∉ ({a} : Finset V) := by simpa [mem_singleton] using Ne.symm ha
+    rw [SimpleGraph.lapMatrix_mulVec_apply',
+      neighborFinset_star_sup_edge_joined_right hb hab, sum_insert hrn, sum_singleton,
+      Pi.smul_apply, one_smul, vec_b, vec_r, vec_a]
+    norm_num
+  · rw [hv]
+    rw [SimpleGraph.lapMatrix_mulVec_apply',
+      neighborFinset_star_sup_edge_hanging hc hac hbc, sum_singleton, Pi.smul_apply,
+      one_smul, vec_c, vec_r]
+    norm_num
+
+/-- **Layer B foothold (proved, card 4):** on a four-vertex window the hire star
+plus one gold chord between leaves still has Laplacian eigenvalue `1` and stays
+connected, so the weak `HasSecondLaplacianEigenvalueOne` survives.
+
+Explicit eigenvector: center `0`, joined leaves both `1`, hanging leaf `-2`.
+The leaves sum to `0` and the two joined leaves agree, so the rank-one edge bump
+vanishes and the star's `λ = 1` vector survives. The K₃ argument does not copy. -/
+theorem four_vertex_star_leaf_edge_keeps_one
+    {V : Type*} [Fintype V] [DecidableEq V]
+    (r a b c : V)
+    (ha : a ≠ r) (hb : b ≠ r) (hc : c ≠ r)
+    (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c)
+    (hcard : Fintype.card V = 4)
+    (H : SimpleGraph V) [DecidableRel H.Adj]
+    (hstar : H = SimpleGraph.starGraph r)
+    (H' : SimpleGraph V) [DecidableRel H'.Adj]
+    (hedge : H' = H ⊔ SimpleGraph.edge a b) :
+    HasSecondLaplacianEigenvalueOne H' := by
+  classical
+  -- Adding a gold edge to the star on the same doors keeps the window connected.
+  have hconn : H'.Connected := by
+    rw [hedge, hstar]
+    exact (SimpleGraph.connected_starGraph r).mono le_sup_left
+  set vec := fourVertexLeafChordEigenvec a b c
+  have hx : vec ≠ 0 := fourVertexLeafChordEigenvec_ne_zero a b c
+  have hmul := lapMatrix_mulVec_fourVertexLeafChordEigenvec ha hb hc hab hac hbc hcard
+  have h1 : (1 : ℝ) ∈ spectrum ℝ
+      ((SimpleGraph.starGraph r ⊔ SimpleGraph.edge a b).lapMatrix ℝ) := by
+    rw [← Matrix.spectrum_toLin']
+    refine Module.End.HasEigenvalue.mem_spectrum ?_
+    refine Module.End.hasEigenvalue_of_hasEigenvector (x := vec) ⟨?_, hx⟩
+    exact Module.End.mem_genEigenspace_one.mpr
+      (by simpa [Matrix.toLin'_apply, vec] using hmul)
+  refine ⟨?_, hconn⟩
+  rw [lapMatrix_eq_of_graph_eq (by rw [hedge, hstar] :
+    H' = SimpleGraph.starGraph r ⊔ SimpleGraph.edge a b)]
+  exact h1
+
 /-- Gold chords never touch the seed `2`. -/
 theorem ne_seed_of_GoldEdge {O : Set ℕ} {u v : HireVertex O} (h : GoldEdge O u v) :
     u ≠ seedVertex O ∧ v ≠ seedVertex O ∧ u ≠ v := by
@@ -447,8 +681,9 @@ theorem lemma8_forward {X : ℕ} (h : GoldFree (owners X))
 to the star-plus-edge setting.
 
 * Three-vertex windows: discharged by `three_vertex_star_leaf_edge_not_second_one`.
-* Larger windows: one honest `sorry` — Mathlib gap is ordered `λ₂` /
-  Courant–Fischer / Cauchy interlacing. Still undershoots Layer D. -/
+* Larger windows: one honest `sorry`. `four_vertex_star_leaf_edge_keeps_one`
+  shows the weak predicate does not fail at card 4, so the gap is ordered `λ₂` /
+  Courant–Fischer / Cauchy interlacing, not `1 ∉ spectrum`. -/
 theorem lemma8_converse_sketch {X : ℕ}
     (hspec : HasSecondLaplacianEigenvalueOne (GX X))
     (_hn : 3 ≤ Fintype.card (HireVertex (owners X))) :
@@ -462,7 +697,7 @@ theorem lemma8_converse_sketch {X : ℕ}
       (seedVertex (owners X)) u v hu hv huv hcard
       (SimpleGraph.starGraph (seedVertex (owners X))) rfl
       (GX X) hG) hspec
-  · -- Mathlib gap: ordered λ₂ / Courant–Fischer / Cauchy interlacing.
+  · -- `four_vertex_star_leaf_edge_keeps_one`: the weak predicate does not fail at card 4, so this sorry stays ordered λ₂ / Courant–Fischer / Cauchy interlacing, not `1 ∉ spectrum`.
     sorry
 
 end Hire

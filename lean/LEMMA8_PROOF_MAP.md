@@ -31,11 +31,14 @@ Layer B footholds (proved):
       xᵀ L' x = xᵀ L x + (x_a - x_b)²
   • three_vertex_star_leaf_edge_not_second_one  (card V = 3 only)
       star + leaf edge = K₃; 1 ∉ spectrum; ¬ HasSecondLaplacianEigenvalueOne
+  • four_vertex_star_leaf_edge_keeps_one  (card V = 4)
+      star + one leaf gold chord stays connected and keeps eigenvalue 1
+      (center 0, joined leaves 1, hanging leaf −2); weak predicate survives
 
 lemma8_converse_sketch : HasSecondLaplacianEigenvalueOne ⇒ GoldFree
     ├── card = 3: wired to three_vertex_star_leaf_edge_not_second_one
     └── card ≥ 4: sorry (ordered λ₂ / Courant–Fischer / Cauchy interlacing)
-        Honesty: one leaf chord on ≥3 leaves does not kill eigenvalue 1
+        not 1 ∉ spectrum: four_vertex_star_leaf_edge_keeps_one
 
 GoldLeavesDisconnected  := ¬ (GgoldLeaves).Connected
     └── distinct from GoldFree; forests allowed
@@ -48,14 +51,14 @@ GoldLeavesDisconnected  := ¬ (GgoldLeaves).Connected
 | Layer | Content | Status |
 |-------|---------|--------|
 | A | `GoldFree` ⇒ `G = Gstar` ⇒ `1` and `n` in spectrum | Checked (`Lemma8` + `StarLap`) |
-| B | Converse footholds at zero-gold / star+edge | Partial: quad-form + `card=3` triangle proved; ordered `λ₂` gap for `card≥4` |
+| B | Hire star, gold edges, finite windows | Proved: card 3, K₃ kills the weak predicate; card 4, one leaf chord keeps `HasSecondLaplacianEigenvalueOne`. Ordered `λ₂` still the gap |
 | C | Cone formula `spec(H_X) = {0,n} ∪ {1+μ_i}` | Paper-only |
 | D | Money line: `λ₂=1` ⟺ `GoldLeavesDisconnected` (forests allowed) | Paper-only; needs C + leaf gold connectivity |
 
 ## Dependency order for Lean
 
 1. Keep Layer A as the present stake.
-2. Layer B: quadratic-form bump and the two-leaf triangle are in; Mathlib still lacks ordered Laplacian spectra / Cauchy interlacing for the general converse. One leaf edge on ≥3 leaves does **not** force `λ₂ > 1`.
+2. Layer B: quadratic-form bump, the three-vertex triangle, and the four-vertex leaf chord are in. The weak predicate fails at card 3 and survives one leaf chord at card 4. Mathlib still lacks ordered Laplacian spectra / Cauchy interlacing for the general converse.
 3. Layer C: block Laplacian / quotient by the all-ones leaf subspace (cone formula).
 4. Layer D: transport Layer C through `GoldLeavesDisconnected` (`¬ (GgoldLeaves).Connected` / `μ₂(L')=0`).
 
