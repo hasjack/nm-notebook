@@ -150,7 +150,99 @@ body,
   flex-shrink: 0;
 }
 
+.nav-about {
+  margin: 0 0 1.35rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2d8c8;
+}
+
+.nav-about-name {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+}
+
+.nav-about-name a {
+  color: #1f4e79;
+  text-decoration: none;
+}
+
+.nav-about-name a:hover {
+  text-decoration: underline;
+}
+
+.nav-about-blurb {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #6b5e4e;
+}
+
+.nav-about-blurb code {
+  font-size: 0.78em;
+}
+
+.nav-section-blurb {
+  margin: 0.15rem 0 0.55rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: #8a7b68;
+}
+
+.nav-drill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.15rem 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  color: #6b5e4e;
+}
+
+.nav-drill-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.nav-drill.sub .nav-drill-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: #7a6c5a;
+}
+
+.nav-drill-chevron {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1.5px solid #6b5e4e;
+  border-bottom: 1.5px solid #6b5e4e;
+  transform: rotate(-45deg);
+  transition: transform 0.18s ease;
+  flex-shrink: 0;
+}
+
+.nav-drill.on .nav-drill-chevron {
+  transform: rotate(45deg);
+}
+
+.nav-drill-body {
+  margin-top: 0.2rem;
+}
+
+.nav-sub {
+  margin: 0.65rem 0 0.15rem;
+  padding-left: 0.15rem;
+}
+
 .nav-group-label {
+
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
