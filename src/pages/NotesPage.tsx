@@ -114,6 +114,44 @@ export function NotesPage() {
         like the right sandbox — neighbouring furniture in the same room, not a
         bridge between theorems.
       </p>
+    
+
+      <h2>Cast &amp; newer tabs</h2>
+      <ul>
+        <li>
+          <strong>Return</strong> — 0 and a full turn as one character: back to
+          where it started.
+        </li>
+        <li>
+          <strong>Beacons / Rotation / Magnitude / Physics</strong> — integer
+          choreography, turns as a number line, real σ off the cylinder, and
+          waves that already speak the same letters.
+        </li>
+      </ul>
+      
+      <h2>Principle — 2 is nature’s only knife</h2>
+      <p>
+        Natural Mathematics take: the privileged cut is twofold. Even versus odd
+        landings (+1 vs −1). Half-turn versus return. Order 2, where the polilog
+        costume exits into π, versus higher orders that stay dressed. Odd versus
+        even denominators in the cube sum (the 7/8 split). Not a theorem — a
+        habit of noticing where nature actually cuts, and where we only wish it
+        would.
+      </p>
+
+      <h2>Formal (Lean)</h2>
+      <p>
+        The 3-free door / hire-graph note has a Lean 4 + Mathlib companion under{" "}
+        <code>lean/</code> in this repo (doors, finite hire set, 3 never hired,
+        directed gold arcs). Built separately with <code>lake build</code> — not
+        part of the Vite bundle. Exploring, not claiming breakthroughs.
+      </p>
+      <h2>Physics-adjacent</h2>
+      <p>
+        Waves already live in the alphabet e, i, π. A tone is e^(i ω π t); a period is
+        Return; two tones beat; damping e^(−γt) is Magnitude’s cousin. See the
+        Physics tab — teaching frame, not a QFT claim.
+      </p>
     </main>
   );
 }

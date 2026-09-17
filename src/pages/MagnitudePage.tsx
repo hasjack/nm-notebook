@@ -172,6 +172,18 @@ export function MagnitudePage() {
               <p className="catalogue-beat">You are in the wind now.</p>
             )}
           </article>
+          <article className="catalogue-card grade-clean">
+            <header className="catalogue-card-head">
+              <h2>The return — 0 ≡ full turn</h2>
+              <span className="grade-pill grade-clean">NM character</span>
+            </header>
+            <p>
+              Here 0 and 1 (as cycle marks) can mean the same thing:{" "}
+              <em>back to where it started</em>. Full turn e^(i 2π) = 1 = e^0.
+              Not the mute (base → 1) and not the wind (base → 0). See the
+              Rotation tab.
+            </p>
+          </article>
 
           <article className="catalogue-card grade-calligraphy">
             <header className="catalogue-card-head">

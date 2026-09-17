@@ -61,3 +61,54 @@ Next dig: deform the argument away from −1 with the three levers and watch Li�
 Route `/analysis-3`: z = base^(α i β π) on the unit circle; watch Li₂(z) vs Li₃(z).
 On peg z=−1: −2 Re Li₂ → π²/6 (exits to π); −(4/3) Re Li₃ → cube sum (costume).
 Deformation moves both; does not force Li₃(−1) into {e,i,π}.
+
+
+## Analysis 4 — asymmetric nest
+
+Demand nest = π²/6 only at classical Euler (e,1,1), not on the whole beacon surface.
+
+Along spine base=e^odd with one factor = 1/odd:
+- **Symmetric** S=(αβπ ln)^2/6 stays **flat** at π²/6 (product-only).
+- **(π ln)^2/6** grows as odd² · π²/6 — moves hard; not a closed-form hint, just the odd label squared.
+- **Ignore-α / ignore-β**: with the complementary factor = 1/odd, these become (π)^2/6 or (π odd)^2/6 depending who holds 1/odd — asymmetric in lever choice, still not a cube formula.
+- **α² (β π ln)^2/6** and **β² (α π ln)^2/6**: on spine with the 1/odd on that factor, often collapse toward π²/6 again (weight cancels the shrink).
+- **α (β π ln)^2/6**: linear leftover of the free factor — varies gently; still probe-grade.
+
+**Star packaging (Jack):** cube sum = −(4/3) Li₃(e^(iπ)), twin of −2 Li₂(e^(iπ)). Prefer over Apéry costume in NM copy.
+
+Honest: asymmetric movement ≠ closed form. e³ is still the same joint peg/nest lock under the symmetric observable.
+
+## Analysis 5 — σ deform polilog
+
+z = base^(σ + α i β π) = base^σ · e^(i π · αβ ln).
+Heights: −2 Re Li₂(z), −(4/3) Re Li₃(z).
+At σ=0, z=−1: recover π²/6 and cube sum (star costumes).
+σ≠0 leaves the unit circle; truncated series needs care for |z|>1.
+Expectation from A3: order 2 can still relate to π under angle moves; order 3 does not fall into {e,i,π}. σ is the Magnitude cousin of that question — watch, don’t claim.
+
+## Return / period as unit test
+
+Even prod ⇒ +1 (full turn / return character). Odd prod ⇒ −1 peg.
+If a “nest” or height formula uses principal Ln and erases 2π turns, the return test fails (β=2 trap from Analysis 1). Prefer structured exponent for benches.
+
+
+## Principle — 2 is nature’s only knife (NM)
+
+Jack: the privileged cut is twofold. Maps onto:
+- odd vs even prod → −1 peg vs +1 return
+- half-turn vs full turn (return = 2 half-turns)
+- Li₂ exits to π; Li₃ stays in costume (−(4/3) Li₃(e^(iπ)) exact but no alphabet exit)
+- cube sum odd/even denominator split (7/8) — again a 2-power cut
+
+Framing habit, not a proof engine. Prefer noticing where 2 already cuts over inventing higher knives.
+
+
+## Analysis 5 — continuation past |z|=1
+
+Knife: |z|=1 is the series fence (twofold: inside / outside).
+
+Inversion (principal Ln):
+- Li₂(z) = −Li₂(1/z) − π²/6 − ½[Ln(−z)]²
+- Li₃(z) = Li₃(1/z) − (π²/6)Ln(−z) − ⅙[Ln(−z)]³
+
+At Euler + σ=0.25: |z|≈1.28, continued heights finite (e.g. −(4/3)Re Li₃ ≈ 1.51, not cube; −2 Re Li₂ ≈ 2.02, not π²/6). Continuation ≠ alphabet exit.

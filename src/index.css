@@ -329,3 +329,11 @@ select {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
+
+/* raised exponents in ±1 writings */
+code.pow sup {
+  font-size: 0.68em;
+  vertical-align: super;
+  line-height: 0;
+}

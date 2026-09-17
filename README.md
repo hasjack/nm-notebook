@@ -36,3 +36,9 @@ Helpers in `src/lib/walk.ts`: `curve`, `resultAt`, `walk`, `piFactorForMinusOne`
 ```bash
 npm run build
 ```
+
+## Formal (Lean)
+
+Companion proofs for the **3-free door** / hire graph live in [`lean/`](lean/). Checked with Lean 4 + Mathlib (`lake build` inside `lean/`). Sources ship with the site for GitHub Pages; the `.lake` cache is gitignored.
+
+See [`lean/README.md`](lean/README.md).
