@@ -1,0 +1,240 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+
+\title{The hire graph of the 3-free door}
+\date{}
+\author{}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\vspace{-2.8em}
+
+Let \(\chi_3\) be the non-principal Dirichlet character modulo \(3\):
+\(\chi_3(n)=0\) if \(3\mid n\), and \(\chi_3(n)=\bigl(\frac{n}{3}\bigr)\) otherwise,
+so \(\chi_3(n)=+1\) if \(n\equiv 1\pmod{3}\) and \(\chi_3(n)=-1\) if \(n\equiv 2\pmod{3}\).
+For an odd prime \(p\neq 3\) write
+\[
+m_0(p)=p+\chi_3(p),
+\qquad
+m_1(p)=p-\chi_3(p).
+\]
+
+\begin{lemma}
+\(m_0(p)\) is even and not divisible by \(3\).
+\(m_1(p)\) is divisible by \(6\).
+\(\{m_0(p),m_1(p)\}=\{p-1,p+1\}\).
+In particular \(3\) never divides a \(3\)-free door.
+\end{lemma}
+
+\begin{proof}
+The residues of \(p-1\), \(p\), \(p+1\) modulo \(3\) are a permutation of \(\{0,1,2\}\), and \(p\not\equiv 0\pmod{3}\).
+Hence exactly one neighbour of \(p\) is divisible by \(3\).
+Both neighbours are even.
+If \(p\equiv 1\pmod{3}\) then \(\chi_3(p)=+1\), so \(m_0(p)=p+1\not\equiv 0\pmod{3}\) and \(m_1(p)=p-1\equiv 0\pmod{3}\).
+If \(p\equiv 2\pmod{3}\) then \(\chi_3(p)=-1\), so \(m_0(p)=p-1\not\equiv 0\pmod{3}\) and \(m_1(p)=p+1\equiv 0\pmod{3}\).
+In both cases \(m_1(p)\) is even and divisible by \(3\), hence by \(6\).
+\end{proof}
+
+\noindent
+Examples.
+\(p=11\equiv 2\pmod{3}\), so \(\chi_3(11)=-1\), \(m_0(11)=10=2\cdot 5\), \(m_1(11)=12=2^2\cdot 3\).
+\(p=13\equiv 1\pmod{3}\), so \(\chi_3(13)=+1\), \(m_0(13)=14=2\cdot 7\), \(m_1(13)=12=2^2\cdot 3\).
+
+\begin{lemma}
+The four residue classes of odd primes modulo \(12\) determine the doors as follows.
+\end{lemma}
+
+\begin{center}
+\small
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+\(p\pmod{12}\) & \(\chi_3\) & \(m_0\pmod{12}\) & \(v_2(m_0)\) & \(m_1\pmod{12}\) & \(v_2(m_1)\) \\
+\midrule
+\(1\)  & \(+1\) & \(2\)  & \(=1\) & \(0\) & \(\ge 2\) \\
+\(5\)  & \(-1\) & \(4\)  & \(\ge 2\) & \(6\) & \(=1\) \\
+\(7\)  & \(+1\) & \(8\)  & \(\ge 2\) & \(6\) & \(=1\) \\
+\(11\) & \(-1\) & \(10\) & \(=1\) & \(0\) & \(\ge 2\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{proof}
+The classes \(\{1,5,7,11\}\pmod{12}\) are the units modulo \(12\).
+Each line is the conjunction of Lemma~1 with the unique lifting of that class modulo \(4\) and modulo \(3\).
+Residues \(2\) and \(10\) modulo \(12\) are \(2\pmod{4}\), so \(v_2(m_0)=1\); residues \(4\) and \(8\) are \(0\pmod{4}\), so \(v_2(m_0)\ge 2\).
+\end{proof}
+
+\begin{lemma}
+If \(p\) and \(p+2\) are both prime and \(p>3\), then \(p\equiv 2\pmod{3}\) and
+\[
+m_1(p)=m_1(p+2)=p+1.
+\]
+\end{lemma}
+
+\begin{proof}
+The pair of residues of \((p,p+2)\) modulo \(3\) is either \((1,0)\) or \((2,1)\).
+The first makes \(p+2\) divisible by \(3\), impossible for \(p+2>3\).
+Thus \(p\equiv 2\pmod{3}\) and \(p+2\equiv 1\pmod{3}\), so \(\chi_3(p)=-1\) and \(\chi_3(p+2)=+1\).
+Then \(m_1(p)=p+1\) and \(m_1(p+2)=p+1\).
+\end{proof}
+
+\begin{corollary}
+If an even integer is not divisible by \(3\), at most one of its two neighbours is an odd prime greater than \(3\).
+\end{corollary}
+
+\begin{lemma}
+If \(p\) and \(q=2p+1\) are both prime and \(p>3\), then \(p\equiv 2\pmod{3}\) and \(m_0(q)=2p\).
+\end{lemma}
+
+\begin{proof}
+If \(p\equiv 1\pmod{3}\) then \(q=2p+1\equiv 0\pmod{3}\), impossible for \(q>3\).
+Thus \(p\equiv 2\pmod{3}\), so \(q\equiv 2\pmod{3}\), \(\chi_3(q)=-1\), and \(m_0(q)=q-1=2p\).
+\end{proof}
+
+\paragraph{The hire graph.}
+An odd prime \(p\neq 3\) is an \emph{owner} of an odd prime \(q\) when \(q\mid m_0(p)\).
+By Dirichlet's theorem on the two admissible classes modulo \(3q\),
+\[
+p\equiv 1\pmod{3},\ \ p\equiv -1\pmod{q}
+\qquad\text{and}\qquad
+p\equiv 2\pmod{3},\ \ p\equiv 1\pmod{q},
+\]
+every odd prime \(q\neq 3\) has an owner.
+Hence the set of primes that occur as \(2\) or as an odd prime factor of some \(m_0(p)\) is all primes except \(3\).
+
+Spectra are taken on finite windows.
+For \(X\ge 5\), let the owners be the odd primes \(p\neq 3\) with \(p\le X\).
+Let \(S_X\) consist of \(2\) together with every odd prime factor of \(m_0(p)\) for such owners, and write \(n=|S_X|\).
+The \emph{hire graph} \(G_X\) has vertex set \(S_X\), a spoke from \(2\) to every other vertex, and a directed gold arc \(p\to q\) whenever \(p\le X\), \(p,q\in S_X\setminus\{2\}\), and \(q\mid m_0(p)\) (gold witnessed by owners in the window).
+The underlying undirected gold graph has an edge \(\{p,q\}\) when at least one of the two arcs is present.
+Let \(H_X\) be the combinatorial Laplacian of the undirected graph (spokes plus undirected gold), and let \(L'_X\) be the Laplacian of the undirected gold graph on \(S_X\setminus\{2\}\).
+
+The relation \(q\mid m_0(p)\) is not symmetric:
+\(5\mid m_0(11)=10\) while \(11\nmid m_0(5)=4\).
+
+\begin{lemma}
+There is a gold arc \(p\to q\) if and only if \(p\equiv -\chi_3(p)\pmod{q}\).
+\end{lemma}
+
+\begin{proof}
+The congruence is \(q\mid\bigl(p+\chi_3(p)\bigr)\), i.e.\ \(q\mid m_0(p)\).
+\end{proof}
+
+\begin{lemma}
+Every undirected gold edge \(\{p,q\}\) is the base of a triangle \(2\textrm{--}p\textrm{--}q\) in \(G_X\).
+\end{lemma}
+
+\begin{proof}
+Both \(p\) and \(q\) are adjacent to \(2\) by construction.
+\end{proof}
+
+\begin{lemma}
+\(\lambda_{\max}(H_X)=n\).
+The vector with value \(n-1\) at \(2\) and value \(-1\) at every other vertex is an eigenvector for this eigenvalue, independently of the gold edges.
+\end{lemma}
+
+\begin{proof}
+Let \(v\) be that vector.
+On the star alone, \(H_Xv=nv\).
+Each gold edge has both ends in the set where \(v\) is constant, so contributes \(0\) to \(H_Xv\).
+\end{proof}
+
+\begin{lemma}
+Let \(0=\mu_1\le\mu_2\le\cdots\le\mu_{n-1}\) be the eigenvalues of \(L'_X\).
+Then
+\[
+\operatorname{spec}(H_X)
+=
+\{0,\,n\}
+\cup
+\{1+\mu_2,\ldots,1+\mu_{n-1}\}.
+\]
+In particular \(\lambda_2(H_X)=1\) if and only if the undirected gold graph on \(S_X\setminus\{2\}\) is disconnected.
+\end{lemma}
+
+\begin{proof}
+Order the vertices as \(2\) followed by \(S_X\setminus\{2\}\).
+Then
+\[
+H_X
+=
+\begin{pmatrix}
+k & -\mathbf{1}^{\mathsf T}\\
+-\mathbf{1} & I+L'_X
+\end{pmatrix},
+\]
+where \(k=n-1\).
+Vectors constant on \(S_X\setminus\{2\}\) yield eigenvalues \(0\) and \(n\).
+On the complement \(\mathbf{1}^{\mathsf T}y=0\) the lower block acts as \(1+\mu\), and the copy of \(\ker L'_X\) spanned by \(\mathbf{1}\) has already been used.
+The remaining eigenvalues of \(L'_X\) are \(\mu_2,\ldots,\mu_{n-1}\).
+\end{proof}
+
+\noindent
+On the windows below, undirected gold remains disconnected, so \(\lambda_2(H_X)=1\).
+
+\begin{center}
+\small
+\begin{tabular}{@{}rrrrccc@{}}
+\toprule
+\(X\) & \(|S_X|\) & gold edges & gold arcs & \(L'_X\) connected & \(\mu_2(L'_X)\) & \(\lambda_2(H_X)\) \\
+\midrule
+\(30\)  & \(4\)  & \(1\)  & \(1\)  & no & \(0\) & \(1\) \\
+\(50\)  & \(6\)  & \(3\)  & \(3\)  & no & \(0\) & \(1\) \\
+\(100\) & \(12\) & \(7\)  & \(7\)  & no & \(0\) & \(1\) \\
+\(200\) & \(18\) & \(13\) & \(13\) & no & \(0\) & \(1\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+\(X=30\): \(S=\{2,5,7,11\}\), gold \(\{5,11\}\).
+\(X=50\): \(S=\{2,5,7,11,19,23\}\), gold \(\{5,11\}\), \(\{5,19\}\), \(\{11,23\}\).
+\(X=100\): gold \(\{5,11\}\), \(\{5,19\}\), \(\{5,41\}\), \(\{7,13\}\), \(\{7,29\}\), \(\{11,23\}\), \(\{19,37\}\).
+
+\paragraph{Variant: the sluice.}
+The hire graph \(G_X\) uses \(m_0\) throughout.
+A finite set \(\Sigma\) of odd primes defines a variant door:
+the \(\Sigma\)-door of \(p\) is \(m_0(p)\) if no prime of \(\Sigma\) divides \(m_0(p)\); otherwise \(m_1(p)\) if no prime of \(\Sigma\) divides \(m_1(p)\); and is otherwise undefined.
+
+\begin{lemma}
+If \(\Sigma=\{5\}\), the \(\Sigma\)-door is defined for every odd prime \(p\neq 3\).
+It differs from \(m_0(p)\) if and only if \(p\equiv 11\) or \(19\pmod{30}\).
+\end{lemma}
+
+\begin{proof}
+The condition \(5\mid m_0(p)\) is \(p\equiv -\chi_3(p)\pmod{5}\).
+Combined with \(p\) odd and the value of \(\chi_3(p)\), this is the pair of classes \(11,19\pmod{30}\).
+On those classes \(m_1(p)\) is divisible by \(6\) and not by \(5\): the two neighbours of \(p\) differ by \(2\), so at most one is divisible by \(5\).
+\end{proof}
+
+\begin{lemma}
+If \(\Sigma=\{5,7\}\), the \(\Sigma\)-door is undefined if and only if
+\[
+p\equiv 29,\ 41,\ 169,\ \text{or }181\pmod{210}.
+\]
+These are four residue classes modulo \(210\), of density \(4/\varphi(210)=1/12\) among units modulo \(210\).
+\end{lemma}
+
+\begin{proof}
+The door is undefined precisely when \(5\) divides one neighbour of \(p\) and \(7\) divides the other, i.e.\
+\[
+\bigl\{p-1,\,p+1\bigr\}
+\equiv
+\bigl\{0\pmod{5},\,0\pmod{7}\bigr\}
+\]
+as sets.
+The system \(p\equiv \pm 1\pmod{5}\), \(p\equiv \mp 1\pmod{7}\), together with \(p\) odd, cuts four classes modulo \(210=2\cdot 3\cdot 5\cdot 7\).
+The odd representatives are \(29\), \(41\), \(169\equiv -41\), and \(181\equiv -29\).
+There are \(\varphi(210)=48\) units modulo \(210\), so the density among those units is \(4/48=1/12\).
+\end{proof}
+
+\end{document}

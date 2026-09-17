@@ -6,7 +6,7 @@ export function HomePage() {
       <p className="eyebrow">Natural Mathematics</p>
       <h1>The hire graph of the 3-free door</h1>
       <p className="lede">
-        Lead article. Lemmas with Lean in <code>lean/</code>; dials on{" "}
+        Lead article. Paper PDF; lemmas with Lean in <code>lean/</code>; dials on{" "}
         <Link to="/hire">/hire</Link>.
       </p>
 
@@ -35,6 +35,9 @@ export function HomePage() {
           <Link className="nav-link on" to="/hire">
             Hire dials
           </Link>
+          <a className="nav-link" href="/paper/two_doors.pdf">
+            PDF
+          </a>
           <a
             className="nav-link"
             href="https://github.com/hasjack/nm-notebook/tree/master/lean"
