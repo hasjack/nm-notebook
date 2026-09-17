@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Nav } from "./components/Nav";
+import { HomePage } from "./pages/HomePage";
 import { WalkPage } from "./pages/WalkPage";
 import { LockIPage } from "./pages/LockIPage";
 import { LockPiPage } from "./pages/LockPiPage";
@@ -35,7 +36,8 @@ export default function App() {
     <div className="app-shell">
       <Nav />
       <Routes>
-        <Route path="/" element={<WalkPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/walk" element={<WalkPage />} />
         <Route path="/lock-i" element={<LockIPage />} />
         <Route path="/lock-pi" element={<LockPiPage />} />
         <Route path="/free" element={<FreePage />} />

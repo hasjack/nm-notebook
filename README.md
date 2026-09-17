@@ -1,10 +1,18 @@
-# e-walk-app
+# Natural Mathematics — open notebook
 
-Jack’s local explorer for a number line spoken only in **e**, **i**, and **π**.
+Jack’s public notebook for Natural Mathematics. Current lead: the **hire graph of the 3-free door**. Exploring, not claiming breakthroughs.
 
-Envisage base^(iπ) when the base is free. Then lock i and watch π; lock π and watch i. Exploring, not claiming breakthroughs.
+Repo: [hasjack/nm-notebook](https://github.com/hasjack/nm-notebook). Local folder may still be named `e-walk-app`.
 
-Landing on −1 (with one factor held at 1) means the free factor times ln(base) is an odd integer.
+## Story
+
+| Shelf | What |
+|-------|------|
+| **Issue** | Lead article (home) + live `/hire` dials |
+| **Alphabet** | Number line in e, i, π — Walk, Lock i / π, Basel, Catalogue, Notes |
+| **Lab** | Probe pages (analysis benches, super-primes, spectrum, …) — kept, demoted |
+
+Formal Lean companion: [`lean/`](lean/).
 
 ## Run
 
@@ -13,23 +21,9 @@ npm install
 npm run dev
 ```
 
-Then open http://127.0.0.1:5173/.
+Open http://127.0.0.1:5173/.
 
-## Routes
-
-| Path | View |
-|------|------|
-| `/` | **Walk** — variable base (ln slider), classical iπ (α=β=1) |
-| `/lock-i` | **Lock i** — α=1; retune π-factor β (or free-β) |
-| `/lock-pi` | **Lock π** — β=1; retune i-factor α (or free-α) |
-| `/solve` | **Solve** — odd + free factor → base = e^(odd/factor) |
-| `/notes` | **Notes** — benefits in e/i/π language |
-
-Legacy `/lock` redirects to `/lock-i`; `/split` redirects to `/`.
-
-## Maths
-
-Helpers in `src/lib/walk.ts`: `curve`, `resultAt`, `walk`, `piFactorForMinusOne`, `iFactorForMinusOne`, `baseForMinusOne`. UI says i-factor / π-factor / base — never **k**.
+Docker (Mac): `docker compose up` → :5173 with hot reload.
 
 ## Build
 
@@ -37,8 +31,6 @@ Helpers in `src/lib/walk.ts`: `curve`, `resultAt`, `walk`, `piFactorForMinusOne`
 npm run build
 ```
 
-## Formal (Lean)
+## Voice
 
-Companion proofs for the **3-free door** / hire graph live in [`lean/`](lean/). Checked with Lean 4 + Mathlib (`lake build` inside `lean/`). Sources ship with the site for GitHub Pages; the `.lake` cache is gitignored.
-
-See [`lean/README.md`](lean/README.md).
+No ζ in public wording. Speak of doors, hire set S, gold edges, finite windows G_X, and the alphabet {e, i, π}.

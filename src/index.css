@@ -337,3 +337,76 @@ code.pow sup {
   vertical-align: super;
   line-height: 0;
 }
+
+.nav-brand {
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.nav-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  align-items: flex-start;
+}
+
+.nav-group-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b5e4e;
+}
+
+.nav-lab {
+  max-width: 100%;
+}
+
+.nav-lab > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.nav-lab > summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-lab[open] > .nav-links {
+  margin-top: 0.35rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b5e4e;
+}
+
+.home-lead {
+  background: #fffaf3;
+  border: 1px solid #e2d8c8;
+  border-radius: 10px;
+  padding: 1rem 1.15rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.home-lead p:last-child {
+  margin-bottom: 0;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  margin: 0.85rem 0 0;
+}
