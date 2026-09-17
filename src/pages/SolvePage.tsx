@@ -26,7 +26,7 @@ export function SolvePage() {
       <p className="lede">
         Two clear stories. Given the locked factor is 1, pick the free factor and
         an odd branch; the base that lands on −1 is e^(odd / free-factor).
-        Exploring, not claiming.
+        
       </p>
 
       <div className="solve-grid">

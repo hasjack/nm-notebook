@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 type LinkItem = { to: string; label: string; end?: boolean };
 
@@ -41,58 +42,105 @@ const lab: LinkItem[] = [
   { to: "/count", label: "Count" },
 ];
 
-function Group({
-  label,
+const sections: { label: string; links: LinkItem[] }[] = [
+  { label: "Issue", links: issue },
+  { label: "Alphabet", links: alphabet },
+  { label: "Lab", links: lab },
+];
+
+function Links({
   links,
+  onNavigate,
+  stacked,
 }: {
-  label: string;
   links: LinkItem[];
+  onNavigate?: () => void;
+  stacked?: boolean;
 }) {
   return (
-    <div className="nav-group">
-      <span className="nav-group-label">{label}</span>
-      <div className="nav-links">
-        {links.map((l) => (
-          <NavLink
-            key={l.to}
-            to={l.to}
-            end={l.end ?? false}
-            className={({ isActive }) => (isActive ? "nav-link on" : "nav-link")}
-          >
-            {l.label}
-          </NavLink>
-        ))}
-      </div>
+    <div className={stacked ? "nav-links stacked" : "nav-links"}>
+      {links.map((l) => (
+        <NavLink
+          key={l.to}
+          to={l.to}
+          end={l.end ?? false}
+          onClick={onNavigate}
+          className={({ isActive }) => (isActive ? "nav-link on" : "nav-link")}
+        >
+          {l.label}
+        </NavLink>
+      ))}
     </div>
   );
 }
 
 export function Nav() {
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <nav className="nav">
-      <NavLink to="/" end className="nav-brand">
-        NM notebook
-      </NavLink>
-      <div className="nav-groups">
-        <Group label="Issue" links={issue} />
-        <Group label="Alphabet" links={alphabet} />
-        <details className="nav-group nav-lab">
-          <summary className="nav-group-label">Lab</summary>
-          <div className="nav-links">
-            {lab.map((l) => (
-              <NavLink
-                key={l.to}
-                to={l.to}
-                className={({ isActive }) =>
-                  isActive ? "nav-link on" : "nav-link"
-                }
-              >
-                {l.label}
-              </NavLink>
-            ))}
-          </div>
-        </details>
-      </div>
-    </nav>
+    <>
+      <header className="nav-bar">
+        <button
+          type="button"
+          className="nav-burger"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span className={open ? "burger-lines open" : "burger-lines"}>
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+
+        <NavLink to="/" end className="nav-brand">
+          NM notebook
+        </NavLink>
+
+        <nav className="nav-desktop" aria-label="Primary">
+          {sections.map((s) => (
+            <div key={s.label} className="nav-group">
+              <span className="nav-group-label">{s.label}</span>
+              <Links links={s.links} />
+            </div>
+          ))}
+        </nav>
+      </header>
+
+      <button
+        type="button"
+        className={open ? "nav-scrim on" : "nav-scrim"}
+        aria-label="Dismiss menu"
+        tabIndex={open ? 0 : -1}
+        onClick={() => setOpen(false)}
+      />
+
+      <aside
+        className={open ? "nav-drawer on" : "nav-drawer"}
+        aria-hidden={!open}
+      >
+        <div className="nav-drawer-inner">
+          {sections.map((s) => (
+            <div key={s.label} className="nav-drawer-section">
+              <div className="nav-group-label">{s.label}</div>
+              <Links links={s.links} stacked onNavigate={() => setOpen(false)} />
+            </div>
+          ))}
+        </div>
+      </aside>
+    </>
   );
 }
