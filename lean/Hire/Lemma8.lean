@@ -19,8 +19,10 @@ as Mathlib reaches without a full interlacing development:
 * `GoldFree` ⇒ hire graph equals the pure star;
 * pure star with two leaves has Laplacian eigenvalue `1` (from `StarLap`);
 * `GoldLeavesDisconnected` names the paper money line separately from `GoldFree`;
-* converse spectral rigidity at zero-gold left as a documented `sorry`
-  pending edge-monotonicity / Cauchy interlacing for Laplacians.
+* Layer B foothold: named interlacing hypothesis
+  `star_plus_leaf_edge_raises_second_eigenvalue`, used by the converse sketch;
+* converse spectral rigidity at zero-gold still `sorry` pending a proof of that
+  hypothesis (Mathlib edge-monotonicity / Cauchy interlacing).
 
 Public voice: doors, hire set, gold edges, finite windows.
 -/
@@ -118,14 +120,12 @@ theorem card_mem_spectrum_GX_of_goldFree {X : ℕ}
   rw [lapMatrix_eq_of_graph_eq (GX_eq_GXstar_of_goldFree h)]
   exact card_mem_spectrum_lapMatrix_GXstar X hn
 
-/-! ### Spectral converse (sketch)
+/-! ### Spectral converse (Layer B foothold)
 
 Paper money line: `λ₂(H) = 1` iff gold leaves are disconnected.
 
-Layer B foothold: converse at `GoldFree` strength (zero gold). Mathlib currently
-exposes PSD Laplacians and the star spectrum helpers above, but not a packaged
-“adding an edge strictly raises `λ₂` above `1`” lemma for stars. We keep the
-statement and mark the body `sorry` so the interface is stable.
+Layer B: converse at `GoldFree` strength (zero gold). The named hypothesis below
+is the Mathlib-shaped claim to prove next; the hire-graph converse reduces to it.
 -/
 
 /-- Placeholder for “second Laplacian eigenvalue is `1`”.
@@ -133,6 +133,23 @@ Until ordered spectra / interlacing land, we use: eigenvalue `1` present and con
 def HasSecondLaplacianEigenvalueOne {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) [DecidableRel H.Adj] : Prop :=
   (1 : ℝ) ∈ spectrum ℝ (H.lapMatrix ℝ) ∧ H.Connected
+
+/-- **Layer B hypothesis (interlacing foothold).**
+On a star with seed `r`, adjoining one edge between two distinct leaves strictly
+raises the second Laplacian eigenvalue above `1`.
+
+This is the packaged Mathlib-facing claim; proof needs edge-monotonicity /
+Cauchy interlacing for combinatorial Laplacians. -/
+theorem star_plus_leaf_edge_raises_second_eigenvalue
+    {V : Type*} [Fintype V] [DecidableEq V]
+    (r a b : V) (ha : a ≠ r) (hb : b ≠ r) (hab : a ≠ b)
+    (H : SimpleGraph V) [DecidableRel H.Adj]
+    (hstar : H = SimpleGraph.starGraph r)
+    (H' : SimpleGraph V) [DecidableRel H'.Adj]
+    (hedge : H'.Adj = fun u v => H.Adj u v ∨ ({u, v} : Set V) = {a, b}
+      ∨ ({u, v} : Set V) = {b, a}) :
+    ¬ HasSecondLaplacianEigenvalueOne H' := by
+  sorry
 
 /-- **Lemma 8 (⇒ combinatorial):** gold-free hire graph with ≥2 leaves is connected
 and has Laplacian eigenvalue `1`. -/
@@ -150,14 +167,14 @@ theorem lemma8_forward {X : ℕ} (h : GoldFree (owners X))
 /-- **Lemma 8 (⇐ spectral sketch at `GoldFree` strength):** if the hire graph has
 second eigenvalue `1` in the strong sense of the paper, then there is no gold chord.
 
-Body deferred: needs Laplacian edge-monotonicity / interlacing relative to the star.
-Filling this `sorry` still undershoots `GoldLeavesDisconnected` (forests). -/
+Body deferred to `star_plus_leaf_edge_raises_second_eigenvalue`.
+Filling that hypothesis still undershoots `GoldLeavesDisconnected` (forests). -/
 theorem lemma8_converse_sketch {X : ℕ}
     (_hspec : HasSecondLaplacianEigenvalueOne (GX X))
     (_hn : 3 ≤ Fintype.card (HireVertex (owners X))) :
     GoldFree (owners X) := by
-  -- Adding any gold chord among leaves raises λ₂ strictly above 1 for the star
-  -- (Cauchy interlacing / edge monotonicity). Not yet in this Mathlib slice.
+  -- Reduce: any gold chord among leaves yields a star-plus-leaf-edge graph,
+  -- contradicting `_hspec` via `star_plus_leaf_edge_raises_second_eigenvalue`.
   sorry
 
 end Hire
