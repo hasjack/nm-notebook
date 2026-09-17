@@ -25,58 +25,14 @@ body,
   align-items: stretch;
 }
 
-.app-sidebar {
-  flex: 0 0 0;
-  width: 0;
-  overflow: hidden;
-  background: #fffaf3;
-  border-right: 1px solid transparent;
-  transition: flex-basis 0.28s ease, width 0.28s ease, border-color 0.28s ease;
-}
-
-.app-shell.menu-open .app-sidebar {
-  flex-basis: var(--app-sidebar-open);
-  width: var(--app-sidebar-open);
-  border-right-color: #e2d8c8;
-}
-
-.app-sidebar-inner {
-  width: var(--app-sidebar-open);
-  height: 100%;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 1.1rem 1.35rem 2.25rem;
-  box-sizing: border-box;
-}
-
-.app-main {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.nav-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.75rem 1.25rem 0.5rem;
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  background: #f4efe6;
-}
-
-.nav-brand {
-  color: #1f4e79;
-  font-size: 1.05rem;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-}
-
+/* Fixed chrome: burger/close never moves. Logo lives in the menu DOM but is
+   position:fixed so it stays visible (and still) when the panel closes. */
 .nav-burger {
+  position: fixed;
+  top: 0.75rem;
+  left: 1.25rem;
+  z-index: 80;
   display: inline-flex;
-  flex-shrink: 0;
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 999px;
@@ -117,6 +73,81 @@ body,
 .burger-lines.open span:nth-child(3) {
   top: 0.35rem;
   transform: rotate(-45deg);
+}
+
+.app-sidebar {
+  position: relative;
+  flex: 0 0 0;
+  width: 0;
+  /* visible so the fixed brand (child of the menu) is never clipped shut */
+  overflow: visible;
+  background: #fffaf3;
+  border-right: 1px solid transparent;
+  transition: flex-basis 0.28s ease, width 0.28s ease, border-color 0.28s ease;
+}
+
+.app-shell.menu-open .app-sidebar {
+  flex-basis: var(--app-sidebar-open);
+  width: var(--app-sidebar-open);
+  border-right-color: #e2d8c8;
+}
+
+/* Shared brand slot: dock (closed) and in-menu brand (open) share coordinates. */
+.nav-brand-dock,
+.app-sidebar-brand {
+  position: fixed;
+  top: 0.75rem;
+  left: calc(1.25rem + 2.5rem + 0.85rem);
+  z-index: 70;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.nav-brand-dock.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.nav-brand {
+  color: #1f4e79;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* When open, the in-menu brand is the one you see; dock is hidden. */
+.app-shell.menu-open .app-sidebar-brand {
+  z-index: 75;
+}
+
+.app-sidebar-inner {
+  width: var(--app-sidebar-open);
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4rem 1.35rem 2.25rem;
+  box-sizing: border-box;
+}
+
+/* When closed, hide link list only — brand stays via fixed positioning. */
+.app-shell:not(.menu-open) .app-sidebar-inner {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.app-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-bar-spacer {
+  height: 3.5rem;
+  flex-shrink: 0;
 }
 
 .nav-group-label {
@@ -206,8 +237,12 @@ body,
 
   .app-sidebar-inner {
     width: 100%;
-    padding-top: 1.25rem;
+    padding-top: 4rem;
   }
+
+  /* Keep chrome above the drawer on mobile too; logo stays put. */
+  .nav-burger { z-index: 80; }
+  .app-sidebar-brand { z-index: 70; }
 
   .nav-scrim {
     display: block;

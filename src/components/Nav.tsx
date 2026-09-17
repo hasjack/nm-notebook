@@ -76,7 +76,19 @@ function Links({
   );
 }
 
-/** Burger always visible. Desktop: push sidebar (default open). Mobile: overlay. */
+function Brand({ onNavigate }: { onNavigate?: () => void }) {
+  return (
+    <NavLink to="/" end className="nav-brand" onClick={onNavigate}>
+      NM notebook
+    </NavLink>
+  );
+}
+
+/**
+ * Burger/close stay fixed in one spot.
+ * Logo lives in the menu; a docked twin covers the closed state so mobile
+ * transform on the drawer cannot drag the wordmark off-screen.
+ */
 export function AppLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(() =>
     typeof window !== "undefined" ? isDesktop() : true,
@@ -111,8 +123,33 @@ export function AppLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className={open ? "app-shell menu-open" : "app-shell"}>
-      <aside className="app-sidebar" aria-hidden={!open} aria-label="Site menu">
-        <div className="app-sidebar-inner">
+      <button
+        type="button"
+        className="nav-burger"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className={open ? "burger-lines open" : "burger-lines"}>
+          <span />
+          <span />
+          <span />
+        </span>
+      </button>
+
+      {/* Docked twin: same coordinates as the in-menu brand; only when closed. */}
+      <div
+        className={open ? "nav-brand-dock hidden" : "nav-brand-dock"}
+        aria-hidden={open}
+      >
+        <Brand />
+      </div>
+
+      <aside className="app-sidebar" aria-label="Site menu">
+        <div className="app-sidebar-brand">
+          <Brand onNavigate={closeIfMobile} />
+        </div>
+        <div className="app-sidebar-inner" aria-hidden={!open}>
           {sections.map((s) => (
             <div key={s.label} className="nav-drawer-section">
               <div className="nav-group-label">{s.label}</div>
@@ -123,24 +160,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
       </aside>
 
       <div className="app-main">
-        <header className="nav-bar">
-          <button
-            type="button"
-            className="nav-burger"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span className={open ? "burger-lines open" : "burger-lines"}>
-              <span />
-              <span />
-              <span />
-            </span>
-          </button>
-          <NavLink to="/" end className="nav-brand">
-            NM notebook
-          </NavLink>
-        </header>
+        <div className="nav-bar-spacer" aria-hidden="true" />
         {children}
       </div>
 
