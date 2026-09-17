@@ -14,6 +14,10 @@ body,
   color: #1a1a1a;
 }
 
+:root {
+  /* Open desktop menu: at least ~1/5 of the page, with a solid rem floor. */
+  --app-sidebar-open: max(20rem, 20vw);
+}
 
 .app-shell {
   display: flex;
@@ -31,17 +35,17 @@ body,
 }
 
 .app-shell.menu-open .app-sidebar {
-  flex-basis: 16.5rem;
-  width: 16.5rem;
+  flex-basis: var(--app-sidebar-open);
+  width: var(--app-sidebar-open);
   border-right-color: #e2d8c8;
 }
 
 .app-sidebar-inner {
-  width: 16.5rem;
+  width: var(--app-sidebar-open);
   height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 1rem 1rem 2rem;
+  padding: 1.1rem 1.35rem 2.25rem;
   box-sizing: border-box;
 }
 
