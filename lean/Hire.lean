@@ -8,4 +8,5 @@ import Hire.Graph
 import Hire.Finite
 import Hire.StarLap
 import Hire.Lemma8
+import Hire.Cone
 import Hire.Dirichlet
