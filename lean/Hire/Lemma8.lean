@@ -135,7 +135,7 @@ Paper money line: `λ₂(H) = 1` iff gold leaves are disconnected.
 Layer B (proved): quadratic-form bump; three-vertex star plus the leaf edge is
 `K₃`, so `1 ∉ spectrum` and the weak predicate fails; four-vertex star plus one
 leaf chord keeps eigenvalue `1` and stays connected, so the weak predicate
-survives. Ordered `λ₂` is still open. A single leaf chord does not reach Layer D.
+survives. Ordered `λ₂` is Layer D, proved in `Cone`. A single leaf chord is not that proof.
 -/
 
 /-- Placeholder for “second Laplacian eigenvalue is `1`”.

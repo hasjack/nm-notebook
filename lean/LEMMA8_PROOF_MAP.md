@@ -69,20 +69,25 @@ Layer C spectrum (Hire/Cone.lean):
       quadratic form of G is at most that of the complete graph, and
       lapMatrix_top is n minus the all-ones matrix, whose form is
       n ‖x‖² − (∑ x)²
-  sorry (middle shift only, not a set union):
+  proved (middle shift, not a set union):
     spectrum_lapMatrix_GX
       ascending λᵢ = 1 + μᵢ for i = 2, …, n-1
-      endpoints are lambda_GX_one and lambda_GX_card, not this sorry
+      endpoints are lambda_GX_one and lambda_GX_card
       cutoff is μ₂, not μ₁: μ₁ = 0 is the leaf all-ones vector and is
       already the global kernel (folding it into 1+μ double-counts 0)
       a set union {0,n} ∪ {1+μ | μ ≠ 0} is not used: spectrum forgets
       multiplicity, so a repeated leaf zero (the card-4 chord) never
       appears as a new point and eigenvalue 1 would be lost
-  corollary, not a checked Layer D proof:
+  Layer D, proved:
     lambda2_eq_one_iff_GoldLeavesDisconnected
       λ₂ = 1 + μ₂ by specialising the spectrum statement (index 2)
-      then sorry: μ₂ = 0 iff gold-on-leaves is disconnected
-      does not prove disconnected gold from scratch
+      μ₂ = 0 iff gold-on-leaves is disconnected
+      eigenvalues₀ is antitone and nonnegative, so the second-smallest
+      leaf eigenvalue is 0 iff 0 has multiplicity at least 2
+      that multiplicity is dim ker, and Mathlib's
+      card_connectedComponent_eq_finrank_ker_toLin'_lapMatrix
+      says dim ker is the number of components
+      on k ≥ 2 vertices that is exactly ¬ Connected
 
 lemma8_converse_card_three : HasSecondLaplacianEigenvalueOne ⇒ GoldFree
     └── card = 3 only, no sorry:
@@ -94,7 +99,7 @@ lemma8_converse_card_three : HasSecondLaplacianEigenvalueOne ⇒ GoldFree
 GoldLeavesDisconnected  := ¬ (GgoldLeaves).Connected
     └── distinct from GoldFree; forests allowed
     └── GoldFree ⇒ GoldLeavesDisconnected (when ≥2 leaves)
-    └── money line typed as lambda2_eq_one_iff_GoldLeavesDisconnected; the μ₂=0 step is sorry
+    └── money line proved: lambda2_eq_one_iff_GoldLeavesDisconnected
 ```
 
 ## Layers
@@ -102,16 +107,16 @@ GoldLeavesDisconnected  := ¬ (GgoldLeaves).Connected
 | Layer | Content | Status |
 |-------|---------|--------|
 | A | `GoldFree` ⇒ `G = Gstar` ⇒ `1` and `n` in spectrum | Checked (`Lemma8` + `StarLap`) |
-| B | Hire star, gold edges, finite windows | n=3 proved: K₃ kills the weak predicate, and `lemma8_converse_card_three` reaches `GoldFree` with no sorry. n=4: one leaf chord keeps `HasSecondLaplacianEigenvalueOne`, so the GoldFree converse does not extend. Remaining open spectral project: ordered `λ₂` toward Layer D |
-| C | Cone block `[ k -1ᵀ ; -1 I+L' ]` and the ordered shift `λᵢ = 1 + μᵢ` for `i ≥ 2` | Block equality proved, no sorry. Eigenvalues `0` and `n` proved as spectrum members and as ordered endpoints `lambda_GX_one`, `lambda_GX_card`. The upper bound is not in Mathlib; `eigenvalues_lapMatrix_le_card` compares with the complete graph. Leaf mode proved (`∑ v = 0`). Middle shift `spectrum_lapMatrix_GX` is still one sorry |
-| D | `λ₂=1` ⟺ `GoldLeavesDisconnected` | Stated as `lambda2_eq_one_iff_GoldLeavesDisconnected`, read off `λ₂ = 1 + μ₂`. The step `μ₂ = 0` iff the leaf gold graph is disconnected is sorry. Not a checked proof |
+| B | Hire star, gold edges, finite windows | n=3 proved: K₃ kills the weak predicate, and `lemma8_converse_card_three` reaches `GoldFree` with no sorry. n=4: one leaf chord keeps `HasSecondLaplacianEigenvalueOne`, so the GoldFree converse does not extend. Ordered `λ₂` is Layer D, proved separately |
+| C | Cone block `[ k -1ᵀ ; -1 I+L' ]` and the ordered shift `λᵢ = 1 + μᵢ` for `i ≥ 2` | Block equality proved, no sorry. Eigenvalues `0` and `n` proved as spectrum members and as ordered endpoints `lambda_GX_one`, `lambda_GX_card`. The upper bound is not in Mathlib; `eigenvalues_lapMatrix_le_card` compares with the complete graph. Leaf mode proved (`∑ v = 0`). Middle shift `spectrum_lapMatrix_GX` is proved |
+| D | `λ₂=1` ⟺ `GoldLeavesDisconnected` | Proved as `lambda2_eq_one_iff_GoldLeavesDisconnected`. `λ₂ = 1 + μ₂`. With at least two leaves, `μ₂ = 0` iff the multiplicity of Laplacian eigenvalue `0` is at least 2 iff `GgoldLeaves` is not connected (`card_connectedComponent_eq_finrank_ker_toLin'_lapMatrix`) |
 
 ## Dependency order for Lean
 
 1. Keep Layer A as the present stake.
-2. Layer B n=3 is proved. n=4 shows the weak predicate survives one chord, so the GoldFree converse does not extend. The remaining open spectral project is ordered λ₂ toward Layer D, with no false sorry left in the converse.
-3. Layer C block equality is proved (`lapMatrix_GX_reindex_eq_fromBlocks`). Eigenvalue `0` (all-ones) and eigenvalue `n` (star-max, gold differences zero) are proved, including the ordered endpoints `lambda_GX_one` (`λ₁ = 0`) and `lambda_GX_card` (`λₙ = n` for `n ≥ 2`). Mathlib does not bound Laplacian eigenvalues by `Fintype.card`; that bound is `eigenvalues_lapMatrix_le_card`, from `lapMatrix_top`. `eigenvector_of_leaf_mode` is proved when `∑ v = 0`. The middle shift `spectrum_lapMatrix_GX` (`λᵢ = 1 + μᵢ` for `i = 2, …, n − 1`) is still one sorry. The set form is not stated: it would miss a repeated `μ₂ = 0`. Card 4 is that case, still a comment, not a new proof.
-4. Layer D is typed as `lambda2_eq_one_iff_GoldLeavesDisconnected`: `λ₂ = 1` iff gold-on-leaves is disconnected, by `λ₂ = 1 + μ₂` from the spectrum statement. The connectivity step is sorry. Not proved from scratch.
+2. Layer B n=3 is proved. n=4 shows the weak predicate survives one chord, so the GoldFree converse does not extend. Ordered λ₂ is Layer D, not this converse. No sorry in `lemma8_converse_card_three`.
+3. Layer C block equality is proved (`lapMatrix_GX_reindex_eq_fromBlocks`). Eigenvalue `0` (all-ones) and eigenvalue `n` (star-max, gold differences zero) are proved, including the ordered endpoints `lambda_GX_one` (`λ₁ = 0`) and `lambda_GX_card` (`λₙ = n` for `n ≥ 2`). Mathlib does not bound Laplacian eigenvalues by `Fintype.card`; that bound is `eigenvalues_lapMatrix_le_card`, from `lapMatrix_top`. `eigenvector_of_leaf_mode` is proved when `∑ v = 0`. The middle shift `spectrum_lapMatrix_GX` (`λᵢ = 1 + μᵢ` for `i = 2, …, n − 1`) is proved. The set form is not stated: it would miss a repeated `μ₂ = 0`. Card 4 is that case, still a comment, not a new proof.
+4. Layer D is proved as `lambda2_eq_one_iff_GoldLeavesDisconnected`: `λ₂ = 1` iff gold-on-leaves is disconnected. The shift is `λ₂ = 1 + μ₂`. On at least two leaves, `μ₂ = 0` iff the multiplicity of `0` is at least 2. That multiplicity is `dim ker`, equal to the number of components by `card_connectedComponent_eq_finrank_ker_toLin'_lapMatrix`. No sorry in `Cone.lean`.
 
 Layer B alone does not unlock Layer D: zero gold is stricter than a disconnected forest.
 
@@ -119,5 +124,5 @@ Layer B alone does not unlock Layer D: zero gold is stricter than a disconnected
 
 - Checked spine: `Doors`, `HireSet`, `Graph`, `StarLap`, `Lemma8` forward + Layer B footholds, `Cone` block equality
 - Named separately: `HireLeaf`, `GgoldLeaves`, `GoldLeavesDisconnected` (no longer an alias of `GoldFree`)
-- Open: `spectrum_lapMatrix_GX` (one sorry; middle ordered shift `λᵢ = 1 + μᵢ` for `i = 2, …, n − 1`; endpoints `lambda_GX_one` and `lambda_GX_card` are proved) and the connectivity step of `lambda2_eq_one_iff_GoldLeavesDisconnected` (second sorry; `μ₂ = 0` iff gold-on-leaves is disconnected is not proved; Layer D not checked). No sorry in `lemma8_converse_card_three`. Dirichlet owner stub in `Dirichlet.lean`
+- Proved: `spectrum_lapMatrix_GX` (middle ordered shift `λᵢ = 1 + μᵢ` for `i = 2, …, n − 1`) and `lambda2_eq_one_iff_GoldLeavesDisconnected` (Layer D: `μ₂ = 0` iff gold-on-leaves is disconnected). No sorry in `Cone.lean`. No sorry in `lemma8_converse_card_three`. Dirichlet owner stub in `Dirichlet.lean`
 - Paper: `paper/two_doors.tex` Lemmas 7–8 and the window table

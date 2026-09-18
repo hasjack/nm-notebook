@@ -68,9 +68,12 @@ last index is `λ₁`, and the matching ranks give `λᵢ = 1 + μᵢ` for
 `i = 2, …, n - 1`. The leading `n` may tie with `1 + μₙ₋₁`.
 
 `lambda2_eq_one_iff_GoldLeavesDisconnected` is the Layer D sentence
-`λ₂ = 1` iff gold-on-leaves is disconnected, obtained as `λ₂ = 1 + μ₂` from
-that statement. The step `μ₂ = 0` iff the leaf gold graph is disconnected is
-not proved here. Layer D is not a checked proof.
+`λ₂ = 1` iff gold-on-leaves is disconnected. `spectrum_lapMatrix_GX` reads
+`λ₂ = 1 + μ₂`, and `μ₂ = 0` is the Laplacian fact that `0` has multiplicity
+at least two on a graph with at least two vertices: Mathlib's
+`card_connectedComponent_eq_finrank_ker_toLin'_lapMatrix` says that
+multiplicity is the number of components, so the leaf gold graph is not
+connected.
 -/
 
 namespace Hire
@@ -1443,15 +1446,151 @@ theorem spectrum_lapMatrix_GX (X : ℕ)
   omega
 
 
-/-- **Layer D sentence, not a checked proof.**
+/-- On a finite simple graph with at least two vertices, the second-smallest
+Laplacian eigenvalue is `0` iff the graph is not connected.
 
-On a window with at least two leaves, the cone reading specialises to
-`λ₂ = 1 + μ₂` (`spectrum_lapMatrix_GX` at index `2`). Therefore
-`λ₂ = 1` iff `μ₂ = 0`.
+`posSemidef_lapMatrix` makes every eigenvalue nonnegative, and the constants
+are a kernel vector, so the smallest eigenvalue is `0`.
+`card_connectedComponent_eq_finrank_ker_toLin'_lapMatrix` identifies the
+number of components with `dim ker`. Rank-nullity and
+`IsHermitian.rank_eq_card_non_zero_eigs` make that dimension the multiplicity
+of the eigenvalue `0`. `eigenvalues₀` is antitone, so the second-smallest
+entry vanishes iff that multiplicity is at least `2`. On a nonempty graph
+that is exactly "more than one component", which is `¬ Connected`. -/
+private theorem eigenvalues₀_lapMatrix_two_eq_zero_iff_not_connected
+    {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj]
+    (hk : 2 ≤ Fintype.card V) :
+    ((G.posSemidef_lapMatrix ℝ).isHermitian.eigenvalues₀
+        ⟨Fintype.card V - 2, by omega⟩ = 0) ↔ ¬ G.Connected := by
+  classical
+  let k := Fintype.card V
+  let hA := (G.posSemidef_lapMatrix ℝ).isHermitian
+  have hk0 : 0 < k := by omega
+  let j1 : Fin k := ⟨k - 1, by omega⟩
+  let j2 : Fin k := ⟨k - 2, by omega⟩
+  have hrew (h : k - 2 < k) :
+      hA.eigenvalues₀ ⟨k - 2, h⟩ = hA.eigenvalues₀ j2 := by
+    have : (⟨k - 2, h⟩ : Fin k) = j2 := Fin.ext rfl
+    rw [this]
+  rw [hrew]
+  have hnn (j : Fin k) : 0 ≤ hA.eigenvalues₀ j := by
+    have hle : 0 ≤ hA.eigenvalues :=
+      (hA.posSemidef_iff_eigenvalues_nonneg).mp (G.posSemidef_lapMatrix ℝ)
+    have hidx := (Pi.le_def.mp hle) (Fintype.equivOfCardEq (Fintype.card_fin k) j)
+    simpa [Matrix.IsHermitian.eigenvalues, Equiv.symm_apply_apply] using hidx
+  have hker : Module.finrank ℝ (G.lapMatrix ℝ).toLin'.ker =
+      Fintype.card {i : V // hA.eigenvalues i = 0} := by
+    have hrn := LinearMap.finrank_range_add_finrank_ker (G.lapMatrix ℝ).toLin'
+    rw [Module.finrank_fintype_fun_eq_card] at hrn
+    have hrank : (G.lapMatrix ℝ).rank =
+        Module.finrank ℝ (LinearMap.range (G.lapMatrix ℝ).toLin') := by
+      unfold Matrix.rank
+      rw [Matrix.toLin'_apply']
+    rw [← hrank] at hrn
+    have hker_sub : Module.finrank ℝ (G.lapMatrix ℝ).toLin'.ker =
+        k - (G.lapMatrix ℝ).rank := Nat.eq_sub_of_add_eq' hrn
+    have hrewrite : Fintype.card {i : V // hA.eigenvalues i = 0} =
+        Fintype.card {i : V // ¬ hA.eigenvalues i ≠ 0} :=
+      Fintype.card_congr (Equiv.subtypeEquivRight fun _ => not_ne_iff.symm)
+    rw [hker_sub, hrewrite, Fintype.card_subtype_compl
+      (fun i : V => hA.eigenvalues i ≠ 0), hA.rank_eq_card_non_zero_eigs]
+  have hcomp : Fintype.card G.ConnectedComponent =
+      Module.finrank ℝ (G.lapMatrix ℝ).toLin'.ker :=
+    G.card_connectedComponent_eq_finrank_ker_toLin'_lapMatrix
+  have hsame : Fintype.card {j : Fin k // hA.eigenvalues₀ j = 0} =
+      Fintype.card {i : V // hA.eigenvalues i = 0} := by
+    let e := Fintype.equivOfCardEq (Fintype.card_fin k)
+    refine Fintype.card_congr (e.subtypeEquiv fun j => ?_)
+    simp [e, Matrix.IsHermitian.eigenvalues, Equiv.symm_apply_apply]
+  have : Nonempty V := Fintype.card_pos_iff.mp hk0
+  have hconn : G.Connected ↔ Fintype.card G.ConnectedComponent = 1 := by
+    constructor
+    · intro hc
+      have : Subsingleton G.ConnectedComponent :=
+        hc.preconnected.subsingleton_connectedComponent
+      have : Nonempty G.ConnectedComponent := inferInstance
+      exact Fintype.card_eq_one_iff.mpr
+        ⟨Classical.choice ‹Nonempty G.ConnectedComponent›, fun y => Subsingleton.elim y _⟩
+    · intro hcard
+      have hsub : Subsingleton G.ConnectedComponent := by
+        rw [← Fintype.card_le_one_iff_subsingleton]
+        omega
+      have hne : Nonempty G.ConnectedComponent :=
+        Fintype.card_pos_iff.mp (by omega : 0 < Fintype.card G.ConnectedComponent)
+      let c : G.ConnectedComponent := Classical.choice hne
+      rw [SimpleGraph.connected_iff]
+      refine ⟨fun u w => ?_, inferInstance⟩
+      exact SimpleGraph.ConnectedComponent.exact <|
+        (Subsingleton.elim (h := hsub) (G.connectedComponentMk u) c).trans
+          (Subsingleton.elim (h := hsub) (G.connectedComponentMk w) c).symm
+  have hdis : ¬ G.Connected ↔ 2 ≤ Fintype.card G.ConnectedComponent := by
+    have hpos : 0 < Fintype.card G.ConnectedComponent :=
+      Fintype.card_pos
+    constructor
+    · intro hnot
+      have hne : Fintype.card G.ConnectedComponent ≠ 1 := fun h1 => hnot (hconn.mpr h1)
+      omega
+    · intro h2 hc
+      exact (by omega : Fintype.card G.ConnectedComponent ≠ 1) (hconn.mp hc)
+  have hj : j2 ≤ j1 := by
+    rw [Fin.le_def]
+    simp only [j1, j2]
+    omega
+  have hj_ne : j1 ≠ j2 := by
+    intro h
+    have := congrArg (Fin.val) h
+    simp only [j1, j2] at this
+    omega
+  have hmu : hA.eigenvalues₀ j2 = 0 ↔
+      2 ≤ Fintype.card {j : Fin k // hA.eigenvalues₀ j = 0} := by
+    constructor
+    · intro hz
+      have hz1 : hA.eigenvalues₀ j1 = 0 := by
+        have hle : hA.eigenvalues₀ j1 ≤ hA.eigenvalues₀ j2 := hA.eigenvalues₀_antitone hj
+        linarith [hle, hz, hnn j1]
+      have hne : (⟨j1, hz1⟩ : {j : Fin k // hA.eigenvalues₀ j = 0}) ≠ ⟨j2, hz⟩ := by
+        intro heq
+        exact hj_ne (congrArg Subtype.val heq)
+      have : Nontrivial {j : Fin k // hA.eigenvalues₀ j = 0} :=
+        ⟨⟨j1, hz1⟩, ⟨j2, hz⟩, hne⟩
+      have : 1 < Fintype.card {j : Fin k // hA.eigenvalues₀ j = 0} :=
+        Fintype.one_lt_card_iff_nontrivial.mpr this
+      omega
+    · intro hcard
+      by_contra hne0
+      have hpos2 : 0 < hA.eigenvalues₀ j2 := lt_of_le_of_ne (hnn j2) (Ne.symm hne0)
+      have hsub : Subsingleton {j : Fin k // hA.eigenvalues₀ j = 0} := by
+        constructor
+        intro a b
+        have hidx (c : {j : Fin k // hA.eigenvalues₀ j = 0}) : c.1 = j1 := by
+          apply Fin.ext
+          have hlt := c.1.isLt
+          have hle_or : c.1.val ≤ k - 2 ∨ c.1.val = k - 1 := by omega
+          rcases hle_or with hle | hlast
+          · have hle' : c.1 ≤ j2 := by
+              rw [Fin.le_def]
+              simpa [j2, Fin.val_mk] using hle
+            have hge' : hA.eigenvalues₀ j2 ≤ hA.eigenvalues₀ c.1 :=
+              hA.eigenvalues₀_antitone hle'
+            have hneq : hA.eigenvalues₀ c.1 ≠ 0 := by linarith
+            exact False.elim (hneq c.2)
+          · simpa [j1, Fin.val_mk] using hlast
+        exact Subtype.ext (hidx a ▸ hidx b ▸ rfl)
+      have : Fintype.card {j : Fin k // hA.eigenvalues₀ j = 0} ≤ 1 :=
+        Fintype.card_le_one_iff_subsingleton.mpr hsub
+      omega
+  rw [hmu, hsame, ← hker, ← hcomp]
+  exact hdis.symm
 
-`μ₂ = 0` is the ordered reading of "gold on the leaves is disconnected".
-`spectrum_lapMatrix_GX` already gives `λ₂ = 1 + μ₂`. The remaining `sorry`
-is only that disconnect reading. Layer D is not proved in this pass.
+/-- **Layer D.** On a window with at least two leaves, `λ₂ = 1` iff gold on
+the leaves is disconnected.
+
+`spectrum_lapMatrix_GX` at index `2` is `λ₂ = 1 + μ₂`, so `λ₂ = 1` iff
+`μ₂ = 0`. With `k ≥ 2` leaves, `μ₂ = 0` is the ordered reading of a
+Laplacian kernel of dimension at least `2`, which is
+`card_connectedComponent_eq_finrank_ker_toLin'_lapMatrix`: at least two
+components, so `GgoldLeaves` is not connected.
 -/
 theorem lambda2_eq_one_iff_GoldLeavesDisconnected (X : ℕ)
     (hk : 2 ≤ Fintype.card (HireLeaf (owners X))) :
@@ -1467,8 +1606,8 @@ theorem lambda2_eq_one_iff_GoldLeavesDisconnected (X : ℕ)
       have hc := card_HireVertex_eq_succ_card_HireLeaf X
       omega)
   rw [hshift, one_add_eq_one_iff]
-  -- Endpoints are `lambda_GX_one` and `lambda_GX_card`. They are not this step.
-  -- `μ₂ = 0` iff the leaf gold graph is disconnected. Not proved here.
-  sorry
+  unfold mu_goldLeaves GoldLeavesDisconnected
+  exact eigenvalues₀_lapMatrix_two_eq_zero_iff_not_connected
+    (GgoldLeaves (owners X)) hk
 
 end Hire
