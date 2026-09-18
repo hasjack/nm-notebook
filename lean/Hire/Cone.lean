@@ -5,6 +5,8 @@ Authors: Jack Pickett
 -/
 import Hire.Lemma8
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Matrix.Block
@@ -51,7 +53,11 @@ form is the ordered shift `spectrum_lapMatrix_GX`: ascending
 `λ₁ ≤ ⋯ ≤ λₙ` and `μ₁ ≤ ⋯ ≤ μₖ`, with `λᵢ = 1 + μᵢ` for `i = 2, …, n - 1`.
 The shift starts at `μ₂`, not `μ₁`. `μ₁ = 0` is the leaf all-ones vector;
 mixed with the seed it is already the global kernel, and folding it into
-`1 + μ` double-counts that kernel. This ordered identification is one `sorry`.
+`1 + μ` double-counts that kernel. The ordered endpoints are proved:
+`lambda_GX_one` is `λ₁ = 0`, and `lambda_GX_card` is `λₙ = n` when `n ≥ 2`.
+Mathlib has no Laplacian bound by the number of doors; the bound used for
+`λₙ` is the complete-graph comparison `eigenvalues_lapMatrix_le_card`. The
+middle shift stays `sorry`.
 
 `lambda2_eq_one_iff_GoldLeavesDisconnected` is the Layer D sentence
 `λ₂ = 1` iff gold-on-leaves is disconnected, obtained as `λ₂ = 1 + μ₂` from
@@ -563,6 +569,181 @@ noncomputable def mu_goldLeaves (X : ℕ) (i : ℕ)
   ((GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ).isHermitian.eigenvalues₀
     ⟨k - i, by omega⟩
 
+/-- Quadratic form of a simple-graph Laplacian, bounded by the number of vertices.
+
+Mathlib has no `eigenvalues_le_card` (and no spectral-radius bound of a
+Laplacian by `Fintype.card`). The comparison proved here is the complete graph:
+adjacency of `G` is a subset of pairs `i ≠ j`, so
+`xᵀ L(G) x ≤ xᵀ L(K) x`, and `lapMatrix_top` writes `L(K)` as `n` minus the
+all-ones matrix. That quadratic form is `n ‖x‖² - (∑ x)²`, hence at most
+`n ‖x‖²`. -/
+theorem dotProduct_mulVec_lapMatrix_le_card
+    {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] (x : V → ℝ) :
+    x ⬝ᵥ (G.lapMatrix ℝ *ᵥ x) ≤ (Fintype.card V : ℝ) * (x ⬝ᵥ x) := by
+  classical
+  have hcmp : Matrix.toLinearMap₂' ℝ (G.lapMatrix ℝ) x x ≤
+      Matrix.toLinearMap₂' ℝ ((⊤ : SimpleGraph V).lapMatrix ℝ) x x := by
+    rw [G.lapMatrix_toLinearMap₂' ℝ x, (⊤ : SimpleGraph V).lapMatrix_toLinearMap₂' ℝ x]
+    refine div_le_div_of_nonneg_right ?_ (by norm_num)
+    refine Finset.sum_le_sum fun i _ => Finset.sum_le_sum fun j _ => ?_
+    by_cases hadj : G.Adj i j
+    · have hne : i ≠ j := hadj.ne
+      rw [ite_eq_left hadj]
+      simp only [SimpleGraph.top_adj]
+      rw [ite_eq_left hne]
+    · rw [ite_eq_right hadj]
+      simp only [SimpleGraph.top_adj]
+      split_ifs with hne
+      · exact sq_nonneg _
+      · exact le_rfl
+  have htop : Matrix.toLinearMap₂' ℝ ((⊤ : SimpleGraph V).lapMatrix ℝ) x x ≤
+      (Fintype.card V : ℝ) * (x ⬝ᵥ x) := by
+    rw [SimpleGraph.lapMatrix_top (R := ℝ), Matrix.toLinearMap₂'_apply']
+    rw [sub_mulVec, dotProduct_sub, natCast_mulVec, dotProduct_smul, smul_eq_mul]
+    have hJ : x ⬝ᵥ (Matrix.of (1 : V → V → ℝ) *ᵥ x) = (∑ i, x i) ^ 2 := by
+      have hmul : Matrix.of (1 : V → V → ℝ) *ᵥ x = fun _ => ∑ j, x j := by
+        ext i
+        rw [mulVec_apply_eq_sum]
+        simp [of_apply]
+      rw [hmul, dotProduct, ← Finset.sum_mul]
+      ring
+    rw [hJ]
+    exact sub_le_self _ (sq_nonneg _)
+  calc
+    x ⬝ᵥ (G.lapMatrix ℝ *ᵥ x)
+        = Matrix.toLinearMap₂' ℝ (G.lapMatrix ℝ) x x :=
+          (Matrix.toLinearMap₂'_apply' _ x x).symm
+    _ ≤ Matrix.toLinearMap₂' ℝ ((⊤ : SimpleGraph V).lapMatrix ℝ) x x := hcmp
+    _ ≤ (Fintype.card V : ℝ) * (x ⬝ᵥ x) := htop
+
+/-- Every eigenvalue of a finite simple-graph Laplacian is at most the number
+of vertices. Mathlib does not state this; it is the Rayleigh form of
+`dotProduct_mulVec_lapMatrix_le_card` on a unit eigenvector from
+`IsHermitian.eigenvectorBasis`. -/
+theorem eigenvalues_lapMatrix_le_card
+    {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] (i : V) :
+    ((G.posSemidef_lapMatrix ℝ).isHermitian.eigenvalues i) ≤ (Fintype.card V : ℝ) := by
+  classical
+  let hA := (G.posSemidef_lapMatrix ℝ).isHermitian
+  let v := hA.eigenvectorBasis i
+  have hunit : ‖v‖ = 1 := hA.eigenvectorBasis.orthonormal.norm_eq_one i
+  have hdot : ⇑v ⬝ᵥ ⇑v = 1 := by
+    rw [dotProduct]
+    have hsq := EuclideanSpace.real_norm_sq_eq v
+    rw [hunit, one_pow] at hsq
+    have hsq' : ∑ j, (v.ofLp j) * (v.ofLp j) = ∑ j, (v.ofLp j) ^ 2 := by
+      refine Finset.sum_congr rfl fun j _ => ?_
+      ring
+    rw [hsq', ← hsq]
+  have hquad := dotProduct_mulVec_lapMatrix_le_card G (⇑v)
+  rw [hA.eigenvalues_eq i]
+  simp only [RCLike.re_to_real, star_trivial]
+  calc
+    ⇑v ⬝ᵥ (G.lapMatrix ℝ *ᵥ ⇑v) ≤ (Fintype.card V : ℝ) * (⇑v ⬝ᵥ ⇑v) := hquad
+    _ = (Fintype.card V : ℝ) := by rw [hdot, mul_one]
+
+/-- `eigenvalues₀` of the hire Laplacian, read as `eigenvalues` along the
+Mathlib reindexing `Fin n ≃` the doors. -/
+private theorem eigenvalues₀_GX_eq_eigenvalues (X : ℕ)
+    (j : Fin (Fintype.card (HireVertex (owners X)))) :
+    ((GX X).posSemidef_lapMatrix ℝ).isHermitian.eigenvalues₀ j =
+      ((GX X).posSemidef_lapMatrix ℝ).isHermitian.eigenvalues
+        (Fintype.equivOfCardEq
+          (Fintype.card_fin (Fintype.card (HireVertex (owners X)))) j) := by
+  simp [Matrix.IsHermitian.eigenvalues, Equiv.symm_apply_apply]
+
+/-- **Ordered endpoint `λ₁ = 0`.**
+
+The hire Laplacian is positive semidefinite, so every eigenvalue is
+nonnegative (`IsHermitian.posSemidef_iff_eigenvalues_nonneg` on
+`posSemidef_lapMatrix`). `0` is achieved (`zero_mem_spectrum_lapMatrix_GX`).
+`eigenvalues₀` is antitone, so its last index is the smallest eigenvalue, and
+that value is `0`. Hypothesis `n ≥ 1` is the nonempty window (the seed door). -/
+theorem lambda_GX_one (X : ℕ)
+    (hn : 1 ≤ Fintype.card (HireVertex (owners X))) :
+    lambda_GX X 1 (by omega) hn = 0 := by
+  classical
+  let n := Fintype.card (HireVertex (owners X))
+  have hn0 : 0 < n := by omega
+  let hA := ((GX X).posSemidef_lapMatrix ℝ).isHermitian
+  unfold lambda_GX
+  dsimp only
+  have hrew (h : n - 1 < n) :
+      hA.eigenvalues₀ ⟨n - 1, h⟩ =
+        hA.eigenvalues₀ ⟨n - 1, Nat.sub_lt hn0 zero_lt_one⟩ := by
+    rw [show (⟨n - 1, h⟩ : Fin n) = ⟨n - 1, Nat.sub_lt hn0 zero_lt_one⟩ from Fin.ext rfl]
+  rw [hrew]
+  have hnn (j : Fin n) : 0 ≤ hA.eigenvalues₀ j := by
+    rw [eigenvalues₀_GX_eq_eigenvalues]
+    have hpsd := (GX X).posSemidef_lapMatrix ℝ
+    have hle : 0 ≤ hA.eigenvalues := (hA.posSemidef_iff_eigenvalues_nonneg).mp hpsd
+    exact (Pi.le_def.mp hle) _
+  have hmem : (0 : ℝ) ∈ spectrum ℝ ((GX X).lapMatrix ℝ) := zero_mem_spectrum_lapMatrix_GX X
+  rw [hA.spectrum_real_eq_range_eigenvalues] at hmem
+  obtain ⟨i, hi⟩ := hmem
+  have hsome : hA.eigenvalues₀
+      ((Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card (HireVertex (owners X))))).symm i) = 0 := by
+    rw [eigenvalues₀_GX_eq_eigenvalues]
+    simpa [Equiv.apply_symm_apply] using hi
+  have hlast_le : hA.eigenvalues₀ ⟨n - 1, Nat.sub_lt hn0 zero_lt_one⟩ ≤
+      hA.eigenvalues₀
+        ((Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card (HireVertex (owners X))))).symm i) := by
+    apply hA.eigenvalues₀_antitone
+    rw [Fin.le_def]
+    exact Nat.le_sub_one_of_lt
+      ((Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card (HireVertex (owners X))))).symm i).isLt
+  have hlast_ge := hnn ⟨n - 1, Nat.sub_lt hn0 zero_lt_one⟩
+  linarith
+
+/-- **Ordered endpoint `λₙ = n`.**
+
+When the window has at least one leaf (`n ≥ 2`), `n` is achieved
+(`card_mem_spectrum_lapMatrix_GX`, the star-max vector). It is maximal because
+every simple-graph Laplacian eigenvalue is at most `n`
+(`eigenvalues_lapMatrix_le_card`). Mathlib does not contain that bound; it is
+proved from `lapMatrix_top`, not from a degree bound. `eigenvalues₀` is
+antitone, so index `0` is the largest eigenvalue, and `lambda_GX` reads that
+index as `λₙ`.
+
+The hypothesis `n ≥ 2` is necessary: a single door has Laplacian eigenvalue
+`0`, not `1`. -/
+theorem lambda_GX_card (X : ℕ)
+    (hn : 2 ≤ Fintype.card (HireVertex (owners X))) :
+    lambda_GX X (Fintype.card (HireVertex (owners X))) (by omega) le_rfl =
+      (Fintype.card (HireVertex (owners X)) : ℝ) := by
+  classical
+  let n := Fintype.card (HireVertex (owners X))
+  have hn0 : 0 < n := by omega
+  let hA := ((GX X).posSemidef_lapMatrix ℝ).isHermitian
+  unfold lambda_GX
+  dsimp only
+  have hrew (h : n - n < n) :
+      hA.eigenvalues₀ ⟨n - n, h⟩ = hA.eigenvalues₀ ⟨0, hn0⟩ := by
+    have hfin : (⟨n - n, h⟩ : Fin n) = ⟨0, hn0⟩ := by
+      apply Fin.ext
+      simp
+    rw [hfin]
+  rw [hrew]
+  have hle : hA.eigenvalues₀ ⟨0, hn0⟩ ≤ (n : ℝ) := by
+    rw [eigenvalues₀_GX_eq_eigenvalues]
+    exact eigenvalues_lapMatrix_le_card (GX X) _
+  have hmem := card_mem_spectrum_lapMatrix_GX X hn
+  rw [hA.spectrum_real_eq_range_eigenvalues] at hmem
+  obtain ⟨i, hi⟩ := hmem
+  have hsome : hA.eigenvalues₀
+      ((Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card (HireVertex (owners X))))).symm i) =
+        (n : ℝ) := by
+    rw [eigenvalues₀_GX_eq_eigenvalues]
+    simpa [Equiv.apply_symm_apply] using hi
+  have hge : (n : ℝ) ≤ hA.eigenvalues₀ ⟨0, hn0⟩ := by
+    rw [← hsome]
+    apply hA.eigenvalues₀_antitone
+    rw [Fin.le_def]
+    exact Nat.zero_le _
+  linarith
+
 private theorem one_add_eq_one_iff (μ : ℝ) : (1 : ℝ) + μ = 1 ↔ μ = 0 := by
   constructor <;> intro h <;> linarith
 
@@ -584,7 +765,8 @@ A set-level union `{0, n} ∪ {1 + μ | μ ∈ spectrum L', μ ≠ 0}` is not us
 `spectrum` forgets multiplicity, so a repeated leaf zero (gold leaves
 disconnected) never appears as a new point, and eigenvalue `1` would be lost.
 `four_vertex_star_leaf_edge_keeps_one` is that case. The ordered shift is the
-honest form. This identification is the one `sorry` of the spectrum reading.
+honest form. The endpoints are `lambda_GX_one` and `lambda_GX_card`.
+This middle identification stays `sorry`.
 -/
 theorem spectrum_lapMatrix_GX (X : ℕ)
     (hn : 2 ≤ Fintype.card (HireVertex (owners X)))
@@ -620,6 +802,7 @@ theorem lambda2_eq_one_iff_GoldLeavesDisconnected (X : ℕ)
       have hc := card_HireVertex_eq_succ_card_HireLeaf X
       omega)
   rw [hshift, one_add_eq_one_iff]
+  -- Endpoints are `lambda_GX_one` and `lambda_GX_card`. They are not this step.
   -- `μ₂ = 0` iff the leaf gold graph is disconnected. Not proved here.
   sorry
 
