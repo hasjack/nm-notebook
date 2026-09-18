@@ -4,13 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jack Pickett
 -/
 import Hire.Lemma8
+import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Matrix.Block
 import Mathlib.Data.Matrix.Mul
+import Mathlib.GroupTheory.Perm.Fin
+import Mathlib.LinearAlgebra.Matrix.Adjugate
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 
 /-!
 # Layer C — cone block of the hire Laplacian
@@ -56,8 +61,11 @@ mixed with the seed it is already the global kernel, and folding it into
 `1 + μ` double-counts that kernel. The ordered endpoints are proved:
 `lambda_GX_one` is `λ₁ = 0`, and `lambda_GX_card` is `λₙ = n` when `n ≥ 2`.
 Mathlib has no Laplacian bound by the number of doors; the bound used for
-`λₙ` is the complete-graph comparison `eigenvalues_lapMatrix_le_card`. The
-middle shift stays `sorry`.
+`λₙ` is the complete-graph comparison `eigenvalues_lapMatrix_le_card`.
+The middle shift is `spectrum_lapMatrix_GX`. The antitone cone list is `n`,
+then `1 + μₙ₋₁ ≥ ⋯ ≥ 1 + μ₂`, then `0`. Index `0` of that list is `λₙ`, the
+last index is `λ₁`, and the matching ranks give `λᵢ = 1 + μᵢ` for
+`i = 2, …, n - 1`. The leading `n` may tie with `1 + μₙ₋₁`.
 
 `lambda2_eq_one_iff_GoldLeavesDisconnected` is the Layer D sentence
 `λ₂ = 1` iff gold-on-leaves is disconnected, obtained as `λ₂ = 1 + μ₂` from
@@ -744,29 +752,665 @@ theorem lambda_GX_card (X : ℕ)
     exact Nat.zero_le _
   linarith
 
+
+/-! ### Middle spectrum
+
+`eigenvalues₀` is antitone, so the ascending rank `λᵢ` is index `n - i`.
+The cone list in that same antitone order is `coneRank`: `n`, then
+`1 + μ_{n-1}, …, 1 + μ₂`, then `0`. `0` is strictly last in that list
+(every earlier entry is at least `1`). The leading `n` may tie with
+`1 + μ_{n-1}`.
+-/
+
+/-- Seed `0`, then the leaves, as `Fin (k + 1) ≃ Unit ⊕ Fin k`. -/
+private def finSeed (k : ℕ) : Fin (k + 1) ≃ Unit ⊕ Fin k where
+  toFun i := if h : i = 0 then Sum.inl () else Sum.inr (i.pred h)
+  invFun
+    | Sum.inl () => 0
+    | Sum.inr j => j.succ
+  left_inv i := by
+    by_cases h : i = 0
+    · subst h
+      rfl
+    · simp only [h, dite_false]
+      exact Fin.succ_pred i h
+  right_inv
+    | Sum.inl () => rfl
+    | Sum.inr j => by
+        show (if h : j.succ = 0 then Sum.inl () else Sum.inr (j.succ.pred h)) = Sum.inr j
+        rw [dite_eq_right (Fin.succ_ne_zero j), Fin.pred_succ]
+
+@[simp] private theorem finSeed_zero (k : ℕ) : finSeed k 0 = Sum.inl () := rfl
+
+@[simp] private theorem finSeed_succ (k : ℕ) (j : Fin k) :
+    finSeed k j.succ = Sum.inr j := by
+  show (if h : j.succ = 0 then Sum.inl () else Sum.inr (j.succ.pred h)) = Sum.inr j
+  rw [dite_eq_right (Fin.succ_ne_zero j), Fin.pred_succ]
+
+/-- Determinant of a matrix bordered by a scalar row and column.
+
+`det` of
+```
+[ a  vᵀ ]
+[ u  D  ]
+```
+is `a det D - v ⬝ adj(D) u`, over any commutative ring. -/
+private theorem det_bordered_fin {R : Type*} [CommRing R] {k : ℕ}
+    (a : R) (u v : Fin k → R) (D : Matrix (Fin k) (Fin k) R) :
+    (Matrix.fromBlocks
+        (Matrix.of fun (_ _ : Unit) => a)
+        (Matrix.of fun (_ : Unit) (j : Fin k) => v j)
+        (Matrix.of fun (i : Fin k) (_ : Unit) => u i)
+        D).det =
+      a * D.det - v ⬝ᵥ (D.adjugate *ᵥ u) := by
+  classical
+  let e := finSeed k
+  set B := Matrix.fromBlocks
+      (Matrix.of fun (_ _ : Unit) => a)
+      (Matrix.of fun (_ : Unit) (j : Fin k) => v j)
+      (Matrix.of fun (i : Fin k) (_ : Unit) => u i)
+      D
+  set M : Matrix (Fin (k + 1)) (Fin (k + 1)) R := B.submatrix e e
+  have hMdet : M.det = B.det := by
+    simp [M]
+  rw [← hMdet]
+  have h00 : M 0 0 = a := by
+    simp only [M, B, Matrix.submatrix_apply, e, finSeed_zero]
+    rfl
+  have h0s (j : Fin k) : M 0 j.succ = v j := by
+    simp only [M, B, Matrix.submatrix_apply, e, finSeed_zero, finSeed_succ]
+    rfl
+  have hs0 (i : Fin k) : M i.succ 0 = u i := by
+    simp only [M, B, Matrix.submatrix_apply, e, finSeed_succ, finSeed_zero]
+    rfl
+  have hss (i j : Fin k) : M i.succ j.succ = D i j := by
+    simp only [M, B, Matrix.submatrix_apply, e, finSeed_succ]
+    rfl
+  have hDD : M.submatrix Fin.succ Fin.succ = D := by
+    ext i j
+    simp [Matrix.submatrix_apply, hss]
+  have hminor (i : Fin k) :
+      (M.submatrix Fin.succ i.succ.succAbove).det =
+        (-1 : R) ^ (i : ℕ) * (D.updateCol i u).det := by
+    set S : Matrix (Fin k) (Fin k) R := M.submatrix Fin.succ i.succ.succAbove
+    set σ : Equiv.Perm (Fin k) := Fin.cycleRange i
+    have hS : S.submatrix id σ = D.updateCol i u := by
+      ext r j
+      simp only [S, Matrix.submatrix_apply, id_eq]
+      have hcol : i.succ.succAbove (σ j) = Equiv.swap 0 i.succ j.succ := by
+        simp [σ, Fin.succAbove_cycleRange]
+      rw [hcol]
+      by_cases hji : j = i
+      · subst hji
+        simp [Equiv.swap_apply_right, hs0, Matrix.updateCol_self]
+      · rw [Equiv.swap_apply_of_ne_of_ne (Fin.succ_ne_zero j)
+          (fun h => hji ((Fin.succ_injective k) h))]
+        simp [hss, hji]
+    have hperm : (D.updateCol i u).det =
+        (Equiv.Perm.sign σ : R) * S.det := by
+      simpa [hS] using Matrix.det_permute' σ S
+    have hsign : (Equiv.Perm.sign σ : R) = (-1) ^ (i : ℕ) := by
+      simp [σ, Fin.sign_cycleRange]
+    have hsq : (Equiv.Perm.sign σ : R) * Equiv.Perm.sign σ = 1 := by
+      rw [hsign, ← pow_add, ← two_mul, pow_mul, pow_two]
+      simp
+    calc
+      S.det = ((Equiv.Perm.sign σ : R) * Equiv.Perm.sign σ) * S.det := by
+        rw [hsq, one_mul]
+      _ = (Equiv.Perm.sign σ : R) * ((Equiv.Perm.sign σ : R) * S.det) := by
+        rw [mul_assoc]
+      _ = (Equiv.Perm.sign σ : R) * (D.updateCol i u).det := by
+        rw [hperm]
+      _ = (-1) ^ (i : ℕ) * (D.updateCol i u).det := by rw [hsign]
+  rw [Matrix.det_succ_row_zero, Fin.sum_univ_succ]
+  simp only [Fin.val_zero, pow_zero, one_mul, Fin.succAbove_zero, h00, hDD]
+  have hterm (i : Fin k) :
+      (-1 : R) ^ (i.succ : ℕ) * M 0 i.succ *
+          (M.submatrix Fin.succ i.succ.succAbove).det =
+        -(v i * (D.updateCol i u).det) := by
+    rw [h0s, hminor, Fin.val_succ]
+    have hpow : (-1 : R) ^ ((i : ℕ) + 1) * (-1) ^ (i : ℕ) = -1 := by
+      have hexp : (i : ℕ) + 1 + (i : ℕ) = 2 * (i : ℕ) + 1 := by omega
+      rw [← pow_add, hexp, pow_add, pow_mul, pow_two]
+      simp
+    calc
+      (-1 : R) ^ ((i : ℕ) + 1) * v i * ((-1) ^ (i : ℕ) * (D.updateCol i u).det) =
+          ((-1) ^ ((i : ℕ) + 1) * (-1) ^ (i : ℕ)) * (v i * (D.updateCol i u).det) := by ring
+      _ = -(v i * (D.updateCol i u).det) := by rw [hpow, neg_one_mul]
+  simp_rw [hterm, Finset.sum_neg_distrib]
+  have hdot : ∑ i : Fin k, v i * (D.updateCol i u).det = v ⬝ᵥ (D.adjugate *ᵥ u) := by
+    simp only [dotProduct]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [← cramer_apply, cramer_eq_adjugate_mulVec]
+  rw [hdot]
+  ring
+
+/-- Reindexing the leaf block of a cone does not change the border entries, only the leaf index. -/
+private theorem fromBlocks_reindex_sumCongr {ι κ R : Type*}
+    [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] [CommRing R]
+    (e : ι ≃ κ) (a : R) (u v : ι → R) (D : Matrix ι ι R) :
+    (Matrix.fromBlocks
+        (Matrix.of fun (_ _ : Unit) => a)
+        (Matrix.of fun (_ : Unit) (j : ι) => v j)
+        (Matrix.of fun (i : ι) (_ : Unit) => u i)
+        D).reindex ((Equiv.refl Unit).sumCongr e) ((Equiv.refl Unit).sumCongr e) =
+      Matrix.fromBlocks
+        (Matrix.of fun (_ _ : Unit) => a)
+        (Matrix.of fun (_ : Unit) (j : κ) => v (e.symm j))
+        (Matrix.of fun (i : κ) (_ : Unit) => u (e.symm i))
+        (D.reindex e e) := by
+  ext i j
+  cases i <;> cases j <;>
+    simp [Matrix.reindex_apply, Equiv.sumCongr_apply, Equiv.sumCongr_symm,
+      Matrix.of_apply]
+
+
+private theorem det_bordered {ι R : Type*} [Fintype ι] [DecidableEq ι] [CommRing R]
+    (a : R) (u v : ι → R) (D : Matrix ι ι R) :
+    (Matrix.fromBlocks
+        (Matrix.of fun (_ _ : Unit) => a)
+        (Matrix.of fun (_ : Unit) (j : ι) => v j)
+        (Matrix.of fun (i : ι) (_ : Unit) => u i)
+        D).det =
+      a * D.det - v ⬝ᵥ (D.adjugate *ᵥ u) := by
+  classical
+  let e : ι ≃ Fin (Fintype.card ι) := Fintype.equivFin ι
+  have hre := fromBlocks_reindex_sumCongr e a u v D
+  rw [← Matrix.det_reindex_self ((Equiv.refl Unit).sumCongr e)]
+  rw [hre, det_bordered_fin]
+  have hdet : (D.reindex e e).det = D.det := Matrix.det_reindex_self e D
+  rw [hdet]
+  congr 1
+  rw [Matrix.adjugate_reindex]
+  have hmul :
+      ((D.adjugate).reindex e e) *ᵥ (fun i : Fin (Fintype.card ι) => u (e.symm i)) =
+        (D.adjugate *ᵥ u) ∘ e.symm := by
+    simpa [Matrix.reindex_apply, Function.comp_def, Equiv.symm_apply_apply] using
+      Matrix.submatrix_mulVec_equiv (D.adjugate) (fun i => u (e.symm i)) e.symm e.symm
+  rw [hmul]
+  exact comp_equiv_dotProduct_comp_equiv v (D.adjugate *ᵥ u) (e.symm)
+
+/-- Ascending-index `0` of `eigenvalues₀` is the smallest leaf eigenvalue. `eigenvalues₀`
+itself is antitone, so this index is `Fin.last`. -/
+private noncomputable def leafEig₀ (X : ℕ) :
+    Fin (Fintype.card (HireLeaf (owners X))) → ℝ :=
+  ((GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ).isHermitian.eigenvalues₀
+
+private theorem zero_mem_spectrum_lapMatrix_goldLeaves (X : ℕ)
+    (hk : 1 ≤ Fintype.card (HireLeaf (owners X))) :
+    (0 : ℝ) ∈ spectrum ℝ ((GgoldLeaves (owners X)).lapMatrix ℝ) := by
+  have hpos : 0 < Fintype.card (HireLeaf (owners X)) := by omega
+  obtain ⟨u⟩ := Fintype.card_pos_iff.mp hpos
+  rw [← Matrix.spectrum_toLin']
+  exact Module.End.HasEigenvalue.mem_spectrum <|
+    Module.End.hasEigenvalue_of_hasEigenvector
+      ⟨Module.End.mem_genEigenspace_one.mpr
+          (by simpa [Matrix.toLin'_apply, zero_smul] using
+            (GgoldLeaves (owners X)).lapMatrix_mulVec_one_eq_zero ℝ),
+        fun h => by
+          have h1 := congrFun h u
+          simp only [Pi.one_apply, Pi.zero_apply] at h1
+          exact one_ne_zero h1⟩
+
+private theorem eigenvalues₀_goldLeaves_eq (X : ℕ)
+    (j : Fin (Fintype.card (HireLeaf (owners X)))) :
+    leafEig₀ X j =
+      ((GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ).isHermitian.eigenvalues
+        (Fintype.equivOfCardEq
+          (Fintype.card_fin (Fintype.card (HireLeaf (owners X)))) j) := by
+  simp [leafEig₀, Matrix.IsHermitian.eigenvalues, Equiv.symm_apply_apply]
+
+/-- `μ₁ = 0`: the smallest leaf-gold eigenvalue is `0`. -/
+private theorem eigenvalues₀_goldLeaves_last (X : ℕ)
+    (hk : 1 ≤ Fintype.card (HireLeaf (owners X))) :
+    leafEig₀ X ⟨Fintype.card (HireLeaf (owners X)) - 1, by omega⟩ = 0 := by
+  classical
+  let hA := ((GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ).isHermitian
+  let e := Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card (HireLeaf (owners X))))
+  have hnn (j : Fin (Fintype.card (HireLeaf (owners X)))) : 0 ≤ leafEig₀ X j := by
+    have hpsd := (GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ
+    have hle : 0 ≤ hA.eigenvalues := (hA.posSemidef_iff_eigenvalues_nonneg).mp hpsd
+    rw [eigenvalues₀_goldLeaves_eq]
+    exact (Pi.le_def.mp hle) _
+  have hmem : (0 : ℝ) ∈ spectrum ℝ ((GgoldLeaves (owners X)).lapMatrix ℝ) :=
+    zero_mem_spectrum_lapMatrix_goldLeaves X hk
+  rw [hA.spectrum_real_eq_range_eigenvalues] at hmem
+  obtain ⟨i, hi⟩ := hmem
+  have hsome : leafEig₀ X (e.symm i) = 0 := by
+    rw [eigenvalues₀_goldLeaves_eq]
+    simpa [e, Equiv.apply_symm_apply] using hi
+  have hle : leafEig₀ X ⟨Fintype.card (HireLeaf (owners X)) - 1, by omega⟩ ≤
+      leafEig₀ X (e.symm i) := by
+    apply hA.eigenvalues₀_antitone
+    rw [Fin.le_def]
+    exact Nat.le_sub_one_of_lt (e.symm i).isLt
+  linarith [hnn ⟨Fintype.card (HireLeaf (owners X)) - 1, by omega⟩, hle, hsome]
+
+private theorem eigenvalues₀_goldLeaves_nonneg (X : ℕ)
+    (j : Fin (Fintype.card (HireLeaf (owners X)))) :
+    0 ≤ leafEig₀ X j := by
+  classical
+  let hA := ((GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ).isHermitian
+  have hpsd := (GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ
+  have hle : 0 ≤ hA.eigenvalues := (hA.posSemidef_iff_eigenvalues_nonneg).mp hpsd
+  rw [eigenvalues₀_goldLeaves_eq]
+  exact (Pi.le_def.mp hle) _
+
+private theorem eigenvalues₀_goldLeaves_le (X : ℕ)
+    (j : Fin (Fintype.card (HireLeaf (owners X)))) :
+    leafEig₀ X j ≤ (Fintype.card (HireLeaf (owners X)) : ℝ) := by
+  rw [eigenvalues₀_goldLeaves_eq]
+  exact eigenvalues_lapMatrix_le_card (GgoldLeaves (owners X)) _
+
+/-- Middle index of the antitone cone list lands in the leaf spectrum. -/
+private theorem leafIndex_middle (X : ℕ)
+    (j : Fin (Fintype.card (HireVertex (owners X))))
+    (h0 : (j : ℕ) ≠ 0)
+    (hlast : (j : ℕ) ≠ Fintype.card (HireVertex (owners X)) - 1) :
+    j.1 - 1 < Fintype.card (HireLeaf (owners X)) := by
+  have hc := card_HireVertex_eq_succ_card_HireLeaf X
+  have hj := j.isLt
+  have := h0
+  have := hlast
+  omega
+
+/-- Antitone cone list on `Fin n`: index `0` is `n`, indices `1, …, n - 2` are
+`1 + μₙ₋₁, …, 1 + μ₂` in that decreasing order, index `n - 1` is `0`.
+`0` is strictly last: every earlier entry is at least `1`. The leading `n` may
+tie with `1 + μₙ₋₁`. -/
+private noncomputable def coneRank (X : ℕ) :
+    Fin (Fintype.card (HireVertex (owners X))) → ℝ := fun j =>
+  let n := Fintype.card (HireVertex (owners X))
+  if h0 : (j : ℕ) = 0 then (n : ℝ)
+  else if hlast : (j : ℕ) = n - 1 then 0
+  else 1 + leafEig₀ X ⟨j.1 - 1, leafIndex_middle X j h0 hlast⟩
+
+private theorem coneRank_zero (X : ℕ)
+    (hn : 1 ≤ Fintype.card (HireVertex (owners X))) :
+    coneRank X ⟨0, by omega⟩ = (Fintype.card (HireVertex (owners X)) : ℝ) := by
+  simp [coneRank]
+
+private theorem coneRank_last (X : ℕ)
+    (hn : 2 ≤ Fintype.card (HireVertex (owners X))) :
+    coneRank X ⟨Fintype.card (HireVertex (owners X)) - 1, by omega⟩ = 0 := by
+  unfold coneRank
+  dsimp only
+  split_ifs with h0 hlast
+  · omega
+  · rfl
+  · omega
+
+private theorem coneRank_middle (X : ℕ)
+    (j : Fin (Fintype.card (HireVertex (owners X))))
+    (h0 : (j : ℕ) ≠ 0)
+    (hlast : (j : ℕ) ≠ Fintype.card (HireVertex (owners X)) - 1) :
+    coneRank X j = 1 + leafEig₀ X ⟨j.1 - 1, leafIndex_middle X j h0 hlast⟩ := by
+  simp [coneRank, h0, hlast]
+
+private theorem coneRank_nonneg (X : ℕ)
+    (j : Fin (Fintype.card (HireVertex (owners X)))) :
+    0 ≤ coneRank X j := by
+  let n := Fintype.card (HireVertex (owners X))
+  have hn1 : 1 ≤ n := by
+    have := j.isLt
+    omega
+  by_cases h0 : (j : ℕ) = 0
+  · have hj : j = ⟨0, by omega⟩ := Fin.ext h0
+    rw [hj, coneRank_zero X hn1]
+    exact_mod_cast (Nat.zero_le n)
+  · by_cases hlast : (j : ℕ) = n - 1
+    · have hj : j = ⟨n - 1, by omega⟩ := Fin.ext hlast
+      have hn2 : 2 ≤ n := by
+        have := j.isLt
+        omega
+      rw [hj, coneRank_last X hn2]
+    · rw [coneRank_middle X j h0 hlast]
+      linarith [eigenvalues₀_goldLeaves_nonneg X ⟨j.1 - 1, leafIndex_middle X j h0 hlast⟩]
+
+private theorem coneRank_le_card (X : ℕ)
+    (hn : 1 ≤ Fintype.card (HireVertex (owners X)))
+    (j : Fin (Fintype.card (HireVertex (owners X)))) :
+    coneRank X j ≤ (Fintype.card (HireVertex (owners X)) : ℝ) := by
+  let n := Fintype.card (HireVertex (owners X))
+  let k := Fintype.card (HireLeaf (owners X))
+  by_cases h0 : (j : ℕ) = 0
+  · have hj : j = ⟨0, by omega⟩ := Fin.ext h0
+    rw [hj, coneRank_zero X hn]
+  · by_cases hlast : (j : ℕ) = n - 1
+    · have hj : j = ⟨n - 1, by omega⟩ := Fin.ext hlast
+      have hn2 : 2 ≤ n := by
+        have : (j : ℕ) < n := j.isLt
+        omega
+      rw [hj, coneRank_last X hn2]
+      exact_mod_cast (Nat.zero_le n)
+    · rw [coneRank_middle X j h0 hlast]
+      have hleaf := eigenvalues₀_goldLeaves_le X ⟨j.1 - 1, leafIndex_middle X j h0 hlast⟩
+      have hc := card_HireVertex_eq_succ_card_HireLeaf X
+      have hcast : (n : ℝ) = (k : ℝ) + 1 := by exact_mod_cast hc
+      linarith
+
+/-- `0` is strictly last in the antitone cone list. -/
+private theorem coneRank_pos_of_ne_last (X : ℕ)
+    (hn : 2 ≤ Fintype.card (HireVertex (owners X)))
+    (j : Fin (Fintype.card (HireVertex (owners X))))
+    (hlast : (j : ℕ) ≠ Fintype.card (HireVertex (owners X)) - 1) :
+    0 < coneRank X j := by
+  let n := Fintype.card (HireVertex (owners X))
+  by_cases h0 : (j : ℕ) = 0
+  · have hj : j = ⟨0, by omega⟩ := Fin.ext h0
+    rw [hj, coneRank_zero X (by omega)]
+    exact_mod_cast (by omega : 0 < n)
+  · rw [coneRank_middle X j h0 hlast]
+    linarith [eigenvalues₀_goldLeaves_nonneg X ⟨j.1 - 1, leafIndex_middle X j h0 hlast⟩]
+
+/-- The cone list decreases: `n ≥ 1 + μₙ₋₁ ≥ ⋯ ≥ 1 + μ₂ > 0`, allowing the
+tie `1 + μₙ₋₁ = n`. -/
+private theorem coneRank_antitone (X : ℕ)
+    (hn : 2 ≤ Fintype.card (HireVertex (owners X))) :
+    Antitone (coneRank X) := by
+  classical
+  let n := Fintype.card (HireVertex (owners X))
+  intro p q hpq
+  by_cases hqL : (q : ℕ) = n - 1
+  · have hq : q = ⟨n - 1, by omega⟩ := Fin.ext hqL
+    rw [hq, coneRank_last X hn]
+    exact coneRank_nonneg X p
+  · by_cases hq0 : (q : ℕ) = 0
+    · have hp0 : (p : ℕ) = 0 := by
+        rw [Fin.le_def] at hpq
+        omega
+      have hp : p = ⟨0, by omega⟩ := Fin.ext hp0
+      have hq : q = ⟨0, by omega⟩ := Fin.ext hq0
+      rw [hp, hq]
+    · by_cases hp0 : (p : ℕ) = 0
+      · have hp : p = ⟨0, by omega⟩ := Fin.ext hp0
+        rw [hp, coneRank_zero X (by omega)]
+        exact coneRank_le_card X (by omega) q
+      · by_cases hpL : (p : ℕ) = n - 1
+        · rw [Fin.le_def] at hpq
+          omega
+        · rw [coneRank_middle X p hp0 hpL, coneRank_middle X q hq0 hqL]
+          have hip := leafIndex_middle X p hp0 hpL
+          have hiq := leafIndex_middle X q hq0 hqL
+          have hle : (⟨p.1 - 1, hip⟩ : Fin (Fintype.card (HireLeaf (owners X)))) ≤
+              ⟨q.1 - 1, hiq⟩ := by
+            rw [Fin.le_def]
+            simp
+            rw [Fin.le_def] at hpq
+            omega
+          have hant :=
+            ((GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ).isHermitian.eigenvalues₀_antitone hle
+          simpa [leafEig₀] using hant
+
+open Polynomial
+
+private theorem charpoly_goldLeaves_factor (X : ℕ)
+    (hk : 1 ≤ Fintype.card (HireLeaf (owners X))) :
+    ((GgoldLeaves (owners X)).lapMatrix ℝ).charpoly =
+      Polynomial.X * ∏ i : Fin (Fintype.card (HireLeaf (owners X)) - 1),
+        (Polynomial.X - C (leafEig₀ X ⟨(i : ℕ), by omega⟩)) := by
+  classical
+  let hA := ((GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ).isHermitian
+  let k := Fintype.card (HireLeaf (owners X))
+  rw [hA.charpoly_eq]
+  let e := Fintype.equivOfCardEq (Fintype.card_fin k)
+  have hprod :
+      (∏ i : HireLeaf (owners X), (Polynomial.X - C (RCLike.ofReal (hA.eigenvalues i)))) =
+        ∏ j : Fin k, (Polynomial.X - C (leafEig₀ X j)) := by
+    rw [← Equiv.prod_comp e]
+    refine Finset.prod_congr rfl fun j _ => ?_
+    rw [← eigenvalues₀_goldLeaves_eq]
+    congr 2
+  rw [hprod]
+  have hk1 : (k - 1) + 1 = k := by omega
+  rw [← Equiv.prod_comp (finCongr hk1)]
+  rw [Fin.prod_univ_castSucc]
+  have hidx (i : Fin (k - 1)) :
+      finCongr hk1 i.castSucc = ⟨(i : ℕ), by omega⟩ := by
+    apply Fin.ext
+    simp
+  have hlast :
+      finCongr hk1 (Fin.last (k - 1)) = ⟨k - 1, by omega⟩ := by
+    apply Fin.ext
+    simp [Fin.val_last]
+  rw [hlast, eigenvalues₀_goldLeaves_last X hk]
+  simp only [C_0, sub_zero]
+  rw [mul_comm]
+  congr 1
+
+private theorem charpoly_one_add_lap {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (L : Matrix ι ι ℝ) :
+    (1 + L).charpoly = L.charpoly.comp (Polynomial.X - C (1 : ℝ)) := by
+  have h1 : (1 : Matrix ι ι ℝ) = Matrix.scalar ι (1 : ℝ) := by
+    rw [Matrix.scalar_apply, Matrix.diagonal_one]
+  have hneg : Matrix.scalar ι (1 : ℝ) = - Matrix.scalar ι (-1 : ℝ) := by
+    rw [← map_neg, neg_neg]
+  rw [h1, hneg, add_comm, ← sub_eq_add_neg, Matrix.charpoly_sub_scalar]
+  congr 1
+  simp [C_neg, sub_eq_add_neg]
+
+/-- Characteristic polynomial of the hire Laplacian, factored as
+`X (X - n)` times the leaf characteristic polynomial with the kernel factor
+`X` removed and the indeterminate shifted by `1`. -/
+private theorem charpoly_lapMatrix_GX_factor (X : ℕ)
+    (hn : 2 ≤ Fintype.card (HireVertex (owners X))) :
+    ((GX X).lapMatrix ℝ).charpoly =
+      Polynomial.X * (Polynomial.X - C (Fintype.card (HireVertex (owners X)) : ℝ)) *
+        ((∏ i : Fin (Fintype.card (HireLeaf (owners X)) - 1),
+            (Polynomial.X - C (leafEig₀ X ⟨(i : ℕ), by omega⟩))).comp
+          (Polynomial.X - C (1 : ℝ))) := by
+  classical
+  let k := Fintype.card (HireLeaf (owners X))
+  let n := Fintype.card (HireVertex (owners X))
+  have hk : 1 ≤ k := by
+    have hc := card_HireVertex_eq_succ_card_HireLeaf X
+    omega
+  have hkn : (n : ℝ) = (k : ℝ) + 1 := by
+    have hc := card_HireVertex_eq_succ_card_HireLeaf X
+    exact_mod_cast hc
+  let L' := (GgoldLeaves (owners X)).lapMatrix ℝ
+  rw [← Matrix.charpoly_reindex (seedLeavesEquiv (owners X)) ((GX X).lapMatrix ℝ)]
+  rw [lapMatrix_GX_reindex_eq_fromBlocks]
+  set A : Matrix (Unit ⊕ HireLeaf (owners X)) (Unit ⊕ HireLeaf (owners X)) ℝ :=
+    Matrix.fromBlocks
+      (Matrix.of fun _ _ => (k : ℝ))
+      (Matrix.of fun _ _ => (-1 : ℝ))
+      (Matrix.of fun _ _ => (-1 : ℝ))
+      (1 + L')
+  let D := Matrix.charmatrix (1 + L')
+  have hform :
+      A.charmatrix =
+        Matrix.fromBlocks
+          (Matrix.of fun _ _ => Polynomial.X - C (k : ℝ))
+          (Matrix.of fun (_ : Unit) (_ : HireLeaf (owners X)) => (1 : ℝ[X]))
+          (Matrix.of fun (_ : HireLeaf (owners X)) (_ : Unit) => (1 : ℝ[X]))
+          D := by
+    rw [Matrix.charmatrix_fromBlocks]
+    ext i j
+    cases i <;> cases j <;>
+      simp [D, Matrix.charmatrix_apply_eq, Matrix.of_apply, map_neg]
+  rw [Matrix.charpoly, hform, det_bordered]
+  set Q : ℝ[X] := ∏ i : Fin (k - 1), (Polynomial.X - C (leafEig₀ X ⟨(i : ℕ), by omega⟩))
+  have hQ : (1 + L').charpoly = (Polynomial.X - C (1 : ℝ)) * Q.comp (Polynomial.X - C (1 : ℝ)) := by
+    rw [charpoly_one_add_lap, charpoly_goldLeaves_factor X hk]
+    simp only [Q]
+    rw [Polynomial.mul_comp, Polynomial.X_comp]
+  rw [show D.det = (1 + L').charpoly from rfl, hQ]
+  set ones : HireLeaf (owners X) → ℝ[X] := fun _ => 1
+  set s : ℝ[X] := Q.comp (Polynomial.X - C (1 : ℝ))
+  have hDmul : D *ᵥ ones = (Polynomial.X - C (1 : ℝ)) • ones := by
+    have hL : L' *ᵥ (1 : HireLeaf (owners X) → ℝ) = 0 :=
+      (GgoldLeaves (owners X)).lapMatrix_mulVec_one_eq_zero ℝ
+    have hM : (1 + L') *ᵥ (1 : HireLeaf (owners X) → ℝ) = 1 := by
+      rw [Matrix.add_mulVec, hL, Matrix.one_mulVec, add_zero]
+    refine funext fun u => ?_
+    have hchar : D = Matrix.scalar _ Polynomial.X - (1 + L').map C := rfl
+    rw [hchar, Matrix.sub_mulVec]
+    simp only [ones, Pi.sub_apply, Pi.smul_apply]
+    have hsc : ((Matrix.scalar (HireLeaf (owners X)) Polynomial.X) *ᵥ fun _ => (1 : ℝ[X])) u =
+        Polynomial.X := by
+      simp [Matrix.mulVec, dotProduct, Matrix.scalar_apply, Matrix.diagonal_apply,
+        Finset.sum_ite_eq, Finset.mem_univ]
+    have hmap : (((1 + L').map C) *ᵥ fun _ => (1 : ℝ[X])) u = 1 := by
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, mul_one]
+      rw [← map_sum]
+      have hsum :
+          ∑ j, (1 + L') u j = ((1 + L') *ᵥ (1 : HireLeaf (owners X) → ℝ)) u := by
+        simp [Matrix.mulVec, dotProduct, mul_one]
+      rw [hsum, hM]
+      simp [C_1]
+    rw [hsc, hmap]
+    simp only [smul_eq_mul, mul_one]
+    rw [← C_1]
+  have hadj : D.adjugate *ᵥ ones = s • ones := by
+    have hcancel :
+        (Polynomial.X - C (1 : ℝ)) • (D.adjugate *ᵥ ones) = (Polynomial.X - C (1 : ℝ)) • (s • ones) := by
+      calc
+        (Polynomial.X - C (1 : ℝ)) • (D.adjugate *ᵥ ones)
+            = D.adjugate *ᵥ ((Polynomial.X - C (1 : ℝ)) • ones) := by
+              rw [← Matrix.mulVec_smul]
+        _ = D.adjugate *ᵥ (D *ᵥ ones) := by rw [hDmul]
+        _ = (D.adjugate * D) *ᵥ ones := by rw [← Matrix.mulVec_mulVec]
+        _ = (D.det • (1 : Matrix _ _ ℝ[X])) *ᵥ ones := by rw [Matrix.adjugate_mul]
+        _ = D.det • ones := by simp [Matrix.smul_mulVec, Matrix.one_mulVec]
+        _ = ((Polynomial.X - C (1 : ℝ)) * s) • ones := by
+              rw [show D.det = (1 + L').charpoly from rfl, hQ]
+        _ = (Polynomial.X - C (1 : ℝ)) • (s • ones) := by rw [smul_smul, mul_comm]
+    refine funext fun u => ?_
+    have hu := congrFun hcancel u
+    simp only [Pi.smul_apply, smul_eq_mul] at hu
+    apply mul_left_cancel₀ (a := Polynomial.X - C (1 : ℝ))
+      (Polynomial.X_sub_C_ne_zero (1 : ℝ))
+    exact hu
+  have hdot : ones ⬝ᵥ (D.adjugate *ᵥ ones) = (k : ℝ[X]) * s := by
+    rw [hadj]
+    simp only [dotProduct, ones, Pi.smul_apply, smul_eq_mul, mul_one, one_mul]
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    rfl
+  rw [hdot]
+  have hkcast : (k : ℝ[X]) = C (k : ℝ) := (C_eq_natCast k).symm
+  have hnC : C (n : ℝ) = C (k : ℝ) + 1 := by rw [hkn, map_add, C_1]
+  rw [hkcast, hnC, C_1]
+  ring
+
+/-- `(X - C μ).comp (X - C 1) = X - C (1 + μ)`. -/
+private theorem charpoly_shift_one (μ : ℝ) :
+    (Polynomial.X - C μ).comp (Polynomial.X - C (1 : ℝ)) =
+      Polynomial.X - C ((1 : ℝ) + μ) := by
+  rw [Polynomial.sub_comp, Polynomial.X_comp, Polynomial.C_comp, sub_sub, ← C_add]
+
+/-- Expanding the antitone cone list.
+Index `0` contributes `X - C n`, indices `1, …, n - 2` contribute
+`X - C (1 + μₙ₋₁), …, X - C (1 + μ₂)` in that order, and index `n - 1`
+contributes `X`. The factor `X - C n` may equal the next factor. -/
+private theorem prod_coneRank_eq_factor (X : ℕ)
+    (hn : 2 ≤ Fintype.card (HireVertex (owners X))) :
+    (∏ j : Fin (Fintype.card (HireVertex (owners X))),
+        (Polynomial.X - C (coneRank X j))) =
+      Polynomial.X *
+        (Polynomial.X - C (Fintype.card (HireVertex (owners X)) : ℝ)) *
+        ((∏ i : Fin (Fintype.card (HireLeaf (owners X)) - 1),
+            (Polynomial.X - C (leafEig₀ X ⟨(i : ℕ), by omega⟩))).comp
+          (Polynomial.X - C (1 : ℝ))) := by
+  classical
+  let n := Fintype.card (HireVertex (owners X))
+  let k := Fintype.card (HireLeaf (owners X))
+  have hc : n = k + 1 := card_HireVertex_eq_succ_card_HireLeaf X
+  have _ := hc
+  have hk1 : (n - 1) + 1 = n := by omega
+  have hm : (n - 2) + 1 = n - 1 := by omega
+  have hleaf : n - 2 = k - 1 := by omega
+  rw [← (finCongr hk1).prod_comp, Fin.prod_univ_castSucc]
+  have hcast (j : Fin (n - 1)) :
+      finCongr hk1 j.castSucc = (⟨(j : ℕ), by omega⟩ : Fin n) := by
+    apply Fin.ext
+    simp
+  simp_rw [hcast]
+  have hlastIdx :
+      finCongr hk1 (Fin.last (n - 1)) = ⟨n - 1, by omega⟩ := by
+    apply Fin.ext
+    simp [Fin.val_last]
+  rw [hlastIdx, coneRank_last X hn, C_0, sub_zero, mul_comm, mul_assoc]
+  congr 1
+  rw [← (finCongr hm).prod_comp, Fin.prod_univ_succ]
+  have hzero :
+      finCongr hm (0 : Fin ((n - 2) + 1)) = (⟨0, by omega⟩ : Fin (n - 1)) := by
+    apply Fin.ext
+    simp
+  have hsucc (i : Fin (n - 2)) :
+      finCongr hm i.succ = (⟨i.1 + 1, by omega⟩ : Fin (n - 1)) := by
+    apply Fin.ext
+    simp [Fin.val_succ]
+  simp_rw [hzero, hsucc]
+  rw [coneRank_zero X (by omega)]
+  congr 1
+  rw [Polynomial.prod_comp, ← (finCongr hleaf).prod_comp]
+  refine Finset.prod_congr rfl fun i _ => ?_
+  rw [charpoly_shift_one]
+  have hi : (i : ℕ) < n - 2 := i.isLt
+  have hlt : (i : ℕ) + 1 < n := by omega
+  have h0 : ((⟨(i : ℕ) + 1, hlt⟩ : Fin n) : ℕ) ≠ 0 := by
+    simp
+  have hnl : ((⟨(i : ℕ) + 1, hlt⟩ : Fin n) : ℕ) ≠ n - 1 := by
+    have := hi
+    simpa using show (i : ℕ) + 1 ≠ n - 1 by omega
+  rw [coneRank_middle X ⟨(i : ℕ) + 1, hlt⟩ h0 hnl]
+  congr 1
+
 private theorem one_add_eq_one_iff (μ : ℝ) : (1 : ℝ) + μ = 1 ↔ μ = 0 := by
   constructor <;> intro h <;> linarith
 
-/-- **Layer C spectrum reading (not proved).**
+private theorem charpoly_lapMatrix_GX_eq_prod_coneRank (X : ℕ)
+    (hn : 2 ≤ Fintype.card (HireVertex (owners X))) :
+    ((GX X).lapMatrix ℝ).charpoly =
+      ∏ j : Fin (Fintype.card (HireVertex (owners X))),
+        (Polynomial.X - C (coneRank X j)) := by
+  rw [charpoly_lapMatrix_GX_factor X hn, prod_coneRank_eq_factor X hn]
+
+set_option backward.isDefEq.respectTransparency.types false in
+/-- Ranking step. `eigenvalues₀` is already the antitone order (index `0`
+largest). `coneRank` is the same order by `coneRank_antitone`: index `0` is
+`n`, then `1 + μₙ₋₁ ≥ ⋯ ≥ 1 + μ₂`, then `0` strictly last
+(`coneRank_pos_of_ne_last`; the leading `n` may tie with `1 + μₙ₋₁`). The
+characteristic polynomial is the product of `X - C (coneRank j)` in that
+index order, so the sorted real roots are `List.ofFn coneRank`, which is
+also `List.ofFn eigenvalues₀`. -/
+private theorem eigenvalues₀_eq_coneRank (X : ℕ)
+    (hn : 2 ≤ Fintype.card (HireVertex (owners X))) :
+    ((GX X).posSemidef_lapMatrix ℝ).isHermitian.eigenvalues₀ = coneRank X := by
+  classical
+  let hA := ((GX X).posSemidef_lapMatrix ℝ).isHermitian
+  have hchar := charpoly_lapMatrix_GX_eq_prod_coneRank X hn
+  simp_rw [← List.ofFn_inj]
+  rw [← hA.sort_roots_charpoly_eq_eigenvalues₀, hchar]
+  have hnz : (∏ j : Fin (Fintype.card (HireVertex (owners X))),
+      (Polynomial.X - C (coneRank X j))) ≠ 0 :=
+    Finset.prod_ne_zero_iff.mpr fun j _ => Polynomial.X_sub_C_ne_zero _
+  have hroots :
+      (∏ j : Fin (Fintype.card (HireVertex (owners X))),
+          (Polynomial.X - C (coneRank X j))).roots =
+        Finset.univ.val.map (coneRank X) := by
+    rw [Polynomial.roots_prod _ _ hnz]
+    simp_rw [Polynomial.roots_X_sub_C]
+    rw [Multiset.bind_singleton]
+  simp_rw [hroots, Fin.univ_val_map, Multiset.map_coe, List.map_ofFn,
+    Function.comp_def, RCLike.re_to_real, Multiset.coe_sort]
+  apply List.mergeSort_of_pairwise
+  simp_rw [decide_eq_true_eq, ← List.sortedGE_iff_pairwise]
+  exact (coneRank_antitone X hn).sortedGE_ofFn
+
+/-- **Layer C spectrum reading.**
 
 Ascending eigenvalues `λ₁ ≤ ⋯ ≤ λₙ` of `(GX X).lapMatrix` and
 `μ₁ ≤ ⋯ ≤ μₖ` of the leaf gold Laplacian, with `k = n - 1` leaves.
-For `i = 2, …, n - 1`,
+The antitone cone list (`coneRank`) is pinned as
+
+`n ≥ 1 + μₙ₋₁ ≥ ⋯ ≥ 1 + μ₂ > 0`,
+
+index `0` first (`λₙ = n`) and `0` strictly last (`λ₁`). The leading `n` may
+tie with `1 + μₙ₋₁`. For the matching ranks `i = 2, …, n - 1`,
 
 `λᵢ = 1 + μᵢ`.
-
-The shift **starts at `μ₂`, not `μ₁`**. `μ₁ = 0` is the leaf all-ones vector.
-Mixing it with the seed already accounts for the global kernel
-(`hasEigenvector_lapMatrix_GX_zero`); the other mix of that same direction is
-the star-max eigenvalue `n` (`card_mem_spectrum_lapMatrix_GX`). Folding `μ₁`
-into `1 + μ` would double-count the kernel.
-
-A set-level union `{0, n} ∪ {1 + μ | μ ∈ spectrum L', μ ≠ 0}` is not used:
-`spectrum` forgets multiplicity, so a repeated leaf zero (gold leaves
-disconnected) never appears as a new point, and eigenvalue `1` would be lost.
-`four_vertex_star_leaf_edge_keeps_one` is that case. The ordered shift is the
-honest form. The endpoints are `lambda_GX_one` and `lambda_GX_card`.
-This middle identification stays `sorry`.
 -/
 theorem spectrum_lapMatrix_GX (X : ℕ)
     (hn : 2 ≤ Fintype.card (HireVertex (owners X)))
@@ -775,7 +1419,29 @@ theorem spectrum_lapMatrix_GX (X : ℕ)
       (1 : ℝ) + mu_goldLeaves X i (by omega) (by
         have hc := card_HireVertex_eq_succ_card_HireLeaf X
         omega) := by
-  sorry
+  classical
+  let n := Fintype.card (HireVertex (owners X))
+  let k := Fintype.card (HireLeaf (owners X))
+  have hc : n = k + 1 := card_HireVertex_eq_succ_card_HireLeaf X
+  unfold lambda_GX
+  dsimp only
+  rw [eigenvalues₀_eq_coneRank X hn]
+  unfold mu_goldLeaves
+  dsimp only
+  have hlt : n - i < n := by omega
+  have h0n : n - i ≠ 0 := by omega
+  have hlastn : n - i ≠ n - 1 := by omega
+  have h0 : ((⟨n - i, hlt⟩ : Fin n) : ℕ) ≠ 0 := by simpa using h0n
+  have hlast : ((⟨n - i, hlt⟩ : Fin n) : ℕ) ≠ n - 1 := by simpa using hlastn
+  rw [coneRank_middle X ⟨n - i, hlt⟩ h0 hlast]
+  unfold leafEig₀
+  congr 1
+  congr 1
+  apply Fin.ext
+  change (n - i) - 1 = k - i
+  have := hc
+  omega
+
 
 /-- **Layer D sentence, not a checked proof.**
 
@@ -784,9 +1450,8 @@ On a window with at least two leaves, the cone reading specialises to
 `λ₂ = 1` iff `μ₂ = 0`.
 
 `μ₂ = 0` is the ordered reading of "gold on the leaves is disconnected".
-That last step is `sorry`: this corollary assumes the spectrum identification
-and does not prove disconnected gold from scratch. Layer D stays open as a
-checked argument.
+`spectrum_lapMatrix_GX` already gives `λ₂ = 1 + μ₂`. The remaining `sorry`
+is only that disconnect reading. Layer D is not proved in this pass.
 -/
 theorem lambda2_eq_one_iff_GoldLeavesDisconnected (X : ℕ)
     (hk : 2 ≤ Fintype.card (HireLeaf (owners X))) :
