@@ -5,8 +5,10 @@ Authors: Jack Pickett
 -/
 import Hire.Lemma8
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Matrix.Block
+import Mathlib.Data.Matrix.Mul
 
 /-!
 # Layer C — cone block of the hire Laplacian
@@ -31,14 +33,30 @@ Why the entries are those:
 * a leaf–leaf entry is `-1` on a gold edge and `0` otherwise;
 * so the leaf block is `I + lapMatrix (GgoldLeaves)`.
 
-The block equality is proved. The spectrum reading
-`spec = {0, n} ∪ {1 + μᵢ}` is the next gap and is not stated here.
+The block equality is proved. From the same window:
+* `0` is a Laplacian eigenvalue, the all-ones vector on the seed door and the
+  leaves (`hasEigenvector_lapMatrix_GX_zero`);
+* when the window has at least one leaf (`n ≥ 2`), `n` is a Laplacian
+  eigenvalue. The test vector is Lemma 7's star-max vector, value `n - 1` on
+  the seed and `-1` on every leaf. Gold edges contribute `0` because that
+  vector is constant on the leaves (`card_mem_spectrum_lapMatrix_GX`);
+* a vector that is `0` on the seed and an `L'`-eigenvector `v` on the leaves
+  is an eigenvector for `1 + μ` only when `∑ v = 0` (`eigenvector_of_leaf_mode`).
 
-Card 4, as a comment only: `four_vertex_star_leaf_edge_keeps_one` is the
-`μ₂ = 0` special case of this block. One gold chord on three leaves leaves the
-leaf gold graph disconnected, so a zero eigenvalue of `L'` would shift to
-eigenvalue `1` of `GX`. That identification is not proved in this module.
-Layer D (`λ₂ = 1` iff the gold leaves are disconnected) is not claimed here.
+`spectrum` as a set is the wrong reading of the cone. A repeated leaf
+eigenvalue `μ = 0` (gold on the leaves disconnected) is still just `{0}` in
+`spectrum ℝ L'`, so the union `{1 + μ | μ ≠ 0}` misses the eigenvalue `1`.
+That is exactly `four_vertex_star_leaf_edge_keeps_one`. The Mathlib-honest
+form is the ordered shift `spectrum_lapMatrix_GX`: ascending
+`λ₁ ≤ ⋯ ≤ λₙ` and `μ₁ ≤ ⋯ ≤ μₖ`, with `λᵢ = 1 + μᵢ` for `i = 2, …, n - 1`.
+The shift starts at `μ₂`, not `μ₁`. `μ₁ = 0` is the leaf all-ones vector;
+mixed with the seed it is already the global kernel, and folding it into
+`1 + μ` double-counts that kernel. This ordered identification is one `sorry`.
+
+`lambda2_eq_one_iff_GoldLeavesDisconnected` is the Layer D sentence
+`λ₂ = 1` iff gold-on-leaves is disconnected, obtained as `λ₂ = 1 + μ₂` from
+that statement. The step `μ₂ = 0` iff the leaf gold graph is disconnected is
+not proved here. Layer D is not a checked proof.
 -/
 
 namespace Hire
@@ -306,5 +324,303 @@ theorem lapMatrix_GX_reindex_eq_fromBlocks (X : ℕ) :
       simp [fromBlocks_apply₂₁, of_apply, lapMatrix_GX_leaf_seed]
     | inr leaf' =>
       simp [fromBlocks_apply₂₂, lapMatrix_GX_leaf_block]
+
+
+/-- Doors in a window: the seed, then the leaves. -/
+theorem card_HireVertex_eq_succ_card_HireLeaf (X : ℕ) :
+    Fintype.card (HireVertex (owners X)) =
+      Fintype.card (HireLeaf (owners X)) + 1 := by
+  rw [Fintype.card_congr (seedLeavesEquiv (owners X)), Fintype.card_sum,
+    Fintype.card_unit, add_comm]
+
+/-- Neighbors of the seed door are exactly the leaves: every non-seed door is a
+spoke (`star_adj_GX`), and the seed is loopless. -/
+theorem neighborFinset_GX_seed (X : ℕ) :
+    (GX X).neighborFinset (seedVertex (owners X)) =
+      Finset.univ.erase (seedVertex (owners X)) := by
+  classical
+  ext u
+  simp only [SimpleGraph.mem_neighborFinset, Finset.mem_erase, Finset.mem_univ, and_true]
+  constructor
+  · intro h
+    exact h.ne.symm
+  · intro hne
+    exact star_adj_GX u ((seedVertex_eq_iff u).not.mp hne)
+
+/-- **Eigenvalue `0`.** The all-ones vector on the seed door and every leaf is a
+kernel vector of the hire Laplacian. The seed door is always a vertex. -/
+theorem hasEigenvector_lapMatrix_GX_zero (X : ℕ) :
+    Module.End.HasEigenvector ((GX X).lapMatrix ℝ).toLin' (0 : ℝ)
+      (1 : HireVertex (owners X) → ℝ) := by
+  refine ⟨Module.End.mem_genEigenspace_one.mpr ?_, ?_⟩
+  · simpa [Matrix.toLin'_apply, zero_smul] using (GX X).lapMatrix_mulVec_one_eq_zero ℝ
+  · intro h
+    have h1 := congrFun h (seedVertex (owners X))
+    simp only [Pi.one_apply, Pi.zero_apply] at h1
+    exact one_ne_zero h1
+
+/-- **Eigenvalue `0`.** `0` lies in the spectrum of `(GX X).lapMatrix ℝ`. -/
+theorem zero_mem_spectrum_lapMatrix_GX (X : ℕ) :
+    (0 : ℝ) ∈ spectrum ℝ ((GX X).lapMatrix ℝ) := by
+  rw [← Matrix.spectrum_toLin']
+  exact Module.End.HasEigenvalue.mem_spectrum
+    (Module.End.hasEigenvalue_of_hasEigenvector (hasEigenvector_lapMatrix_GX_zero X))
+
+/-- The star-max test vector is constant off the seed door, so its difference on
+any two leaves is `0`. A gold edge, which never meets the seed, contributes `0`. -/
+lemma starMaxEigenvec_sub_eq_zero_of_ne_seed (X : ℕ)
+    {u v : HireVertex (owners X)}
+    (hu : u ≠ seedVertex (owners X)) (hv : v ≠ seedVertex (owners X)) :
+    starMaxEigenvec (seedVertex (owners X))
+        (Fintype.card (HireVertex (owners X))) u -
+      starMaxEigenvec (seedVertex (owners X))
+        (Fintype.card (HireVertex (owners X))) v = 0 := by
+  simp [starMaxEigenvec, hu, hv]
+
+/-- **Eigenvalue `n`.** Lemma 7's star-max vector survives gold. It takes the
+value `n - 1` on the seed door and `-1` on every leaf, so each gold edge has
+difference `0` and does not move the eigenvalue. -/
+theorem lapMatrix_GX_mulVec_starMaxEigenvec (X : ℕ) :
+    (GX X).lapMatrix ℝ *ᵥ
+        starMaxEigenvec (seedVertex (owners X))
+          (Fintype.card (HireVertex (owners X))) =
+      (Fintype.card (HireVertex (owners X)) : ℝ) •
+        starMaxEigenvec (seedVertex (owners X))
+          (Fintype.card (HireVertex (owners X))) := by
+  classical
+  set seed := seedVertex (owners X)
+  set n := Fintype.card (HireVertex (owners X))
+  set vec := starMaxEigenvec seed n
+  have hn1 : 1 ≤ n := Fintype.card_pos
+  ext v
+  rw [SimpleGraph.lapMatrix_mulVec_apply']
+  by_cases hv : v = seed
+  · subst hv
+    rw [neighborFinset_GX_seed]
+    have hdiff : ∀ u ∈ univ.erase seed, vec seed - vec u = (n : ℝ) := by
+      intro u hu
+      have hu' : u ≠ seed := (mem_erase.mp hu).1
+      simp only [vec, starMaxEigenvec, ↓reduceIte, hu']
+      ring
+    rw [sum_congr rfl hdiff, sum_const, card_erase_of_mem (mem_univ seed), card_univ]
+    simp only [vec, starMaxEigenvec, ↓reduceIte, Pi.smul_apply, smul_eq_mul, nsmul_eq_mul]
+    rw [Nat.cast_sub hn1]
+    ring
+  · have hseed : seed ∈ (GX X).neighborFinset v := by
+      rw [SimpleGraph.mem_neighborFinset]
+      exact (star_adj_GX v ((seedVertex_eq_iff v).not.mp hv)).symm
+    have hdiff : ∀ u ∈ (GX X).neighborFinset v,
+        vec v - vec u = if u = seed then -(n : ℝ) else 0 := by
+      intro u _
+      by_cases hu : u = seed
+      · subst hu
+        simp only [vec, starMaxEigenvec, hv, ↓reduceIte]
+        ring
+      · -- Both doors are leaves: the test vector is constant, so a gold edge
+        -- contributes difference zero.
+        rw [starMaxEigenvec_sub_eq_zero_of_ne_seed (X := X) (u := v) (v := u) hv hu,
+          ite_eq_right hu]
+    rw [sum_congr rfl hdiff, sum_ite_eq', ite_eq_left hseed]
+    simp only [vec, starMaxEigenvec, hv, ↓reduceIte, Pi.smul_apply, smul_eq_mul]
+    ring
+
+/-- **Eigenvalue `n`.** When the window has at least one leaf (`n ≥ 2`), `n` lies
+in the spectrum of `(GX X).lapMatrix ℝ`. -/
+theorem card_mem_spectrum_lapMatrix_GX (X : ℕ)
+    (hn : 2 ≤ Fintype.card (HireVertex (owners X))) :
+    (Fintype.card (HireVertex (owners X)) : ℝ) ∈
+      spectrum ℝ ((GX X).lapMatrix ℝ) := by
+  classical
+  set n := Fintype.card (HireVertex (owners X))
+  set vec := starMaxEigenvec (seedVertex (owners X)) n
+  have hx : vec ≠ 0 := starMaxEigenvec_ne_zero (seedVertex (owners X)) hn
+  have hmul := lapMatrix_GX_mulVec_starMaxEigenvec X
+  rw [← Matrix.spectrum_toLin']
+  refine Module.End.HasEigenvalue.mem_spectrum ?_
+  refine Module.End.hasEigenvalue_of_hasEigenvector (x := vec) ⟨?_, hx⟩
+  exact Module.End.mem_genEigenspace_one.mpr
+    (by simpa [Matrix.toLin'_apply, vec, n] using hmul)
+
+/-- Lift a leaf vector to the hire window: `0` on the seed door, `v` on the leaves. -/
+def leafMode {O : Set ℕ} (v : HireLeaf O → ℝ) : HireVertex O → ℝ :=
+  Sum.elim (fun _ => (0 : ℝ)) v ∘ seedLeavesEquiv O
+
+theorem leafMode_seed {O : Set ℕ} (v : HireLeaf O → ℝ) :
+    leafMode v (seedVertex O) = 0 := by
+  unfold leafMode
+  rw [Function.comp_apply]
+  have he : seedLeavesEquiv O (seedVertex O) = Sum.inl () := by
+    change (if h : seedVertex O = seedVertex O then Sum.inl () else Sum.inr ⟨seedVertex O, h⟩) =
+      Sum.inl ()
+    exact dite_eq_left rfl
+  simp [he, Sum.elim_inl]
+
+theorem leafMode_leaf {O : Set ℕ} (v : HireLeaf O → ℝ) (u : HireLeaf O) :
+    leafMode v u.1 = v u := by
+  have hu : u.1 ≠ seedVertex O := u.property
+  unfold leafMode
+  rw [Function.comp_apply]
+  have he : seedLeavesEquiv O u.1 = Sum.inr u := by
+    change (if h : u.1 = seedVertex O then Sum.inl () else Sum.inr ⟨u.1, h⟩) = Sum.inr u
+    rw [dite_eq_right hu]
+  simp [he, Sum.elim_inr]
+
+/-- **Leaf mode.** A vector that is `0` on the seed and an `L'`-eigenvector `v`
+on the leaves is an eigenvector of the cone block for `1 + μ` precisely when
+`∑ v = 0` (orthogonal to the leaf all-ones vector). The leaf all-ones mode
+`μ₁ = 0` fails that test: it is already the global kernel vector, mixed with
+the seed, so it must not be folded into `1 + μ`. -/
+theorem lapMatrix_GX_mulVec_leafMode (X : ℕ) (v : HireLeaf (owners X) → ℝ) (μ : ℝ)
+    (hv : (GgoldLeaves (owners X)).lapMatrix ℝ *ᵥ v = μ • v)
+    (hsum : ∑ i, v i = 0) :
+    (GX X).lapMatrix ℝ *ᵥ leafMode v = ((1 : ℝ) + μ) • leafMode v := by
+  classical
+  set e := seedLeavesEquiv (owners X)
+  set w : Unit ⊕ HireLeaf (owners X) → ℝ := Sum.elim (fun _ => 0) v
+  have hre :
+      ((GX X).lapMatrix ℝ).reindex e e *ᵥ w =
+        ((GX X).lapMatrix ℝ *ᵥ leafMode v) ∘ e.symm := by
+    rw [Matrix.reindex_apply, Matrix.submatrix_mulVec_equiv]
+    simp only [Equiv.symm_symm]
+    rfl
+  have hblock :
+      ((GX X).lapMatrix ℝ).reindex e e *ᵥ w = ((1 : ℝ) + μ) • w := by
+    rw [lapMatrix_GX_reindex_eq_fromBlocks, Matrix.fromBlocks_mulVec]
+    have hinl : w ∘ Sum.inl = 0 := by
+      ext u
+      cases u
+      rfl
+    have hinr : w ∘ Sum.inr = v := by
+      ext u
+      rfl
+    rw [hinl, hinr, Matrix.mulVec_zero, Matrix.mulVec_zero, zero_add, zero_add]
+    ext s
+    cases s with
+    | inl u =>
+      cases u
+      simp only [Sum.elim_inl, Pi.smul_apply, smul_eq_mul]
+      have hw0 : w (Sum.inl ()) = 0 := rfl
+      rw [hw0, mul_zero]
+      rw [Matrix.mulVec_apply_eq_sum]
+      simp only [Matrix.of_apply, neg_one_mul, sum_neg_distrib, hsum, neg_zero]
+    | inr leaf =>
+      simp only [Sum.elim_inr, Pi.smul_apply, smul_eq_mul]
+      have hwv : w (Sum.inr leaf) = v leaf := rfl
+      rw [hwv]
+      have hD :
+          ((1 : Matrix (HireLeaf (owners X)) (HireLeaf (owners X)) ℝ) +
+              (GgoldLeaves (owners X)).lapMatrix ℝ) *ᵥ v =
+            ((1 : ℝ) + μ) • v := by
+        rw [Matrix.add_mulVec, Matrix.one_mulVec, hv]
+        calc
+          v + μ • v = (1 : ℝ) • v + μ • v := by rw [one_smul]
+          _ = ((1 : ℝ) + μ) • v := (add_smul (1 : ℝ) μ v).symm
+      rw [hD]
+      simp [Pi.smul_apply, smul_eq_mul]
+  have hfun :
+      ((GX X).lapMatrix ℝ *ᵥ leafMode v) ∘ e.symm = ((1 : ℝ) + μ) • w := by
+    rw [← hre, hblock]
+  ext x
+  have hxs := congrFun hfun (e x)
+  simpa [Function.comp_apply, Equiv.symm_apply_apply, Pi.smul_apply, smul_eq_mul,
+    leafMode, w] using hxs
+
+theorem eigenvector_of_leaf_mode (X : ℕ) (v : HireLeaf (owners X) → ℝ) (μ : ℝ)
+    (hv : (GgoldLeaves (owners X)).lapMatrix ℝ *ᵥ v = μ • v)
+    (hsum : ∑ i, v i = 0) (hne : v ≠ 0) :
+    Module.End.HasEigenvector ((GX X).lapMatrix ℝ).toLin'
+      ((1 : ℝ) + μ) (leafMode v) := by
+  have hmul := lapMatrix_GX_mulVec_leafMode X v μ hv hsum
+  have hnz : leafMode v ≠ 0 := by
+    intro h
+    apply hne
+    ext u
+    have := congrFun h u.1
+    rw [leafMode_leaf] at this
+    simpa [Pi.zero_apply] using this
+  refine ⟨Module.End.mem_genEigenspace_one.mpr ?_, hnz⟩
+  simpa [Matrix.toLin'_apply] using hmul
+
+/-! ### Ordered spectrum, `μ₂` cutoff
+
+`IsHermitian.eigenvalues₀` lists Laplacian eigenvalues in **antitone** order
+(index `0` is the largest). The ascending eigenvalue of rank `i` (1-indexed,
+so `i = 1` is the smallest) is therefore index `card - i`.
+-/
+
+/-- Ascending eigenvalue `λᵢ` of the hire Laplacian, `1 ≤ i ≤ n`.
+`λ₁` is the smallest, `λ₂` the second smallest. -/
+noncomputable def lambda_GX (X : ℕ) (i : ℕ)
+    (hi : 1 ≤ i) (hin : i ≤ Fintype.card (HireVertex (owners X))) : ℝ :=
+  let n := Fintype.card (HireVertex (owners X))
+  ((GX X).posSemidef_lapMatrix ℝ).isHermitian.eigenvalues₀
+    ⟨n - i, by omega⟩
+
+/-- Ascending eigenvalue `μᵢ` of gold on the leaves, `1 ≤ i ≤ k`. -/
+noncomputable def mu_goldLeaves (X : ℕ) (i : ℕ)
+    (hi : 1 ≤ i) (hin : i ≤ Fintype.card (HireLeaf (owners X))) : ℝ :=
+  let k := Fintype.card (HireLeaf (owners X))
+  ((GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ).isHermitian.eigenvalues₀
+    ⟨k - i, by omega⟩
+
+private theorem one_add_eq_one_iff (μ : ℝ) : (1 : ℝ) + μ = 1 ↔ μ = 0 := by
+  constructor <;> intro h <;> linarith
+
+/-- **Layer C spectrum reading (not proved).**
+
+Ascending eigenvalues `λ₁ ≤ ⋯ ≤ λₙ` of `(GX X).lapMatrix` and
+`μ₁ ≤ ⋯ ≤ μₖ` of the leaf gold Laplacian, with `k = n - 1` leaves.
+For `i = 2, …, n - 1`,
+
+`λᵢ = 1 + μᵢ`.
+
+The shift **starts at `μ₂`, not `μ₁`**. `μ₁ = 0` is the leaf all-ones vector.
+Mixing it with the seed already accounts for the global kernel
+(`hasEigenvector_lapMatrix_GX_zero`); the other mix of that same direction is
+the star-max eigenvalue `n` (`card_mem_spectrum_lapMatrix_GX`). Folding `μ₁`
+into `1 + μ` would double-count the kernel.
+
+A set-level union `{0, n} ∪ {1 + μ | μ ∈ spectrum L', μ ≠ 0}` is not used:
+`spectrum` forgets multiplicity, so a repeated leaf zero (gold leaves
+disconnected) never appears as a new point, and eigenvalue `1` would be lost.
+`four_vertex_star_leaf_edge_keeps_one` is that case. The ordered shift is the
+honest form. This identification is the one `sorry` of the spectrum reading.
+-/
+theorem spectrum_lapMatrix_GX (X : ℕ)
+    (hn : 2 ≤ Fintype.card (HireVertex (owners X)))
+    (i : ℕ) (hi2 : 2 ≤ i) (hi : i + 1 ≤ Fintype.card (HireVertex (owners X))) :
+    lambda_GX X i (by omega) (by omega) =
+      (1 : ℝ) + mu_goldLeaves X i (by omega) (by
+        have hc := card_HireVertex_eq_succ_card_HireLeaf X
+        omega) := by
+  sorry
+
+/-- **Layer D sentence, not a checked proof.**
+
+On a window with at least two leaves, the cone reading specialises to
+`λ₂ = 1 + μ₂` (`spectrum_lapMatrix_GX` at index `2`). Therefore
+`λ₂ = 1` iff `μ₂ = 0`.
+
+`μ₂ = 0` is the ordered reading of "gold on the leaves is disconnected".
+That last step is `sorry`: this corollary assumes the spectrum identification
+and does not prove disconnected gold from scratch. Layer D stays open as a
+checked argument.
+-/
+theorem lambda2_eq_one_iff_GoldLeavesDisconnected (X : ℕ)
+    (hk : 2 ≤ Fintype.card (HireLeaf (owners X))) :
+    lambda_GX X 2 (by omega) (by
+        have hc := card_HireVertex_eq_succ_card_HireLeaf X
+        omega) =
+      1 ↔ GoldLeavesDisconnected (owners X) := by
+  have hshift := spectrum_lapMatrix_GX X
+    (by
+      have hc := card_HireVertex_eq_succ_card_HireLeaf X
+      omega)
+    2 (by omega) (by
+      have hc := card_HireVertex_eq_succ_card_HireLeaf X
+      omega)
+  rw [hshift, one_add_eq_one_iff]
+  -- `μ₂ = 0` iff the leaf gold graph is disconnected. Not proved here.
+  sorry
 
 end Hire
