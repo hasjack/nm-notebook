@@ -13,7 +13,8 @@ Lives inside the e-walk explorer repo so GitHub Pages can link at the sources. P
 | `Hire/Graph.lean` | `G` / `GX` as Mathlib `SimpleGraph` on hired vertices; star on 2 + gold chords |
 | `Hire/Finite.lean` | `Finite` / `Fintype` for `HireVertex (owners X)`; classical `DecidableRel` Adj |
 | `Hire/StarLap.lean` | Pure star `Gstar` / `GXstar`; Lemma 7 style: Laplacian eigenvalues `n` and `1` |
-| `Hire/Lemma8.lean` | Gold-free ⇒ `G = Gstar` + eigenvalue `1`; converse spectral sketch (`sorry`) |
+| `Hire/Lemma8.lean` | Gold-free ⇒ `G = Gstar` + eigenvalue `1`; card-3 converse; card-4 chord keeps `1` |
+| `Hire/Cone.lean` | Layer C cone block: seed-then-leaves Laplacian equals `[k -1ᵀ; -1 I+L']` |
 | `Hire/Dirichlet.lean` | Stub: `Nat.forall_exists_prime_gt_and_eq_mod` + `eventually_hired` placeholder |
 
 ## Build
