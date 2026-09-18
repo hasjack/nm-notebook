@@ -35,7 +35,7 @@ Layer B footholds (proved):
       star + one leaf gold chord stays connected and keeps eigenvalue 1
       (center 0, joined leaves 1, hanging leaf −2); weak predicate survives
 
-lemma8_converse_sketch : HasSecondLaplacianEigenvalueOne ⇒ GoldFree
+lemma8_converse_card_three : HasSecondLaplacianEigenvalueOne ⇒ GoldFree
     └── card = 3 only, no sorry:
         GX_eq_star_sup_edge_of_gold_card_three
         → three_vertex_star_leaf_edge_not_second_one
@@ -53,7 +53,7 @@ GoldLeavesDisconnected  := ¬ (GgoldLeaves).Connected
 | Layer | Content | Status |
 |-------|---------|--------|
 | A | `GoldFree` ⇒ `G = Gstar` ⇒ `1` and `n` in spectrum | Checked (`Lemma8` + `StarLap`) |
-| B | Hire star, gold edges, finite windows | n=3 proved: K₃ kills the weak predicate, and `lemma8_converse_sketch` reaches `GoldFree` with no sorry. n=4: one leaf chord keeps `HasSecondLaplacianEigenvalueOne`, so the GoldFree converse does not extend. Remaining open spectral project: ordered `λ₂` toward Layer D |
+| B | Hire star, gold edges, finite windows | n=3 proved: K₃ kills the weak predicate, and `lemma8_converse_card_three` reaches `GoldFree` with no sorry. n=4: one leaf chord keeps `HasSecondLaplacianEigenvalueOne`, so the GoldFree converse does not extend. Remaining open spectral project: ordered `λ₂` toward Layer D |
 | C | Cone formula `spec(H_X) = {0,n} ∪ {1+μ_i}` | Paper-only |
 | D | Money line: `λ₂=1` ⟺ `GoldLeavesDisconnected` (forests allowed) | Paper-only; needs C + leaf gold connectivity |
 
@@ -70,5 +70,5 @@ Layer B alone does not unlock Layer D: zero gold is stricter than a disconnected
 
 - Checked spine: `Doors`, `HireSet`, `Graph`, `StarLap`, `Lemma8` forward + Layer B footholds
 - Named separately: `HireLeaf`, `GgoldLeaves`, `GoldLeavesDisconnected` (no longer an alias of `GoldFree`)
-- Open: ordered `λ₂` toward Layer D (no false sorry left in `lemma8_converse_sketch`). Dirichlet owner stub in `Dirichlet.lean`
+- Open: ordered `λ₂` toward Layer D (no false sorry left in `lemma8_converse_card_three`). Dirichlet owner stub in `Dirichlet.lean`
 - Paper: `paper/two_doors.tex` Lemmas 7–8 and the window table

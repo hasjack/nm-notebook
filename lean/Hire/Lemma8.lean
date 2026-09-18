@@ -27,7 +27,7 @@ as Mathlib reaches without a full interlacing development:
   `HasSecondLaplacianEigenvalueOne` fails; on a four-vertex window the star plus
   one leaf chord keeps eigenvalue `1` and stays connected, so the weak predicate
   survives;
-* converse (`lemma8_converse_sketch`): `HasSecondLaplacianEigenvalueOne` implies
+* converse (`lemma8_converse_card_three`): `HasSecondLaplacianEigenvalueOne` implies
   `GoldFree` only on a three-vertex window. `four_vertex_star_leaf_edge_keeps_one`
   is why `GoldFree` stops at card 3. The forest line `GoldLeavesDisconnected`
   is Layer D, not this theorem.
@@ -683,7 +683,7 @@ theorem lemma8_forward {X : ℕ} (h : GoldFree (owners X))
 `four_vertex_star_leaf_edge_keeps_one` is why `GoldFree` stops at card 3: the
 weak predicate survives one leaf chord, so the implication is false for card ≥ 4.
 The forest line `GoldLeavesDisconnected` is Layer D, not this theorem. -/
-theorem lemma8_converse_sketch {X : ℕ}
+theorem lemma8_converse_card_three {X : ℕ}
     (hspec : HasSecondLaplacianEigenvalueOne (GX X))
     (hcard : Fintype.card (HireVertex (owners X)) = 3) :
     GoldFree (owners X) := by
