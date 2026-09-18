@@ -27,10 +27,10 @@ as Mathlib reaches without a full interlacing development:
   `HasSecondLaplacianEigenvalueOne` fails; on a four-vertex window the star plus
   one leaf chord keeps eigenvalue `1` and stays connected, so the weak predicate
   survives;
-* converse sketch wires a gold leaf chord to the three-vertex foothold; larger
-  windows keep one honest `sorry` (ordered `λ₂` / Courant–Fischer / Cauchy
-  interlacing, not `1 ∉ spectrum`). A single leaf chord does not reach the
-  money line.
+* converse (`lemma8_converse_sketch`): `HasSecondLaplacianEigenvalueOne` implies
+  `GoldFree` only on a three-vertex window. `four_vertex_star_leaf_edge_keeps_one`
+  is why `GoldFree` stops at card 3. The forest line `GoldLeavesDisconnected`
+  is Layer D, not this theorem.
 
 Public voice: doors, hire set, gold edges, finite windows.
 -/
@@ -677,27 +677,23 @@ theorem lemma8_forward {X : ℕ} (h : GoldFree (owners X))
   rw [GX_eq_GXstar_of_goldFree h]
   exact SimpleGraph.connected_starGraph (seedVertex (owners X))
 
-/-- **Lemma 8 (⇐ spectral sketch at `GoldFree` strength):** gold leaf chord reduces
-to the star-plus-edge setting.
+/-- **Lemma 8 converse at card 3:** `HasSecondLaplacianEigenvalueOne` implies
+`GoldFree` when the hire window has three vertices.
 
-* Three-vertex windows: discharged by `three_vertex_star_leaf_edge_not_second_one`.
-* Larger windows: one honest `sorry`. `four_vertex_star_leaf_edge_keeps_one`
-  shows the weak predicate does not fail at card 4, so the gap is ordered `λ₂` /
-  Courant–Fischer / Cauchy interlacing, not `1 ∉ spectrum`. -/
+`four_vertex_star_leaf_edge_keeps_one` is why `GoldFree` stops at card 3: the
+weak predicate survives one leaf chord, so the implication is false for card ≥ 4.
+The forest line `GoldLeavesDisconnected` is Layer D, not this theorem. -/
 theorem lemma8_converse_sketch {X : ℕ}
     (hspec : HasSecondLaplacianEigenvalueOne (GX X))
-    (_hn : 3 ≤ Fintype.card (HireVertex (owners X))) :
+    (hcard : Fintype.card (HireVertex (owners X)) = 3) :
     GoldFree (owners X) := by
   classical
   intro u v hg
   obtain ⟨hu, hv, huv⟩ := ne_seed_of_GoldEdge hg
-  by_cases hcard : Fintype.card (HireVertex (owners X)) = 3
-  · have hG := GX_eq_star_sup_edge_of_gold_card_three hg hcard
-    exact (three_vertex_star_leaf_edge_not_second_one
-      (seedVertex (owners X)) u v hu hv huv hcard
-      (SimpleGraph.starGraph (seedVertex (owners X))) rfl
-      (GX X) hG) hspec
-  · -- `four_vertex_star_leaf_edge_keeps_one`: the weak predicate does not fail at card 4, so this sorry stays ordered λ₂ / Courant–Fischer / Cauchy interlacing, not `1 ∉ spectrum`.
-    sorry
+  have hG := GX_eq_star_sup_edge_of_gold_card_three hg hcard
+  exact (three_vertex_star_leaf_edge_not_second_one
+    (seedVertex (owners X)) u v hu hv huv hcard
+    (SimpleGraph.starGraph (seedVertex (owners X))) rfl
+    (GX X) hG) hspec
 
 end Hire
