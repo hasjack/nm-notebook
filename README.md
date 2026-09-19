@@ -2,7 +2,7 @@
 
 Public notebook: explore, or publish lemmas with Lean proofs.
 
-Current lead: the **hire graph of the 3-free door** ([`/`](/) · [`/hire`](/hire) · [`lean/`](lean/) · [PDF](public/paper/two_doors.pdf) · [TeX](paper/two_doors.tex)).
+Current lead: the **hire graph of the 3-free door** ([`/`](/) · [`/hire`](/hire) · [`lean/`](lean/) · [PDF](public/paper/hire-graph-of-the-3-free-door.pdf) · [TeX](paper/two_doors.tex)).
 
 | Shelf | What |
 |-------|------|

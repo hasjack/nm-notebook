@@ -4,35 +4,53 @@
 \usepackage{booktabs}
 \usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={The hire graph of the 3-free door},pdfauthor={Jack Pickett}}
 
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}
 \newtheorem{remark}{Remark}
+\newtheorem{theorem}{Theorem}
+\newtheorem{question}{Question}
 
 \title{The hire graph of the 3-free door}
+\author{Jack Pickett \textperiodcentered\ 19th September 2026}
 \date{}
-\author{}
 
 \begin{document}
 \maketitle
 \thispagestyle{empty}
-\vspace{-2.8em}
 
-Let \(\chi_3\) be the non-principal Dirichlet character modulo \(3\):
-\(\chi_3(n)=0\) if \(3\mid n\), and \(\chi_3(n)=\bigl(\frac{n}{3}\bigr)\) otherwise,
-so \(\chi_3(n)=+1\) if \(n\equiv 1\pmod{3}\) and \(\chi_3(n)=-1\) if \(n\equiv 2\pmod{3}\).
+\begin{abstract}
+Of the two even neighbours of an odd prime \(p\neq 3\), exactly one is divisible by \(3\).
+The other, the \emph{3-free door} \(m_0(p)=p+\chi_3(p)\), is a canonical even integer attached to \(p\) whose odd prime factors never include \(3\).
+Ownership \(q\mid m_0(p)\) places a directed graph on the primes other than \(3\); adjoining a hub at \(2\), which divides every door, produces the \emph{hire graph}.
+On a finite window the graph is the cone on its gold subgraph, so the Laplacian spectrum is the standard cone formula and the algebraic connectivity equals \(1\) precisely when gold is disconnected.
+Gold is a DAG: arcs run from larger primes to smaller ones, so the relation is never symmetric.
+Machine checks find gold disconnected through \(X=10^7\), with satellites on \(2\)-power doors.
+The first connecting window is the first owner of \(46\,137\,211\):
+\(X^*=92\,274\,421\), with \(m_0(X^*)=2\cdot 46\,137\,211\) and \(m_0(46\,137\,211)=2^2\cdot 11\cdot 1\,048\,573\),
+so two new gold arcs join the mainland at \(11\) to the last island \(\{524\,287,\,1\,048\,573,\,8\,388\,593\}\).
+Gold stays connected through \(X=2.2\cdot 10^9\).
+Thus \(\lambda_2(H_X)=1\) fails for some finite \(X\).
+Every odd prime other than \(3\) lies in the infinite gold component of \(5\): a Dirichlet bridge in one of two classes modulo \(15q\) yields a common owner of \(5\) and \(q\).
+Whether gold is disconnected for infinitely many finite windows remains open.
+\end{abstract}
+
+\section{Doors}
+
+Let \(\chi_3\) be the non-principal Dirichlet character modulo \(3\): \(\chi_3(n)=0\) if \(3\mid n\), and \(\chi_3(n)=\bigl(\frac{n}{3}\bigr)\) otherwise, so \(\chi_3(n)=+1\) if \(n\equiv 1\pmod{3}\) and \(\chi_3(n)=-1\) if \(n\equiv 2\pmod{3}\).
 For an odd prime \(p\neq 3\) write
 \[
-m_0(p)=p+\chi_3(p),
-\qquad
-m_1(p)=p-\chi_3(p).
+m_0(p)=p+\chi_3(p),\qquad m_1(p)=p-\chi_3(p).
 \]
+The value \(m_0(p)\) is the \emph{3-free door} of \(p\); \(m_1(p)\) is the complementary neighbour.
 
 \begin{lemma}
+\label{lem:doors}
 \(m_0(p)\) is even and not divisible by \(3\).
 \(m_1(p)\) is divisible by \(6\).
 \(\{m_0(p),m_1(p)\}=\{p-1,p+1\}\).
-In particular \(3\) never divides a \(3\)-free door.
+In particular \(3\) never divides a 3-free door.
 \end{lemma}
 
 \begin{proof}
@@ -50,6 +68,7 @@ Examples.
 \(p=13\equiv 1\pmod{3}\), so \(\chi_3(13)=+1\), \(m_0(13)=14=2\cdot 7\), \(m_1(13)=12=2^2\cdot 3\).
 
 \begin{lemma}
+\label{lem:mod12}
 The four residue classes of odd primes modulo \(12\) determine the doors as follows.
 \end{lemma}
 
@@ -69,11 +88,14 @@ The four residue classes of odd primes modulo \(12\) determine the doors as foll
 
 \begin{proof}
 The classes \(\{1,5,7,11\}\pmod{12}\) are the units modulo \(12\).
-Each line is the conjunction of Lemma~1 with the unique lifting of that class modulo \(4\) and modulo \(3\).
+Each line is the conjunction of Lemma~\ref{lem:doors} with the unique lifting of that class modulo \(4\) and modulo \(3\).
 Residues \(2\) and \(10\) modulo \(12\) are \(2\pmod{4}\), so \(v_2(m_0)=1\); residues \(4\) and \(8\) are \(0\pmod{4}\), so \(v_2(m_0)\ge 2\).
 \end{proof}
 
+The same residue constraint specialises to two classical families.
+
 \begin{lemma}
+\label{lem:twins}
 If \(p\) and \(p+2\) are both prime and \(p>3\), then \(p\equiv 2\pmod{3}\) and
 \[
 m_1(p)=m_1(p+2)=p+1.
@@ -88,10 +110,14 @@ Then \(m_1(p)=p+1\) and \(m_1(p+2)=p+1\).
 \end{proof}
 
 \begin{corollary}
+\label{cor:one-neighbour}
 If an even integer is not divisible by \(3\), at most one of its two neighbours is an odd prime greater than \(3\).
 \end{corollary}
 
+In other words, the only twin-prime pair not sitting around a multiple of \(3\) is \((3,5)\); see Hardy--Wright~\cite[Ch.~1]{HW}.
+
 \begin{lemma}
+\label{lem:sg}
 If \(p\) and \(q=2p+1\) are both prime and \(p>3\), then \(p\equiv 2\pmod{3}\) and \(m_0(q)=2p\).
 \end{lemma}
 
@@ -100,28 +126,55 @@ If \(p\equiv 1\pmod{3}\) then \(q=2p+1\equiv 0\pmod{3}\), impossible for \(q>3\)
 Thus \(p\equiv 2\pmod{3}\), so \(q\equiv 2\pmod{3}\), \(\chi_3(q)=-1\), and \(m_0(q)=q-1=2p\).
 \end{proof}
 
-\paragraph{The hire graph.}
+Thus a Sophie Germain prime \(p>3\) forces the associated safeprime \(q=2p+1\) to have 3-free door \(2p\).
+Iterating the same relation produces a Cunningham chain of the first kind.
+
+\section{Ownership and the hire graph}
+
 An odd prime \(p\neq 3\) is an \emph{owner} of an odd prime \(q\) when \(q\mid m_0(p)\).
-By Dirichlet's theorem on the two admissible classes modulo \(3q\),
+The resulting directed graph on \(\{\text{odd primes}\}\setminus\{3\}\) is the 3-free half of the familiar graph whose edges record prime factors of \(p\pm 1\), as in Pratt certificates for \(p-1\)~\cite{Pratt} and in the Sophie Germain / Cunningham setting of Lemma~\ref{lem:sg}.
+
+By Dirichlet's theorem~\cite{Dirichlet} on the two admissible classes modulo \(3q\),
 \[
 p\equiv 1\pmod{3},\ \ p\equiv -1\pmod{q}
 \qquad\text{and}\qquad
 p\equiv 2\pmod{3},\ \ p\equiv 1\pmod{q},
 \]
-every odd prime \(q\neq 3\) has an owner.
+every odd prime \(q\neq 3\) has infinitely many owners.
 Hence the set of primes that occur as \(2\) or as an odd prime factor of some \(m_0(p)\) is all primes except \(3\).
 
-Spectra are taken on finite windows.
-For \(X\ge 5\), let the owners be the odd primes \(p\neq 3\) with \(p\le X\).
-Let \(S_X\) consist of \(2\) together with every odd prime factor of \(m_0(p)\) for such owners, and write \(n=|S_X|\).
-The \emph{hire graph} \(G_X\) has vertex set \(S_X\), a spoke from \(2\) to every other vertex, and a directed gold arc \(p\to q\) whenever \(p\le X\), \(p,q\in S_X\setminus\{2\}\), and \(q\mid m_0(p)\) (gold witnessed by owners in the window).
-The underlying undirected gold graph has an edge \(\{p,q\}\) when at least one of the two arcs is present.
-Let \(H_X\) be the combinatorial Laplacian of the undirected graph (spokes plus undirected gold), and let \(L'_X\) be the Laplacian of the undirected gold graph on \(S_X\setminus\{2\}\).
+\begin{lemma}
+\label{lem:dag}
+If \(q\mid m_0(p)\) for odd primes \(p,q\neq 3\), then
+\[
+q\le \frac{m_0(p)}{2}\le \frac{p+1}{2}<p.
+\]
+In particular the directed ownership graph is acyclic, the relation is never symmetric, and on every finite window the number of gold arcs equals the number of undirected gold edges.
+\end{lemma}
 
-The relation \(q\mid m_0(p)\) is not symmetric:
-\(5\mid m_0(11)=10\) while \(11\nmid m_0(5)=4\).
+\begin{proof}
+By Lemma~\ref{lem:doors}, \(m_0(p)\) is even and at least \(4\).
+An odd prime factor therefore divides \(m_0(p)/2\), hence is at most \(m_0(p)/2\le(p+1)/2<p\).
+\end{proof}
+
+The example \(5\mid m_0(11)=10\) while \(11\nmid m_0(5)=4\) is the general case, not a curiosity: ownership always points from a larger prime to a smaller one.
+
+Spectra are taken on finite windows.
+For \(X\ge 5\), let the \emph{owners of the window} be the odd primes \(p\neq 3\) with \(p\le X\).
+Let \(S_X\) consist of \(2\) together with every odd prime factor of \(m_0(p)\) as \(p\) runs over those owners, and write \(n=|S_X|\).
+Thus \(S_X\) is not the set of owners: an owner appears as a vertex only if it arises as an odd prime factor of some door in the window.
+Since \(m_0(p)\le p+1\le X+1\), every odd prime in \(S_X\) is at most \((X+1)/2\).
+
+The \emph{hire graph} \(G_X\) has vertex set \(S_X\), a spoke from \(2\) to every other vertex, and a directed \emph{gold} arc \(p\to q\) whenever \(p,q\in S_X\setminus\{2\}\) and \(q\mid m_0(p)\).
+Gold is witnessed by doors of owners in the window; the source \(p\) is required only to lie in \(S_X\), which already forces \(p\le(X+1)/2\).
+The underlying undirected gold graph has an edge \(\{p,q\}\) when at least one of the two arcs is present.
+By Lemma~\ref{lem:dag} at most one of the two arcs can be present.
+
+The factor \(2\) divides every door, so it is adjacent to every vertex of \(S_X\setminus\{2\}\) independently of gold.
+That is the reason for the star: finite windows are connected whether or not gold is.
 
 \begin{lemma}
+\label{lem:gold-cong}
 There is a gold arc \(p\to q\) if and only if \(p\equiv -\chi_3(p)\pmod{q}\).
 \end{lemma}
 
@@ -130,14 +183,23 @@ The congruence is \(q\mid\bigl(p+\chi_3(p)\bigr)\), i.e.\ \(q\mid m_0(p)\).
 \end{proof}
 
 \begin{lemma}
-Every undirected gold edge \(\{p,q\}\) is the base of a triangle \(2\textrm{--}p\textrm{--}q\) in \(G_X\).
+\label{lem:triangle}
+Every undirected gold edge \(\{p,q\}\) is the base of a triangle \(2\)--\(p\)--\(q\) in \(G_X\).
 \end{lemma}
 
 \begin{proof}
 Both \(p\) and \(q\) are adjacent to \(2\) by construction.
 \end{proof}
 
+\section{The cone spectrum}
+
+Let \(H_X\) be the combinatorial Laplacian of the undirected graph on \(S_X\) (spokes plus undirected gold), and let \(L'_X\) be the Laplacian of the undirected gold graph on \(S_X\setminus\{2\}\).
+Thus \(G_X\) is the cone on its gold subgraph.
+We record the block computation of its Laplacian spectrum for completeness; algebraic connectivity is due to Fiedler~\cite{Fiedler}.
+\footnote{Door identities and the window cone block are checked in Lean~4 (\texttt{Hire/Doors.lean}, \texttt{Hire/Lemma8.lean}); the connecting witness at \(X^*\) is \texttt{Hire/WitnessXstar.lean}; the Dirichlet bridge is \texttt{Hire/GoldBridge.lean}. The Mathlib card bound is only the coarse estimate \(\lambda\le |V|\), not the cone identity.}
+
 \begin{lemma}
+\label{lem:lambda-max}
 \(\lambda_{\max}(H_X)=n\).
 The vector with value \(n-1\) at \(2\) and value \(-1\) at every other vertex is an eigenvector for this eigenvalue, independently of the gold edges.
 \end{lemma}
@@ -149,14 +211,11 @@ Each gold edge has both ends in the set where \(v\) is constant, so contributes 
 \end{proof}
 
 \begin{lemma}
+\label{lem:cone}
 Let \(0=\mu_1\le\mu_2\le\cdots\le\mu_{n-1}\) be the eigenvalues of \(L'_X\).
 Then
 \[
-\operatorname{spec}(H_X)
-=
-\{0,\,n\}
-\cup
-\{1+\mu_2,\ldots,1+\mu_{n-1}\}.
+\operatorname{spec}(H_X)=\{0,n\}\cup\{1+\mu_2,\dots,1+\mu_{n-1}\}.
 \]
 In particular \(\lambda_2(H_X)=1\) if and only if the undirected gold graph on \(S_X\setminus\{2\}\) is disconnected.
 \end{lemma}
@@ -165,76 +224,192 @@ In particular \(\lambda_2(H_X)=1\) if and only if the undirected gold graph on \
 Order the vertices as \(2\) followed by \(S_X\setminus\{2\}\).
 Then
 \[
-H_X
-=
+H_X=
 \begin{pmatrix}
-k & -\mathbf{1}^{\mathsf T}\\
+k & -\mathbf{1}^\top \\
 -\mathbf{1} & I+L'_X
 \end{pmatrix},
 \]
 where \(k=n-1\).
 Vectors constant on \(S_X\setminus\{2\}\) yield eigenvalues \(0\) and \(n\).
-On the complement \(\mathbf{1}^{\mathsf T}y=0\) the lower block acts as \(1+\mu\), and the copy of \(\ker L'_X\) spanned by \(\mathbf{1}\) has already been used.
-The remaining eigenvalues of \(L'_X\) are \(\mu_2,\ldots,\mu_{n-1}\).
+On the complement \(\mathbf{1}^\top y=0\) the lower block acts as \(1+\mu\), and the copy of \(\ker L'_X\) spanned by \(\mathbf{1}\) has already been used.
+The remaining eigenvalues of \(L'_X\) are \(\mu_2,\dots,\mu_{n-1}\).
+The algebraic connectivity of a graph vanishes if and only if the graph is disconnected~\cite{Fiedler}, so \(\mu_2=0\) if and only if gold is disconnected, and then \(\lambda_2(H_X)=1\).
 \end{proof}
 
-\noindent
-On the windows below, undirected gold remains disconnected, so \(\lambda_2(H_X)=1\).
+Thus \(\lambda_2(H_X)=1\) is not an independent spectral observation: it is exactly the statement that gold is disconnected on the window.
+
+\section{Windows and satellites}
+
+Early windows are disconnected, so \(\lambda_2(H_X)=1\) by Lemma~\ref{lem:cone}.
+Larger machine-checked windows find a first connecting cutoff \(X^*\), after which gold stays connected through the range below.
+These counts were obtained by an SPF sieve and union-find on the undirected gold graph; they are not Lean-checked.
 
 \begin{center}
 \small
-\begin{tabular}{@{}rrrrccc@{}}
+\begin{tabular}{@{}rrrrll@{}}
 \toprule
-\(X\) & \(|S_X|\) & gold edges & gold arcs & \(L'_X\) connected & \(\mu_2(L'_X)\) & \(\lambda_2(H_X)\) \\
+\(X\) & \(|S_X|\) & gold edges & gold CCs & connected? & satellites / note \\
 \midrule
-\(30\)  & \(4\)  & \(1\)  & \(1\)  & no & \(0\) & \(1\) \\
-\(50\)  & \(6\)  & \(3\)  & \(3\)  & no & \(0\) & \(1\) \\
-\(100\) & \(12\) & \(7\)  & \(7\)  & no & \(0\) & \(1\) \\
-\(200\) & \(18\) & \(13\) & \(13\) & no & \(0\) & \(1\) \\
+\(30\)    & \(4\)   & \(1\)   & \(2\) & no & \(\{7\}\) \\
+\(50\)    & \(6\)   & \(3\)   & \(2\) & no & \(\{7\}\) \\
+\(100\)   & \(12\)  & \(7\)   & \(4\) & no & \(\{7,13,29\}\), \(\{17\}\), \(\{31\}\) \\
+\(200\)   & \(18\)  & \(13\)  & \(4\) & no & \(\{7,13,29,53,97\}\), \(\{17\}\), \(\{31\}\) \\
+\(10^4\)  & \(362\) & \(543\) & \(2\) & no & \(\{257,4111\}\) \\
+\(5\cdot 10^5\) & \(9292\) & \(18335\) & \(3\) & no & \(\{8191,16381\}\), \(\{65537\}\) \\
+\(10^7\)  & \(125662\) & \(278752\) & \(3\) & no & \(\{131071\}\), \(\{524287\}\) \\
+\(X^*-1\) & \(912341\) & \(2161493\) & \(2\) & no & \(\{524287,1048573,8388593\}\) \\
+\(X^*=92274421\) & \(912342\) & \(2161495\) & \(1\) & yes & first mainland \\
+\(10^8\)  & \(980293\) & \(2327533\) & \(1\) & yes & \\
+\(10^9\)  & \(7877141\) & \(19761831\) & \(1\) & yes & \\
+\(2.2\cdot 10^9\) & \(16173663\) & \(41258757\) & \(1\) & yes & \(2^{31}-1\) not yet in \(S_X\) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \noindent
+Small windows in full.
 \(X=30\): \(S=\{2,5,7,11\}\), gold \(\{5,11\}\).
 \(X=50\): \(S=\{2,5,7,11,19,23\}\), gold \(\{5,11\}\), \(\{5,19\}\), \(\{11,23\}\).
-\(X=100\): gold \(\{5,11\}\), \(\{5,19\}\), \(\{5,41\}\), \(\{7,13\}\), \(\{7,29\}\), \(\{11,23\}\), \(\{19,37\}\).
+\(X=100\): \(S=\{2,5,7,11,13,17,19,23,29,31,37,41\}\), gold \(\{5,11\}\), \(\{5,19\}\), \(\{5,41\}\), \(\{7,13\}\), \(\{7,29\}\), \(\{11,23\}\), \(\{19,37\}\).
+In every row the number of gold arcs equals the number of undirected gold edges, as required by Lemma~\ref{lem:dag}.
 
-\paragraph{Variant: the sluice.}
-The hire graph \(G_X\) uses \(m_0\) throughout.
-A finite set \(\Sigma\) of odd primes defines a variant door:
-the \(\Sigma\)-door of \(p\) is \(m_0(p)\) if no prime of \(\Sigma\) divides \(m_0(p)\); otherwise \(m_1(p)\) if no prime of \(\Sigma\) divides \(m_1(p)\); and is otherwise undefined.
+The leftover components are not arbitrary.
+They sit on primes whose door is a power of \(2\), together with short owner-chains off those primes.
 
 \begin{lemma}
-If \(\Sigma=\{5\}\), the \(\Sigma\)-door is defined for every odd prime \(p\neq 3\).
-It differs from \(m_0(p)\) if and only if \(p\equiv 11\) or \(19\pmod{30}\).
+\label{lem:twopow}
+Let \(p\neq 3\) be an odd prime.
+Then \(m_0(p)\) is a power of \(2\) if and only if either
+\begin{itemize}
+\item \(p=2^k-1\) is a Mersenne prime (necessarily \(k\) odd, \(k\ge 3\)), in which case \(p\equiv 1\pmod{3}\) and \(m_0(p)=p+1=2^k\), or
+\item \(p=2^k+1\) is a Fermat prime (necessarily \(k\) a power of \(2\), \(k\ge 2\)), in which case \(p\equiv 2\pmod{3}\) and \(m_0(p)=p-1=2^k\).
+\end{itemize}
+In both cases \(p\) has gold out-degree zero, so it enters \(S_X\) only as a target and is isolated in gold until one of its owners itself lies in \(S_X\).
 \end{lemma}
 
 \begin{proof}
-The condition \(5\mid m_0(p)\) is \(p\equiv -\chi_3(p)\pmod{5}\).
-Combined with \(p\) odd and the value of \(\chi_3(p)\), this is the pair of classes \(11,19\pmod{30}\).
-On those classes \(m_1(p)\) is divisible by \(6\) and not by \(5\): the two neighbours of \(p\) differ by \(2\), so at most one is divisible by \(5\).
+The 3-free door is always one of \(p\pm 1\).
+If \(p=2^k-1\) is prime and \(p>3\), then \(k\) is an odd prime, so \(2^k\equiv 2\pmod{3}\) and \(p\equiv 1\pmod{3}\).
+Thus \(\chi_3(p)=+1\) and \(m_0(p)=p+1=2^k\).
+If \(p=2^k+1\) is prime and \(p>3\), then \(k\) is a power of \(2\) with \(k\ge 2\), hence even, so \(2^k\equiv 1\pmod{3}\) and \(p\equiv 2\pmod{3}\).
+Thus \(\chi_3(p)=-1\) and \(m_0(p)=p-1=2^k\).
+Conversely, if \(m_0(p)=2^k\) then either \(p+1=2^k\) or \(p-1=2^k\).
+
+A prime with \(m_0(p)\) a power of \(2\) has no odd prime factor in its door, so it emits no gold arc.
+It appears in \(S_X\) only when some owner \(r\le X\) has \(p\mid m_0(r)\).
+The arc \(r\to p\) is present in \(G_X\) only if that owner \(r\) itself lies in \(S_X\).
 \end{proof}
 
-\begin{lemma}
-If \(\Sigma=\{5,7\}\), the \(\Sigma\)-door is undefined if and only if
-\[
-p\equiv 29,\ 41,\ 169,\ \text{or }181\pmod{210}.
-\]
-These are four residue classes modulo \(210\), of density \(4/\varphi(210)=1/12\) among units modulo \(210\).
-\end{lemma}
+The primes of Lemma~\ref{lem:twopow} below \(10^6\) include
+\(5=2^2+1\),
+\(7=2^3-1\),
+\(17=2^4+1\),
+\(31=2^5-1\),
+\(127=2^7-1\),
+\(257=2^8+1\),
+\(8191=2^{13}-1\),
+\(65537=2^{16}+1\),
+\(131071=2^{17}-1\),
+and
+\(524287=2^{19}-1\).
+On the windows above, satellites absorb into the component of \(5\) and newer \(2\)-power doors replenish leftovers: \(\{257,4111\}\) at \(X=10^4\); \(\{8191,16381\}\) and \(\{65537\}\) at \(X=5\cdot 10^5\); \(\{131071\}\) and \(\{524287\}\) at \(X=10^7\).
+The last island before mainland is \(\{524\,287,\,1\,048\,573,\,8\,388\,593\}\) at \(X^*-1\).
+The cutoff \(X^*=92\,274\,421\) is the first owner of \(46\,137\,211\): both are prime,
+\(m_0(X^*)=2\cdot 46\,137\,211\), and \(m_0(46\,137\,211)=2^2\cdot 11\cdot 1\,048\,573\).
+Thus the new vertex contributes the gold arcs \(46\,137\,211\to 11\) (into the component of \(5\)) and \(46\,137\,211\to 1\,048\,573\) (into the last island), so \(|S_X|\) rises by \(1\), the gold-edge count rises by \(2\), and the number of components drops from \(2\) to \(1\).
+The island itself is elementary: \(524\,287=2^{19}-1\) has \(m_0=2^{19}\), while \(m_0(1\,048\,573)=2\cdot 524\,287\) and \(m_0(8\,388\,593)=2^4\cdot 524\,287\).
+Gold stays connected through \(X=2.2\cdot 10^9\).
+Let \(M_{31}=2^{31}-1\). Every owner of \(M_{31}\) is at least \(2M_{31}-1\approx 4.29\cdot 10^9\), so \(M_{31}\) cannot enter \(S_X\) before that bound; there is no \(2\)-power door prime between \(524\,287\) and \(M_{31}\).
+Connectedness on \([X^*,\,2.2\cdot 10^9]\) is therefore not threatened by a new Lemma~\ref{lem:twopow} island (a non-\(2\)-power satellite remains conceivable, which is why those rows stay machine-checked).
+The lag throughout is the distinction between owners and \(S_X\): an owner of a \(2\)-power door may exist long before that owner itself lies in \(S_X\).
+
+\section{Questions}
+
+Lemma~\ref{lem:cone} equates the spectral and graph forms of the finite-window connectivity question.
+
+\begin{question}
+\label{q:windows}
+Is the undirected gold graph on \(S_X\setminus\{2\}\) disconnected for every finite \(X\)?
+Equivalently, is \(\lambda_2(H_X)=1\) for every finite window?
+\end{question}
+
+Machine checks answer Question~\ref{q:windows} in the negative: at \(X^*=92\,274\,421\) gold is connected, so \(\lambda_2(H_X)\neq 1\).
+This does not prove that every larger window is connected; it only falsifies the universal claim.
+In particular, a later \(2\)-power door (once hired into \(S_X\)) could open a new satellite.
+
+\begin{question}
+\label{q:infinite}
+Does every odd prime other than \(3\) eventually sit in the infinite component of \(5\) in undirected gold?
+\end{question}
+
+An ascending owner-chain from \(q\) need not meet \(5\); a common owner of both does.
+The next theorem supplies one by Dirichlet in two classes modulo \(15q\).
+
+\begin{theorem}
+\label{thm:bridge}
+Let \(q\neq 3\) be an odd prime.
+Then \(q\) lies in the same connected component as \(5\) in the infinite undirected gold graph.
+Moreover there is a finite \(X\) such that \(5\) and \(q\) lie in the same gold component of \(G_X\).
+\end{theorem}
 
 \begin{proof}
-The door is undefined precisely when \(5\) divides one neighbour of \(p\) and \(7\) divides the other, i.e.\
+The case \(q=5\) is empty.
+Assume \(q\neq 3,5\).
+Consider the two residue classes modulo \(15q\)
 \[
-\bigl\{p-1,\,p+1\bigr\}
-\equiv
-\bigl\{0\pmod{5},\,0\pmod{7}\bigr\}
+\begin{aligned}
+(A)&\quad r\equiv 1\pmod{3},\qquad r\equiv -1\pmod{5q},\\
+(B)&\quad r\equiv 2\pmod{3},\qquad r\equiv +1\pmod{5q}.
+\end{aligned}
 \]
-as sets.
-The system \(p\equiv \pm 1\pmod{5}\), \(p\equiv \mp 1\pmod{7}\), together with \(p\) odd, cuts four classes modulo \(210=2\cdot 3\cdot 5\cdot 7\).
-The odd representatives are \(29\), \(41\), \(169\equiv -41\), and \(181\equiv -29\).
-There are \(\varphi(210)=48\) units modulo \(210\), so the density among those units is \(4/48=1/12\).
+In both classes \(\gcd(r,15q)=1\): the first congruence keeps \(r\) coprime to \(3\), and the second keeps \(r\) coprime to \(5q\).
+Dirichlet's theorem~\cite{Dirichlet} therefore yields infinitely many primes in each class.
+Take any such prime \(r\).
+Then \(5q\mid m_0(r)\), so there are gold arcs \(r\to 5\) and \(r\to q\).
+In the infinite gold graph this is the path \(q{-}r{-}5\).
+
+For a finite window, let \(p\) be an owner of \(r\) (again by Dirichlet, as in the ownership section).
+Choose \(X\ge\max(p,r)\).
+Then \(r\in S_X\) and \(r\le X\), so \(r\) is an owner of the window; since \(q\mid m_0(r)\), also \(q\in S_X\), and both arcs are present in \(G_X\).
 \end{proof}
+
+Thus Question~\ref{q:infinite} is answered in the affirmative.
+The same argument gives the Mersenne and Fermat corollaries: every \(2\)-power-door satellite is absorbed into \(\mathrm{comp}(5)\) in some finite window.
+
+\begin{question}
+\label{q:infmany}
+Is the undirected gold graph disconnected for infinitely many finite \(X\)?
+\end{question}
+
+If there are infinitely many Mersenne primes, Lemma~\ref{lem:twopow} makes each new \(M_p\) a sink when it first enters \(S_X\).
+A satellite interval then exists whenever a \(5\)--\(M_p\) bridge is hired only later; that is the expected size of a class modulo \(15M_p\), and it holds for every computed \(M_p\), but it is not a formal consequence of the sink lemma alone.
+Infinitude of Mersenne primes is open, and so is Question~\ref{q:infmany}.
+The theorem does not give an effective \(X\) worth computing: Linnik bounds the first prime in the class modulo \(15q\), and that prime still has to be hired.
+
+
+\begin{thebibliography}{9}
+
+\bibitem{Dirichlet}
+P.~G.~L. Dirichlet,
+\emph{Beweis des Satzes, dass jede unbegrenzte arithmetische Progression, deren erstes Glied und Differenz ganze Zahlen ohne gemeinschaftlichen Factor sind, unendlich viele Primzahlen enth\"alt},
+Abh.\ K\"onigl.\ Akad.\ Wiss.\ Berlin (1837), 45--81.
+
+\bibitem{Fiedler}
+M.~Fiedler,
+Algebraic connectivity of graphs,
+\emph{Czechoslovak Math.\ J.} \textbf{23} (1973), 298--305.
+
+\bibitem{HW}
+G.~H. Hardy and E.~M. Wright,
+\emph{An Introduction to the Theory of Numbers},
+6th~ed., Oxford University Press, 2008.
+
+\bibitem{Pratt}
+V.~R. Pratt,
+Every prime has a succinct certificate,
+\emph{SIAM J.\ Comput.} \textbf{4} (1975), 214--220.
+
+\end{thebibliography}
 
 \end{document}
