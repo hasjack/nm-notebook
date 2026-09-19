@@ -22,7 +22,6 @@ Checked under `lean/Hire/` (build with `elan` / `lake`; Mathlib is not vendored)
 - `GoldBridge` — strong Q2 (0 sorry)
 - `GoldDisconnects` — sequel A (first-owner disconnect + sink chains)
 
-No ζ in public wording.
 
 ## Run
 
