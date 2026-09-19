@@ -46,4 +46,4 @@ npm run build
 
 ## License
 
-Apache-2.0 (see Lean file headers). Add a root `LICENSE` if you cut a public release tag.
+Apache-2.0 — see [`LICENSE`](LICENSE).
