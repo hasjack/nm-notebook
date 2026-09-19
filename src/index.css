@@ -219,10 +219,11 @@ body {
 }
 
 .nav-drill-label {
-  font-size: 0.72rem;
+  font-size: 0.95rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 600;
+  color: #1a1a1a;
 }
 
 .nav-drill.sub .nav-drill-label {
@@ -255,11 +256,10 @@ body {
 }
 
 .nav-group-label {
-
-  font-size: 0.72rem;
+  font-size: 0.95rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #6b5e4e;
+  color: #1a1a1a;
   font-weight: 600;
   margin-bottom: 0.35rem;
 }
@@ -275,10 +275,10 @@ body {
   border: none;
   background: transparent;
   border-radius: 0;
-  padding: 0.4rem 0;
+  padding: 0.32rem 0;
   text-align: left;
-  font-size: 0.95rem;
-  color: #1a1a1a;
+  font-size: 0.86rem;
+  color: #3a3228;
   text-decoration: none;
 }
 
@@ -735,4 +735,579 @@ code.pow sup {
 
 .figure-grid img {
   border-radius: 6px;
+}
+
+.basins-page {
+  max-width: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 4.5rem);
+}
+
+.basins-page > h1,
+.basins-page > p {
+  max-width: 40rem;
+}
+
+.basins-panel {
+  background: transparent;
+  color: #1a1a1a;
+  border-radius: 0;
+  padding: 0.25rem 0 0.5rem;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.basins-panel svg,
+.basins-svg {
+  display: block;
+  width: 100%;
+  flex: 1 1 auto;
+  height: calc(100vh - 15rem);
+  min-height: 68vh;
+  background: transparent;
+}
+
+.basins-panel text {
+  fill: #1a1a1a;
+  font-family: Georgia, Palatino, serif;
+  pointer-events: none;
+}
+
+.basins-readout {
+  min-height: 2.6rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: #1a1a1a;
+  font-family: Georgia, Palatino, serif;
+}
+
+.basins-slider {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0 0 0.35rem;
+  color: #1a1a1a;
+  font-family: Georgia, Palatino, serif;
+  font-size: 0.95rem;
+}
+
+.basins-slider span {
+  min-width: 8.5rem;
+}
+
+.basins-slider input[type="range"] {
+  flex: 1;
+  min-width: 8rem;
+  accent-color: #d4a017;
+}
+
+.basins-legend {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.2rem;
+  align-items: center;
+  margin: 0.15rem 0 0.55rem;
+  padding: 0;
+  color: #1a1a1a;
+  font-family: Georgia, Palatino, serif;
+  font-size: 0.88rem;
+}
+
+.basins-legend li {
+  display: flex;
+  align-items: center;
+}
+
+.basins-legend .dot {
+  display: inline-block;
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+}
+
+.basins-legend .dot.fermat {
+  background: #d4a017;
+}
+
+.basins-legend .dot.mersenne {
+  background: #c45c26;
+}
+
+.basins-legend .dot.fork {
+  background: #3dba7a;
+}
+
+.basins-hit {
+  cursor: pointer;
+}
+
+
+.basins-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin: 0.15rem 0 0.55rem;
+}
+
+.basins-toolbar .basins-legend {
+  margin: 0;
+}
+
+.basins-reset {
+  border: 1px solid #c8bfb0;
+  background: #fffaf3;
+  color: #1a1a1a;
+  font-family: Georgia, Palatino, serif;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.basins-reset:hover {
+  border-color: #1f4e79;
+}
+
+.basins-svg {
+  cursor: grab;
+  touch-action: none;
+}
+
+.basins-svg:active {
+  cursor: grabbing;
+}
+
+
+.basins-caption {
+  max-width: 46rem;
+  margin: 0 0 0.65rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #6b5e4e;
+  font-family: Georgia, Palatino, serif;
+}
+
+
+.paper-lean {
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.1rem;
+  line-height: 1.5;
+}
+
+.paper-lean ul {
+  margin: 0.25rem 0 0.6rem;
+  padding-left: 1.1rem;
+}
+
+.paper-lean code {
+  font-size: 0.9em;
+}
+
+
+
+
+.paper-page {
+  width: 68%;
+  max-width: none;
+  margin-inline: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.paper-page .paper-abstract,
+.paper-page .lede {
+  max-width: none;
+  margin-bottom: 1.15rem;
+}
+
+.paper-page .paper-lean,
+.paper-page > h1,
+.paper-page > h2 {
+  max-width: none;
+}
+
+.paper-page .paper-viewer {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.paper-page .paper-frame {
+  height: min(90vh, 1400px);
+}
+
+.paper-viewer {
+  width: 100%;
+  margin: 0 0 2rem;
+  border: 1px solid color-mix(in srgb, var(--ink, #2a2418) 18%, transparent);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  min-height: 70vh;
+}
+
+.paper-frame {
+  display: block;
+  width: 100%;
+  height: min(85vh, 1100px);
+  border: 0;
+}
+
+
+.paper-byline {
+  margin: -0.35rem 0 0.85rem;
+  color: color-mix(in srgb, var(--ink, #2a2418) 62%, transparent);
+  font-size: 0.95rem;
+}
+
+
+.hire-beat {
+  margin: 1.1rem 0 1.35rem;
+}
+
+.hire-beat h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.4rem;
+}
+
+.hire-beat p {
+  margin: 0 0 0.55rem;
+  color: #7a7468;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  max-width: 42em;
+  font-weight: normal;
+}
+
+.hire-beat p strong {
+  font-weight: 600;
+  color: #7a7468;
+}
+
+.hire-beat .beat-link {
+  display: inline-block;
+  margin-top: 0.2rem;
+}
+
+
+.door-table-wrap {
+  overflow-x: auto;
+  margin: 0.75rem 0 0.5rem;
+  border: 1px solid #e2d8c8;
+  border-radius: 8px;
+  background: #fffef9;
+}
+
+.door-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.door-table th,
+.door-table td {
+  padding: 0.35rem 0.55rem;
+  text-align: left;
+  border-bottom: 1px solid #ebe3d6;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.door-table th {
+  font-weight: 600;
+  color: #5a4e3e;
+  background: #f7f0e4;
+  position: sticky;
+  top: 0;
+}
+
+.door-table tr.sacked td {
+  background: #f3ebe0;
+  color: #7a6c5a;
+}
+
+.door-table td.by3 {
+  color: #9a8b78;
+}
+
+.door-table td.by3 s {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: #9a8b78;
+}
+
+.door-table td.door-cell {
+  color: #1a1a1a;
+}
+
+.door-tag {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  background: #e8dcc8;
+  color: #5a4e3e;
+  vertical-align: middle;
+}
+
+.door-tag.muted {
+  background: transparent;
+  color: #9a8b78;
+  padding-left: 0.2rem;
+}
+
+.door-tag.sink {
+  background: #dce8df;
+  color: #2f6b4f;
+}
+
+/* Islands spotlight — cream page, dark panel like basins; islands-* only */
+
+.islands-page {
+  max-width: none;
+  width: 100%;
+}
+
+.islands-page > h1,
+.islands-page > .lede,
+.islands-page > .islands-lab-caption,
+.islands-page > .islands-caption {
+  max-width: 42rem;
+}
+
+.islands-panel {
+  background: #0f1c2e;
+  color: #e8e0d0;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem 1rem;
+  border: 1px solid #c8bfb0;
+}
+
+.islands-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.7rem;
+  margin: 0 0 0.45rem;
+}
+
+.islands-toggle {
+  appearance: none;
+  border: 1px solid #5a6a82;
+  background: #162338;
+  color: #c8bfb0;
+  font-family: Georgia, Palatino, serif;
+  font-size: 0.92rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  line-height: 1.3;
+}
+
+.islands-toggle:hover {
+  border-color: #d4a017;
+  color: #e8e0d0;
+}
+
+.islands-toggle.on {
+  background: #d4a017;
+  border-color: #d4a017;
+  color: #0f1c2e;
+}
+
+.islands-status {
+  font-family: Georgia, Palatino, serif;
+  font-size: 0.88rem;
+  color: #c8bfb0;
+  margin-left: 0.25rem;
+}
+
+.islands-readout {
+  min-height: 1.5rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: #e8e0d0;
+  font-family: Georgia, Palatino, serif;
+  margin: 0 0 0.45rem;
+}
+
+.islands-svg {
+  display: block;
+  width: 100%;
+  height: calc(100vh - 16rem);
+  min-height: 420px;
+  max-height: 640px;
+  background: transparent;
+}
+
+.islands-panel text,
+.islands-cluster-label {
+  fill: #e8e0d0;
+  font-family: Georgia, Palatino, serif;
+  pointer-events: none;
+}
+
+.islands-cluster-label {
+  font-size: 11px;
+  fill: #8aa4c8;
+  letter-spacing: 0.04em;
+}
+
+.islands-hit {
+  cursor: pointer;
+}
+
+.islands-lab-caption {
+  margin: 0.85rem 0 0.35rem;
+  padding: 0 0.15rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #5c5348;
+  font-style: italic;
+  max-width: 42rem;
+}
+
+.islands-caption {
+  margin-top: 0.35rem;
+}
+
+.islands-gold-on {
+  transition: opacity 0.25s ease, stroke-width 0.25s ease;
+}
+
+.islands-gold-off {
+  transition: opacity 0.25s ease, stroke-width 0.25s ease;
+}
+
+.islands-bridge-dim {
+  transition: opacity 0.25s ease;
+}
+
+.islands-blob {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.islands-node {
+  transition: opacity 0.2s ease;
+}
+
+.islands-bernard {
+  margin: -0.35rem 0 1rem;
+  max-width: 42rem;
+  font-family: Georgia, Palatino, serif;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: #1f4e79;
+}
+.islands-cold-body {
+  color: #6b5e4e;
+  font-style: normal;
+}
+
+.paper-viewer-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  border: 1px dashed #c8bfb0;
+  background: #f7f3ea;
+  margin: 1rem 0 1.25rem;
+}
+.paper-placeholder {
+  margin: 1.5rem;
+  max-width: 36rem;
+  text-align: center;
+  color: #6b5e4e;
+  font-family: Georgia, Palatino, serif;
+  line-height: 1.45;
+}
+
+.islands-corridor {
+  margin-top: 0.85rem;
+  padding: 0.65rem 0.5rem 0.35rem;
+  border-top: 1px solid #2a3a52;
+}
+.islands-corridor-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  margin-bottom: 1.6rem;
+  font-family: Georgia, Palatino, serif;
+}
+.islands-corridor-title {
+  color: #e8e0d0;
+  font-size: 0.92rem;
+}
+.islands-corridor-note {
+  color: #8aa4c8;
+  font-size: 0.8rem;
+}
+.islands-corridor-rail {
+  position: relative;
+  height: 4.2rem;
+  margin: 0 0.75rem 0.35rem;
+}
+.islands-corridor-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.55rem;
+  height: 2px;
+  background: linear-gradient(90deg, #5a6a82, #d4a017 72%, #5a6a82);
+  border-radius: 1px;
+}
+.islands-corridor-tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 5.5rem;
+  z-index: 1;
+}
+.islands-corridor-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #c8bfb0;
+  border: 2px solid #0f1c2e;
+  margin-bottom: 0.25rem;
+}
+.islands-corridor-tick.mark .islands-corridor-dot {
+  background: #d4a017;
+  box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.35);
+}
+.islands-corridor-label {
+  color: #e8e0d0;
+  font-size: 0.78rem;
+  font-family: Georgia, Palatino, serif;
+}
+.islands-corridor-tick.mark .islands-corridor-label {
+  color: #d4a017;
+  font-weight: 600;
+}
+.islands-corridor-val {
+  color: #8aa4c8;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+.islands-corridor-caption {
+  margin: 0.35rem 0.25rem 0;
+  color: #c8bfb0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  font-family: Georgia, Palatino, serif;
 }

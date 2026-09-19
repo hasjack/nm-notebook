@@ -27,6 +27,10 @@ import { MissedPage } from "./pages/MissedPage";
 import { SpectrumPage } from "./pages/SpectrumPage";
 import { Pm1TablePage } from "./pages/Pm1TablePage";
 import { HirePage } from "./pages/HirePage";
+import { BasinsPage } from "./pages/BasinsPage";
+import { IslandsPage } from "./pages/IslandsPage";
+import { PaperPage } from "./pages/PaperPage";
+import { WhenGoldDisconnectsPage } from "./pages/WhenGoldDisconnectsPage";
 import { SignedDoorsPage } from "./pages/SignedDoorsPage";
 import { AlphabetSpiralPage } from "./pages/AlphabetSpiralPage";
 import { CountPage } from "./pages/CountPage";
@@ -61,6 +65,10 @@ export default function App() {
         <Route path="/spectrum" element={<SpectrumPage />} />
         <Route path="/pm1" element={<Pm1TablePage />} />
         <Route path="/hire" element={<HirePage />} />
+        <Route path="/basins" element={<BasinsPage />} />
+        <Route path="/islands" element={<IslandsPage />} />
+        <Route path="/paper" element={<PaperPage />} />
+        <Route path="/when-gold-disconnects" element={<WhenGoldDisconnectsPage />} />
         <Route path="/signed-doors" element={<SignedDoorsPage />} />
         <Route path="/alphabet-spiral" element={<AlphabetSpiralPage />} />
         <Route path="/count" element={<CountPage />} />

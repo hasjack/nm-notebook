@@ -33,9 +33,9 @@ export function HomePage() {
         </p>
         <p className="home-actions">
           <Link className="nav-link on" to="/hire">
-            Hire dials
+            Introduction
           </Link>
-          <a className="nav-link" href="/paper/two_doors.pdf">
+          <a className="nav-link" href="/paper/hire-graph-of-the-3-free-door.pdf">
             PDF
           </a>
           <a
