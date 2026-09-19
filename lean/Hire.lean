@@ -10,3 +10,7 @@ import Hire.StarLap
 import Hire.Lemma8
 import Hire.Cone
 import Hire.Dirichlet
+import Hire.WitnessXstar
+import Hire.WeakQ2
+import Hire.GoldBridge
+import Hire.GoldDisconnects

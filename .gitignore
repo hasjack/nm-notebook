@@ -28,3 +28,11 @@ dist-ssr
 
 # Lean / Mathlib (see lean/.gitignore)
 lean/.lake/
+
+# Local clutter — not for public face
+.shots/
+_islands-out/
+champ.cert
+drafts/
+journal/
+*.cert
