@@ -1,0 +1,137 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={When gold disconnects},pdfauthor={Jack Pickett}}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+\newtheorem{theorem}{Theorem}
+
+\title{When gold disconnects}
+\author{Jack Pickett \textperiodcentered\ 19th September 2026}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+In the hire graph of the 3-free door, every odd prime other than \(3\) meets \(5\) in the infinite undirected gold graph.
+Finite windows can still be disconnected: each new \(2\)-power-door prime is gold-isolated at its first-owner window.
+Downward gold chains terminate only at \(2\)-power doors, so gold is disconnected for infinitely many finite \(X\) if and only if there are infinitely many Mersenne or Fermat primes.
+The companion note settles the infinite component of \(5\); this note records the equivalence for the leftover finite-window question, together with the thin \(M_{31}\) first-owner and first direct-bridge integers.
+\end{abstract}
+
+\section{Setup}
+
+We use the notation of the hire-graph note~\cite{Hire}: the 3-free door \(m_0\), the hire set \(S_X\), directed gold arcs \(q\mid m_0(p)\), and the undirected gold graph on \(S_X\setminus\{2\}\).
+A prime \(M\neq 3\) is a \emph{\(2\)-power door} if \(m_0(M)=2^k\) for some \(k\ge 1\).
+Every Mersenne prime \(M_p=2^p-1\) with \(p\) odd, and every Fermat prime greater than \(3\), is of this form.
+The first owner \(r_0\) of \(M\) is the least prime \(r\) with \(M\mid m_0(r)\); by the door bound, \(r_0\ge 2M-1\).
+
+\section{First-owner windows}
+
+\begin{lemma}
+\label{lem:isolated}
+Let \(M>5\) be a \(2\)-power-door prime and let \(r_0\) be its first owner.
+At the window \(X=r_0\), the prime \(M\) is an isolated vertex of undirected gold.
+In particular gold is disconnected.
+\end{lemma}
+
+\begin{proof}
+Since \(M\mid m_0(r_0)\) and \(r_0\le X\), one has \(M\in S_X\).
+The first owner itself is not hired at this window: nothing smaller than \(r_0\) can have hired it, so \(r_0\notin S_X\).
+As a \(2\)-power door, \(M\) has gold out-degree zero.
+No other owner of \(M\) exists below \(r_0\), so no incoming gold arc is live either.
+Thus \(M\) meets no other odd hired prime by a gold edge.
+\end{proof}
+
+Every known Mersenne prime from \(M_{31}\) onward has first owner larger than the connecting window \(X^*=92\,274\,421\) of the hire-graph note, so Lemma~\ref{lem:isolated} already supplies many concrete disconnected windows.
+That is a finite list, not an infinitude theorem.
+
+\section{Downward chains}
+
+\begin{lemma}
+\label{lem:sinks}
+Let \(S\) be a finite nonempty set of odd primes other than \(3\), closed under taking odd prime factors of \(m_0\).
+Then \(S\) contains a \(2\)-power door.
+\end{lemma}
+
+\begin{proof}
+Take a least element \(p\in S\).
+If \(m_0(p)=2^k\), we are done.
+Otherwise some odd prime \(q\neq 3\) divides \(m_0(p)\).
+Closure puts \(q\in S\), and the size bound \(q\le m_0(p)/2<(p+1)/2\) forces \(q<p\), contradicting minimality.
+\end{proof}
+
+Gold arcs on odd leaves are strictly decreasing in the prime label, so every finite descending gold chain ends at a sink, and Lemma~\ref{lem:sinks} says every such sink in a door-closed set is a \(2\)-power door.
+
+\section{The equivalence}
+
+\begin{theorem}
+\label{thm:equiv}
+The following are equivalent.
+\begin{enumerate}
+\item There are infinitely many finite windows \(X\) on which undirected gold is disconnected.
+\item There are infinitely many \(2\)-power-door primes.
+\item There are infinitely many Mersenne primes, or infinitely many Fermat primes.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Lemma~\ref{lem:isolated} gives \((2)\Rightarrow(1)\): each sufficiently large \(2\)-power door contributes at least its first-owner window.
+For \((1)\Rightarrow(2)\), suppose only finitely many \(2\)-power doors exist.
+After the last of them has been absorbed into the infinite component of \(5\) (which the hire-graph note supplies for every odd prime other than \(3\)), every later hired vertex has a downward gold path onto an already-absorbed sink.
+That path is live in the window: \(S_X\setminus\{2\}\) is always closed under odd prime factors of \(m_0\), because every odd vertex is \(\le(X+1)/2\le X\) and is therefore an owner, so its odd door factors already sit in \(S_X\).
+Hence later windows stay connected.
+The equivalence of \((2)\) and \((3)\) is the classification of \(2\)-power doors as Mersenne or Fermat primes greater than \(3\).
+\end{proof}
+
+Fermat primes are widely believed finite (five known; the last is \(65537\)).
+Infinitude of Mersenne primes is open.
+Thus Theorem~\ref{thm:equiv} does not settle item~(1) unconditionally; it identifies the obstruction.
+
+\begin{remark}[Heuristic]
+The Lenstra--Pomerance--Wagstaff heuristic predicts about \(e^\gamma\log_2\log_2 x\) Mersenne primes with exponent at most \(x\), hence infinitely many, and therefore infinitely many disconnected windows, with a new island of length comparable to \(M_p\) around each large Mersenne prime.
+That is a labelled heuristic, not a proof of~(1).
+\end{remark}
+
+\section{The \(M_{31}\) integers}
+
+Let \(M_{31}=2^{31}-1\).
+A thin CRT hunt (not a gold-graph rebuild) finds:
+\[
+r_0=98\,784\,247\,763,\qquad
+v=300\,647\,710\,579,
+\]
+where \(r_0\) is the first owner of \(M_{31}\) and \(v\) is the least prime in either class modulo \(15M_{31}\) with \(5M_{31}\mid m_0(v)\) (class A; \(m_0(v)=2^2\cdot 5\cdot 7\cdot M_{31}\)).
+The ratio \(v/r_0\approx 3.04\).
+The floor candidate \(2M_{31}-1\) is composite; no earlier owner appears in the two classes modulo \(3M_{31}\).
+
+At \(X=v\) the integer \(v\) is an owner, so \(5\) and \(M_{31}\) divide its door, but \(v\notin S_X\), and the gold arcs \(v\to 5\) and \(v\to M_{31}\) are not live until \(v\) itself is hired.
+That hiring time is at least \(2v-1\approx 6.01\cdot 10^{11}\).
+What \(v\) records is a bridge owner, not yet a bridge vertex.
+A mixed owner hired earlier than \(v\) could still connect \(M_{31}\) sooner; ``first direct \(5\)--\(M_{31}\) bridge'' is not automatically the first connecting vertex.
+A full component check at these scales remains past home computing.
+
+\section*{Lean}
+
+Lemmas~\ref{lem:isolated}--\ref{lem:sinks} and Theorem~\ref{thm:equiv} are checked in Lean~4 as \texttt{Hire/GoldDisconnects.lean}
+(\texttt{goldIsolated\_of\_firstOwner\_twoPowerDoor},
+\texttt{exists\_twoPowerDoor\_of\_finite\_closed},
+\texttt{infinite\_goldDisconnected\_of\_infinite\_mersenne\_or\_fermat\_doors}).
+The \(M_{31}\) integers above are thin machine searches, not Lean theorems.
+
+\begin{thebibliography}{9}
+
+\bibitem{Hire}
+J.~Pickett,
+\emph{The hire graph of the 3-free door},
+note, 19th September 2026.
+
+\end{thebibliography}
+
+\end{document}
