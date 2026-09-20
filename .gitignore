@@ -36,3 +36,11 @@ champ.cert
 drafts/
 journal/
 *.cert
+
+# Hire-rate C build products (sources stay tracked)
+analysis/hire_rate/hire_rate_HX_core
+analysis/hire_rate/hire_rate_Rpois
+analysis/hire_rate/hire_rate_bin_residual
+analysis/hire_rate/hire_rate_lambda_bins
+analysis/hire_rate/__pycache__/
+analysis/corridor/__pycache__/
