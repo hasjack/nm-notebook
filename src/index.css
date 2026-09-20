@@ -1407,3 +1407,359 @@ code.pow sup {
 .alphabet-panel > .page {
   padding-top: 0.15rem;
 }
+
+.hire-lab-page .hire-lab-hierarchy {
+  max-width: 42rem;
+  margin: 0.5rem 0 1.25rem;
+  padding-left: 1.25rem;
+  color: #6b5e4e;
+  font-family: Georgia, Palatino, serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.hire-lab-page .hire-lab-hierarchy li {
+  margin-bottom: 0.45rem;
+}
+
+.corridor-page .corridor-panel {
+  margin-top: 0.5rem;
+}
+.corridor-page .islands-corridor {
+  margin-top: 0;
+  padding-top: 0.75rem;
+}
+
+/* Microscope page — UP / Q / DOWN; reuses corridor/islands/hire-rate */
+.microscope-page > h1,
+.microscope-page > .lede,
+.microscope-page > .islands-bernard,
+.microscope-page > .hire-beat,
+.microscope-page > .figure-caption {
+  max-width: 42rem;
+}
+
+/* Digit rail + UP/DOWN panels: full page container width (not a skinny strip). */
+.microscope-page > .microscope-zone {
+  max-width: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.microscope-page .microscope-panel,
+.microscope-page .microscope-rail {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.microscope-zone {
+  margin: 1.25rem 0 1.5rem;
+  padding: 0.85rem 1rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #e2d8c8;
+  background: #fffef9;
+}
+.microscope-zone .hire-beat {
+  max-width: none;
+}
+.microscope-zone-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid #e8dfd0;
+}
+.microscope-zone-tag {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7a6a56;
+  font-weight: 700;
+}
+.microscope-zone-arrow,
+.microscope-zone-arrows {
+  font-size: 1.1rem;
+  color: #9a8b78;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.microscope-zone-arrows {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 0.05rem;
+}
+
+.microscope-up {
+  background: linear-gradient(180deg, #f7f0e4 0%, #fffef9 42%);
+  border-color: #d4c4a8;
+}
+.microscope-hub {
+  background: #0f1c2e;
+  border-color: #2a3a52;
+  color: #e8e0d0;
+  max-width: none;
+}
+.microscope-hub .microscope-zone-tag {
+  color: #c8bfb0;
+}
+.microscope-hub .microscope-zone-arrows {
+  color: #e8c07a;
+}
+.microscope-hub-box {
+  background: transparent;
+  border: 1px solid #3a4a62;
+  color: #e8e0d0;
+  max-width: none;
+}
+.microscope-hub-box p {
+  color: #f0e8d8;
+}
+.microscope-hub-box ul {
+  color: #c8bfb0;
+}
+.microscope-hub-box strong {
+  color: #e8c07a;
+}
+
+.microscope-down {
+  background: linear-gradient(0deg, #f0ebe3 0%, #fffef9 48%);
+  border-color: #c8bfb0;
+}
+
+.microscope-id-box {
+  border: 1px solid #e2d8c8;
+  border-radius: 8px;
+  background: #fffef9;
+  padding: 0.75rem 1rem;
+  max-width: 42rem;
+}
+.microscope-id-box p {
+  margin: 0 0 0.45rem;
+  color: #1a1a1a;
+  font-size: 1.02rem;
+}
+.microscope-id-box ul {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: #5c5348;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.microscope-id-box li {
+  margin: 0.2rem 0;
+}
+
+.microscope-panel {
+  margin-top: 0.35rem;
+  max-width: none;
+}
+.microscope-page .microscope-rail {
+  margin-top: 0;
+  padding-top: 0.75rem;
+}
+
+.microscope-life-wrap {
+  max-width: 48rem;
+}
+.microscope-life-table td.microscope-note {
+  white-space: normal;
+  text-align: left;
+  color: #7a7468;
+  font-size: 0.86rem;
+}
+.microscope-life-table tr.microscope-mark td {
+  background: #f7f0e4;
+  font-weight: 600;
+}
+
+.microscope-punch-box {
+  border: 1px solid #c8bfb0;
+  border-radius: 8px;
+  background: #0f1c2e;
+  color: #e8e0d0;
+  padding: 0.85rem 1rem;
+  max-width: 42rem;
+}
+.microscope-punch-box p {
+  margin: 0 0 0.45rem;
+  color: #e8e0d0;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  max-width: none;
+}
+.microscope-punch-box p:last-child {
+  margin-bottom: 0;
+  color: #c8bfb0;
+}
+
+.microscope-cert-slot {
+  border: 1px solid #c8bfb0;
+  border-radius: 8px;
+  background: #f7f3ea;
+  padding: 0.85rem 1rem;
+  max-width: 42rem;
+}
+.microscope-cert-filled {
+  border-style: solid;
+  border-color: #b8a888;
+  background: #f3ecdc;
+}
+.microscope-cert-lead {
+  margin: 0 0 0.55rem;
+  font-family: Georgia, Palatino, serif;
+  font-size: 1.02rem;
+  color: #5a4e3e;
+}
+.microscope-cert-readout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem 1rem;
+  margin: 0 0 0.55rem;
+}
+.microscope-cert-readout dt {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #9a8b78;
+  margin: 0 0 0.15rem;
+}
+.microscope-cert-readout dd {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 1.05rem;
+  min-height: 1.6rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+  background: #fffef9;
+  border: 1px solid #e2d8c8;
+  color: #1a1a1a;
+}
+.microscope-cert-bullets {
+  margin: 0 0 0.55rem;
+  padding-left: 1.15rem;
+  color: #5c5348;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+.microscope-cert-bullets li {
+  margin: 0.2rem 0;
+}
+.microscope-cert-empty {
+  color: #9a8b78;
+  font-style: italic;
+}
+
+.microscope-down-box {
+  border: 1px solid #e2d8c8;
+  border-radius: 8px;
+  background: #fffef9;
+  padding: 0.75rem 1rem;
+  max-width: 42rem;
+}
+.microscope-down-box ul {
+  margin: 0 0 0.55rem;
+  padding-left: 1.15rem;
+  color: #5c5348;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.microscope-down-box li {
+  margin: 0.25rem 0;
+}
+.microscope-gold-collapse p {
+  margin: 0;
+  color: #5a4e3e;
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+.microscope-shadow-chain {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.92rem;
+  padding: 0.65rem 0.75rem;
+  margin: 0.35rem 0 0.55rem;
+  border: 2px solid #c8a86a;
+  border-radius: 6px;
+  background: #faf6ee;
+  color: #3a3228;
+  letter-spacing: 0.01em;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.microscope-falsifier-table td {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 560px) {
+  .microscope-cert-readout {
+    grid-template-columns: 1fr;
+  }
+  .microscope-shadow-chain {
+    white-space: normal;
+  }
+}
+
+/* Shared lab-note shell — Hire rate / Spectrum / Microscope / Corridor.
+   Page already max-width 980px; lede/Bernard prose ~42rem; tables/panels full width. */
+.lab-note-page > .lede,
+.lab-note-page > .islands-bernard,
+.lab-note-page > .lab-note-hierarchy,
+.lab-note-page > .lab-note-caveats {
+  max-width: 42rem;
+}
+
+.lab-note-page .lab-note-hierarchy-list {
+  max-width: 42rem;
+  margin: 0.35rem 0 0.6rem 1.25rem;
+  padding: 0;
+  color: #5a5348;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.lab-note-page .lab-note-hierarchy-list li {
+  margin: 0.25rem 0;
+}
+
+.lab-note-page .hire-rate-wrap {
+  max-width: min(100%, 56rem);
+}
+
+.lab-note-caveats {
+  margin: 1.75rem 0 0.5rem;
+  padding: 0.75rem 0.9rem;
+  border-top: 1px solid #e2d8c8;
+  border-left: 3px solid #c8bfb0;
+  background: #faf6ef;
+  max-width: 42rem;
+}
+
+.lab-note-caveats p {
+  margin: 0;
+  color: #5a5348;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+/* Certificates page — owner-floor receipt table */
+.certs-receipt-wrap {
+  max-width: min(100%, 56rem);
+}
+
+.certs-receipt td:nth-child(1),
+.certs-receipt th:nth-child(1),
+.certs-receipt td:nth-child(2),
+.certs-receipt th:nth-child(2),
+.certs-receipt td:nth-child(3),
+.certs-receipt th:nth-child(3) {
+  font-variant-numeric: tabular-nums;
+}
+
+.certificates-page .certs-receipt td:nth-child(n+3),
+.certificates-page .certs-receipt th:nth-child(n+3) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9rem;
+}

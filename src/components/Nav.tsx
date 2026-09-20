@@ -17,11 +17,16 @@ const tree: NavGroup[] = [
   {
     id: "hire",
     label: "Hire",
-    blurb: "Door, basins, islands — then the notes.",
+    blurb: "Door → basins → islands → corridor → microscope → certificates → spectrum → hire rate → notes.",
     links: [
       { to: "/hire", label: "Introduction" },
       { to: "/basins", label: "Basins" },
       { to: "/islands", label: "Islands" },
+      { to: "/corridor", label: "Corridor" },
+      { to: "/microscope", label: "Microscope" },
+      { to: "/certificates", label: "Certificates" },
+      { to: "/hire-spectrum", label: "Spectrum" },
+      { to: "/hire-lab", label: "Hire rate" },
     ],
     subs: [
       {

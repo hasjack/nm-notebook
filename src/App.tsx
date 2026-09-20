@@ -25,6 +25,11 @@ import { Pm1TablePage } from "./pages/Pm1TablePage";
 import { HirePage } from "./pages/HirePage";
 import { BasinsPage } from "./pages/BasinsPage";
 import { IslandsPage } from "./pages/IslandsPage";
+import { CorridorPage } from "./pages/CorridorPage";
+import { MicroscopePage } from "./pages/MicroscopePage";
+import { CertificatesPage } from "./pages/CertificatesPage";
+import { HireSpectrumPage } from "./pages/HireSpectrumPage";
+import { HireLabPage } from "./pages/HireLabPage";
 import { PaperPage } from "./pages/PaperPage";
 import { WhenGoldDisconnectsPage } from "./pages/WhenGoldDisconnectsPage";
 import { SignedDoorsPage } from "./pages/SignedDoorsPage";
@@ -64,6 +69,12 @@ export default function App() {
         <Route path="/hire" element={<HirePage />} />
         <Route path="/basins" element={<BasinsPage />} />
         <Route path="/islands" element={<IslandsPage />} />
+        <Route path="/corridor" element={<CorridorPage />} />
+        <Route path="/microscope" element={<MicroscopePage />} />
+        <Route path="/certificates" element={<CertificatesPage />} />
+        <Route path="/certs" element={<Navigate to="/certificates" replace />} />
+        <Route path="/hire-spectrum" element={<HireSpectrumPage />} />
+        <Route path="/hire-lab" element={<HireLabPage />} />
         <Route path="/notes/hire-graph" element={<PaperPage />} />
         <Route path="/notes/when-gold-disconnects" element={<WhenGoldDisconnectsPage />} />
         <Route path="/paper" element={<Navigate to="/notes/hire-graph" replace />} />

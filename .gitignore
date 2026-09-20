@@ -47,3 +47,8 @@ analysis/corridor/__pycache__/
 
 # Local alphabet fold scratch
 _alphabet-fold/
+
+# Local sync/scratch folds
+_certs-mac-sync/
+_lab-note-mac-sync/
+_microscope-out/
