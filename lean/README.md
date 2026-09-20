@@ -30,6 +30,3 @@ lake build
 
 First run downloads the Lean toolchain and Mathlib (large).
 
-## Voice
-
-No ζ in public wording. Speak of doors, hire set `S`, gold edges, finite windows `G_X`.
