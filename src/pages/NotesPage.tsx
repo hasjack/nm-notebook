@@ -140,10 +140,17 @@ export function NotesPage() {
 
       <h2>Formal (Lean)</h2>
       <p>
-        The 3-free door / hire-graph note has a Lean 4 + Mathlib companion under{" "}
-        <code>lean/</code> in this repo (doors, finite hire set, 3 never hired,
-        directed gold arcs). Built separately with <code>lake build</code> — not
-        part of the Vite bundle.
+        The hire-graph notes have a Lean 4 + Mathlib companion under{" "}
+        <code>lean/Hire/</code> — doors, finite hire set, 3 never hired, gold
+        arcs, the Laplacian cone, and Layer D: λ<sub>2</sub> = 1 iff gold on the
+        leaves is disconnected. <code>GoldBridge</code> is strong Q2 with 0 sorry;
+        <code>GoldDisconnects</code> is the sequel scaffolding; Dirichlet
+        infinitude of S is still a stub. Built with <code>lake build</code> — not
+        part of the Vite bundle. See{" "}
+        <a href="https://github.com/hasjack/nm-notebook/tree/master/lean">
+          lean/
+        </a>
+        .
       </p>
       <h2>Physics-adjacent</h2>
       <p>

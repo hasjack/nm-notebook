@@ -32,6 +32,30 @@ type Top10Row = {
   note?: string;
 };
 
+type KCertRow = {
+  n: number;
+  rank: number;
+  form: string;
+  digits: string;
+  kCert: number;
+  kills: number;
+  compression: string;
+};
+
+/** Thin-sieve owner floors at B = 10^7. Source: analysis/microscope/top100_owner_floor_catalog.md */
+const TOP100_KCERT: KCertRow[] = [
+  { n: 1, rank: 42, form: "7·2^18233956+1 (Proth)", digits: "5,488,969", kCert: 134, kills: 44, compression: "1.25e+05" },
+  { n: 2, rank: 75, form: "9145334·3^9145334+1 (GenPow)", digits: "4,363,441", kCert: 116, kills: 38, compression: "1.15e+05" },
+  { n: 3, rank: 18, form: "69·2^24612729−1 (Riesel)", digits: "7,409,172", kCert: 110, kills: 36, compression: "2.06e+05" },
+  { n: 4, rank: 100, form: "2293·2^12918431−1 (Riesel)", digits: "3,888,839", kCert: 98, kills: 32, compression: "1.22e+05" },
+  { n: 5, rank: 10, form: "GU 465859", digits: "11,887,192", kCert: 92, kills: 30, compression: "3.96e+05" },
+  { n: 6, rank: 14, form: "M30402457", digits: "9,152,052", kCert: 82, kills: 27, compression: "3.39e+05" },
+  { n: 7, rank: 65, form: "37·2^15474010+1 (Proth)", digits: "4,658,143", kCert: 82, kills: 27, compression: "1.73e+05" },
+  { n: 8, rank: 2, form: "M82589933", digits: "24,862,048", kCert: 80, kills: 26, compression: "9.56e+05" },
+  { n: 9, rank: 89, form: "31·2^13514933−1 (Riesel)", digits: "4,068,402", kCert: 76, kills: 25, compression: "1.63e+05" },
+  { n: 10, rank: 72, form: "69·2^14977631−1 (Riesel)", digits: "4,508,719", kCert: 70, kills: 23, compression: "1.96e+05" },
+];
+
 /** Thin-sieve owner floors at B = 10^7. Source: analysis/microscope/top10_owner_floor_catalog.csv */
 const TOP10: Top10Row[] = [
   { rank: 1, form: "M136279841", digits: "41,024,320", kCert: 28, kills: 9, note: "record demo" },
@@ -61,7 +85,9 @@ export function CertificatesPage() {
       <p className="lede">
         Owner-floor certificates for Mersenne sinks (and any odd prime{" "}
         <em>q</em>). Small witnesses replace a huge graph chase. Demo: record M
-        <sub>136279841</sub>; top-ten floors below. Lifecycle seating is on{" "}
+        <sub>136279841</sub>. PrimePages top ten by size, then K<sub>cert</sub>{" "}
+        leaders from the top-100 thin sieve at B = 10<sup>7</sup> (99/100;
+        skipped #82 primorial). Hunt closed. Lifecycle seating is on{" "}
         <Link to="/microscope">Microscope</Link>; lab freeze counts on{" "}
         <Link to="/hire-lab">Hire rate</Link>. Papers frozen.
       </p>
@@ -162,11 +188,11 @@ export function CertificatesPage() {
 
       <section className="hire-beat">
         <h2>
-          Top-ten catalog — K<sub>cert</sub>(q; 10<sup>7</sup>)
+          PrimePages top ten — K<sub>cert</sub>(q; 10<sup>7</sup>)
         </h2>
         <p>
-          Same thin sieve as the record demo, across the current PrimePages top
-          ten. Kill receipts for every admissible <em>k</em> &lt; K
+          Same thin sieve as the record demo, ranked by size (current PrimePages
+          top ten). Kill receipts for every admissible <em>k</em> &lt; K
           <sub>cert</sub>. Papers frozen; owner hunt closed.
         </p>
         <div className="door-table-wrap hire-rate-wrap certs-receipt-wrap">
@@ -210,6 +236,55 @@ export function CertificatesPage() {
 
       <section className="hire-beat">
         <h2>
+          Top-100 by K<sub>cert</sub>(q; 10<sup>7</sup>)
+        </h2>
+        <p>
+          Same sieve across the PrimePages top 100. Ranked by K<sub>cert</sub>,
+          not by size: the record Mersenne is K = 28; the freak floors are
+          smaller forms. Processed 99/100; skipped #82 (<code>9562633#+1</code>,
+          primorial). Compression = digits / max(1, kills).
+        </p>
+        <div className="door-table-wrap hire-rate-wrap certs-receipt-wrap">
+          <table className="door-table hire-rate-table certs-receipt certs-top10">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>rank</th>
+                <th>form</th>
+                <th>digits</th>
+                <th>
+                  K<sub>cert</sub>
+                </th>
+                <th>kills</th>
+                <th>compression</th>
+              </tr>
+            </thead>
+            <tbody>
+              {TOP100_KCERT.map((row) => (
+                <tr key={row.n}>
+                  <td>{row.n}</td>
+                  <td>{row.rank}</td>
+                  <td>{row.form}</td>
+                  <td>{row.digits}</td>
+                  <td>{row.kCert}</td>
+                  <td>{row.kills}</td>
+                  <td>{row.compression}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="figure-caption islands-caption">
+          Leaders #42 = 134, #75 = 116, #18 = 110. Full table:{" "}
+          <code>
+            analysis/microscope/top100_owner_floor_catalog.{"{"}csv,md{"}"}
+          </code>
+          . No PRP lottery.
+        </p>
+      </section>
+
+      <section className="hire-beat">
+        <h2>
           Sanity — M<sub>31</sub>
         </h2>
         <p>
@@ -236,7 +311,8 @@ export function CertificatesPage() {
           <em>q</em>+1 is prime.
         </p>
         <p>
-          Owner hunt closed: finding τ(q) is not a GIMPS Lucas–Lehmer job.
+          Owner hunt closed (top-100 catalog frozen at B = 10<sup>7</sup>):
+          finding τ(q) is not a GIMPS Lucas–Lehmer job.
           Heuristic K ∼ log q ≈ 9·10<sup>7</sup>; after a serious sieve, ~10
           <sup>6</sup> survivors remain. Each is a structured 41M-digit test
           (Pocklington/Lucas is kinder because N∓1 = kq already knows a factor

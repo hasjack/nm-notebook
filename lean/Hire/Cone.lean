@@ -60,8 +60,9 @@ The shift starts at `μ₂`, not `μ₁`. `μ₁ = 0` is the leaf all-ones vecto
 mixed with the seed it is already the global kernel, and folding it into
 `1 + μ` double-counts that kernel. The ordered endpoints are proved:
 `lambda_GX_one` is `λ₁ = 0`, and `lambda_GX_card` is `λₙ = n` when `n ≥ 2`.
-Mathlib has no Laplacian bound by the number of doors; the bound used for
-`λₙ` is the complete-graph comparison `eigenvalues_lapMatrix_le_card`.
+The bound used for `λₙ` is the complete-graph comparison
+`eigenvalues_lapMatrix_le_card` (local copy; same argument is
+mathlib4#43953).
 The middle shift is `spectrum_lapMatrix_GX`. The antitone cone list is `n`,
 then `1 + μₙ₋₁ ≥ ⋯ ≥ 1 + μ₂`, then `0`. Index `0` of that list is `λₙ`, the
 last index is `λ₁`, and the matching ranks give `λᵢ = 1 + μᵢ` for
@@ -582,8 +583,8 @@ noncomputable def mu_goldLeaves (X : ℕ) (i : ℕ)
 
 /-- Quadratic form of a simple-graph Laplacian, bounded by the number of vertices.
 
-Mathlib has no `eigenvalues_le_card` (and no spectral-radius bound of a
-Laplacian by `Fintype.card`). The comparison proved here is the complete graph:
+Mathlib had no `eigenvalues_le_card` (same argument proposed as mathlib4#43953).
+The comparison proved here is the complete graph:
 adjacency of `G` is a subset of pairs `i ≠ j`, so
 `xᵀ L(G) x ≤ xᵀ L(K) x`, and `lapMatrix_top` writes `L(K)` as `n` minus the
 all-ones matrix. That quadratic form is `n ‖x‖² - (∑ x)²`, hence at most

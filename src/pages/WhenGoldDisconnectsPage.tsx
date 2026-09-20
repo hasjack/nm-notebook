@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-/** Sequel note page — cold PDF arrives when Albert ships it. */
+/** Sequel note — PDF in public/paper/when-gold-disconnects.pdf. */
 export function WhenGoldDisconnectsPage() {
   return (
     <main className="page paper-page">

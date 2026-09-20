@@ -44,6 +44,9 @@ export function HomePage() {
           >
             Lean
           </a>
+          <Link className="nav-link" to="/certificates">
+            Certificates
+          </Link>
         </p>
       </section>
 
