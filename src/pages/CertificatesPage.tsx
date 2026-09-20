@@ -23,6 +23,37 @@ const RECEIPT: ReceiptRow[] = [
 
 const M31_FIRST_OWNER = "98,784,247,763";
 
+type Top10Row = {
+  rank: number;
+  form: string;
+  digits: string;
+  kCert: number;
+  kills: number;
+  note?: string;
+};
+
+/** Thin-sieve owner floors at B = 10^7. Source: analysis/microscope/top10_owner_floor_catalog.csv */
+const TOP10: Top10Row[] = [
+  { rank: 1, form: "M136279841", digits: "41,024,320", kCert: 28, kills: 9, note: "record demo" },
+  { rank: 2, form: "M82589933", digits: "24,862,048", kCert: 80, kills: 26 },
+  { rank: 3, form: "M77232917", digits: "23,249,425", kCert: 14, kills: 4 },
+  { rank: 4, form: "M74207281", digits: "22,338,618", kCert: 2, kills: 0, note: "elementary floor" },
+  { rank: 5, form: "M57885161", digits: "17,425,170", kCert: 14, kills: 4 },
+  {
+    rank: 6,
+    form: "GFN 2524190^(2^21)+1",
+    digits: "13,426,224",
+    kCert: 4,
+    kills: 1,
+    note: "q≡2 (mod 3); class flip",
+  },
+  { rank: 7, form: "M43112609", digits: "12,978,189", kCert: 10, kills: 3 },
+  { rank: 8, form: "M42643801", digits: "12,837,064", kCert: 2, kills: 0, note: "elementary floor" },
+  { rank: 9, form: "GU 516693", digits: "11,981,518", kCert: 44, kills: 14, note: "at B=10^8 → 46" },
+  { rank: 10, form: "GU 465859", digits: "11,887,192", kCert: 92, kills: 30 },
+];
+
+
 export function CertificatesPage() {
   return (
     <main className="page lab-note-page certificates-page certs-page">
@@ -30,7 +61,7 @@ export function CertificatesPage() {
       <p className="lede">
         Owner-floor certificates for Mersenne sinks (and any odd prime{" "}
         <em>q</em>). Small witnesses replace a huge graph chase. Demo: record M
-        <sub>136279841</sub>. Lifecycle seating is on{" "}
+        <sub>136279841</sub>; top-ten floors below. Lifecycle seating is on{" "}
         <Link to="/microscope">Microscope</Link>; lab freeze counts on{" "}
         <Link to="/hire-lab">Hire rate</Link>. Papers frozen.
       </p>
@@ -125,6 +156,55 @@ export function CertificatesPage() {
           <sup>7</sup>) = K<sub>cert</sub>(q;10<sup>8</sup>) = 28; the
           certificate says K<sub>hire</sub>(q) ≥ 28. No forced climb past 28
           without a better kill on 28<em>q</em>+1.
+        </p>
+      </section>
+
+
+      <section className="hire-beat">
+        <h2>
+          Top-ten catalog — K<sub>cert</sub>(q; 10<sup>7</sup>)
+        </h2>
+        <p>
+          Same thin sieve as the record demo, across the current PrimePages top
+          ten. Kill receipts for every admissible <em>k</em> &lt; K
+          <sub>cert</sub>. Papers frozen; owner hunt closed.
+        </p>
+        <div className="door-table-wrap hire-rate-wrap certs-receipt-wrap">
+          <table className="door-table hire-rate-table certs-receipt certs-top10">
+            <thead>
+              <tr>
+                <th>rank</th>
+                <th>form</th>
+                <th>digits</th>
+                <th>
+                  K<sub>cert</sub>
+                </th>
+                <th>kills</th>
+                <th>note</th>
+              </tr>
+            </thead>
+            <tbody>
+              {TOP10.map((row) => (
+                <tr key={row.rank}>
+                  <td>{row.rank}</td>
+                  <td>{row.form}</td>
+                  <td>{row.digits}</td>
+                  <td>{row.kCert}</td>
+                  <td>{row.kills}</td>
+                  <td>{row.note ?? "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="figure-caption islands-caption">
+          Primary bound B = 10<sup>7</sup>. At B = 10<sup>8</sup>, #9 rises
+          44→46; #2 and #6 hold. Ranks 4 and 8 sit at the elementary floor K =
+          2. #6 is q ≡ 2 (mod 3) — door class flipped; sink only on
+          odd-exponent Mersennes. Artifacts:{" "}
+          <code>analysis/microscope/top10_owner_floor_catalog.{"{"}csv,md{"}"}</code>
+          . One-shot tickets (e.g. N<sub>28</sub>) have a PFGW/PRST toolpath;
+          batch lottery does not.
         </p>
       </section>
 
