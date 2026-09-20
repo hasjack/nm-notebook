@@ -11,7 +11,7 @@ export function WhenGoldDisconnectsPage() {
         disconnected for infinitely many finite windows if and only if there
         are infinitely many Mersenne or Fermat primes. Paper 1 stays the hire
         graph and the Dirichlet bridge into{" "}
-        <Link to="/paper">comp(5)</Link>; this note is the equivalence for the
+        <Link to="/notes/hire-graph">comp(5)</Link>; this note is the equivalence for the
         leftover question, plus the thin M₃₁ bridge-owner appointment.
       </p>
 
@@ -19,7 +19,7 @@ export function WhenGoldDisconnectsPage() {
         <iframe
           className="paper-frame"
           title="when-gold-disconnects.pdf"
-          src="/paper/when-gold-disconnects.pdf?v=1789840294#view=FitH"
+          src="/paper/when-gold-disconnects.pdf?v=1789856592#view=FitH"
         />
       </div>
 

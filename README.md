@@ -6,8 +6,8 @@ Open notebook for Natural Mathematics: explore on the web, or publish lemmas wit
 
 Lead shelf: the **hire graph of the 3-free door**.
 
-- **Paper 1** — [*The hire graph of the 3-free door*](public/paper/hire-graph-of-the-3-free-door.pdf) ([TeX](paper/two_doors.tex)) · site: [`/paper`](/paper)
-- **Sequel** — [*When gold disconnects*](public/paper/when-gold-disconnects.pdf) ([TeX](paper/when_gold_disconnects.tex)) · site: [`/when-gold-disconnects`](/when-gold-disconnects)
+- **Paper 1** — [*The hire graph of the 3-free door*](public/paper/hire-graph-of-the-3-free-door.pdf) ([TeX](paper/two_doors.tex)) · site: [`/notes/hire-graph`](/notes/hire-graph)
+- **Sequel** — [*When gold disconnects*](public/paper/when-gold-disconnects.pdf) ([TeX](paper/when_gold_disconnects.tex)) · site: [`/notes/when-gold-disconnects`](/notes/when-gold-disconnects)
 - **Islands** — last-island / black-swan spotlight and the thin M₃₁ corridor · site: [`/islands`](/islands)
 - **Introduction / Basins** — door table and drain lattice · [`/hire`](/hire) · [`/basins`](/basins)
 

@@ -22,8 +22,19 @@ const tree: NavGroup[] = [
       { to: "/hire", label: "Introduction" },
       { to: "/basins", label: "Basins" },
       { to: "/islands", label: "Islands" },
-      { to: "/paper", label: "Paper" },
-      { to: "/when-gold-disconnects", label: "When gold disconnects" },
+    ],
+    subs: [
+      {
+        id: "hire-notes",
+        label: "Notes",
+        links: [
+          { to: "/notes/hire-graph", label: "The hire graph of the 3-free door" },
+          {
+            to: "/notes/when-gold-disconnects",
+            label: "When gold disconnects",
+          },
+        ],
+      },
     ],
   },
   {
@@ -36,14 +47,10 @@ const tree: NavGroup[] = [
     label: "Alphabet",
     blurb: "Number line in e, i, and π.",
     links: [
-      { to: "/walk", label: "Walk" },
-      { to: "/lock-i", label: "Lock i" },
-      { to: "/lock-pi", label: "Lock π" },
-      { to: "/basel", label: "Basel" },
-      { to: "/free", label: "Free" },
+      { to: "/alphabet", label: "Alphabet" },
       { to: "/solve", label: "Solve" },
       { to: "/catalogue", label: "Catalogue" },
-      { to: "/notes", label: "Notes" },
+      { to: "/notes", label: "Notes", end: true },
     ],
   },
   {
@@ -187,6 +194,11 @@ export function AppLayout({ children }: { children: ReactNode }) {
   }, [location.pathname]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    document.querySelector(".app-main")?.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  useEffect(() => {
     if (open && !isDesktop()) {
       document.body.style.overflow = "hidden";
     } else {
@@ -208,9 +220,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
     });
   };
 
-  const toggleLabSub = (id: string) => {
+  const toggleSub = (parentId: string, id: string) => {
     setExpanded((prev) => {
-      const next = new Set<string>(["lab"]);
+      const next = new Set<string>([parentId]);
       if (!prev.has(id)) next.add(id);
       return next;
     });
@@ -292,7 +304,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
                               subOpen ? "nav-drill sub on" : "nav-drill sub"
                             }
                             aria-expanded={subOpen}
-                            onClick={() => toggleLabSub(s.id)}
+                            onClick={() => toggleSub(g.id, s.id)}
                           >
                             <span className="nav-drill-label">{s.label}</span>
                             <span

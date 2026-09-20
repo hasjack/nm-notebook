@@ -1087,6 +1087,205 @@ export function HirePage() {
         </figure>
       </section>
 
+                  <section className="hire-beat">
+        <h2>Hire rate (Lab)</h2>
+        <p>
+          Odd hires through window <em>X</em>: 
+          <em>H</em>(<em>X</em>)=|<em>S</em>
+          <sub>
+            <em>X</em>
+          </sub>
+          |−1. Thin rem-sieve through 2·10<sup>10</sup>. 
+          <em>R</em> uses the leading law; <em>R</em>
+          <sub>Pois</sub> divides by the Li/Poisson first-hire sum; 
+          <em>E</em>
+          <sub>1</sub>=(<em>R</em>
+          <sub>Pois</sub>−1) log <em>X</em> and <em>E</em>
+          <sub>2</sub>=(<em>R</em>
+          <sub>Pois</sub>−1)(log <em>X</em>)<sup>2</sup>. Lab only — not a
+          theorem.
+        </p>
+        <div className="door-table-wrap hire-rate-wrap">
+          <table className="door-table hire-rate-table">
+            <thead>
+              <tr>
+                <th>
+                  <em>X</em>
+                </th>
+                <th>
+                  <em>H</em>
+                </th>
+                <th>π</th>
+                <th>
+                  <em>H</em>/π
+                </th>
+                <th>
+                  <em>R</em>
+                </th>
+                <th>
+                  <em>R</em>
+                  <sub>Pois</sub>
+                </th>
+                <th>
+                  <em>E</em>
+                  <sub>1</sub>
+                </th>
+                <th>
+                  <em>E</em>
+                  <sub>2</sub>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>10<sup>4</sup></td>
+                <td>361</td>
+                <td>1,229</td>
+                <td>0.294</td>
+                <td>1.379</td>
+                <td>1.044</td>
+                <td>0.408</td>
+                <td>3.76</td>
+              </tr>
+              <tr>
+                <td>10<sup>5</sup></td>
+                <td>2,401</td>
+                <td>9,592</td>
+                <td>0.250</td>
+                <td>1.302</td>
+                <td>1.052</td>
+                <td>0.604</td>
+                <td>6.95</td>
+              </tr>
+              <tr>
+                <td>5·10<sup>5</sup></td>
+                <td>9,291</td>
+                <td>41,538</td>
+                <td>0.224</td>
+                <td>1.243</td>
+                <td>1.038</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>10<sup>6</sup></td>
+                <td>16,688</td>
+                <td>78,498</td>
+                <td>0.213</td>
+                <td>1.213</td>
+                <td>1.026</td>
+                <td>0.357</td>
+                <td>4.93</td>
+              </tr>
+              <tr>
+                <td>10<sup>7</sup></td>
+                <td>125,661</td>
+                <td>664,579</td>
+                <td>0.189</td>
+                <td>1.174</td>
+                <td>1.026</td>
+                <td>0.423</td>
+                <td>6.82</td>
+              </tr>
+              <tr>
+                <td>10<sup>8</sup></td>
+                <td>980,292</td>
+                <td>5,761,455</td>
+                <td>0.170</td>
+                <td>1.142</td>
+                <td>1.022</td>
+                <td>0.413</td>
+                <td>7.61</td>
+              </tr>
+              <tr>
+                <td>10<sup>9</sup></td>
+                <td>7,877,140</td>
+                <td>50,847,534</td>
+                <td>0.155</td>
+                <td>1.116</td>
+                <td>1.018</td>
+                <td>0.379</td>
+                <td>7.84</td>
+              </tr>
+              <tr>
+                <td>2.2·10<sup>9</sup></td>
+                <td>16,173,662</td>
+                <td>107,540,122</td>
+                <td>0.150</td>
+                <td>1.109</td>
+                <td>1.017</td>
+                <td>0.367</td>
+                <td>7.90</td>
+              </tr>
+              <tr>
+                <td>5·10<sup>9</sup></td>
+                <td>34,296,996</td>
+                <td>234,954,223</td>
+                <td>0.146</td>
+                <td>1.101</td>
+                <td>1.016</td>
+                <td>0.352</td>
+                <td>7.85</td>
+              </tr>
+              <tr>
+                <td>10<sup>10</sup></td>
+                <td>64,838,984</td>
+                <td>455,052,511</td>
+                <td>0.142</td>
+                <td>1.096</td>
+                <td>1.015</td>
+                <td>0.342</td>
+                <td>7.88</td>
+              </tr>
+              <tr>
+                <td>1.5·10<sup>10</sup></td>
+                <td>94,178,863</td>
+                <td>670,180,516</td>
+                <td>0.141</td>
+                <td>1.093</td>
+                <td>1.014</td>
+                <td>0.335</td>
+                <td>7.86</td>
+              </tr>
+              <tr>
+                <td>2·10<sup>10</sup></td>
+                <td>122,776,796</td>
+                <td>882,206,716</td>
+                <td>0.139</td>
+                <td>1.091</td>
+                <td>1.014</td>
+                <td>0.330</td>
+                <td>7.82</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="figure-caption">
+          Tip: <em>R</em>≈1.091, <em>R</em>
+          <sub>Pois</sub>≈1.014, <em>E</em>
+          <sub>2</sub>≈7.8–7.9 from ~10<sup>8</sup> while <em>E</em>
+          <sub>1</sub> drifts down — shape <em>R</em>
+          <sub>Pois</sub>≈1+<em>C</em>/(log <em>X</em>)<sup>2</sup> with 
+          <em>C</em>≈8. Notes stay frozen.
+        </p>
+        <p className="figure-caption">
+          Sparsity: <em>H</em>(<em>X</em>)/π(<em>X</em>)∼ log log <em>X</em>/log 
+          <em>X</em> — every odd prime ≠3 arrives eventually, but by window 
+          <em>X</em> only a vanishing fraction of π(<em>X</em>) is hired. That
+          is why islands can breathe.
+        </p>
+        <p className="figure-caption">
+          Bin residual (tip <em>X</em>=2·10<sup>10</sup>): the ~1.4% excess
+          lives at <em>u</em>=log <em>q</em>/log <em>X</em> in [0.8, 0.9) —
+          the hiring frontier where λ=Li(<em>X</em>)/(<em>q</em>−1)∼1 (i.e.{" "}
+          <em>q</em>∼<em>X</em>/log <em>X</em>). Those λ∼1 primes are hired a
+          little more often than independent Dirichlet coins predict.
+          Saturation (<em>u</em>≤0.7) shows residual ≈0; near <em>u</em>→1 the
+          untruncated Poisson over-predicts. Keep naive <em>P</em>
+          <sub>Pois</sub>; truncated Li fails. <em>C</em> stays unnamed.
+        </p>
+      </section>
+
       <section className="hire-intro">
         <h2>Hire-sun H</h2>
         <p>

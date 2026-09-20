@@ -53,16 +53,16 @@ export function HomePage() {
         <strong>π</strong>.
       </p>
       <p className="home-actions">
-        <Link className="nav-link" to="/walk">
+        <Link className="nav-link" to="/alphabet?tab=walk">
           Walk
         </Link>
-        <Link className="nav-link" to="/lock-i">
+        <Link className="nav-link" to="/alphabet?tab=lock-i">
           Lock i
         </Link>
-        <Link className="nav-link" to="/lock-pi">
+        <Link className="nav-link" to="/alphabet?tab=lock-pi">
           Lock π
         </Link>
-        <Link className="nav-link" to="/basel">
+        <Link className="nav-link" to="/alphabet?tab=basel">
           Basel
         </Link>
         <Link className="nav-link" to="/catalogue">

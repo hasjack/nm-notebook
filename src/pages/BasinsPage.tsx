@@ -297,7 +297,9 @@ function rank(kind: Kind): number {
   return 0;
 }
 
-function buildModel(n: number): Model {
+type EdgeMode = "factors" | "sinks";
+
+function buildModel(n: number, edgeMode: EdgeMode): Model {
   const raw = buildRaw(n);
   const byRaw = new Map(raw.map((node) => [node.p, node]));
   const meta = annotate(byRaw);
@@ -405,13 +407,19 @@ function buildModel(n: number): Model {
   const byP = new Map(nodes.map((node) => [node.p, node]));
   const edges: DrawnEdge[] = [];
   for (const node of nodes) {
-    for (const q of node.oddFactors) {
+    const targets =
+      edgeMode === "sinks"
+        ? node.kind === "fermat" || node.kind === "mersenne"
+          ? []
+          : node.sinks
+        : node.oddFactors;
+    for (const q of targets) {
       const child = byP.get(q);
       if (!child) continue;
       edges.push({
         from: node.p,
         to: q,
-        fork: node.kind === "fork",
+        fork: node.kind === "fork" || (edgeMode === "sinks" && targets.length > 1),
         d: curve(node, child),
       });
     }
@@ -434,7 +442,11 @@ function fillOf(kind: Kind): string {
   return HIRE_FILL;
 }
 
-function downstream(p: number, byP: Map<number, Placed>): Set<number> {
+function downstream(
+  p: number,
+  byP: Map<number, Placed>,
+  edgeMode: EdgeMode,
+): Set<number> {
   const seen = new Set<number>();
   const stack: number[] = [p];
   while (stack.length > 0) {
@@ -443,7 +455,12 @@ function downstream(p: number, byP: Map<number, Placed>): Set<number> {
     seen.add(cur);
     const node = byP.get(cur);
     if (!node) continue;
-    for (const q of node.oddFactors) stack.push(q);
+    if (edgeMode === "sinks") {
+      if (node.kind === "fermat" || node.kind === "mersenne") continue;
+      for (const q of node.sinks) stack.push(q);
+    } else {
+      for (const q of node.oddFactors) stack.push(q);
+    }
   }
   return seen;
 }
@@ -479,6 +496,7 @@ type ViewBox = { x: number; y: number; w: number; h: number };
 
 export function BasinsPage() {
   const [limit, setLimit] = useState(10);
+  const [edgeMode, setEdgeMode] = useState<EdgeMode>("sinks");
   const [hover, setHover] = useState<number | null>(null);
   const [pinned, setPinned] = useState<number | null>(null);
   const [view, setView] = useState<ViewBox>({ x: 0, y: 0, w: VB_W, h: VB_H });
@@ -490,14 +508,14 @@ export function BasinsPage() {
     oy: number;
   } | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const model = useMemo(() => buildModel(limit), [limit]);
+  const model = useMemo(() => buildModel(limit, edgeMode), [limit, edgeMode]);
   const active = hover ?? pinned;
   const activeNode = active === null ? undefined : model.byP.get(active);
   const lit = useMemo(() => {
     if (active === null) return null;
     if (!model.byP.has(active)) return null;
-    return downstream(active, model.byP);
-  }, [active, model]);
+    return downstream(active, model.byP, edgeMode);
+  }, [active, model, edgeMode]);
 
   function onLimit(event: ChangeEvent<HTMLInputElement>): void {
     setLimit(nFromSlider(Number(event.target.value)));
@@ -593,17 +611,37 @@ export function BasinsPage() {
               <i className="dot fork" /> fork
             </li>
           </ul>
+          <div className="basins-mode" role="group" aria-label="Edge mode">
+            <button
+              type="button"
+              className={edgeMode === "sinks" ? "basins-toggle on" : "basins-toggle"}
+              aria-pressed={edgeMode === "sinks"}
+              onClick={() => setEdgeMode("sinks")}
+            >
+              eventual sinks
+            </button>
+            <button
+              type="button"
+              className={edgeMode === "factors" ? "basins-toggle on" : "basins-toggle"}
+              aria-pressed={edgeMode === "factors"}
+              onClick={() => setEdgeMode("factors")}
+            >
+              immediate factors
+            </button>
+          </div>
           <button type="button" className="basins-reset" onClick={resetView}>
             reset view
           </button>
         </div>
         <p className="basins-caption">
           An odd prime other than 3 has two even neighbours. One of them is free
-          of the factor 3 — that neighbour is the door. Follow the odd primes in
-          the door downhill until you land on a power of 2: those are the sinks
-          (Fermat just above, Mersenne just below). Two or more odd primes in a
-          door make a fork; the picture draws each split onto the sinks it feeds.
-          The rail stops at Fermat 65537; the next sink is Mersenne 131071.
+          of the factor 3 — that neighbour is the door.{" "}
+          {edgeMode === "sinks"
+            ? "Edges jump from each prime to the power-of-2 sinks it finally drains into (Fermat above, Mersenne below)."
+            : "Edges go to the odd primes hired from the door on the next step."}{" "}
+          A fork can feed more than one sink at once: overlapping drains on a DAG,
+          not unique orbits. The rail stops at Fermat 65537; the next sink is
+          Mersenne 131071.
         </p>
         <svg
           ref={svgRef}

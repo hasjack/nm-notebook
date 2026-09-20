@@ -208,6 +208,8 @@ The vector with value \(n-1\) at \(2\) and value \(-1\) at every other vertex is
 Let \(v\) be that vector.
 On the star alone, \(H_Xv=nv\).
 Each gold edge has both ends in the set where \(v\) is constant, so contributes \(0\) to \(H_Xv\).
+By Lemma~\ref{lem:cone} the remaining eigenvalues are \(1+\mu_i\), and on a graph with \(n-1\) vertices one has \(\mu_i\le n-1\), so \(1+\mu_i\le n\).
+Hence \(n\) is the largest eigenvalue.
 \end{proof}
 
 \begin{lemma}
@@ -321,7 +323,7 @@ Thus the new vertex contributes the gold arcs \(46\,137\,211\to 11\) (into the c
 The island itself is elementary: \(524\,287=2^{19}-1\) has \(m_0=2^{19}\), while \(m_0(1\,048\,573)=2\cdot 524\,287\) and \(m_0(8\,388\,593)=2^4\cdot 524\,287\).
 Gold stays connected through \(X=2.2\cdot 10^9\).
 Let \(M_{31}=2^{31}-1\). Every owner of \(M_{31}\) is at least \(2M_{31}-1\approx 4.29\cdot 10^9\), so \(M_{31}\) cannot enter \(S_X\) before that bound; there is no \(2\)-power door prime between \(524\,287\) and \(M_{31}\).
-Connectedness on \([X^*,\,2.2\cdot 10^9]\) is therefore not threatened by a new Lemma~\ref{lem:twopow} island (a non-\(2\)-power satellite remains conceivable, which is why those rows stay machine-checked).
+Connectedness on \([X^*,\,2.2\cdot 10^9]\) is therefore not threatened by a new Lemma~\ref{lem:twopow} island.
 The lag throughout is the distinction between owners and \(S_X\): an owner of a \(2\)-power door may exist long before that owner itself lies in \(S_X\).
 
 \section{Questions}

@@ -35,7 +35,7 @@ export function PaperPage() {
         <iframe
           className="paper-frame"
           title="hire-graph-of-the-3-free-door.pdf"
-          src="/paper/hire-graph-of-the-3-free-door.pdf?v=1789836799#view=FitH"
+          src="/paper/hire-graph-of-the-3-free-door.pdf?v=1789857354#view=FitH"
         />
       </div>
 

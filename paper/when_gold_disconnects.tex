@@ -3,6 +3,8 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\do\_}\makeatother
 \hypersetup{pdftitle={When gold disconnects},pdfauthor={Jack Pickett}}
 
 \newtheorem{lemma}{Lemma}
@@ -22,7 +24,7 @@
 In the hire graph of the 3-free door, every odd prime other than \(3\) meets \(5\) in the infinite undirected gold graph.
 Finite windows can still be disconnected: each new \(2\)-power-door prime is gold-isolated at its first-owner window.
 Downward gold chains terminate only at \(2\)-power doors, so gold is disconnected for infinitely many finite \(X\) if and only if there are infinitely many Mersenne or Fermat primes.
-The companion note settles the infinite component of \(5\); this note records the equivalence for the leftover finite-window question, together with the thin \(M_{31}\) first-owner and first direct-bridge integers.
+The companion note settles the infinite component of \(5\); this note records the equivalence for the leftover finite-window question, together with thin computational certificates for the \(M_{31}\) corridor.
 \end{abstract}
 
 \section{Setup}
@@ -47,12 +49,23 @@ The first owner itself is not hired at this window: nothing smaller than \(r_0\)
 As a \(2\)-power door, \(M\) has gold out-degree zero.
 No other owner of \(M\) exists below \(r_0\), so no incoming gold arc is live either.
 Thus \(M\) meets no other odd hired prime by a gold edge.
+Since \(M>5\) and \(r_0\ge 2M-1>11\), we also have \(5\in S_{r_0}\) (for example \(5\mid m_0(11)=10\)), so \(M\) is an isolated vertex distinct from another vertex of the gold graph.
 \end{proof}
 
-Every known Mersenne prime from \(M_{31}\) onward has first owner larger than the connecting window \(X^*=92\,274\,421\) of the hire-graph note, so Lemma~\ref{lem:isolated} already supplies many concrete disconnected windows.
+As of September 2026, every known Mersenne prime from \(M_{31}\) onward has first owner larger than the connecting window \(X^*=92\,274\,421\) of the hire-graph note, so Lemma~\ref{lem:isolated} already supplies many concrete disconnected windows.
 That is a finite list, not an infinitude theorem.
 
 \section{Downward chains}
+
+\begin{lemma}[Door closure in a window]
+\label{lem:closed}
+If \(q\in S_X\setminus\{2\}\) and \(r\) is an odd prime dividing \(m_0(q)\), then \(r\in S_X\).
+\end{lemma}
+
+\begin{proof}
+Every odd hired prime satisfies \(q\le(X+1)/2\le X\), so \(q\) itself is an owner in the window.
+Any odd prime factor of \(m_0(q)\) is therefore hired into \(S_X\).
+\end{proof}
 
 \begin{lemma}
 \label{lem:sinks}
@@ -85,7 +98,7 @@ The following are equivalent.
 Lemma~\ref{lem:isolated} gives \((2)\Rightarrow(1)\): each sufficiently large \(2\)-power door contributes at least its first-owner window.
 For \((1)\Rightarrow(2)\), suppose only finitely many \(2\)-power doors exist.
 After the last of them has been absorbed into the infinite component of \(5\) (which the hire-graph note supplies for every odd prime other than \(3\)), every later hired vertex has a downward gold path onto an already-absorbed sink.
-That path is live in the window: \(S_X\setminus\{2\}\) is always closed under odd prime factors of \(m_0\), because every odd vertex is \(\le(X+1)/2\le X\) and is therefore an owner, so its odd door factors already sit in \(S_X\).
+That path is live in the window by Lemma~\ref{lem:closed}.
 Hence later windows stay connected.
 The equivalence of \((2)\) and \((3)\) is the classification of \(2\)-power doors as Mersenne or Fermat primes greater than \(3\).
 \end{proof}
@@ -95,21 +108,22 @@ Infinitude of Mersenne primes is open.
 Thus Theorem~\ref{thm:equiv} does not settle item~(1) unconditionally; it identifies the obstruction.
 
 \begin{remark}[Heuristic]
-The Lenstra--Pomerance--Wagstaff heuristic predicts about \(e^\gamma\log_2\log_2 x\) Mersenne primes with exponent at most \(x\), hence infinitely many, and therefore infinitely many disconnected windows, with a new island of length comparable to \(M_p\) around each large Mersenne prime.
+The Lenstra--Pomerance--Wagstaff heuristic predicts about \(e^\gamma\log_2 x\) Mersenne primes with exponent at most \(x\), hence infinitely many, and therefore infinitely many disconnected windows.
+(An additional, separate heuristic is that each large Mersenne prime opens a satellite interval whose length is governed by owner and hire delays in residue classes modulo a multiple of \(M_p\); that is not a consequence of LPW alone.)
 That is a labelled heuristic, not a proof of~(1).
 \end{remark}
 
 \section{The \(M_{31}\) integers}
 
 Let \(M_{31}=2^{31}-1\).
-A thin CRT hunt (not a gold-graph rebuild) finds:
+Thin CRT searches (exhaustive over the two admissible classes, not a gold-graph rebuild) yield the following computational certificates:
 \[
 r_0=98\,784\,247\,763,\qquad
 v=300\,647\,710\,579,
 \]
-where \(r_0\) is the first owner of \(M_{31}\) and \(v\) is the least prime in either class modulo \(15M_{31}\) with \(5M_{31}\mid m_0(v)\) (class A; \(m_0(v)=2^2\cdot 5\cdot 7\cdot M_{31}\)).
+where \(r_0\) is certified as the least prime owner of \(M_{31}\) in either class modulo \(3M_{31}\), and \(v\) is certified as the least prime in either class modulo \(15M_{31}\) with \(5M_{31}\mid m_0(v)\) (class A; \(m_0(v)=2^2\cdot 5\cdot 7\cdot M_{31}\)).
 The ratio \(v/r_0\approx 3.04\).
-The floor candidate \(2M_{31}-1\) is composite; no earlier owner appears in the two classes modulo \(3M_{31}\).
+The floor candidate \(2M_{31}-1\) is composite (\(9241\cdot 464773\)); the certificate for \(r_0\) is that no earlier candidate in those two classes is prime.
 
 At \(X=v\) the integer \(v\) is an owner, so \(5\) and \(M_{31}\) divide its door, but \(v\notin S_X\), and the gold arcs \(v\to 5\) and \(v\to M_{31}\) are not live until \(v\) itself is hired.
 That hiring time is at least \(2v-1\approx 6.01\cdot 10^{11}\).
@@ -119,11 +133,10 @@ A full component check at these scales remains past home computing.
 
 \section*{Lean}
 
-Lemmas~\ref{lem:isolated}--\ref{lem:sinks} and Theorem~\ref{thm:equiv} are checked in Lean~4 as \texttt{Hire/GoldDisconnects.lean}
-(\texttt{goldIsolated\_of\_firstOwner\_twoPowerDoor},
-\texttt{exists\_twoPowerDoor\_of\_finite\_closed},
-\texttt{infinite\_goldDisconnected\_of\_infinite\_mersenne\_or\_fermat\_doors}).
-The \(M_{31}\) integers above are thin machine searches, not Lean theorems.
+Lemmas~\ref{lem:isolated}--\ref{lem:sinks} and Theorem~\ref{thm:equiv} are checked in Lean~4
+(\path{Hire/GoldDisconnects.lean}; declaration names on the companion site).
+Door closure (Lemma~\ref{lem:closed}) is the next Lean target.
+The \(M_{31}\) integers above are thin computational certificates, not Lean theorems.
 
 \begin{thebibliography}{9}
 

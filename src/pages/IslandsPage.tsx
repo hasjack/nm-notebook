@@ -220,9 +220,9 @@ export function IslandsPage() {
       </p>
 
       <p className="lede" style={{ maxWidth: "42rem" }}>
-        Notes: <Link to="/paper">The hire graph of the 3-free door</Link>
+        Notes: <Link to="/notes/hire-graph">The hire graph of the 3-free door</Link>
         {" · "}
-        <Link to="/when-gold-disconnects">When gold disconnects</Link>{" "}
+        <Link to="/notes/when-gold-disconnects">When gold disconnects</Link>{" "}
         (sequel — Lean green, PDF pending).
       </p>
 
