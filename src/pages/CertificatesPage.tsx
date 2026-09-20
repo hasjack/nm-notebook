@@ -156,11 +156,12 @@ export function CertificatesPage() {
           <em>q</em>+1 is prime.
         </p>
         <p>
-          Owner hunt closed: finding τ(q) is not a GIMPS-style Lucas–Lehmer job.
-          Heuristic K ∼ log q ≈ 9·10<sup>7</sup> means ~10<sup>7</sup>–10
-          <sup>8</sup> separate ~41M-digit PRP/ECPP tests — a different and
-          worse proposition. The certificate microscope stays; chasing the
-          owner does not.
+          Owner hunt closed: finding τ(q) is not a GIMPS Lucas–Lehmer job.
+          Heuristic K ∼ log q ≈ 9·10<sup>7</sup>; after a serious sieve, ~10
+          <sup>6</sup> survivors remain. Each is a structured 41M-digit test
+          (Pocklington/Lucas is kinder because N∓1 = kq already knows a factor
+          &gt; √N) — still a world-scale GPU project, not a Mac run. The
+          certificate microscope stays; chasing the owner does not.
         </p>
       </aside>
     </main>
