@@ -148,7 +148,11 @@ def main():
             'pool_max':args.pool_max,'nmin':args.nmin,'nmax':args.nmax,
             'emin':args.emin,'emax':args.emax,'no_cert':args.no_cert}
     cp=args.out/'config.json'
-    if cp.exists() and json.loads(cp.read_text())!=config:ap.error('Config differs; choose a new --out folder')
+    def norm(c):
+        c=dict(c); c.setdefault('no_cert',False); c.setdefault('emin',1); c.setdefault('emax',2); c.pop('version',None)
+        return c
+    if cp.exists() and norm(json.loads(cp.read_text()))!=norm(config):
+        ap.error('Config differs; choose a new --out folder')
     cp.write_text(json.dumps(config,indent=2))
     log=args.out/'attempts.jsonl';hits=args.out/'hits.jsonl'
     # A crash may leave a partial final line; discard only that unfinished record.
