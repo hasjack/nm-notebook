@@ -81,6 +81,10 @@ def main():
     ap.add_argument("--keep-going", action="store_true", help="do not stop on PRP")
     args = ap.parse_args()
     pfgw = Path(args.pfgw).expanduser()
+    if not pfgw.is_absolute():
+        pfgw = (Path.cwd() / pfgw).resolve()
+    else:
+        pfgw = pfgw.resolve()
     if not os.access(pfgw, os.X_OK):
         sys.exit(f"not executable: {pfgw}")
     args.out.mkdir(parents=True, exist_ok=True)
