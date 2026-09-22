@@ -24,7 +24,7 @@ const pages: Record<string, PageMeta> = {
   "/hire-lab": { title: "Hire rate" },
   "/notes": {
     title: "Notes",
-    description: "PDFs: hire papers and standalone notes.",
+    description: "PDFs of the hire papers and the zeta-doors note.",
   },
   "/notes/hire-graph": {
     title: "The hire graph of the 3-free door",

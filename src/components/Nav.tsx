@@ -50,19 +50,6 @@ const tree: NavGroup[] = [
     ],
   },
   {
-    id: "notes",
-    label: "Notes",
-    blurb: "Standalone PDFs. Hire papers remain under Hire.",
-    links: [
-      { to: "/notes", label: "Index", end: true },
-      {
-        to: "/notes/zeta-doors",
-        label: "Prime neighbours of zeta denominators",
-        icon: "pdf",
-      },
-    ],
-  },
-  {
     id: "alphabet",
     label: "Alphabet",
     blurb: "Number line in e, i, and π.",
@@ -109,6 +96,29 @@ const tree: NavGroup[] = [
       { to: "/signed-doors", label: "±Doors" },
       { to: "/alphabet-spiral", label: "α-spiral" },
       { to: "/count", label: "Count" },
+    ],
+    subs: [
+      {
+        id: "lab-notes",
+        label: "Notes",
+        links: [
+          {
+            to: "/notes/hire-graph",
+            label: "The hire graph of the 3-free door",
+            icon: "pdf",
+          },
+          {
+            to: "/notes/when-gold-disconnects",
+            label: "When gold disconnects",
+            icon: "pdf",
+          },
+          {
+            to: "/notes/zeta-doors",
+            label: "Prime neighbours of zeta denominators",
+            icon: "pdf",
+          },
+        ],
+      },
     ],
   },
 ];
