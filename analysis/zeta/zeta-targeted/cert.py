@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
-"""Prove probable zeta-door hits. python3 cert.py kitchen8/hits.jsonl"""
-import json, sys
+"""Prove zeta-door hits. Default: only the longest candidate in the file.
+
+    python3 cert.py kitchen-prp/hits.jsonl
+    python3 cert.py --all kitchen-prp/hits.jsonl
+"""
+import argparse, json, sys
 from pathlib import Path
 import hunt
 
@@ -18,13 +22,24 @@ def prove(row):
     return row
 
 def main():
-    src=Path(sys.argv[1])
-    dst=Path(sys.argv[2]) if len(sys.argv)>2 else src.with_name(src.stem+'.certified.jsonl')
+    ap=argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('src',type=Path)
+    ap.add_argument('dst',type=Path,nargs='?')
+    ap.add_argument('--all',action='store_true',help='prove every hit, not only the longest')
+    args=ap.parse_args()
+    rows=[json.loads(l) for l in args.src.read_text().splitlines() if l.strip()]
+    if not rows:
+        sys.exit('no hits')
+    if not args.all:
+        best=max(r.get('digits') or 0 for r in rows)
+        rows=[r for r in rows if (r.get('digits') or 0)==best]
+        if len(rows)>1:
+            rows=[rows[0]]
+    dst=args.dst or args.src.with_name(args.src.stem+'.certified.jsonl')
     n=0
     with dst.open('w') as out:
-        for line in src.read_text().splitlines():
-            if not line.strip():continue
-            row=prove(json.loads(line))
+        for row in rows:
+            row=prove(row)
             out.write(json.dumps(row)+'\n')
             print(row['status'], row.get('digits'), 'digits; zeta input', 1-int(row['index']), flush=True)
             n+=1

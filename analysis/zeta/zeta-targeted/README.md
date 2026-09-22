@@ -6,7 +6,8 @@ certified plus-side neighbour (kitchen8/). Hunt first, prove later:
     python3 hunt.py --no-cert --min-digits 3400 --max-digits 10000 \
       --pool-max 71 --nmin 8 --nmax 8 --emin 2 --emax 2 \
       --out kitchen-next
-    python3 cert.py kitchen-next/hits.jsonl
+    python3 cert.py kitchen-next/hits.jsonl          # longest hit only
+    python3 cert.py --all kitchen-next/hits.jsonl    # every hit
     python3 verify.py kitchen-next/hits.certified.jsonl
 
 Python 3.9+ otherwise. Unzip, open a terminal in this folder.

@@ -25,7 +25,6 @@ const tree: NavGroup[] = [
       { to: "/corridor", label: "Corridor" },
       { to: "/microscope", label: "Microscope" },
       { to: "/certificates", label: "Certificates" },
-      { to: "/zeta-doors", label: "Zeta doors" },
       { to: "/hire-spectrum", label: "Spectrum" },
       { to: "/hire-lab", label: "Hire rate" },
     ],
@@ -74,6 +73,7 @@ const tree: NavGroup[] = [
     label: "Lab",
     blurb: "More probes — field, analysis, primes, spectra.",
     links: [
+      { to: "/zeta-doors", label: "Zeta doors" },
       { to: "/magnitude", label: "Magnitude" },
       { to: "/beacons", label: "Beacons" },
       { to: "/rotation", label: "Rotation" },

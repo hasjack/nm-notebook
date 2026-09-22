@@ -13,7 +13,7 @@ BASES64=(2,325,9375,28178,450775,9780504,1795265022)
 BASES=(2,3,5,7,11,13,17,19,23,29,31,37)
 POOL=(5,7,11,13,17,19,23,29,31)
 LIMIT=2**64-1
-MAX_DIV=20000
+MAX_DIV=200000
 
 try:
     import gmpy2
@@ -136,37 +136,50 @@ def main():
     ap.add_argument('--emax',type=int,default=2)
     ap.add_argument('--no-cert',action='store_true',
                     help='log gmpy2 PRP hits as probable; prove later with cert.py')
+    ap.add_argument('--hits-only',action='store_true',
+                    help='do not write attempts.jsonl; keep hits, summary, and a small seen-k skip list')
     ap.add_argument('--out',type=Path,default=Path('results'))
     args=ap.parse_args()
-    if not (1<=args.min_digits<=args.max_digits<=20000 and args.seconds>0 and args.attempts>0):
-        ap.error('Require positive time/attempts and 1 <= min-digits <= max-digits <= 20000')
+    if not (1<=args.min_digits<=args.max_digits<=50000 and args.seconds>0 and args.attempts>0):
+        ap.error('Require positive time/attempts and 1 <= min-digits <= max-digits <= 50000')
     if args.pool_max<5 or args.nmin<1 or args.nmax<args.nmin or args.emin<1 or args.emax<args.emin:
         ap.error('Need pool-max>=5, 1<=nmin<=nmax, 1<=emin<=emax')
     args.out.mkdir(parents=True,exist_ok=True)
     pool=odd_primes_upto(args.pool_max)
-    config={'version':4,'seed':args.seed,'min_digits':args.min_digits,'max_digits':args.max_digits,
+    config={'version':5,'seed':args.seed,'min_digits':args.min_digits,'max_digits':args.max_digits,
             'pool_max':args.pool_max,'nmin':args.nmin,'nmax':args.nmax,
-            'emin':args.emin,'emax':args.emax,'no_cert':args.no_cert}
+            'emin':args.emin,'emax':args.emax,'no_cert':args.no_cert,'hits_only':args.hits_only}
     cp=args.out/'config.json'
     def norm(c):
-        c=dict(c); c.setdefault('no_cert',False); c.setdefault('emin',1); c.setdefault('emax',2); c.pop('version',None)
+        c=dict(c)
+        c.setdefault('no_cert',False); c.setdefault('hits_only',False)
+        c.setdefault('emin',1); c.setdefault('emax',2); c.pop('version',None)
         return c
     if cp.exists() and norm(json.loads(cp.read_text()))!=norm(config):
         ap.error('Config differs; choose a new --out folder')
     cp.write_text(json.dumps(config,indent=2))
     log=args.out/'attempts.jsonl';hits=args.out/'hits.jsonl'
-    # A crash may leave a partial final line; discard only that unfinished record.
-    if log.exists():
-        raw=log.read_bytes()
-        if raw and not raw.endswith(b'\n'):log.write_bytes(raw[:raw.rfind(b'\n')+1])
-    prior=[json.loads(s) for s in log.read_text().splitlines()] if log.exists() else []
-    # Derive hit file from the authoritative attempt log, recovering interrupted writes.
-    hits.write_text(''.join(json.dumps(r)+'\n' for r in prior if r['status'] in ('certified','probable')))
-    seen={r['candidate'] for r in prior if 'candidate' in r}
-    done={r['index'] for r in prior if 'index' in r}
-    start_id=max((r['attempt'] for r in prior),default=-1)+1
+    seen_k=args.out/'seen-k.txt';prog=args.out/'progress.json'
+    if args.hits_only:
+        prior_hits=[json.loads(s) for s in hits.read_text().splitlines()] if hits.exists() else []
+        seen={r['candidate'] for r in prior_hits if 'candidate' in r}
+        done=set(seen_k.read_text().splitlines()) if seen_k.exists() else {r['index'] for r in prior_hits if 'index' in r}
+        start_id=json.loads(prog.read_text()).get('next_attempt',0) if prog.exists() else 0
+        counts=json.loads(prog.read_text()).get('status_counts',{}) if prog.exists() else {}
+        gen_s=json.loads(prog.read_text()).get('generation_seconds',0) if prog.exists() else 0
+        test_s=json.loads(prog.read_text()).get('test_seconds',0) if prog.exists() else 0
+    else:
+        if log.exists():
+            raw=log.read_bytes()
+            if raw and not raw.endswith(b'\n'):log.write_bytes(raw[:raw.rfind(b'\n')+1])
+        prior=[json.loads(s) for s in log.read_text().splitlines()] if log.exists() else []
+        hits.write_text(''.join(json.dumps(r)+'\n' for r in prior if r['status'] in ('certified','probable')))
+        seen={r['candidate'] for r in prior if 'candidate' in r}
+        done={r['index'] for r in prior if 'index' in r}
+        start_id=max((r['attempt'] for r in prior),default=-1)+1
+        counts={}; gen_s=0; test_s=0
     small=[p for p in range(5,10000) if prime64(p)]
-    started=time.monotonic();last=started
+    started=time.monotonic();last=started;last_i=start_id-1
     print('engine',ENGINE,'Resume at attempt',start_id,'; output:',args.out,flush=True)
     try:
         for i in range(start_id,start_id+args.attempts):
@@ -180,8 +193,13 @@ def main():
                     k,d,df=denominator(f)
                 except ValueError:
                     row['status']='too-many-divisors'
-                    append(log,row);done.add(str(k));continue
+                    counts[row['status']]=counts.get(row['status'],0)+1
+                    done.add(str(k))
+                    if args.hits_only:seen_k.open('a').write(str(k)+'\n')
+                    else:append(log,row)
+                    continue
                 row['generation_seconds']=time.monotonic()-t
+                gen_s+=row['generation_seconds']
                 q=d+(1 if d%3==1 else -1)
                 digits=int(q.bit_length()*math.log10(2))+1
                 row.update(digits=digits,side='plus' if q==d+1 else 'minus')
@@ -205,15 +223,29 @@ def main():
                                 row['status']='certified' if cert else 'probable'
                                 if cert:row['certificate']=cert
                         row['test_seconds']=time.monotonic()-t
-            append(log,row);done.add(str(k))
+                        test_s+=row['test_seconds']
+            counts[row['status']]=counts.get(row['status'],0)+1
+            fresh=str(k) not in done
+            done.add(str(k))
+            if args.hits_only:
+                if fresh:seen_k.open('a').write(str(k)+'\n')
+            else:append(log,row)
             if row.get('candidate'):seen.add(row['candidate'])
             if row['status'] in ('certified','probable'):
                 append(hits,row)
                 print('HIT',row['status'],row['digits'],'digits; zeta input',1-k,flush=True)
             if time.monotonic()-last>5:
                 print('attempt',i+1,'elapsed',round(time.monotonic()-started,1),'s',flush=True);last=time.monotonic()
+            last_i=i
     except KeyboardInterrupt:print('\nStopped; completed attempts saved.',flush=True)
-    report=summarize(log);(args.out/'summary.json').write_text(json.dumps(report,indent=2))
+    if args.hits_only:
+        report={'attempts_logged':sum(counts.values()),'status_counts':counts,
+                'generation_seconds':round(gen_s,3),'test_seconds':round(test_s,3)}
+        prog.write_text(json.dumps({'next_attempt':last_i+1,'status_counts':counts,
+                                    'generation_seconds':gen_s,'test_seconds':test_s},indent=2))
+    else:
+        report=summarize(log)
+    (args.out/'summary.json').write_text(json.dumps(report,indent=2))
     print(json.dumps(report,indent=2))
 
 if __name__=='__main__':main()
