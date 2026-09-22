@@ -160,8 +160,8 @@ def main():
         vmin2,vmax2,force_mod12=1,3,None
     if args.vmin2 is not None:vmin2=max(1,args.vmin2)
     if args.vmax2 is not None:vmax2=max(vmin2,args.vmax2)
-    if not (1<=args.min_digits<=args.max_digits<=250000 and args.seconds>0 and args.attempts>0):
-        ap.error('Require positive time/attempts and 1 <= min-digits <= max-digits <= 250000')
+    if not (1<=args.min_digits<=args.max_digits and args.seconds>0 and args.attempts>0):
+        ap.error('Require positive time/attempts and 1 <= min-digits <= max-digits')
     if args.pool_max<5 or args.nmin<1 or args.nmax<args.nmin or args.emin<1 or args.emax<args.emin:
         ap.error('Need pool-max>=5, 1<=nmin<=nmax, 1<=emin<=emax')
     args.out.mkdir(parents=True,exist_ok=True)

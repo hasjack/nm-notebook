@@ -135,10 +135,13 @@ export function ZetaDoorsPage() {
         </table>
       </div>
       <p>
-        The original family repeats denominators heavily. The extra residues
-        produce more distinct D and more distinct primes, including many
-        minus-side neighbours that this hunt still does not certify. Targeted
-        kitchen: <code>--family wide</code> (default remains tight).
+        The original family repeats denominators heavily. Extra residues
+        (k ≡ 4, 8, 10) give more distinct D. Residue 10 still has v<sub>2</sub> = 1;
+        4 and 8 need v<sub>2</sub> ≥ 2. Sign of Q is not automatic from “wide”: it
+        depends on v<sub>2</sub> and Ω(T). Plus-side survivors keep the same
+        Pocklington route. <code>--max-digits</code> is the digit cap;
+        <code>--family wide</code> is a parallel experiment. Default hunt remains
+        tight.
       </p>
 
       <h2>Route</h2>
