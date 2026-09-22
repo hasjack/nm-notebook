@@ -28,6 +28,119 @@ export function ZetaDoorsPage() {
         mentions it and does not invoke it.
       </p>
 
+      <h2>Even k, 3 not dividing k</h2>
+      <p>
+        Removing the unique factor of 3 works for every positive even k with
+        3 ∤ k, i.e. k ≡ 2, 4, 8, or 10 (mod 12). The exponent of 3 in D is
+        1 + v<sub>3</sub>(k); when 3 ∤ k that is exactly one. What remains is
+        even and 3-free. The power of 2 can now vary, so d need not be 4T.
+      </p>
+      <aside className="lab-theorem" aria-label="Relaxed selection rule">
+        <p>
+          2 | k, 3 ∤ k, p &gt; 3 prime, p − 1 | k
+        </p>
+        <p className="lab-theorem-implies">
+          ⟹ p ≡ 2 (mod 3), m<sub>0</sub>(p) = p − 1 | k.
+        </p>
+      </aside>
+      <p>
+        If also 4 ∤ k (k ≡ 2 or 10 (mod 12)), the extra primes are still 11
+        (mod 12). If 4 | k they may be 5 or 11 (mod 12). Lean:{" "}
+        <code>prime_mod_three_of_pred_dvd_even</code>,{" "}
+        <code>prime_mod_twelve_of_pred_dvd_four</code>.
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>k</th>
+              <th>ζ(1−k)</th>
+              <th>d = D/3</th>
+              <th>neighbour</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2</td>
+              <td>−1/12</td>
+              <td>4</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>1/120</td>
+              <td>40</td>
+              <td>41</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>1/240</td>
+              <td>80</td>
+              <td>79</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>−1/132</td>
+              <td>44</td>
+              <td>43</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        All four neighbours are prime here; that is not a law. k = 8 and k = 10
+        land on the minus side (Q = d−1), so Q−1 is not the known door. Plus-side
+        Pocklington still wants Q = d+1.
+      </p>
+      <p>
+        Sequential census, even k ≤ 10,000 with 3 ∤ k, distinct denominators
+        counted once:
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>k ≡ 2 (mod 12)</th>
+              <th>k ≡ 4, 8, 10</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>indices</td>
+              <td>834</td>
+              <td>2,500</td>
+            </tr>
+            <tr>
+              <td>distinct D</td>
+              <td>171</td>
+              <td>1,426</td>
+            </tr>
+            <tr>
+              <td>repeat D</td>
+              <td>663</td>
+              <td>1,074</td>
+            </tr>
+            <tr>
+              <td>distinct plus-side primes</td>
+              <td>29</td>
+              <td>160</td>
+            </tr>
+            <tr>
+              <td>distinct χ₃-neighbour primes</td>
+              <td>44</td>
+              <td>320</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        The original family repeats denominators heavily. The extra residues
+        produce more distinct D and more distinct primes, including many
+        minus-side neighbours that this hunt still does not certify. Targeted
+        kitchen: <code>--family wide</code> (default remains tight).
+      </p>
+
       <h2>Route</h2>
       <p>
         ζ(−1) = ζ(−13) = −1/12. Inputs twelve apart, −1, −13, −25, −37, …, do

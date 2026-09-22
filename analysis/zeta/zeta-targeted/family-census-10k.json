@@ -1,0 +1,25 @@
+{
+  "2": {
+    "indices": 834,
+    "distinct_D": 171,
+    "plus_side": 660,
+    "minus_side": 174,
+    "plus_prime": 561,
+    "eligible_prime": 646,
+    "repeat_D": 663,
+    "distinct_plus_primes": 29,
+    "distinct_eligible_primes": 44
+  },
+  "extra": {
+    "indices": 2500,
+    "distinct_D": 1426,
+    "plus_side": 1340,
+    "minus_side": 1160,
+    "plus_prime": 745,
+    "eligible_prime": 1160,
+    "repeat_D": 1074,
+    "distinct_plus_primes": 160,
+    "distinct_eligible_primes": 320
+  },
+  "max_k": 10000
+}

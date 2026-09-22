@@ -95,7 +95,7 @@ def validate(row):
     factors={int(p):e for p,e in c['factors'].items()}
     F,proven,cofactors=pocklington(n,factors,c['witnesses'])
     k=int(row['index']);f={int(p):e for p,e in row['index_factors'].items()}
-    assert k%12==2
+    assert k%12 in (2,4,8,10)
     assert all(isinstance(e,int) and e>0 and isprime64(p) for p,e in f.items())
     assert math.prod(p**e for p,e in f.items())==k
     index_primes=tuple(f)

@@ -82,4 +82,68 @@ theorem m0_dvd_of_pred_dvd_index {p k : ℕ}
   rw [m0_of_mod_two this]
   exact hdvd
 
+/-- Even k not divisible by 3 is 2, 4, 8, or 10 (mod 12). -/
+lemma even_not_three_mod_twelve {k : ℕ} (h2 : 2 ∣ k) (h3 : ¬ 3 ∣ k) :
+    k % 12 = 2 ∨ k % 12 = 4 ∨ k % 12 = 8 ∨ k % 12 = 10 := by
+  have h2m : k % 2 = 0 := Nat.dvd_iff_mod_eq_zero.mp h2
+  have h3m : k % 3 ≠ 0 := fun h => h3 (Nat.dvd_iff_mod_eq_zero.mpr h)
+  have h12_2 : (k % 12) % 2 = k % 2 := Nat.mod_mod_of_dvd k (by decide : 2 ∣ 12)
+  have h12_3 : (k % 12) % 3 = k % 3 := Nat.mod_mod_of_dvd k (by decide : 3 ∣ 12)
+  have : k % 12 < 12 := Nat.mod_lt k (by decide)
+  interval_cases k % 12 <;> omega
+
+/-- Removing the unique factor of 3 from the denominator still leaves a 3-free
+even door when `3 ∤ k`. Extra primes then satisfy `p ≡ 2 (mod 3)`. -/
+theorem prime_mod_three_of_pred_dvd_even {p k : ℕ}
+    (hp : p.Prime) (hp3 : p ≠ 3)
+    (_h2 : 2 ∣ k) (h3 : ¬ 3 ∣ k) (hdvd : p - 1 ∣ k) :
+    p % 3 = 2 := by
+  have h3pred : ¬ 3 ∣ p - 1 := fun h => h3 (Nat.dvd_trans h hdvd)
+  have hne0 : p % 3 ≠ 0 := by
+    intro h
+    exact not_three_dvd_of_prime_ne_three hp hp3 (Nat.dvd_iff_mod_eq_zero.mpr h)
+  have hne1 : p % 3 ≠ 1 := by
+    intro h
+    have : (p - 1) % 3 = 0 := by omega
+    exact h3pred (Nat.dvd_iff_mod_eq_zero.mpr this)
+  have : p % 3 < 3 := Nat.mod_lt p (by decide)
+  interval_cases p % 3 <;> omega
+
+theorem m0_dvd_of_pred_dvd_even {p k : ℕ}
+    (hp : p.Prime) (hp3 : p ≠ 3)
+    (h2 : 2 ∣ k) (h3 : ¬ 3 ∣ k) (hdvd : p - 1 ∣ k) :
+    m0 p ∣ k := by
+  have : p % 3 = 2 := prime_mod_three_of_pred_dvd_even hp hp3 h2 h3 hdvd
+  rw [m0_of_mod_two this]
+  exact hdvd
+
+/-- If also `4 ∤ k` (so k ≡ 2 or 10 (mod 12)), the extra primes are 11 (mod 12). -/
+theorem prime_mod_twelve_of_pred_dvd_not_four {p k : ℕ}
+    (hp : p.Prime) (hp2 : p ≠ 2) (hp3 : p ≠ 3)
+    (h2 : 2 ∣ k) (h3 : ¬ 3 ∣ k) (h4 : ¬ 4 ∣ k)
+    (hdvd : p - 1 ∣ k) :
+    p % 12 = 11 := by
+  have hodd : Odd p := hp.odd_of_ne_two hp2
+  have h4pred : ¬ 4 ∣ p - 1 := fun h => h4 (Nat.dvd_trans h hdvd)
+  have hpmod4 : p % 4 = 3 := by
+    have := Nat.odd_iff.mp hodd
+    have : (p - 1) % 4 ≠ 0 := fun h => h4pred (Nat.dvd_iff_mod_eq_zero.mpr h)
+    omega
+  have hpmod3 : p % 3 = 2 := prime_mod_three_of_pred_dvd_even hp hp3 h2 h3 hdvd
+  omega
+
+/-- If `4 ∣ k`, extra primes may be 5 or 11 (mod 12). -/
+theorem prime_mod_twelve_of_pred_dvd_four {p k : ℕ}
+    (hp : p.Prime) (hp2 : p ≠ 2) (hp3 : p ≠ 3)
+    (h2 : 2 ∣ k) (h3 : ¬ 3 ∣ k)
+    (hdvd : p - 1 ∣ k) :
+    p % 12 = 5 ∨ p % 12 = 11 := by
+  have hodd : Odd p := hp.odd_of_ne_two hp2
+  have hpmod3 : p % 3 = 2 := prime_mod_three_of_pred_dvd_even hp hp3 h2 h3 hdvd
+  have hpmod2 : p % 2 = 1 := Nat.odd_iff.mp hodd
+  have h12_2 : (p % 12) % 2 = p % 2 := Nat.mod_mod_of_dvd p (by decide : 2 ∣ 12)
+  have h12_3 : (p % 12) % 3 = p % 3 := Nat.mod_mod_of_dvd p (by decide : 3 ∣ 12)
+  have : p % 12 < 12 := Nat.mod_lt p (by decide)
+  interval_cases p % 12 <;> omega
+
 end Hire

@@ -14,9 +14,15 @@ def factor(n):
         p+=1
     if n>1:out[n]=1
     return out
-for k in range(2,202,12):
+for k in range(2,202):
+    if k%2 or k%3==0:continue
     _,d,_=hunt.denominator(factor(k))
     assert 3*d==(B[k]/k).denominator
+# ChatGPT's four examples: neighbours 5, 41, 79, 43.
+assert hunt.denominator(factor(2))[1]==4
+assert hunt.denominator(factor(4))[1]==40
+assert hunt.denominator(factor(8))[1]==80
+assert hunt.denominator(factor(10))[1]==44
 for n in range(2,10000):
     expected=all(n%p for p in range(2,__import__('math').isqrt(n)+1))
     assert hunt.prime64(n)==verify.isprime64(n)==expected

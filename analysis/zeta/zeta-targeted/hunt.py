@@ -14,6 +14,8 @@ BASES=(2,3,5,7,11,13,17,19,23,29,31,37)
 POOL=(5,7,11,13,17,19,23,29,31)
 LIMIT=2**64-1
 MAX_DIV=200000
+# Even k, 3 does not divide k. Tight family is k ≡ 2 (mod 12).
+MOD12_OK=(2,4,8,10)
 
 try:
     import gmpy2
@@ -71,7 +73,7 @@ def divisor_count(f):
 
 def denominator(f):
     k=math.prod(p**e for p,e in f.items())
-    assert k%12==2
+    assert k%12 in MOD12_OK
     if divisor_count(f)>MAX_DIV:
         raise ValueError('too many divisors')
     factors={}
@@ -84,20 +86,28 @@ def denominator(f):
     assert factors.pop(3)==1
     return k,math.prod(p**e for p,e in factors.items()),factors
 
-def index_for(i,seed,pool,nmin,nmax,emin,emax):
+def index_for(i,seed,pool,nmin,nmax,emin,emax,vmin2=1,vmax2=1,force_mod12=2):
     rng=random.Random(seed+i)
     nmin=max(1,min(nmin,len(pool))); nmax=max(nmin,min(nmax,len(pool)))
     emin=max(1,emin); emax=max(emin,emax)
+    vmin2=max(1,vmin2); vmax2=max(vmin2,vmax2)
     for _ in range(80):
         chosen=rng.sample(pool,rng.randint(nmin,nmax))
-        f={2:1,**{p:rng.randint(emin,emax) for p in chosen}}
-        if math.prod(p**e for p,e in f.items())%12!=2:
+        f={2:rng.randint(vmin2,vmax2),**{p:rng.randint(emin,emax) for p in chosen}}
+        k=math.prod(p**e for p,e in f.items())
+        if force_mod12 is not None and k%12!=force_mod12:
             f[5]=f.get(5,0)+1
+            k=math.prod(p**e for p,e in f.items())
+        if k%12 not in MOD12_OK:
+            continue
+        if force_mod12 is not None and k%12!=force_mod12:
+            continue
         if divisor_count(f)<=MAX_DIV:
             return dict(sorted(f.items()))
     chosen=list(pool[: min(5,len(pool))])
-    f={2:1,**{p:emin for p in chosen}}
-    if math.prod(p**e for p,e in f.items())%12!=2:
+    f={2:vmin2,**{p:emin for p in chosen}}
+    k=math.prod(p**e for p,e in f.items())
+    if force_mod12 is not None and k%12!=force_mod12:
         f[5]=f.get(5,0)+1
     return dict(sorted(f.items()))
 
@@ -138,22 +148,30 @@ def main():
                     help='log gmpy2 PRP hits as probable; prove later with cert.py')
     ap.add_argument('--hits-only',action='store_true',
                     help='do not write attempts.jsonl; keep hits, summary, and a small seen-k skip list')
+    ap.add_argument('--family',choices=('tight','wide'),default='tight',
+                    help='tight: k≡2 (mod 12). wide: even k, 3 does not divide k (2,4,8,10 mod 12)')
     ap.add_argument('--out',type=Path,default=Path('results'))
     args=ap.parse_args()
+    if args.family=='tight':
+        vmin2,vmax2,force_mod12=1,1,2
+    else:
+        vmin2,vmax2,force_mod12=1,3,None
     if not (1<=args.min_digits<=args.max_digits<=50000 and args.seconds>0 and args.attempts>0):
         ap.error('Require positive time/attempts and 1 <= min-digits <= max-digits <= 50000')
     if args.pool_max<5 or args.nmin<1 or args.nmax<args.nmin or args.emin<1 or args.emax<args.emin:
         ap.error('Need pool-max>=5, 1<=nmin<=nmax, 1<=emin<=emax')
     args.out.mkdir(parents=True,exist_ok=True)
     pool=odd_primes_upto(args.pool_max)
-    config={'version':5,'seed':args.seed,'min_digits':args.min_digits,'max_digits':args.max_digits,
+    config={'version':6,'seed':args.seed,'min_digits':args.min_digits,'max_digits':args.max_digits,
             'pool_max':args.pool_max,'nmin':args.nmin,'nmax':args.nmax,
-            'emin':args.emin,'emax':args.emax,'no_cert':args.no_cert,'hits_only':args.hits_only}
+            'emin':args.emin,'emax':args.emax,'family':args.family,
+            'no_cert':args.no_cert,'hits_only':args.hits_only}
     cp=args.out/'config.json'
     def norm(c):
         c=dict(c)
         c.setdefault('no_cert',False); c.setdefault('hits_only',False)
-        c.setdefault('emin',1); c.setdefault('emax',2); c.pop('version',None)
+        c.setdefault('emin',1); c.setdefault('emax',2)
+        c.setdefault('family','tight'); c.pop('version',None)
         return c
     if cp.exists() and norm(json.loads(cp.read_text()))!=norm(config):
         ap.error('Config differs; choose a new --out folder')
@@ -184,8 +202,10 @@ def main():
     try:
         for i in range(start_id,start_id+args.attempts):
             if time.monotonic()-started>=args.seconds:break
-            f=index_for(i,args.seed,pool,args.nmin,args.nmax,args.emin,args.emax);k=math.prod(p**e for p,e in f.items())
-            row={'attempt':i,'index':str(k),'index_factors':f}
+            f=index_for(i,args.seed,pool,args.nmin,args.nmax,args.emin,args.emax,
+                        vmin2,vmax2,force_mod12)
+            k=math.prod(p**e for p,e in f.items())
+            row={'attempt':i,'index':str(k),'index_factors':f,'k_mod12':k%12}
             if str(k) in done:row['status']='duplicate-index'
             else:
                 t=time.monotonic()
