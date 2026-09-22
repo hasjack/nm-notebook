@@ -1,0 +1,14 @@
+{
+  "attempts_logged": 12000,
+  "status_counts": {
+    "minus-side-deferred": 1287,
+    "outside-digit-band": 4144,
+    "sieved-composite": 1023,
+    "duplicate-index": 5320,
+    "mr-composite": 210,
+    "duplicate-candidate": 9,
+    "certified": 7
+  },
+  "generation_seconds": 2.287,
+  "test_seconds": 0.558
+}

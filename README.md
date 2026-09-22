@@ -1,6 +1,6 @@
-# Natural Mathematics — nm-notebook
+# nm-notebook
 
-Open notebook for Natural Mathematics: explore on the web, or publish lemmas with Lean proofs.
+The hire graph of the 3-free door. Alphabet toys and Lean live in the same repo.
 
 ## Hire graph
 
@@ -44,7 +44,8 @@ npm run build
 |-------|------|
 | **Hire** | Introduction, Basins, Islands, Corridor, Microscope, Certificates, Spectrum, Hire rate, notes |
 | **Alphabet** | e, i, π — Walk, Lock i / π, Basel, Catalogue, Notes |
-| **Lab** | Probe pages |
+| **Toys** | Physics, Bell `(σ, p)`, switching atlas |
+| **Lab** | More probes |
 
 Certificates: owner-floor thin sieve at `B = 10⁷` across the PrimePages top 100 (99/100; skipped #82 primorial). Hunt closed; papers frozen. K_cert leaders #42 = 134, #75 = 116, #18 = 110.
 

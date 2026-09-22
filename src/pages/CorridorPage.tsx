@@ -152,7 +152,7 @@ export function CorridorPage() {
       <aside className="lab-note-caveats" aria-label="Lab freeze / caveats">
         <p>
           <strong>Lab freeze.</strong> Thin markers only; fat not run.{" "}
-          <em>C</em> unnamed. Papers 1–2 frozen. Open notebook.
+          <em>C</em> unnamed. Papers 1–2 frozen.
         </p>
       </aside>
 

@@ -1,6 +1,6 @@
 # Lean: 3-free door / hire graph
 
-Formal companion to the Natural Mathematics note on the **3-free door** of an odd prime and the **hire graph** `G` (star on 2, gold chords).
+Formal companion to the **3-free door** of an odd prime and the **hire graph** `G` (star on 2, gold chords).
 
 Lives inside the e-walk explorer repo so GitHub Pages can link at the sources. Proofs are checked with [Lean 4](https://lean-lang.org/) + [Mathlib](https://github.com/leanprover-community/mathlib4).
 

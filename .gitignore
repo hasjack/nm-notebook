@@ -44,6 +44,9 @@ analysis/hire_rate/hire_rate_bin_residual
 analysis/hire_rate/hire_rate_lambda_bins
 analysis/hire_rate/__pycache__/
 analysis/corridor/__pycache__/
+analysis/zeta/**/__pycache__/
+analysis/zeta/zeta-door-safari/results-million.json
+analysis/rank100_probe_receipt.json
 
 # Local alphabet fold scratch
 _alphabet-fold/

@@ -87,34 +87,6 @@ export function NotesPage() {
         </li>
       </ul>
 
-      <h2>Adjacent curiosity (not a claim)</h2>
-      <p>
-        Jack arrived at this explorer via the square reciprocal sum, the cube reciprocal sum, and the growth along a critical line.
-        The kinship is thematic, not a derivation — a light shoreline touch:
-      </p>
-      <ul>
-        <li>
-          <strong>Complex log</strong> is the same function that turns
-          multiplicative structure into additive structure on the e-line we plot.
-        </li>
-        <li>
-          The <strong>critical strip</strong> is another place where a continuous
-          complex object along a line is constrained by discrete arithmetic (zeros),
-          analogous in spirit to a continuous walk constrained by odd integers.
-        </li>
-        <li>
-          <strong>Special heights</strong> (ordinates of zeros, or Apéry’s the cube reciprocal sum /
-          the Basel the square reciprocal sum shoreline) feel nearby when you are already staring at
-          distinguished real parameters on a log-scaled axis.
-        </li>
-      </ul>
-      <p className="hint">
-        None of that is a path to a proof or a closed form. It is why the toy feels
-        like the right sandbox — neighbouring furniture in the same room, not a
-        bridge between theorems.
-      </p>
-    
-
       <h2>Cast &amp; newer tabs</h2>
       <ul>
         <li>
@@ -122,22 +94,16 @@ export function NotesPage() {
           where it started.
         </li>
         <li>
-          <strong>Beacons / Rotation / Magnitude / Physics</strong> — integer
-          choreography, turns as a number line, real σ off the cylinder, and
-          waves that already speak the same letters.
+          <strong>Beacons / Rotation / Magnitude</strong> — integer
+          choreography, turns as a number line, real σ off the cylinder.
+        </li>
+        <li>
+          <strong>Toys</strong> — Physics (waves in the same letters); Bell (
+          <code>(σ, p)</code> local CHSH toy); Atlas (orientation-switching
+          quadratic map).
         </li>
       </ul>
       
-      <h2>Principle — 2 is nature’s only knife</h2>
-      <p>
-        Natural Mathematics take: the privileged cut is twofold. Even versus odd
-        landings (+1 vs −1). Half-turn versus return. Order 2, where the polilog
-        costume exits into π, versus higher orders that stay dressed. Odd versus
-        even denominators in the cube sum (the 7/8 split). Not a theorem — a
-        habit of noticing where nature actually cuts, and where we only wish it
-        would.
-      </p>
-
       <h2>Formal (Lean)</h2>
       <p>
         The hire-graph notes have a Lean 4 + Mathlib companion under{" "}
@@ -151,12 +117,6 @@ export function NotesPage() {
           lean/
         </a>
         .
-      </p>
-      <h2>Physics-adjacent</h2>
-      <p>
-        Waves already live in the alphabet e, i, π. A tone is e^(i ω π t); a period is
-        Return; two tones beat; damping e^(−γt) is Magnitude’s cousin. See the
-        Physics tab — teaching frame, not a QFT claim.
       </p>
     </main>
   );

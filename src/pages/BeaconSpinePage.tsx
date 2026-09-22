@@ -26,8 +26,7 @@ export function BeaconSpinePage() {
       <h1>Beacon spine — count the odds</h1>
       <p className="lede">
         Pleasant lattice: base = e^{odd}, and either the π-factor or the i-factor
-        is 1/odd. Same −1 landing every time. e³ with ⅓ is the poster child —
-        integer choreography, not a new theorem.
+        is 1/odd. Same −1 landing every time. e³ with ⅓ is the poster child.
       </p>
 
       <div className="value">−1</div>

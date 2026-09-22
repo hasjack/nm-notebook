@@ -35,6 +35,8 @@ import { WhenGoldDisconnectsPage } from "./pages/WhenGoldDisconnectsPage";
 import { SignedDoorsPage } from "./pages/SignedDoorsPage";
 import { AlphabetSpiralPage } from "./pages/AlphabetSpiralPage";
 import { CountPage } from "./pages/CountPage";
+import { BellToyPage } from "./pages/BellToyPage";
+import { AtlasPage } from "./pages/AtlasPage";
 
 export default function App() {
   return (
@@ -86,6 +88,16 @@ export default function App() {
         <Route path="/alphabet-spiral" element={<AlphabetSpiralPage />} />
         <Route path="/count" element={<CountPage />} />
         <Route path="/notes" element={<NotesPage />} />
+        <Route path="/toys/bell" element={<BellToyPage />} />
+        <Route path="/toys/atlas" element={<AtlasPage />} />
+        <Route
+          path="/notes/natural-mathematics-bell-toy"
+          element={<Navigate to="/toys/bell" replace />}
+        />
+        <Route
+          path="/notes/switching-quadratic-atlas-diagnostics"
+          element={<Navigate to="/toys/atlas" replace />}
+        />
         <Route path="/lock" element={<Navigate to="/alphabet?tab=lock-i" replace />} />
         <Route path="/split" element={<Navigate to="/alphabet?tab=free" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />

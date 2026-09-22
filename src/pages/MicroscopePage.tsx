@@ -377,7 +377,7 @@ export function MicroscopePage() {
               136279841 → 851749 → 3407 → {"{"}13, 131{"}"} → {"{"}5, 7{"}"}
             </div>
             <p className="figure-caption islands-caption">
-              arithmetic aside, not a gold edge — no significance claim yet
+              Exponent shadow chain.
             </p>
           </div>
         </div>
@@ -385,7 +385,7 @@ export function MicroscopePage() {
         <div className="hire-beat">
           <h2>Complement / sluice factors</h2>
           <p className="islands-lab-caption">
-            Exploratory only — papers frozen; not a hire-graph claim.
+            Papers frozen.
           </p>
           <div className="microscope-down-box">
             <ul>
@@ -447,15 +447,13 @@ export function MicroscopePage() {
       </section>
 
       <p className="figure-caption islands-caption islands-cold-body">
-        Open notebook. UP = owners / heuristics / K<sub>cert</sub> / Linnik. DOWN
-        = gold collapse + exponent shadow + sluice — arithmetic aside, not a
-        theorem about first ownership of M<sub>{EXP}</sub>. No ζ. Open notebook.
+        UP = owners / heuristics / K<sub>cert</sub> / Linnik. DOWN = gold
+        collapse + exponent shadow + sluice.
       </p>
     
       <aside className="lab-note-caveats" aria-label="Lab freeze / caveats">
         <p>
           <strong>Lab freeze.</strong> <em>C</em> unnamed. Papers 1–2 frozen.
-          Open notebook — UP / Q / DOWN layout only, not a theorem.
         </p>
       </aside>
 

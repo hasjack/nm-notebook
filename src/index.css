@@ -21,6 +21,9 @@ body {
 :root {
   /* Open desktop menu: at least ~1/5 of the page, with a solid rem floor. */
   --app-sidebar-open: max(20rem, 20vw);
+  /* One column for text/table pages. Full-bleed UI (basins, islands) opts out. */
+  --page-width: 980px;
+  --prose-width: 42rem;
 }
 
 .app-shell {
@@ -280,6 +283,17 @@ body {
   font-size: 0.86rem;
   color: #3a3228;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.nav-pdf-icon {
+  flex-shrink: 0;
+  width: 0.78rem;
+  height: 0.9rem;
+  margin-top: -0.08em;
+  color: #9a2f38;
 }
 
 .nav-links.stacked .nav-link.on {
@@ -378,9 +392,11 @@ body {
 
 
 .page {
-  max-width: 980px;
+  max-width: var(--page-width);
+  width: 100%;
   margin: 0 auto;
   padding: 0.5rem 1.25rem 2.5rem;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -402,7 +418,7 @@ h2 {
   font-size: 0.95rem;
   line-height: 1.45;
   margin: 0 0 1rem;
-  max-width: 42em;
+  max-width: var(--prose-width);
 }
 
 .value {
@@ -534,7 +550,7 @@ select {
 .notes ul {
   line-height: 1.5;
   color: #1a1a1a;
-  max-width: 46em;
+  max-width: var(--prose-width);
 }
 
 .notes li {
@@ -542,7 +558,7 @@ select {
 }
 
 .notes p {
-  max-width: 46em;
+  max-width: var(--prose-width);
   line-height: 1.5;
 }
 
@@ -685,7 +701,7 @@ code.pow sup {
 /* Hire page curated figures (dark PNGs on cream page) */
 .hire-intro {
   margin: 1rem 0 0.35rem;
-  max-width: 52rem;
+  max-width: none;
 }
 .hire-intro h2 {
   font-size: 1.15rem;
@@ -747,7 +763,7 @@ code.pow sup {
 
 .basins-page > h1,
 .basins-page > p {
-  max-width: 40rem;
+  max-width: var(--prose-width);
 }
 
 .basins-panel {
@@ -919,7 +935,7 @@ code.pow sup {
 
 
 .basins-caption {
-  max-width: 46rem;
+  max-width: var(--prose-width);
   margin: 0 0 0.65rem;
   font-size: 0.9rem;
   line-height: 1.45;
@@ -947,11 +963,9 @@ code.pow sup {
 
 
 .paper-page {
-  width: 68%;
-  max-width: none;
+  width: 100%;
+  max-width: var(--page-width);
   margin-inline: auto;
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .paper-page .paper-abstract,
@@ -1083,7 +1097,7 @@ code.pow sup {
 
 
 .hire-rate-wrap {
-  max-width: 42rem;
+  max-width: none;
 }
 
 .hire-rate-table td:nth-child(n+2),
@@ -1126,7 +1140,7 @@ code.pow sup {
 .islands-page > .lede,
 .islands-page > .islands-lab-caption,
 .islands-page > .islands-caption {
-  max-width: 42rem;
+  max-width: var(--prose-width);
 }
 
 .islands-panel {
@@ -1218,7 +1232,7 @@ code.pow sup {
   line-height: 1.45;
   color: #5c5348;
   font-style: italic;
-  max-width: 42rem;
+  max-width: var(--prose-width);
 }
 
 .islands-caption {
@@ -1248,7 +1262,7 @@ code.pow sup {
 
 .islands-bernard {
   margin: -0.35rem 0 1rem;
-  max-width: 42rem;
+  max-width: var(--prose-width);
   font-family: Georgia, Palatino, serif;
   font-size: 1.05rem;
   line-height: 1.4;
@@ -1368,7 +1382,7 @@ code.pow sup {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.45rem 0.55rem;
-  max-width: 980px;
+  max-width: var(--page-width);
   margin: 0 auto;
   padding: 0.35rem 1.25rem 0.65rem;
   width: 100%;
@@ -1409,7 +1423,7 @@ code.pow sup {
 }
 
 .hire-lab-page .hire-lab-hierarchy {
-  max-width: 42rem;
+  max-width: var(--prose-width);
   margin: 0.5rem 0 1.25rem;
   padding-left: 1.25rem;
   color: #6b5e4e;
@@ -1431,12 +1445,11 @@ code.pow sup {
 }
 
 /* Microscope page — UP / Q / DOWN; reuses corridor/islands/hire-rate */
-.microscope-page > h1,
 .microscope-page > .lede,
 .microscope-page > .islands-bernard,
 .microscope-page > .hire-beat,
 .microscope-page > .figure-caption {
-  max-width: 42rem;
+  max-width: var(--prose-width);
 }
 
 /* Digit rail + UP/DOWN panels: full page container width (not a skinny strip). */
@@ -1534,7 +1547,7 @@ code.pow sup {
   border-radius: 8px;
   background: #fffef9;
   padding: 0.75rem 1rem;
-  max-width: 42rem;
+  max-width: none;
 }
 .microscope-id-box p {
   margin: 0 0 0.45rem;
@@ -1581,7 +1594,7 @@ code.pow sup {
   background: #0f1c2e;
   color: #e8e0d0;
   padding: 0.85rem 1rem;
-  max-width: 42rem;
+  max-width: none;
 }
 .microscope-punch-box p {
   margin: 0 0 0.45rem;
@@ -1600,7 +1613,7 @@ code.pow sup {
   border-radius: 8px;
   background: #f7f3ea;
   padding: 0.85rem 1rem;
-  max-width: 42rem;
+  max-width: none;
 }
 .microscope-cert-filled {
   border-style: solid;
@@ -1657,7 +1670,7 @@ code.pow sup {
   border-radius: 8px;
   background: #fffef9;
   padding: 0.75rem 1rem;
-  max-width: 42rem;
+  max-width: none;
 }
 .microscope-down-box ul {
   margin: 0 0 0.55rem;
@@ -1702,17 +1715,16 @@ code.pow sup {
   }
 }
 
-/* Shared lab-note shell — Hire rate / Spectrum / Microscope / Corridor.
-   Page already max-width 980px; lede/Bernard prose ~42rem; tables/panels full width. */
+/* Shared lab-note shell — Hire rate / Spectrum / Microscope / Corridor. */
 .lab-note-page > .lede,
 .lab-note-page > .islands-bernard,
 .lab-note-page > .lab-note-hierarchy,
 .lab-note-page > .lab-note-caveats {
-  max-width: 42rem;
+  max-width: var(--prose-width);
 }
 
 .lab-note-page .lab-note-hierarchy-list {
-  max-width: 42rem;
+  max-width: var(--prose-width);
   margin: 0.35rem 0 0.6rem 1.25rem;
   padding: 0;
   color: #5a5348;
@@ -1725,7 +1737,7 @@ code.pow sup {
 }
 
 .lab-note-page .hire-rate-wrap {
-  max-width: min(100%, 56rem);
+  max-width: none;
 }
 
 .lab-note-caveats {
@@ -1734,7 +1746,7 @@ code.pow sup {
   border-top: 1px solid #e2d8c8;
   border-left: 3px solid #c8bfb0;
   background: #faf6ef;
-  max-width: 42rem;
+  max-width: var(--prose-width);
 }
 
 .lab-note-caveats p {
@@ -1746,7 +1758,23 @@ code.pow sup {
 
 /* Certificates page — owner-floor receipt table */
 .certs-receipt-wrap {
-  max-width: min(100%, 56rem);
+  max-width: none;
+}
+
+.certs-catalog-wrap {
+  overflow-x: auto;
+}
+
+.certs-catalog {
+  font-size: 0.88rem;
+}
+
+.certs-catalog td:nth-child(2) {
+  white-space: nowrap;
+}
+
+.certs-skipped td {
+  color: #9a8b78;
 }
 
 .certs-receipt td:nth-child(1),
@@ -1762,4 +1790,81 @@ code.pow sup {
 .certificates-page .certs-receipt th:nth-child(n+3) {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.9rem;
+}
+
+.toy-panel {
+  border: 1px solid #e2d8c8;
+  background: #fffaf3;
+  padding: 0.9rem 1.1rem 1.1rem;
+  margin: 1rem 0 1.4rem;
+}
+
+.toy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem 1.1rem;
+}
+
+@media (max-width: 700px) {
+  .toy-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.toy-readout {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88rem;
+}
+
+.toy-chsh {
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #e2d8c8;
+}
+
+.toy-s {
+  font-size: 1.7rem;
+  color: #1f4e79;
+}
+
+.toy-canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem auto 0.35rem;
+  border: 1px solid #e2d8c8;
+  cursor: crosshair;
+  background: #111;
+}
+
+.toy-probe {
+  margin-top: 0.9rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #e2d8c8;
+}
+
+.toy-trace {
+  overflow: hidden;
+}
+
+.toy-panel select,
+.toy-panel input[type="number"] {
+  width: 100%;
+  font: inherit;
+  border: 1px solid #e2d8c8;
+  background: #fff;
+  padding: 0.28rem 0.45rem;
+  margin-top: 0.2rem;
+}
+
+.note-fig {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0.6rem 0 0.25rem;
+  border: 1px solid #e2d8c8;
+}
+
+.notes ul {
+  max-width: var(--prose-width);
 }

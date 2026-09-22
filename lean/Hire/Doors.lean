@@ -9,7 +9,7 @@ import Mathlib.Tactic
 /-!
 # The 3-free door of an odd prime
 
-Elementary formalization of the χ₃ door package (Natural Mathematics / hire graph).
+Elementary formalization of the χ₃ door package (hire graph).
 
 * `chi3` — non-principal character mod 3 as `ℕ → ℤ`
 * `m0 p` — unique **3-free** even neighbour for odd primes `p ≠ 3`

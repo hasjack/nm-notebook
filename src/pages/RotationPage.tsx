@@ -100,9 +100,9 @@ export function RotationPage() {
       <h1>Rotation — turns as a number line</h1>
       <p className="lede">
         Slide <strong>t</strong> in e^(i · t · π). Landings at 0, ½, 1, 1½, 2.
-        In Natural Mathematics, <strong>0 and 1 (as full-cycle marks) mean the
-        same character: back to where it started</strong> — t=0 and t=2 are the
-        same point on the circle. That is not the mute at base→1; it is return.
+        <strong>0 and 1 as full-cycle marks mean the same character: back to
+        where it started</strong> — t=0 and t=2 are the same point on the
+        circle. That is not the mute at base→1; it is return.
       </p>
 
       <div className="value">

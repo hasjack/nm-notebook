@@ -431,8 +431,7 @@ export function IslandsPage() {
         Lab note — early windows are crowded with leftover 2-power-door
         satellites; <em>X</em>
         <sup>*</sup> is the first time the last island finds a clear bridge into
-        the mainland. Past that we only checked through 2.2·10⁹ — “enough space
-        forever” stays weak Q2, not a claim.
+        the mainland. Checked through 2.2·10⁹.
       </p>
 
       <p className="figure-caption islands-caption">

@@ -67,8 +67,7 @@ export function HireLabPage() {
           <sub>1</sub>=(<em>R</em>
           <sub>Pois</sub>−1) log <em>X</em> and <em>E</em>
           <sub>2</sub>=(<em>R</em>
-          <sub>Pois</sub>−1)(log <em>X</em>)<sup>2</sup>. Lab only — not a
-          theorem.
+          <sub>Pois</sub>−1)(log <em>X</em>)<sup>2</sup>.
         </p>
         <div className="door-table-wrap hire-rate-wrap">
           <table className="door-table hire-rate-table">
@@ -494,7 +493,6 @@ export function HireLabPage() {
       <aside className="lab-note-caveats" aria-label="Lab freeze / caveats">
         <p>
           <strong>Lab freeze.</strong> <em>C</em> unnamed. Papers 1–2 frozen.
-          Open notebook — lab counts only, not a theorem.
         </p>
       </aside>
     </main>

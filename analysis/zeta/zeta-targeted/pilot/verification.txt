@@ -1,0 +1,8 @@
+VERIFIED 118 digits; zeta input -17743183249
+VERIFIED 123 digits; zeta input -2200599169
+VERIFIED 245 digits; zeta input -523808166529
+VERIFIED 215 digits; zeta input -4258504249
+VERIFIED 129 digits; zeta input -902994949
+VERIFIED 121 digits; zeta input -34760725009
+VERIFIED 121 digits; zeta input -6486509749
+Verified certificates and denominator origins: 7

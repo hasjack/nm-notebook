@@ -12,11 +12,7 @@ import {
 } from "../lib/plotTheme";
 import type { Data, Layout } from "plotly.js";
 
-/**
- * Physics-adjacent Natural Mathematics.
- * Same alphabet {e, i, π}: a tone is Re(e^(i · ω · t)), a full period is return,
- * two tones interfere. Not new physics — the walk’s language on waves.
- */
+/** Waves in {e, i, π}: a tone is Re(e^(i · ω · t)). */
 
 type Scene = "tone" | "beat" | "phasor" | "damped";
 
@@ -245,16 +241,14 @@ export function PhysicsPage() {
 
   return (
     <main className="page">
-      <h1>Physics-adjacent — waves in the alphabet</h1>
+      <h1>Waves in e, i, π</h1>
       <p className="lede">
-        A tone is already{" "}
+        A tone is{" "}
         <strong>
           e<sup>i · ω · π · t</sup>
         </strong>
-        . That is the same lettering as the walk and Rotation — not a costume
-        change on Maxwell, just Natural Mathematics noticing that oscillators
-        speak {`{e, i, π}`} for free. Period T = 2/ω (in these units) is the{" "}
-        <em>return</em> character again.
+        . Period T = 2/ω (in these units) is the <em>return</em> character
+        again.
       </p>
 
       <div className="value">
@@ -422,12 +416,11 @@ export function PhysicsPage() {
         <article className="catalogue-card grade-clean">
           <header className="catalogue-card-head">
             <h2>Shared spine with the walk</h2>
-            <span className="grade-pill grade-clean">NM</span>
+            <span className="grade-pill grade-clean">alphabet</span>
           </header>
           <p>
             Walk uses base^(α i β π). Freeze the base at e and read the exponent’s
-            angular piece as time: you are watching a phasor. Physics didn’t invent
-            a second alphabet — it borrowed this one.
+            angular piece as time: you are watching a phasor.
           </p>
           <p className="catalogue-beat">
             Video beat: cut from the 3D ribbon to the unit-circle arrow — same e^(iθ).
@@ -442,18 +435,6 @@ export function PhysicsPage() {
             When ω π T = 2π, T = 2/ω — you are back where you started. That is the
             same Return character as Rotation (t=0 ≡ t=2). Frequency is how often
             return happens.
-          </p>
-        </article>
-        <article className="catalogue-card grade-calligraphy">
-          <header className="catalogue-card-head">
-            <h2>What this is not</h2>
-            <span className="grade-pill grade-calligraphy">honest</span>
-          </header>
-          <p>
-            Not a claim that e, i, π solve QFT. It is a teaching frame: waves,
-            beats, and damping already live in the explorer’s letters. Keep company
-            and token separate — and keep physics-adjacent NM in the open-notebook
-            tone.
           </p>
         </article>
       </div>

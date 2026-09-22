@@ -392,7 +392,7 @@ export function SignedDoorsPage() {
           (classic 78 → signed 33 at N=2000 in the probe that motivated this
           page). −3 carries real load on the quarter-clock. Still instrument
           news for a covering spectrum — 2 plus a thinner super set, doors on
-          both signs — not a claim about zeta zeros.
+          both signs.
         </blockquote>
       </div>
     </main>

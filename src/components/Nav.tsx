@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
-type LinkItem = { to: string; label: string; end?: boolean };
+type LinkItem = { to: string; label: string; end?: boolean; icon?: "pdf" };
 
 type NavSub = { id: string; label: string; links: LinkItem[] };
 
@@ -33,19 +33,19 @@ const tree: NavGroup[] = [
         id: "hire-notes",
         label: "Notes",
         links: [
-          { to: "/notes/hire-graph", label: "The hire graph of the 3-free door" },
+          {
+            to: "/notes/hire-graph",
+            label: "The hire graph of the 3-free door",
+            icon: "pdf",
+          },
           {
             to: "/notes/when-gold-disconnects",
             label: "When gold disconnects",
+            icon: "pdf",
           },
         ],
       },
     ],
-  },
-  {
-    id: "issue",
-    label: "Issue",
-    blurb: "Main-line trail — commit hashes to land here.",
   },
   {
     id: "alphabet",
@@ -59,54 +59,39 @@ const tree: NavGroup[] = [
     ],
   },
   {
+    id: "toys",
+    label: "Toys",
+    blurb: "Waves, (σ, p) Bell, switching atlas.",
+    links: [
+      { to: "/physics", label: "Physics" },
+      { to: "/toys/bell", label: "Bell" },
+      { to: "/toys/atlas", label: "Atlas" },
+    ],
+  },
+  {
     id: "lab",
     label: "Lab",
-    blurb: "Probe pages — one shelf at a time.",
-    subs: [
-      {
-        id: "lab-field",
-        label: "Field",
-        links: [
-          { to: "/magnitude", label: "Magnitude" },
-          { to: "/beacons", label: "Beacons" },
-          { to: "/rotation", label: "Rotation" },
-          { to: "/physics", label: "Physics" },
-        ],
-      },
-      {
-        id: "lab-analysis",
-        label: "Analysis",
-        links: [
-          { to: "/analysis-1", label: "A1" },
-          { to: "/analysis-2", label: "A2" },
-          { to: "/analysis-3", label: "A3" },
-          { to: "/analysis-4", label: "A4" },
-          { to: "/analysis-5", label: "A5" },
-        ],
-      },
-      {
-        id: "lab-primes",
-        label: "Primes",
-        links: [
-          { to: "/primes", label: "Primes" },
-          { to: "/super-primes", label: "Super" },
-          { to: "/unclaimed", label: "Unclaimed" },
-          { to: "/beacon-super", label: "Beacon×S" },
-          { to: "/suspect-bench", label: "Suspect" },
-          { to: "/missed", label: "Missed" },
-        ],
-      },
-      {
-        id: "lab-spectra",
-        label: "Spectra & doors",
-        links: [
-          { to: "/spectrum", label: "Spectrum" },
-          { to: "/pm1", label: "±1" },
-          { to: "/signed-doors", label: "±Doors" },
-          { to: "/alphabet-spiral", label: "α-spiral" },
-          { to: "/count", label: "Count" },
-        ],
-      },
+    blurb: "More probes — field, analysis, primes, spectra.",
+    links: [
+      { to: "/magnitude", label: "Magnitude" },
+      { to: "/beacons", label: "Beacons" },
+      { to: "/rotation", label: "Rotation" },
+      { to: "/analysis-1", label: "A1" },
+      { to: "/analysis-2", label: "A2" },
+      { to: "/analysis-3", label: "A3" },
+      { to: "/analysis-4", label: "A4" },
+      { to: "/analysis-5", label: "A5" },
+      { to: "/primes", label: "Primes" },
+      { to: "/super-primes", label: "Super" },
+      { to: "/unclaimed", label: "Unclaimed" },
+      { to: "/beacon-super", label: "Beacon×S" },
+      { to: "/suspect-bench", label: "Suspect" },
+      { to: "/missed", label: "Missed" },
+      { to: "/spectrum", label: "Spectrum" },
+      { to: "/pm1", label: "±1" },
+      { to: "/signed-doors", label: "±Doors" },
+      { to: "/alphabet-spiral", label: "α-spiral" },
+      { to: "/count", label: "Count" },
     ],
   },
 ];
@@ -121,15 +106,37 @@ function pathInLinks(pathname: string, links: LinkItem[]): boolean {
   );
 }
 
-/** Exclusive accordion keys for the current route. Default shelf: Hire. */
+const HIRE_OPEN = new Set(["hire", "hire-notes"]);
+
+/** Exclusive accordion keys for the current route. Default: Hire with Notes open. */
 function accordionFor(pathname: string): Set<string> {
   for (const g of tree) {
-    if (g.links && pathInLinks(pathname, g.links)) return new Set([g.id]);
+    if (g.links && pathInLinks(pathname, g.links)) {
+      return g.id === "hire" ? new Set(HIRE_OPEN) : new Set([g.id]);
+    }
     for (const s of g.subs ?? []) {
       if (pathInLinks(pathname, s.links)) return new Set([g.id, s.id]);
     }
   }
-  return new Set(["hire"]);
+  return new Set(HIRE_OPEN);
+}
+
+function PdfIcon() {
+  return (
+    <svg
+      className="nav-pdf-icon"
+      viewBox="0 0 12 14"
+      width="12"
+      height="14"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        fill="currentColor"
+        d="M2.2.6h5.2L11 4.2v8.2c0 .6-.5 1-.9 1H2.2c-.5 0-1-.4-1-1V1.6c0-.6.5-1 1-1zm5 1.1v2.4h2.4L7.2 1.7z"
+      />
+    </svg>
+  );
 }
 
 function Links({
@@ -149,6 +156,7 @@ function Links({
           onClick={onNavigate}
           className={({ isActive }) => (isActive ? "nav-link on" : "nav-link")}
         >
+          {l.icon === "pdf" ? <PdfIcon /> : null}
           {l.label}
         </NavLink>
       ))}
@@ -168,7 +176,7 @@ function Brand({ onNavigate }: { onNavigate?: () => void }) {
  * Burger/close stay fixed in one spot.
  * Logo lives in the menu; a docked twin covers the closed state so mobile
  * transform on the drawer cannot drag the wordmark off-screen.
- * Shelves are exclusive: one top section (and at most one Lab sub) open.
+ * Shelves are exclusive: one top section (and at most one nested sub) open.
  */
 export function AppLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(() =>
@@ -221,6 +229,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const toggleTop = (id: string) => {
     setExpanded((prev) => {
       if (prev.has(id)) return new Set(); // allow all closed
+      if (id === "hire") return new Set(HIRE_OPEN);
       return new Set([id]);
     });
   };
@@ -272,10 +281,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
                 @hasjack
               </a>
             </p>
-            <p className="nav-about-blurb">
-              Public notebook for Natural Mathematics — hire graph, alphabet on e / i / π,
-              and Lean lemmas under <code>lean/</code>.
-            </p>
+            <p className="nav-about-blurb">Independent researcher, UK.</p>
           </div>
 
           {tree.map((g) => {

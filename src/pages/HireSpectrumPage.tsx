@@ -1272,7 +1272,6 @@ export function HireSpectrumPage() {
       <aside className="lab-note-caveats" aria-label="Lab freeze / caveats">
         <p>
           <strong>Lab freeze.</strong> <em>C</em> unnamed. Papers 1–2 frozen.
-          Open notebook — dial spectra only, not a theorem.
         </p>
       </aside>
 

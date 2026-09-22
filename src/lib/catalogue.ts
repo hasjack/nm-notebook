@@ -178,7 +178,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     rewrite: "back to where it started",
     alphabet: ["e", "i", "π"],
     grade: "clean",
-    why: "In Natural Mathematics, 0 and the full turn are one character: return. Not the mute (base→1) and not the wind (base→0).",
+    why: "0 and the full turn are one character: return. Not the mute (base→1) and not the wind (base→0).",
     videoBeat: "Zero and one as home — the circle’s handshake with itself.",
   },
   {

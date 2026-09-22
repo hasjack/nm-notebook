@@ -5,7 +5,7 @@ import { layout3dMag, plotConfig, traces3dMag } from "../lib/plotTheme";
 import { magnitudeAt, resultAtMag } from "../lib/walk";
 
 /**
- * Magnitude / singularities — Natural Mathematics characters.
+ * Magnitude / singularities.
  * base^(σ + α·i·βπ): σ grows/shrinks off the unit cylinder.
  */
 export function MagnitudePage() {

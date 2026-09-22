@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 export function HomePage() {
   return (
     <main className="page home">
-      <p className="eyebrow">Natural Mathematics</p>
       <h1>The hire graph of the 3-free door</h1>
       <p className="lede">
-        Lead article. Paper PDF; lemmas with Lean in <code>lean/</code>; dials on{" "}
-        <Link to="/hire">/hire</Link>.
+        Of the two even neighbours of an odd prime ≠ 3, exactly one is 3-free.
+        Ownership of those doors makes a graph. Lean under <code>lean/</code>.
       </p>
 
       <section className="home-lead">
@@ -49,29 +48,6 @@ export function HomePage() {
           </Link>
         </p>
       </section>
-
-      <h2>Alphabet</h2>
-      <p>
-        Number line in <strong>e</strong>, <strong>i</strong>, and{" "}
-        <strong>π</strong>.
-      </p>
-      <p className="home-actions">
-        <Link className="nav-link" to="/alphabet?tab=walk">
-          Walk
-        </Link>
-        <Link className="nav-link" to="/alphabet?tab=lock-i">
-          Lock i
-        </Link>
-        <Link className="nav-link" to="/alphabet?tab=lock-pi">
-          Lock π
-        </Link>
-        <Link className="nav-link" to="/alphabet?tab=basel">
-          Basel
-        </Link>
-        <Link className="nav-link" to="/catalogue">
-          Catalogue
-        </Link>
-      </p>
     </main>
   );
 }
