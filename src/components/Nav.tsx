@@ -43,12 +43,20 @@ const tree: NavGroup[] = [
             label: "When gold disconnects",
             icon: "pdf",
           },
-          {
-            to: "/notes/zeta-doors",
-            label: "Prime neighbours of zeta denominators",
-            icon: "pdf",
-          },
         ],
+      },
+    ],
+  },
+  {
+    id: "notes",
+    label: "Notes",
+    blurb: "Standalone PDFs. Hire papers remain under Hire.",
+    links: [
+      { to: "/notes", label: "Index", end: true },
+      {
+        to: "/notes/zeta-doors",
+        label: "Prime neighbours of zeta denominators",
+        icon: "pdf",
       },
     ],
   },
@@ -60,7 +68,7 @@ const tree: NavGroup[] = [
       { to: "/alphabet", label: "Alphabet" },
       { to: "/solve", label: "Solve" },
       { to: "/catalogue", label: "Catalogue" },
-      { to: "/notes", label: "Notes", end: true },
+      { to: "/alphabet/notes", label: "Benefits" },
     ],
   },
   {

@@ -14,6 +14,7 @@ import { Analysis5Page } from "./pages/Analysis5Page";
 import { SolvePage } from "./pages/SolvePage";
 import { CataloguePage } from "./pages/CataloguePage";
 import { NotesPage } from "./pages/NotesPage";
+import { NotesIndexPage } from "./pages/NotesIndexPage";
 import { PrimesPage } from "./pages/PrimesPage";
 import { SuperPrimesPage } from "./pages/SuperPrimesPage";
 import { UnclaimedPage } from "./pages/UnclaimedPage";
@@ -93,7 +94,8 @@ export default function App() {
         <Route path="/signed-doors" element={<SignedDoorsPage />} />
         <Route path="/alphabet-spiral" element={<AlphabetSpiralPage />} />
         <Route path="/count" element={<CountPage />} />
-        <Route path="/notes" element={<NotesPage />} />
+        <Route path="/notes" element={<NotesIndexPage />} />
+        <Route path="/alphabet/notes" element={<NotesPage />} />
         <Route path="/toys/bell" element={<BellToyPage />} />
         <Route path="/toys/atlas" element={<AtlasPage />} />
         <Route
