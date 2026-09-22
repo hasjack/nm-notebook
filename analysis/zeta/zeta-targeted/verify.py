@@ -5,6 +5,19 @@ Verifies certificate AND exact zeta-denominator origin. Does not import hunt.py.
 import json,sys,math
 from functools import lru_cache
 
+try:
+    import gmpy2
+    def is_prime(n):
+        n=int(n)
+        return n>=2 and bool(gmpy2.is_prime(n))
+    def modpow(a,e,m):
+        return int(gmpy2.powmod(int(a),int(e),int(m)))
+except ImportError:
+    def is_prime(n):
+        return isprime64(n)
+    def modpow(a,e,m):
+        return pow(int(a),int(e),int(m))
+
 @lru_cache(maxsize=100000)
 def isprime64(n):
     if not 2<=n<2**64:return False
@@ -24,15 +37,15 @@ def validate(row):
     c=row['certificate'];n=int(c['n'])
     assert n==int(row['candidate']) and row['status']=='certified'
     factors={int(p):e for p,e in c['factors'].items()}
-    assert all(isinstance(e,int) and e>0 and isprime64(p) for p,e in factors.items())
+    assert all(isinstance(e,int) and e>0 and is_prime(p) for p,e in factors.items())
     assert math.prod(p**e for p,e in factors.items())==n-1
     for p in factors:
         a=c['witnesses'][str(p)]
-        assert pow(a,n-1,n)==1
-        assert math.gcd(pow(a,(n-1)//p,n)-1,n)==1
+        assert modpow(a,n-1,n)==1
+        assert math.gcd(modpow(a,(n-1)//p,n)-1,n)==1
     k=int(row['index']);f={int(p):e for p,e in row['index_factors'].items()}
-    assert k%12==2 and k<2**64-1
-    assert all(isinstance(e,int) and e>0 and isprime64(p) for p,e in f.items())
+    assert k%12==2
+    assert all(isinstance(e,int) and e>0 and is_prime(p) for p,e in f.items())
     assert math.prod(p**e for p,e in f.items())==k
     # Independently enumerate all index divisors, testing all potential p=d+1.
     ds={1}
@@ -45,7 +58,7 @@ def validate(row):
     D=1
     for d in ds:
         p=d+1
-        if isprime64(p):
+        if is_prime(p):
             D*=p;t=k
             while t%p==0:D*=p;t//=p
     assert D==int(row['denominator'])==3*(n-1)

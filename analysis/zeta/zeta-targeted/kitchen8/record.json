@@ -1,0 +1,18 @@
+{
+  "digits": 5522,
+  "status": "certified",
+  "zeta_input": "-111695474196999960960049",
+  "index": "111695474196999960960050",
+  "engine": "gmpy2",
+  "config": {
+    "version": 3,
+    "seed": 20260926,
+    "min_digits": 3400,
+    "max_digits": 10000,
+    "pool_max": 71,
+    "nmin": 8,
+    "nmax": 8,
+    "emin": 2,
+    "emax": 2
+  }
+}

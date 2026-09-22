@@ -28,6 +28,7 @@ import { IslandsPage } from "./pages/IslandsPage";
 import { CorridorPage } from "./pages/CorridorPage";
 import { MicroscopePage } from "./pages/MicroscopePage";
 import { CertificatesPage } from "./pages/CertificatesPage";
+import { ZetaDoorsPage } from "./pages/ZetaDoorsPage";
 import { HireSpectrumPage } from "./pages/HireSpectrumPage";
 import { HireLabPage } from "./pages/HireLabPage";
 import { PaperPage } from "./pages/PaperPage";
@@ -74,6 +75,7 @@ export default function App() {
         <Route path="/corridor" element={<CorridorPage />} />
         <Route path="/microscope" element={<MicroscopePage />} />
         <Route path="/certificates" element={<CertificatesPage />} />
+        <Route path="/zeta-doors" element={<ZetaDoorsPage />} />
         <Route path="/certs" element={<Navigate to="/certificates" replace />} />
         <Route path="/hire-spectrum" element={<HireSpectrumPage />} />
         <Route path="/hire-lab" element={<HireLabPage />} />

@@ -46,6 +46,7 @@ analysis/hire_rate/__pycache__/
 analysis/corridor/__pycache__/
 analysis/zeta/**/__pycache__/
 analysis/zeta/zeta-door-safari/results-million.json
+analysis/zeta/zeta-targeted/**/attempts.jsonl
 analysis/rank100_probe_receipt.json
 
 # Local alphabet fold scratch

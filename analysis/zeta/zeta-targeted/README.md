@@ -1,6 +1,15 @@
 # Targeted zeta-door experiment
 
-Python 3.9+, standard library only. Unzip, open a terminal in this folder.
+gmpy2 for large Q and for d+1 when k ≥ 2^64. Kitchen record: 5522-digit
+certified plus-side neighbour (kitchen8/). Hunt first, prove later:
+
+    python3 hunt.py --no-cert --min-digits 3400 --max-digits 10000 \
+      --pool-max 71 --nmin 8 --nmax 8 --emin 2 --emax 2 \
+      --out kitchen-next
+    python3 cert.py kitchen-next/hits.jsonl
+    python3 verify.py kitchen-next/hits.certified.jsonl
+
+Python 3.9+ otherwise. Unzip, open a terminal in this folder.
 
 ## Run a five-minute, 100-300 digit experiment
 
@@ -38,8 +47,8 @@ D = product p^(1+v_p(k)) over ALL primes p with p-1 dividing k.
 
 All divisors of k are enumerated: no selected factors are silently omitted.
 This is a genuine denominator construction, not an arbitrary product inspired by it.
-Require k+1 < 2^64 so all potential denominator primes can be tested exactly
-with deterministic 64-bit Miller-Rabin.
+k may exceed 2^64 when gmpy2 is installed (d+1 tested with gmpy2.is_prime).
+Without gmpy2, factor primes must stay in the 64-bit deterministic MR range.
 
 ## Screening and proof
 
@@ -63,7 +72,8 @@ as string dictionary keys; exponents and witnesses are small integers.
 
 ## Files
 
-- hunt.py: search, deterministic seed, checkpoints, stage timing.
+- hunt.py: search, deterministic seed, checkpoints, stage timing. --no-cert skips Pocklington.
+- cert.py: prove probable hits from a hits.jsonl.
 - verify.py: independent certificate and denominator-origin verifier.
 - selftest.py: exact Bernoulli small cases, primality checks, corrupted-data
   rejection and resume regression. Run from this folder: python3 selftest.py

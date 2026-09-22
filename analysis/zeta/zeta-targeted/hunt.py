@@ -3,13 +3,41 @@
 python3 hunt.py --seconds 300 --attempts 10000
 python3 verify.py results/hits.jsonl
 """
-import argparse, json, math, random, time
+import argparse, json, math, random, sys, time
 from pathlib import Path
 from functools import lru_cache
+
+sys.set_int_max_str_digits(0)
 
 BASES64=(2,325,9375,28178,450775,9780504,1795265022)
 BASES=(2,3,5,7,11,13,17,19,23,29,31,37)
 POOL=(5,7,11,13,17,19,23,29,31)
+LIMIT=2**64-1
+MAX_DIV=20000
+
+try:
+    import gmpy2
+    def is_prime(n):
+        n=int(n)
+        return n>=2 and bool(gmpy2.is_prime(n))
+    def modpow(a,e,m):
+        return int(gmpy2.powmod(int(a),int(e),int(m)))
+    ENGINE='gmpy2'
+except ImportError:
+    def is_prime(n):
+        n=int(n)
+        if n<2:return False
+        if n>=LIMIT:raise ValueError('gmpy2 required for primes >= 2^64')
+        return mr(n,BASES64)
+    def modpow(a,e,m):
+        return pow(int(a),int(e),int(m))
+    ENGINE='stdlib'
+
+def odd_primes_upto(n):
+    s=bytearray(b'\1')*(n+1);s[:2]=b'\0\0'
+    for p in range(2,int(n**0.5)+1):
+        if s[p]:s[p*p::p]=b'\0'*((n-p*p)//p+1)
+    return tuple(p for p in range(5,n+1) if s[p])
 
 def mr(n,bases):
     if n<2:return False
@@ -36,34 +64,49 @@ def divisors(f):
     for p,e in f.items():ds=[d*p**a for d in ds for a in range(e+1)]
     return ds
 
+def divisor_count(f):
+    n=1
+    for e in f.values():n*=e+1
+    return n
+
 def denominator(f):
     k=math.prod(p**e for p,e in f.items())
-    if k>=2**64-1:raise ValueError('Index too large for exact factor certification')
     assert k%12==2
+    if divisor_count(f)>MAX_DIV:
+        raise ValueError('too many divisors')
     factors={}
     for d in divisors(f):
         p=d+1
-        if prime64(p):
+        if is_prime(p):
             e=1;t=k
             while t%p==0:t//=p;e+=1
             factors[p]=e
     assert factors.pop(3)==1
     return k,math.prod(p**e for p,e in factors.items()),factors
 
-def index_for(i,seed):
+def index_for(i,seed,pool,nmin,nmax,emin,emax):
     rng=random.Random(seed+i)
-    chosen=rng.sample(POOL,rng.randint(5,7))
-    f={2:1,**{p:rng.randint(1,2) for p in chosen}}
-    k=math.prod(p**e for p,e in f.items())
-    if k%12!=2:f[5]=f.get(5,0)+1
+    nmin=max(1,min(nmin,len(pool))); nmax=max(nmin,min(nmax,len(pool)))
+    emin=max(1,emin); emax=max(emin,emax)
+    for _ in range(80):
+        chosen=rng.sample(pool,rng.randint(nmin,nmax))
+        f={2:1,**{p:rng.randint(emin,emax) for p in chosen}}
+        if math.prod(p**e for p,e in f.items())%12!=2:
+            f[5]=f.get(5,0)+1
+        if divisor_count(f)<=MAX_DIV:
+            return dict(sorted(f.items()))
+    chosen=list(pool[: min(5,len(pool))])
+    f={2:1,**{p:emin for p in chosen}}
+    if math.prod(p**e for p,e in f.items())%12!=2:
+        f[5]=f.get(5,0)+1
     return dict(sorted(f.items()))
 
 def certificate(q,f):
     assert math.prod(p**e for p,e in f.items())==q-1
     w={}
     for p in f:
-        for a in range(2,258):
-            if pow(a,q-1,q)==1 and math.gcd(pow(a,(q-1)//p,q)-1,q)==1:
+        for a in range(2,502):
+            if modpow(a,q-1,q)==1 and math.gcd(modpow(a,(q-1)//p,q)-1,q)==1:
                 w[str(p)]=a;break
         else:return None
     return {'n':str(q),'factors':{str(p):e for p,e in f.items()},'witnesses':w}
@@ -86,12 +129,24 @@ def main():
     ap.add_argument('--min-digits',type=int,default=100)
     ap.add_argument('--max-digits',type=int,default=300)
     ap.add_argument('--seed',type=int,default=20260922)
+    ap.add_argument('--pool-max',type=int,default=31,help='odd primes in 5..pool-max')
+    ap.add_argument('--nmin',type=int,default=5,help='odd primes multiplied into k')
+    ap.add_argument('--nmax',type=int,default=7)
+    ap.add_argument('--emin',type=int,default=1,help='min exponent of those odd primes')
+    ap.add_argument('--emax',type=int,default=2)
+    ap.add_argument('--no-cert',action='store_true',
+                    help='log gmpy2 PRP hits as probable; prove later with cert.py')
     ap.add_argument('--out',type=Path,default=Path('results'))
     args=ap.parse_args()
-    if not (1<=args.min_digits<=args.max_digits<=4000 and args.seconds>0 and args.attempts>0):
-        ap.error('Require positive time/attempts and 1 <= min-digits <= max-digits <= 4000')
+    if not (1<=args.min_digits<=args.max_digits<=20000 and args.seconds>0 and args.attempts>0):
+        ap.error('Require positive time/attempts and 1 <= min-digits <= max-digits <= 20000')
+    if args.pool_max<5 or args.nmin<1 or args.nmax<args.nmin or args.emin<1 or args.emax<args.emin:
+        ap.error('Need pool-max>=5, 1<=nmin<=nmax, 1<=emin<=emax')
     args.out.mkdir(parents=True,exist_ok=True)
-    config={'version':1,'seed':args.seed,'min_digits':args.min_digits,'max_digits':args.max_digits}
+    pool=odd_primes_upto(args.pool_max)
+    config={'version':4,'seed':args.seed,'min_digits':args.min_digits,'max_digits':args.max_digits,
+            'pool_max':args.pool_max,'nmin':args.nmin,'nmax':args.nmax,
+            'emin':args.emin,'emax':args.emax,'no_cert':args.no_cert}
     cp=args.out/'config.json'
     if cp.exists() and json.loads(cp.read_text())!=config:ap.error('Config differs; choose a new --out folder')
     cp.write_text(json.dumps(config,indent=2))
@@ -108,35 +163,46 @@ def main():
     start_id=max((r['attempt'] for r in prior),default=-1)+1
     small=[p for p in range(5,10000) if prime64(p)]
     started=time.monotonic();last=started
-    print('Resume at attempt',start_id,'; output:',args.out,flush=True)
+    print('engine',ENGINE,'Resume at attempt',start_id,'; output:',args.out,flush=True)
     try:
         for i in range(start_id,start_id+args.attempts):
             if time.monotonic()-started>=args.seconds:break
-            f=index_for(i,args.seed);k=math.prod(p**e for p,e in f.items())
+            f=index_for(i,args.seed,pool,args.nmin,args.nmax,args.emin,args.emax);k=math.prod(p**e for p,e in f.items())
             row={'attempt':i,'index':str(k),'index_factors':f}
             if str(k) in done:row['status']='duplicate-index'
-            elif k>=2**64-1:row['status']='index-limit'
             else:
-                t=time.monotonic();k,d,df=denominator(f)
+                t=time.monotonic()
+                try:
+                    k,d,df=denominator(f)
+                except ValueError:
+                    row['status']='too-many-divisors'
+                    append(log,row);done.add(str(k));continue
                 row['generation_seconds']=time.monotonic()-t
-                q=d+(1 if d%3==1 else -1);digits=len(str(q))
-                row.update(candidate=str(q),digits=digits,side='plus' if q==d+1 else 'minus')
-                if str(q) in seen:row['status']='duplicate-candidate'
-                elif not args.min_digits<=digits<=args.max_digits:row['status']='outside-digit-band'
-                elif q!=d+1:row['status']='minus-side-deferred'
+                q=d+(1 if d%3==1 else -1)
+                digits=int(q.bit_length()*math.log10(2))+1
+                row.update(digits=digits,side='plus' if q==d+1 else 'minus')
+                if not args.min_digits<=digits<=args.max_digits:
+                    row['status']='outside-digit-band'
                 else:
-                    t=time.monotonic()
-                    divisor=next((p for p in small if q!=p and q%p==0),None)
-                    if divisor:row.update(status='sieved-composite',small_factor=divisor)
-                    elif not mr(q,BASES):row['status']='mr-composite'
+                    row['candidate']=str(q)
+                    if row['candidate'] in seen:row['status']='duplicate-candidate'
+                    elif q!=d+1:row['status']='minus-side-deferred'
                     else:
-                        cert=certificate(q,df)
-                        row.update(status='certified' if cert else 'probable',door=str(d),
-                                   denominator=str(3*d),door_factors=df)
-                        if cert:row['certificate']=cert
-                    row['test_seconds']=time.monotonic()-t
+                        t=time.monotonic()
+                        divisor=next((p for p in small if q!=p and q%p==0),None)
+                        if divisor:row.update(status='sieved-composite',small_factor=divisor)
+                        elif not is_prime(q):row['status']='mr-composite'
+                        else:
+                            row.update(door=str(d),denominator=str(3*d),door_factors=df)
+                            if args.no_cert:
+                                row['status']='probable'
+                            else:
+                                cert=certificate(q,df)
+                                row['status']='certified' if cert else 'probable'
+                                if cert:row['certificate']=cert
+                        row['test_seconds']=time.monotonic()-t
             append(log,row);done.add(str(k))
-            if 'candidate' in row:seen.add(row['candidate'])
+            if row.get('candidate'):seen.add(row['candidate'])
             if row['status'] in ('certified','probable'):
                 append(hits,row)
                 print('HIT',row['status'],row['digits'],'digits; zeta input',1-k,flush=True)
