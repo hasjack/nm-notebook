@@ -158,7 +158,9 @@ export function ZetaDoorsPage() {
       <p>
         Code: <code>analysis/zeta/zeta-door-safari/</code>,{" "}
         <code>analysis/zeta/zeta-targeted/</code>,{" "}
-        <code>lean/Hire/ZetaDoors.lean</code>.
+        <code>lean/Hire/ZetaDoors.lean</code>. Note:{" "}
+        <Link to="/notes/zeta-doors">Prime neighbours of zeta denominators</Link>
+        .
       </p>
       <p className="home-actions">
         <Link className="nav-link" to="/certificates">

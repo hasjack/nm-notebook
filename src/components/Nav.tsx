@@ -43,6 +43,11 @@ const tree: NavGroup[] = [
             label: "When gold disconnects",
             icon: "pdf",
           },
+          {
+            to: "/notes/zeta-doors",
+            label: "Prime neighbours of zeta denominators",
+            icon: "pdf",
+          },
         ],
       },
     ],

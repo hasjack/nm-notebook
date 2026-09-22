@@ -34,6 +34,7 @@ import { HireSpectrumPage } from "./pages/HireSpectrumPage";
 import { HireLabPage } from "./pages/HireLabPage";
 import { PaperPage } from "./pages/PaperPage";
 import { WhenGoldDisconnectsPage } from "./pages/WhenGoldDisconnectsPage";
+import { ZetaDoorsNotePage } from "./pages/ZetaDoorsNotePage";
 import { SignedDoorsPage } from "./pages/SignedDoorsPage";
 import { AlphabetSpiralPage } from "./pages/AlphabetSpiralPage";
 import { CountPage } from "./pages/CountPage";
@@ -83,6 +84,7 @@ export default function App() {
         <Route path="/hire-lab" element={<HireLabPage />} />
         <Route path="/notes/hire-graph" element={<PaperPage />} />
         <Route path="/notes/when-gold-disconnects" element={<WhenGoldDisconnectsPage />} />
+        <Route path="/notes/zeta-doors" element={<ZetaDoorsNotePage />} />
         <Route path="/paper" element={<Navigate to="/notes/hire-graph" replace />} />
         <Route
           path="/when-gold-disconnects"
