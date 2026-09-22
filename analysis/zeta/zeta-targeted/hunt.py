@@ -150,28 +150,35 @@ def main():
                     help='do not write attempts.jsonl; keep hits, summary, and a small seen-k skip list')
     ap.add_argument('--family',choices=('tight','wide'),default='tight',
                     help='tight: k≡2 (mod 12). wide: even k, 3 does not divide k (2,4,8,10 mod 12)')
+    ap.add_argument('--vmin2',type=int,default=None,help='override 2-adic valuation min')
+    ap.add_argument('--vmax2',type=int,default=None,help='override 2-adic valuation max')
     ap.add_argument('--out',type=Path,default=Path('results'))
     args=ap.parse_args()
     if args.family=='tight':
         vmin2,vmax2,force_mod12=1,1,2
     else:
         vmin2,vmax2,force_mod12=1,3,None
-    if not (1<=args.min_digits<=args.max_digits<=50000 and args.seconds>0 and args.attempts>0):
-        ap.error('Require positive time/attempts and 1 <= min-digits <= max-digits <= 50000')
+    if args.vmin2 is not None:vmin2=max(1,args.vmin2)
+    if args.vmax2 is not None:vmax2=max(vmin2,args.vmax2)
+    if not (1<=args.min_digits<=args.max_digits<=250000 and args.seconds>0 and args.attempts>0):
+        ap.error('Require positive time/attempts and 1 <= min-digits <= max-digits <= 250000')
     if args.pool_max<5 or args.nmin<1 or args.nmax<args.nmin or args.emin<1 or args.emax<args.emin:
         ap.error('Need pool-max>=5, 1<=nmin<=nmax, 1<=emin<=emax')
     args.out.mkdir(parents=True,exist_ok=True)
     pool=odd_primes_upto(args.pool_max)
-    config={'version':6,'seed':args.seed,'min_digits':args.min_digits,'max_digits':args.max_digits,
+    config={'version':7,'seed':args.seed,'min_digits':args.min_digits,'max_digits':args.max_digits,
             'pool_max':args.pool_max,'nmin':args.nmin,'nmax':args.nmax,
             'emin':args.emin,'emax':args.emax,'family':args.family,
+            'vmin2':vmin2,'vmax2':vmax2,
             'no_cert':args.no_cert,'hits_only':args.hits_only}
     cp=args.out/'config.json'
     def norm(c):
         c=dict(c)
         c.setdefault('no_cert',False); c.setdefault('hits_only',False)
         c.setdefault('emin',1); c.setdefault('emax',2)
-        c.setdefault('family','tight'); c.pop('version',None)
+        c.setdefault('family','tight')
+        c.setdefault('vmin2',1); c.setdefault('vmax2',1 if c.get('family')=='tight' else 3)
+        c.pop('version',None)
         return c
     if cp.exists() and norm(json.loads(cp.read_text()))!=norm(config):
         ap.error('Config differs; choose a new --out folder')

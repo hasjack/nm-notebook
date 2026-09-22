@@ -6,12 +6,11 @@ export function ZetaDoorsNotePage() {
     <main className="page paper-page">
       <h1>Prime neighbours of zeta denominators</h1>
       <p className="lede paper-abstract">
-        For k ≡ 2 (mod 12), the reduced denominator of ζ(1−k) is 12T, and
-        every prime factor of T is 11 (mod 12). The unique 3-free neighbour of
-        D/3 is the zeta-door candidate; the plus branch has a factored Q−1 and
-        admits a Pocklington certificate. Lean records the selection rule, not
-        von Staudt–Clausen. Lab snapshot, not an infinite family. Working
-        draft, 22 September 2026. Live hunt:{" "}
+        For even k with 3 ∤ k, D = 3·2<sup>1+v<sub>2</sub>(k)</sup> T. Extra
+        primes are 2 (mod 3);
+        11 (mod 12) when 4 ∤ k, else 5 or 11 (mod 12). Plus-side candidates have
+        a factored Q−1. Lean records the selection rule, not von Staudt–Clausen.
+        Lab snapshot, not an infinite family. 22 September 2026. Live hunt:{" "}
         <Link to="/zeta-doors">Zeta doors</Link>.
       </p>
 
@@ -19,7 +18,7 @@ export function ZetaDoorsNotePage() {
         <iframe
           className="paper-frame"
           title="zeta-doors.pdf"
-          src="/paper/zeta-doors.pdf?v=1758568200#view=FitH"
+          src="/paper/zeta-doors.pdf?v=1758570000#view=FitH"
         />
       </div>
 
@@ -29,13 +28,19 @@ export function ZetaDoorsNotePage() {
           <code>Hire/ZetaDoors.lean</code>
           <ul>
             <li>
+              <code>prime_mod_three_of_pred_dvd_even</code>
+            </li>
+            <li>
+              <code>m0_dvd_of_pred_dvd_even</code>
+            </li>
+            <li>
+              <code>prime_mod_twelve_of_pred_dvd_not_four</code>
+            </li>
+            <li>
+              <code>prime_mod_twelve_of_pred_dvd_four</code>
+            </li>
+            <li>
               <code>prime_mod_twelve_of_pred_dvd_index</code>
-            </li>
-            <li>
-              <code>m0_dvd_of_pred_dvd_index</code>
-            </li>
-            <li>
-              <code>m0_eq_pred_iff</code>
             </li>
           </ul>
         </li>

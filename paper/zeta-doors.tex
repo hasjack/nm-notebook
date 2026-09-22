@@ -15,10 +15,11 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-For positive indices $k\equiv2\pmod{12}$, let $D_k$ be the reduced positive
-denominator of $\zeta(1-k)$. Classical Bernoulli arithmetic gives
-$D_k=12T_k$, where every prime factor of $T_k$ is congruent to $11$ modulo
-$12$. We select the unique neighbour of $D_k/3$ that is not divisible by
+For positive even indices $k$ with $3\nmid k$, let $D_k$ be the reduced
+positive denominator of $\zeta(1-k)$. Classical Bernoulli arithmetic gives
+$D_k=3\cdot2^{1+v_2(k)}T_k$, where every prime factor of $T_k$ is $2$
+modulo $3$. If also $4\nmid k$, these factors are $11$ modulo $12$;
+otherwise factors congruent to $5$ modulo $12$ are also permitted. We select the unique neighbour of $D_k/3$ that is not divisible by
 $3$ and investigate when it is prime. The construction provides known
 factorisations on one side of each candidate and therefore supports
 classical primality certificates. We give the elementary selection rule,
@@ -35,13 +36,16 @@ The equality
 motivated an examination of arguments $1-k$ with $k\equiv2\pmod{12}$.
 The equality itself does not establish a period of the zeta function.
 Our object is the denominator at these arguments, rather than equality
-of their values.
+of their values. The construction extends to all positive even indices
+not divisible by $3$, namely $k\equiv2,4,8,10\pmod{12}$. We call
+$k\equiv2\pmod{12}$ the original family and the other three residue
+classes the added family.
 
 For a rational number $x$, write $\den(x)$ for its positive denominator
 in lowest terms. For a prime $p$, let $v_p(k)$ denote the exponent of $p$
 in the positive integer $k$. Throughout the note,
 \[
- k\ge2,\qquad k\equiv2\pmod{12},\qquad
+ k\ge2,\qquad 2\mid k,\qquad 3\nmid k,\qquad
  D_k=\den\bigl(\zeta(1-k)\bigr).
 \]
 For an integer $n$ not divisible by $3$, put
@@ -67,35 +71,43 @@ Bernoulli numbers gives $B_k/k\in\mathbb Z_p$; see Kellner's account
 In particular, dividing the denominator of $B_k$ by $k$ without accounting
 for cancellation would not justify this formula.
 
-\begin{proposition}[Selection rule]\label{prop:selection}
+\begin{proposition}[Extended selection rule]\label{prop:selection}
 If $p>3$ is prime and $p-1\mid k$, then
 \[
- p\equiv11\pmod{12},\qquad m_0(p)=p-1\mid k.
+ \boxed{p\equiv2\pmod3,\qquad m_0(p)=p-1\mid k.}
 \]
+Consequently $p\equiv5$ or $11\pmod{12}$. If in addition $4\nmid k$,
+then $p\equiv11\pmod{12}$.
 \end{proposition}
 \begin{proof}
-The index $k$ is even, is not divisible by $4$, and is not divisible by
-$3$. Thus neither $4$ nor $3$ divides $p-1$. As $p$ is odd, the first
-restriction forces $p\equiv3\pmod4$. Primality and $p>3$ exclude
-$p\equiv0\pmod3$, and the second restriction excludes
-$p\equiv1\pmod3$. Consequently $p\equiv2\pmod3$.
-Combining these congruences gives $p\equiv11\pmod{12}$.
-The definition of $m_0$ then gives $m_0(p)=p-1$.
+If $3\mid p-1$, then $p-1\mid k$ would imply $3\mid k$.
+Thus $p\not\equiv1\pmod3$. Primality and $p>3$ exclude
+$p\equiv0\pmod3$, leaving $p\equiv2\pmod3$.
+This gives $m_0(p)=p-1$. Since $p$ is odd, its possible residues
+modulo $12$ are $5$ and $11$. If $4\nmid k$, then $4\nmid p-1$;
+oddness now forces $p\equiv3\pmod4$, selecting $11$ modulo $12$.
 \end{proof}
+The stronger conclusion therefore covers both $k\equiv2$ and
+$k\equiv10\pmod{12}$. For $k\equiv4$ or $8\pmod{12}$, factors
+congruent to $5$ are permitted, not required.
 
 \begin{corollary}\label{cor:shape}
-There is an odd positive integer $T_k$ such that
+Put $a_k=1+v_2(k)$ and
 \[
- D_k=12T_k,\qquad
  T_k=\prod_{\substack{p>3\text{ prime}\\p-1\mid k}}p^{1+v_p(k)}.
 \]
-Every prime factor of $T_k$ is $11$ modulo $12$. In particular,
-$d_k=D_k/3=4T_k$ is even and not divisible by $3$.
+Then
+\[
+ D_k=3\cdot2^{a_k}T_k,\qquad d_k=D_k/3=2^{a_k}T_k.
+\]
+The integer $T_k$ is odd and not divisible by $3$; all its prime factors
+are $2$ modulo $3$. Thus $d_k$ is even and not divisible by $3$.
+When $4\nmid k$, one has $a_k=2$, recovering $D_k=12T_k$.
 \end{corollary}
 \begin{proof}
-In \eqref{eq:denominator}, $2$ occurs to exponent $2$, since $v_2(k)=1$,
-and $3$ occurs to exponent $1$, since $v_3(k)=0$. Apply
-Proposition~\ref{prop:selection} to the remaining factors.
+In \eqref{eq:denominator}, the prime $2$ occurs to exponent
+$1+v_2(k)$, and $3$ occurs to exponent $1$ since $v_3(k)=0$.
+The remaining factors obey Proposition~\ref{prop:selection}.
 \end{proof}
 
 \begin{definition}
@@ -114,9 +126,10 @@ of $d_k$, so
 Writing $\Omega(T)$ for the number of prime factors counted with
 multiplicity, including $\Omega(1)=0$, an equivalent expression is
 \[
- Q_k=4T_k+(-1)^{\Omega(T_k)}.
+ Q_k=2^{a_k}T_k+(-1)^{a_k+\Omega(T_k)}.
 \]
-The exponent multiplicities in this expression are essential.
+The exponent multiplicities and the parity of $a_k$ are essential.
+For $4\nmid k$ this reduces to $Q_k=4T_k+(-1)^{\Omega(T_k)}$.
 
 \section{Small examples and the relation to doors}
 Direct rational evaluation gives the following examples.
@@ -126,6 +139,9 @@ Direct rational evaluation gives the following examples.
 $k$ & $1-k$ & $D_k$ & $d_k$ & $Q_k$\\
 \midrule
 2 & $-1$ & 12 & 4 & 5\\
+4 & $-3$ & 120 & 40 & 41\\
+8 & $-7$ & 240 & 80 & 79\\
+10 & $-9$ & 132 & 44 & 43\\
 14 & $-13$ & 12 & 4 & 5\\
 26 & $-25$ & 12 & 4 & 5\\
 38 & $-37$ & 12 & 4 & 5\\
@@ -136,7 +152,10 @@ $k$ & $1-k$ & $D_k$ & $d_k$ & $Q_k$\\
 Thus different indices can produce the same candidate. Counts of
 indices, distinct denominators, and distinct primes must be separated.
 The table concerns reduced denominators; it does not assert that the
-zeta values in its first four rows are equal.
+zeta values with the same denominator are equal.
+For $k=8$ and $10$, the eligible neighbours are on the minus side:
+$79=80-1$ and $43=44-1$. Their known doors factor $Q_k+1$,
+not $Q_k-1$.
 
 Two divisibility relations also require separation. The denominator
 selection rule reads $m_0(p)\mid k$ for a contributing prime $p>3$.
@@ -185,9 +204,43 @@ Pocklington above that range. Its seven Miller--Rabin bases are
 \]
 The range restriction is part of the verification contract.
 
+\section{A finite comparison of the two families}
+The committed census at $k\le10000$ compares the original residue class
+with the added classes. Denominators and candidate values are
+deduplicated separately within each column.
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+ & $k\equiv2\pmod{12}$ & $k\equiv4,8,10\pmod{12}$\\
+\midrule
+Indices & 834 & 2500\\
+Distinct $D_k$ & 171 & 1426\\
+Repeated-denominator occurrences & 663 & 1074\\
+Distinct plus-side screen survivors & 29 & 160\\
+Distinct eligible screen survivors & 44 & 320\\
+\bottomrule
+\end{tabular}
+\end{center}
+The source is \path{family-census-10k.json}, generated by
+\path{compare_families.py} in the targeted-search directory.
+Repeated means every occurrence after the first within its family.
+About $79.5\%$ of original-family indices repeat a denominator, compared
+with $43.0\%$ in the added family. The added family contains about three
+times as many indices, so raw prime counts alone are not a comparison
+of search efficiency. The columns can share denominators and primes;
+their distinct counts must not be added to obtain a union count.
+
+The census calls the search engine's primality predicate, rather than
+producing a certificate for every survivor. Its stored keys use the word
+primes; the table deliberately records them as screen survivors
+until deterministic checks or certificates establish their status.
+In particular, the plus-side certificate workflow does not certify
+minus-side survivors through their known door. The census is separate
+from the completed large candidate certificates below.
+
 \section{Computational snapshot and reproducibility}
 The notebook reports the following successful candidate-primality
-checks in the \texttt{kitchen8} run. These are experimental records of
+checks in the original-family \texttt{kitchen8} run. These are experimental records of
 this search, not claims of global size records.
 \begin{center}
 \begin{tabular}{rrr}
@@ -212,7 +265,7 @@ $k=1522610689958516981964050$ remains a probable prime in this snapshot;
 its certificate computation is not included among completed results.
 
 The source snapshot for this draft is repository revision
-\texttt{8b99e2b} \cite{repo}. Change into the directory
+\texttt{c04d373} \cite{repo}. Change into the directory
 \begin{center}
 \path{analysis/zeta/zeta-targeted}
 \end{center}
@@ -227,7 +280,7 @@ thousands of decimal digits in the note. Reported long certificate runs
 have not been independently repeated during preparation of this draft.
 
 \paragraph{Outstanding audit item for this draft.}
-Revision \texttt{8b99e2b} searches bases $2,\ldots,501$ when proving
+Revision \texttt{c04d373} searches bases $2,\ldots,501$ when proving
 large divisor-derived candidates. Exhausting this bounded search returns
 \texttt{False}, which the denominator loop treats as a reason to omit the
 candidate. Failure to find a primality witness is not a compositeness
@@ -239,24 +292,32 @@ exhaustiveness issue. This qualification concerns denominator provenance,
 not the separate partial-Pocklington proof of $Q_k$.
 
 \section{Formalisation and further questions}
-The file \texttt{lean/Hire/ZetaDoors.lean} contains the selection theorem
-\begin{center}
-\texttt{prime\_mod\_twelve\_of\_pred\_dvd\_index}
-\end{center}
-and its door-divisibility consequence
-\texttt{m0\_dvd\_of\_pred\_dvd\_index}. The first proves
-Proposition~\ref{prop:selection}'s residue conclusion from primality,
-$p\ne2,3$, $k\bmod12=2$, and $p-1\mid k$; the second rewrites the
-door as $p-1$. The file mentions Mathlib's von Staudt--Clausen theorem
-but does not invoke it. It does not formalise
+The file \path{lean/Hire/ZetaDoors.lean} now contains the following
+theorems (names are given exactly for navigation):
+\begin{itemize}
+\item \path{prime_mod_three_of_pred_dvd_even}: the extended conclusion
+$p\equiv2\pmod3$.
+\item \path{m0_dvd_of_pred_dvd_even}: the consequence $m_0(p)\mid k$.
+\item \path{prime_mod_twelve_of_pred_dvd_not_four}: the sharper residue
+$11$ modulo $12$ under $4\nmid k$.
+\item \path{prime_mod_twelve_of_pred_dvd_four}: the alternatives $5$ or
+$11$ modulo $12$. Despite its name, its statement does not require
+$4\mid k$; it applies to the full extended family.
+\end{itemize}
+The original \path{prime_mod_twelve_of_pred_dvd_index} and
+\path{m0_dvd_of_pred_dvd_index} remain for $k\equiv2\pmod{12}$.
+The residue-class lemma \path{even_not_three_mod_twelve} identifies the
+four admissible index classes. The source mentions Mathlib's
+von Staudt--Clausen theorem but does not invoke it. It does not formalise
 \eqref{eq:denominator}, the complete search, or the large numerical
-primality certificates.
+primality certificates. The Lean source was inspected for this update;
+its compilation was not independently repeated.
 
 The immediate computational questions are how often denominators repeat,
 how the two signs are distributed, and how prime frequency changes under
 different index-selection schemes. A density measured in a targeted
 sample of highly factored indices should not be presented as the density
-over all $k\equiv2\pmod{12}$. Whether infinitely many distinct zeta-door
+over all even $k$ with $3\nmid k$. Whether infinitely many distinct zeta-door
 primes exist is not settled here. A literature comparison is also needed
 before making a priority claim for this particular construction.
 
@@ -272,7 +333,8 @@ sections on denominator and numerator structure,
 primality}, Section 3: classical primality tests,
 \url{https://t5k.org/prove/prove3.html}.
 \bibitem{repo} J. Pickett, \emph{Natural Maths notebook}, source and
-computational records, revision \texttt{8b99e2b},
-\url{https://github.com/hasjack/nm-notebook/tree/8b99e2b}.
+computational records, revision \texttt{c04d373},
+\url{https://github.com/hasjack/nm-notebook/tree/c04d373}.
 \end{thebibliography}
 \end{document}
+

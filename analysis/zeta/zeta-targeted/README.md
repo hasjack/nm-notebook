@@ -43,7 +43,9 @@ Build fully factored k from 2 and five to seven primes selected from
 Default family is tight: adjust the exponent of 5 if necessary to ensure
 k=2 modulo 12. `--family wide` allows v2 in 1..3 so k is any even index
 not divisible by 3 (residues 2, 4, 8, 10 mod 12). Extra primes are then
-5 or 11 mod 12. Compare: `python3 compare_families.py --max-k 10000`.
+5 or 11 mod 12. Override with `--vmin2` / `--vmax2`. Digit band may go
+to 250000. Compare: `python3 compare_families.py --max-k 10000`.
+A 100000-digit plus-side hunt is `n=10`, `v2=2`, pool 71.
 The experiment takes the exact reduced denominator D of zeta(1-k), removes
 its one factor of 3, and chooses the sole neighbor Q of d=D/3 not divisible by 3.
 
