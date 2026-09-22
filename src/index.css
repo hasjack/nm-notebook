@@ -194,6 +194,26 @@ body {
   color: #6b5e4e;
 }
 
+.nav-about-repo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #1f4e79;
+  text-decoration: none;
+}
+
+.nav-about-repo:hover {
+  text-decoration: underline;
+}
+
+.nav-github-icon {
+  flex-shrink: 0;
+  color: #1a1a1a;
+}
+
 .nav-about-blurb code {
   font-size: 0.78em;
 }
