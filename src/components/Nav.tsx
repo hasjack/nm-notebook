@@ -74,6 +74,7 @@ const tree: NavGroup[] = [
     blurb: "More probes — field, analysis, primes, spectra.",
     links: [
       { to: "/zeta-doors", label: "Zeta doors" },
+      { to: "/rank100", label: "Rank 100" },
       { to: "/magnitude", label: "Magnitude" },
       { to: "/beacons", label: "Beacons" },
       { to: "/rotation", label: "Rotation" },
