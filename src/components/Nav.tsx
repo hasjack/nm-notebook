@@ -71,6 +71,27 @@ const tree: NavGroup[] = [
     ],
   },
   {
+    id: "notes",
+    label: "Notes",
+    links: [
+      {
+        to: "/notes/hire-graph",
+        label: "The hire graph of the 3-free door",
+        icon: "pdf",
+      },
+      {
+        to: "/notes/when-gold-disconnects",
+        label: "When gold disconnects",
+        icon: "pdf",
+      },
+      {
+        to: "/notes/zeta-doors",
+        label: "Prime neighbours of zeta denominators",
+        icon: "pdf",
+      },
+    ],
+  },
+  {
     id: "lab",
     label: "Lab",
     blurb: "More probes — field, analysis, primes, spectra.",
@@ -96,29 +117,6 @@ const tree: NavGroup[] = [
       { to: "/signed-doors", label: "±Doors" },
       { to: "/alphabet-spiral", label: "α-spiral" },
       { to: "/count", label: "Count" },
-    ],
-    subs: [
-      {
-        id: "lab-notes",
-        label: "Notes",
-        links: [
-          {
-            to: "/notes/hire-graph",
-            label: "The hire graph of the 3-free door",
-            icon: "pdf",
-          },
-          {
-            to: "/notes/when-gold-disconnects",
-            label: "When gold disconnects",
-            icon: "pdf",
-          },
-          {
-            to: "/notes/zeta-doors",
-            label: "Prime neighbours of zeta denominators",
-            icon: "pdf",
-          },
-        ],
-      },
     ],
   },
 ];
