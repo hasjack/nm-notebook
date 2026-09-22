@@ -60,15 +60,17 @@ then run 12 fixed-base Miller-Rabin screens. Passing those screens alone is
 only probable primality. A hit becomes certified only after a Pocklington
 certificate whose 64-bit part F satisfies F^2 > Q. All certificates are
 independently rechecked by verify.py, which also rebuilds their zeta
-denominators.
-This is arithmetic verification in Python, not a Lean proof.
+denominators from the index. This is arithmetic verification in Python, not a
+Lean proof.
 
 For each prime factor p of Q-1 below 2^64, the certificate supplies a witness a
 satisfying a^(Q-1)=1 modulo Q and gcd(a^((Q-1)/p)-1,Q)=1. verify.py proves
 those factors with the Jaeschke Miller-Rabin bases and applies Pocklington to
-their product F, requiring F^2 > Q. Cofactors >= 2^64 are not treated as primes.
-gmpy2.is_prime is a probable-prime test; it is used only when rebuilding the
-zeta denominator from index divisors d+1 that exceed 2^64.
+their product F, requiring F^2 > Q. Cofactors >= 2^64 are not used as primes of
+Q. Each such cofactor has p-1 dividing the fully factored index, so verify.py
+proves it by a separate Pocklington run on those 64-bit index primes. The same
+test is used when rebuilding D from divisors d+1 of the index. gmpy2.is_prime
+is not treated as a proof.
 
 Numbers of arbitrary size are stored as decimal strings. Do not load them as
 JavaScript floating-point Numbers. Factor keys are decimal strings; exponents

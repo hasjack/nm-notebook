@@ -142,10 +142,11 @@ export function ZetaDoorsPage() {
           Certified kitchen record: <strong>5,522 digits</strong> (also 5,118
           and 4,443 in the same run). Five listed factors of N−1 sit above 2
           <sup>64</sup>. The 510 factors below 2<sup>64</sup> multiply to a
-          5,419-digit F with F<sup>2</sup> &gt; N, so Pocklington does not use
-          those five as primes. <code>gmpy2.is_prime</code> is a probable-prime
-          test; the verifier no longer accepts it as a proof of certificate
-          factors.
+          5,419-digit F with F<sup>2</sup> &gt; N, so Q’s Pocklington proof does
+          not use those five as primes. Each has p−1 dividing the fully factored
+          index, and is proved by a second Pocklington run on those small
+          primes. That is the zeta-denominator origin. <code>gmpy2.is_prime</code>{" "}
+          is not a proof.
         </li>
         <li>
           Longest PRP so far: <strong>18,365 digits</strong> (lions71; also

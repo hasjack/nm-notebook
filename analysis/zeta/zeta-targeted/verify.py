@@ -3,10 +3,12 @@
 
 Pocklington uses only factors below 2^64, proved by the Jaeschke
 Miller-Rabin bases (isprime64). Their product F must satisfy F^2 > N.
-Listed cofactors >= 2^64 are not treated as primes.
+Listed cofactors >= 2^64 are not treated as primes of N.
 
 Denominator origin rebuilds D from the index. Von Staudt primes below
-2^64 are proved; any p = d+1 >= 2^64 is a gmpy2 probable prime, not a proof.
+2^64 are proved by isprime64. Any p = d+1 >= 2^64 is proved by Pocklington
+on p-1, which divides the fully factored index (all index primes < 2^64).
+gmpy2.is_prime is not used as a proof.
 """
 import json,sys,math
 from functools import lru_cache
@@ -17,14 +19,9 @@ LIM=2**64
 
 try:
     import gmpy2
-    def prp(n):
-        n=int(n)
-        return n>=2 and bool(gmpy2.is_prime(n))
     def modpow(a,e,m):
         return int(gmpy2.powmod(int(a),int(e),int(m)))
 except ImportError:
-    def prp(n):
-        return isprime64(n)
     def modpow(a,e,m):
         return pow(int(a),int(e),int(m))
 
@@ -43,10 +40,33 @@ def isprime64(n):
         else:return False
     return True
 
-def origin_prime(n):
+def factor_over(n,primes):
+    out={};t=n
+    for p in primes:
+        e=0
+        while t%p==0:t//=p;e+=1
+        if e:out[p]=e
+    return out,t
+
+def pocklington_from_index(n,index_primes):
+    """Prove n prime when n-1 factors over 64-bit index primes."""
+    factors,rest=factor_over(n-1,index_primes)
+    if rest!=1 or not factors:return False
+    assert all(isprime64(p) for p in factors)
+    F=n-1
+    if F*F<=n:return False
+    for p in factors:
+        for a in range(2,502):
+            if modpow(a,n-1,n)==1 and math.gcd(modpow(a,(n-1)//p,n)-1,n)==1:
+                break
+        else:
+            return False
+    return True
+
+def origin_prime(n,index_primes):
     n=int(n)
     if n<LIM:return isprime64(n)
-    return prp(n)
+    return pocklington_from_index(n,index_primes)
 
 def pocklington(n,factors,witnesses):
     """Partial Pocklington: proven 64-bit part F with F^2 > n."""
@@ -78,8 +98,10 @@ def validate(row):
     assert k%12==2
     assert all(isinstance(e,int) and e>0 and isprime64(p) for p,e in f.items())
     assert math.prod(p**e for p,e in f.items())==k
+    index_primes=tuple(f)
     for p in cofactors:
         assert k%(p-1)==0
+        assert pocklington_from_index(p,index_primes)
     # Independently enumerate all index divisors, testing all potential p=d+1.
     ds={1}
     for p,e in f.items():
@@ -91,7 +113,7 @@ def validate(row):
     D=1
     for d in ds:
         p=d+1
-        if origin_prime(p):
+        if origin_prime(p,index_primes):
             D*=p;t=k
             while t%p==0:D*=p;t//=p
     assert D==int(row['denominator'])==3*(n-1)
@@ -108,9 +130,9 @@ def main():
         n,proven,cofactors=validate(row);total+=1
         msg='VERIFIED %d digits; zeta input %s'%(len(str(n)),1-int(row['index']))
         if cofactors:
-            msg+='; Pocklington F from %d primes < 2^64 (%d cofactors unproven)'%(
+            msg+='; Pocklington F from %d primes < 2^64; %d cofactors proved from index'%(
                 len(proven),len(cofactors))
         print(msg)
-    print('Verified certificates and denominator origins:',total)
+    print('Verified primality certificates and denominator origins:',total)
 
 if __name__=='__main__':main()
