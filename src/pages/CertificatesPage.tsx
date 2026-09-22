@@ -166,8 +166,8 @@ export function CertificatesPage() {
         <p>
           <strong>Lab freeze.</strong> Papers frozen. Catalog frozen at B = 10
           <sup>7</sup>. A certificate is a lower bound on K<sub>hire</sub>, not
-          a first owner. Rank 100, k = 98, is now composite (factor 162981019);
-          see <Link to="/rank100">Rank 100 floor</Link>.
+          a first owner. Rank 100, k = 98 through 122, are composite; k = 124
+          is next. See <Link to="/rank100">Rank 100 floor</Link>.
         </p>
       </aside>
     </main>

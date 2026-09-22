@@ -20,6 +20,8 @@ for k in range(2,202,12):
 for n in range(2,10000):
     expected=all(n%p for p in range(2,__import__('math').isqrt(n)+1))
     assert hunt.prime64(n)==verify.isprime64(n)==expected
+assert not verify.isprime64(2**64)
+assert not verify.isprime64(24793667968257483011)  # 20-digit; not a 64-bit proof
 row=json.loads(Path('pilot/hits.jsonl').read_text().splitlines()[0])
 verify.validate(row)
 bad=copy.deepcopy(row);bad['certificate']['witnesses']['2']=1

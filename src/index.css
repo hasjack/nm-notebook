@@ -1756,6 +1756,26 @@ code.pow sup {
   line-height: 1.45;
 }
 
+.lab-theorem {
+  margin: 1.1rem 0 1.25rem;
+  padding: 0.95rem 1.15rem 1.05rem;
+  border: 1px solid #c8bfb0;
+  background: #faf6ef;
+  max-width: var(--prose-width);
+}
+
+.lab-theorem p {
+  margin: 0;
+  text-align: center;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: #1a1a1a;
+}
+
+.lab-theorem-implies {
+  margin-top: 0.45rem !important;
+}
+
 /* Certificates page — owner-floor receipt table */
 .certs-receipt-wrap {
   max-width: none;

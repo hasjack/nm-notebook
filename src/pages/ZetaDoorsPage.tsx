@@ -11,6 +11,23 @@ export function ZetaDoorsPage() {
         the hire graph.
       </p>
 
+      <aside className="lab-theorem" aria-label="Zeta-door selection rule">
+        <p>
+          k ≡ 2 (mod 12), p &gt; 3 prime, p − 1 | k
+        </p>
+        <p className="lab-theorem-implies">
+          ⟹ p ≡ 11 (mod 12), m<sub>0</sub>(p) = p − 1 | k.
+        </p>
+      </aside>
+      <p>
+        That is the residue restriction on primes selected by the denominator
+        construction. Formalised in{" "}
+        <code>lean/Hire/ZetaDoors.lean</code> as{" "}
+        <code>prime_mod_twelve_of_pred_dvd_index</code>. Von Staudt–Clausen is
+        Mathlib’s <code>Bernoulli.vonStaudt_clausen</code>; that Lean file
+        mentions it and does not invoke it.
+      </p>
+
       <h2>Route</h2>
       <p>
         ζ(−1) = ζ(−13) = −1/12. Inputs twelve apart, −1, −13, −25, −37, …, do
@@ -19,8 +36,10 @@ export function ZetaDoorsPage() {
       </p>
       <p>
         Write the input as 1−k with k = 12r+2. Von Staudt–Clausen: a prime p
-        divides the denominator of ζ(1−k) when p−1 | k. Every such prime above
-        3 is 11 (mod 12). For those primes the 3-free door is p−1.
+        divides the denominator of ζ(1−k) when p−1 | k. Neither 4 nor 3 divides
+        such a k, so neither divides p−1. An odd prime p &gt; 3 with those
+        restrictions is 3 (mod 4) and 2 (mod 3), hence 11 (mod 12), and its
+        3-free door is exactly p−1.
       </p>
       <p>
         D carries exactly one factor of 3. d = D/3 is even and 3-free. χ₃ picks
@@ -115,26 +134,37 @@ export function ZetaDoorsPage() {
       <p>
         Construct k from a handful of small primes so D is large and Q−1 stays
         fully factored. Hunt logs PRP; <code>cert.py</code> proves the longest
-        hit in a run; <code>verify.py</code> rebuilds the denominator.
+        hit in a run; <code>verify.py</code> rebuilds the denominator and
+        checks a partial-Pocklington certificate.
       </p>
       <ul>
         <li>
           Certified kitchen record: <strong>5,522 digits</strong> (also 5,118
-          and 4,443 in the same run).
+          and 4,443 in the same run). Five listed factors of N−1 sit above 2
+          <sup>64</sup>. The 510 factors below 2<sup>64</sup> multiply to a
+          5,419-digit F with F<sup>2</sup> &gt; N, so Pocklington does not use
+          those five as primes. <code>gmpy2.is_prime</code> is a probable-prime
+          test; the verifier no longer accepts it as a proof of certificate
+          factors.
         </li>
         <li>
-          Longest PRP so far: <strong>5,943 digits</strong>, unsigned until
-          Pocklington.
+          Longest PRP so far: <strong>18,365 digits</strong> (lions71; also
+          16,213 and 16,165). Kitchen-prp unsigned record 5,943. Probable,
+          not certified.
         </li>
         <li>Farm Boolean length: 3,361 digits (q = 31).</li>
       </ul>
       <p>
         Code: <code>analysis/zeta/zeta-door-safari/</code>,{" "}
-        <code>analysis/zeta/zeta-targeted/</code>.
+        <code>analysis/zeta/zeta-targeted/</code>,{" "}
+        <code>lean/Hire/ZetaDoors.lean</code>.
       </p>
       <p className="home-actions">
         <Link className="nav-link" to="/certificates">
           Certificates
+        </Link>
+        <Link className="nav-link" to="/rank100">
+          Rank 100
         </Link>
         <Link className="nav-link" to="/hire">
           Introduction

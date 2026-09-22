@@ -57,19 +57,22 @@ Only Q=d+1 is tested in this pilot, giving a complete known factorization of Q-1
 Minus-side candidates are logged as deferred, not as composites.
 After deduplication and digit-band filtering, sieve by primes below 10000,
 then run 12 fixed-base Miller-Rabin screens. Passing those screens alone is
-only probable primality. A hit becomes certified only after constructing an
-exact full-factorization n-1 certificate. All certificates are independently
-rechecked by verify.py, which also rebuilds their exact zeta denominators.
+only probable primality. A hit becomes certified only after a Pocklington
+certificate whose 64-bit part F satisfies F^2 > Q. All certificates are
+independently rechecked by verify.py, which also rebuilds their zeta
+denominators.
 This is arithmetic verification in Python, not a Lean proof.
 
-For each prime factor p of Q-1, the certificate supplies a witness a satisfying
-a^(Q-1)=1 modulo Q and gcd(a^((Q-1)/p)-1,Q)=1. These conditions force every
-prime divisor of Q to be 1 modulo Q-1, proving Q prime. All factor primes
-are independently checked within the deterministic 64-bit range.
+For each prime factor p of Q-1 below 2^64, the certificate supplies a witness a
+satisfying a^(Q-1)=1 modulo Q and gcd(a^((Q-1)/p)-1,Q)=1. verify.py proves
+those factors with the Jaeschke Miller-Rabin bases and applies Pocklington to
+their product F, requiring F^2 > Q. Cofactors >= 2^64 are not treated as primes.
+gmpy2.is_prime is a probable-prime test; it is used only when rebuilding the
+zeta denominator from index divisors d+1 that exceed 2^64.
 
 Numbers of arbitrary size are stored as decimal strings. Do not load them as
-JavaScript floating-point Numbers. Factor bases are at most 64 bits and appear
-as string dictionary keys; exponents and witnesses are small integers.
+JavaScript floating-point Numbers. Factor keys are decimal strings; exponents
+and witnesses are small integers. Only factors below 2^64 enter the proof.
 
 ## Files
 
