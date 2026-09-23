@@ -90,7 +90,7 @@ export function CubeDoorPage() {
       <p>
         a³ + b³ = (a + b)(a² − a b + b²). Write A = a + b and B = a² − a b + b².
         For coprime a, b, any common prime of A and B divides 3: 3 is the only
-        bridge between the factors. When 3 ∣ A,
+        bridge between the factors. When 3 ∣ A and A · B is a cube,
       </p>
       <aside className="lab-theorem" aria-label="Cube forces boxed forms">
         <p className="lab-theorem-implies">
