@@ -9,7 +9,7 @@ export function TwoClassCoveragePage() {
         Afternoon Lab: which primes hire a fixed odd ingredient Q not divisible
         by 3, and which gap sizes between successive such primes are allowed.
         Short supporting lemma: elementary modular arithmetic that pins the
-        repeating lane picture. Not a breakthrough on prime gaps. Related:{" "}
+        repeating lane picture. Related:{" "}
         <Link to="/basins">Basins</Link>, <Link to="/zeta-doors">Zeta doors</Link>
         .
       </p>
