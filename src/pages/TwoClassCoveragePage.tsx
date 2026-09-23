@@ -129,16 +129,15 @@ export function TwoClassCoveragePage() {
         Formalised in <code>lean/Hire/InfiniteHire.lean</code> as{" "}
         <code>infinite_primes_hire</code> and{" "}
         <code>exists_prime_hire_gt</code>. Same Dirichlet fact as GoldBridge’s
-        classes, named for a fixed Q. Lab shelf for now; Albert has a half-page
-        Paper 1 insert draft if Jack thaws.
+        classes, named for a fixed Q. Now also Corollary{" "}
+        <code>cor:infinite-hire</code> in Paper 1 (after GoldBridge).
       </p>
 
       <aside className="lab-note-caveats" aria-label="Lab freeze">
         <p>
-          <strong>Lab freeze.</strong> Two-class + infinite hire are
-          supporting Lab arithmetic (Dirichlet on named classes). Hire-rate
-          stays the analytic target. Papers frozen unless the Paper 1 corollary
-          insert is thawed.
+          <strong>Lab note.</strong> Two-class + infinite hire are Dirichlet
+          on named classes; Paper 1 carries the corollary after GoldBridge.
+          Hire-rate stays the analytic target. Other cameras stay Lab.
         </p>
       </aside>
     </main>
