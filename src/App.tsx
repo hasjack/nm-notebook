@@ -32,6 +32,8 @@ import { CertificatesPage } from "./pages/CertificatesPage";
 import { ZetaDoorsPage } from "./pages/ZetaDoorsPage";
 import { Rank100Page } from "./pages/Rank100Page";
 import { TwoClassCoveragePage } from "./pages/TwoClassCoveragePage";
+import { CubeDoorPage } from "./pages/CubeDoorPage";
+import { CoverageLatticePage } from "./pages/CoverageLatticePage";
 import { GaussianDoorsPage } from "./pages/GaussianDoorsPage";
 import { HireSpectrumPage } from "./pages/HireSpectrumPage";
 import { HireLabPage } from "./pages/HireLabPage";
@@ -84,6 +86,8 @@ export default function App() {
         <Route path="/rank100" element={<Rank100Page />} />
         <Route path="/two-class" element={<TwoClassCoveragePage />} />
         <Route path="/door-coverage" element={<TwoClassCoveragePage />} />
+        <Route path="/cube-doors" element={<CubeDoorPage />} />
+        <Route path="/coverage-lattice" element={<CoverageLatticePage />} />
         <Route path="/gaussian-doors" element={<GaussianDoorsPage />} />
         <Route path="/certs" element={<Navigate to="/certificates" replace />} />
         <Route path="/hire-spectrum" element={<HireSpectrumPage />} />

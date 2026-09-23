@@ -61,3 +61,14 @@ These are standard congruence consequences, presented in the door language.
 
 The page contains the elementary proof. Finite script checks support the
 implementation but do not replace that proof or the classical density theorem.
+
+
+## Wait census
+
+```sh
+python3 analysis/door-coverage/waits.py --limit 10000000
+```
+
+Exact sieve through ten million for ingredients 5, 7, 49, 11. Writes
+`waits-results.json`. Narrative summary: `waits-report.md`. Slim tables for the
+site live in `src/lib/doorWaitData.ts`.
