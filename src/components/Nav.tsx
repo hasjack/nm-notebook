@@ -77,6 +77,7 @@ const tree: NavGroup[] = [
     links: [
       { to: "/zeta-doors", label: "Zeta doors" },
       { to: "/rank100", label: "Rank 100" },
+      { to: "/two-class", label: "Two-class coverage" },
       { to: "/gaussian-doors", label: "Gaussian doors" },
       { to: "/magnitude", label: "Magnitude" },
       { to: "/beacons", label: "Beacons" },
