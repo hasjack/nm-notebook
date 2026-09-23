@@ -115,11 +115,30 @@ export function TwoClassCoveragePage() {
         is still open Lab investigation.
       </p>
 
+      <aside className="lab-theorem" aria-label="Infinite hire corollary">
+        <p>
+          <strong>Corollary (infinite hire of a fixed ingredient).</strong> Let
+          Q &gt; 1 be odd with 3 ∤ Q. Then infinitely many primes p satisfy Q |
+          m₀(p).
+        </p>
+        <p className="lab-theorem-implies">
+          Two-class coverage + Dirichlet on those APs.
+        </p>
+      </aside>
+      <p>
+        Formalised in <code>lean/Hire/InfiniteHire.lean</code> as{" "}
+        <code>infinite_primes_hire</code> and{" "}
+        <code>exists_prime_hire_gt</code>. Same Dirichlet fact as GoldBridge’s
+        classes, named for a fixed Q. Lab shelf for now; Albert has a half-page
+        Paper 1 insert draft if Jack thaws.
+      </p>
+
       <aside className="lab-note-caveats" aria-label="Lab freeze">
         <p>
-          <strong>Lab freeze.</strong> Supporting lemma for the visualisation:
-          elementary modular arithmetic in the hire-door framework. Does not
-          claim a new theorem about ordinary prime gaps. Papers frozen.
+          <strong>Lab freeze.</strong> Two-class + infinite hire are
+          supporting Lab arithmetic (Dirichlet on named classes). Hire-rate
+          stays the analytic target. Papers frozen unless the Paper 1 corollary
+          insert is thawed.
         </p>
       </aside>
     </main>
