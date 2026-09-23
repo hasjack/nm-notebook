@@ -285,7 +285,7 @@ They sit on primes whose door is a power of \(2\), together with short owner-cha
 Let \(p\neq 3\) be an odd prime.
 Then \(m_0(p)\) is a power of \(2\) if and only if either
 \begin{itemize}
-\item \(p=2^k-1\) is a Mersenne prime (necessarily \(k\) odd, \(k\ge 3\)), in which case \(p\equiv 1\pmod{3}\) and \(m_0(p)=p+1=2^k\), or
+\item \(p=2^k-1\) is a Mersenne prime (necessarily \(k\) an odd prime, \(k\ge 3\)), in which case \(p\equiv 1\pmod{3}\) and \(m_0(p)=p+1=2^k\), or
 \item \(p=2^k+1\) is a Fermat prime (necessarily \(k\) a power of \(2\), \(k\ge 2\)), in which case \(p\equiv 2\pmod{3}\) and \(m_0(p)=p-1=2^k\).
 \end{itemize}
 In both cases \(p\) has gold out-degree zero, so it enters \(S_X\) only as a target and is isolated in gold until one of its owners itself lies in \(S_X\).
@@ -372,9 +372,9 @@ Take any such prime \(r\).
 Then \(5q\mid m_0(r)\), so there are gold arcs \(r\to 5\) and \(r\to q\).
 In the infinite gold graph this is the path \(q{-}r{-}5\).
 
-For a finite window, let \(p\) be an owner of \(r\) (again by Dirichlet, as in the ownership section).
+For a finite window, let \(p\) be an owner of \(r\) (again by Dirichlet, as in the ownership section), so \(r\mid m_0(p)\).
 Choose \(X\ge\max(p,r)\).
-Then \(r\in S_X\) and \(r\le X\), so \(r\) is an owner of the window; since \(q\mid m_0(r)\), also \(q\in S_X\), and both arcs are present in \(G_X\).
+Then \(p\in S_X\) places \(r\) in \(S_X\) (not merely \(r\le X\)); since \(q\mid m_0(r)\), also \(q\in S_X\), and both arcs from \(r\) are present in \(G_X\).
 \end{proof}
 
 Thus Question~\ref{q:infinite} is answered in the affirmative.
@@ -394,10 +394,22 @@ p\equiv 2Q-s\ \text{or}\ 4Q+s\pmod{6Q}.
 \end{lemma}
 
 \begin{proof}
-A door divisible by \(Q\) is an even multiple of \(Q\).
-Excluding multiples of \(3\) leaves multipliers congruent to \(2\) or \(4\) modulo \(6\).
-The sign \(s=\chi_3(Q)\) then follows from the door rule \(m_0(p)=p+\chi_3(p)\), which forces the two residue classes above.
-(Lean: \texttt{two\_class\_coverage} in \texttt{Hire/TwoClassCoverage.lean}.)
+Write \(m_0(p)=tQ\) with \(t\) even and \(3\nmid t\) (the door is even and 3-free).
+Then \(t\equiv 2\) or \(4\pmod{6}\), so
+\[
+m_0(p)\equiv 2Q\quad\text{or}\quad 4Q\pmod{6Q}.
+\]
+In either subcase the residue of \(m_0(p)\) modulo \(3\) is forced by \(s=\chi_3(Q)\), and the door rule \(m_0(p)=p+\chi_3(p)\) selects the unique neighbour congruent to that residue.
+
+If \(m_0(p)\equiv 2Q\pmod{6Q}\), then \(m_0(p)\equiv 2s\pmod{3}\).
+When \(s=+1\) one has \(m_0(p)\equiv 2\pmod{3}\), so \(\chi_3(p)=+1\) and \(p=m_0(p)-1\equiv 2Q-s\pmod{6Q}\).
+When \(s=-1\) one has \(m_0(p)\equiv 1\pmod{3}\), so \(\chi_3(p)=-1\) and \(p=m_0(p)+1\equiv 2Q-s\pmod{6Q}\).
+
+If \(m_0(p)\equiv 4Q\pmod{6Q}\), then \(m_0(p)\equiv s\pmod{3}\) after reducing \(4\equiv 1\pmod{3}\).
+When \(s=+1\) one has \(m_0(p)\equiv 1\pmod{3}\), so \(\chi_3(p)=-1\) and \(p=m_0(p)+1\equiv 4Q+s\pmod{6Q}\).
+When \(s=-1\) one has \(m_0(p)\equiv 2\pmod{3}\), so \(\chi_3(p)=+1\) and \(p=m_0(p)-1\equiv 4Q+s\pmod{6Q}\).
+
+(The cases are checked in Lean as \texttt{two\_class\_coverage} in \texttt{Hire/TwoClassCoverage.lean}.)
 \end{proof}
 
 \begin{corollary}[Infinite hire of a fixed ingredient]
