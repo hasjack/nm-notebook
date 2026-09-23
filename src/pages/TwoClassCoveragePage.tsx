@@ -166,7 +166,7 @@ export function TwoClassCoveragePage() {
         For fixed odd Q coprime to 3, the share of prime doors divisible by Q
         tends to 1/φ(Q). In particular qᵃ has limiting coverage
         1/[qᵃ⁻¹(q−1)]. This is the prime-number theorem for arithmetic
-        progressions on the two reduced classes below — fixed-Q density as the
+        progressions on the two reduced classes below. That is fixed-Q density as the
         window grows, not a claim when Q grows with the window.
       </p>
 
