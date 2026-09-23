@@ -1,0 +1,34 @@
+.door-coverage-page {
+  --coverage-paper: #f4efe6;
+  --coverage-ink: #1a1a1a;
+  --coverage-line: #cfc4b4;
+  --coverage-blue: #2b617f;
+}
+.door-coverage-page details { margin: 1.2rem 0; }
+.door-coverage-page summary { cursor: pointer; font-weight: 600; }
+.coverage-controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: end; margin: 1rem 0; }
+.coverage-controls label { display: flex; flex-direction: column; gap: .4rem; max-width: 100%; }
+.coverage-controls input, .coverage-controls select, .coverage-controls button, .coverage-controls > button {
+  font: inherit; color: var(--coverage-ink); background: #fffaf3; padding: .55rem .7rem;
+  border: 1px solid var(--coverage-line); border-radius: .3rem; min-height: 44px; max-width: 100%;
+}
+.coverage-controls button { cursor: pointer; }
+.coverage-controls input { width: 10rem; }
+.coverage-gap-chart { display: block; width: 100%; }
+.coverage-gap-chart text { fill: var(--coverage-ink); font: 12px system-ui, sans-serif; }
+.coverage-frame { fill: none; stroke: var(--coverage-line); }
+.coverage-axis { stroke: var(--coverage-line); }
+.coverage-zone { fill: var(--coverage-blue); opacity: .045; }
+.coverage-zone.alternate { opacity: .12; }
+.coverage-prime { fill: var(--coverage-blue); }
+.coverage-composite { fill: var(--coverage-paper); stroke: #70695e; stroke-width: 1.3; }
+.coverage-selected { fill: none; stroke: var(--coverage-ink); stroke-width: 1.5; }
+.coverage-hit { cursor: pointer; }
+.coverage-inspection { border-left: 3px solid var(--coverage-blue); padding-left: 1rem; margin: 1rem 0; }
+.coverage-inspection p { margin: .4rem 0; }
+.coverage-decimal { overflow-wrap: anywhere; font-family: monospace; }
+.door-coverage-page .door-table { font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) {
+  .coverage-controls { gap: .75rem; }
+  .coverage-controls label { flex: 1 1 120px; }
+}

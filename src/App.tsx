@@ -83,6 +83,7 @@ export default function App() {
         <Route path="/zeta-doors" element={<ZetaDoorsPage />} />
         <Route path="/rank100" element={<Rank100Page />} />
         <Route path="/two-class" element={<TwoClassCoveragePage />} />
+        <Route path="/door-coverage" element={<TwoClassCoveragePage />} />
         <Route path="/gaussian-doors" element={<GaussianDoorsPage />} />
         <Route path="/certs" element={<Navigate to="/certificates" replace />} />
         <Route path="/hire-spectrum" element={<HireSpectrumPage />} />
