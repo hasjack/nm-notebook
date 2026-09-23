@@ -19,7 +19,8 @@ export function CoverageLatticePage() {
       <p className="lede">
         How coverage sets for fixed odd ingredients nest under powers and meet
         under least common multiples. Related:{" "}
-        <Link to="/two-class">Two-class coverage</Link>.
+        <Link to="/two-class">Two-class coverage</Link>,{" "}
+        <Link to="/door-waits">Door waits</Link>.
       </p>
 
       <h2>Nesting of powers</h2>

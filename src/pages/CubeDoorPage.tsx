@@ -11,6 +11,7 @@ export function CubeDoorPage() {
       <p className="lede">
         How cubing enlarges a 3-free door, and what happens when two cube doors
         are added. Related: <Link to="/two-class">Two-class coverage</Link>,{" "}
+        <Link to="/door-waits">Door waits</Link>,{" "}
         <Link to="/notes/hire-graph">Paper 1</Link>.
       </p>
 
