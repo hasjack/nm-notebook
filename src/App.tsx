@@ -31,6 +31,7 @@ import { MicroscopePage } from "./pages/MicroscopePage";
 import { CertificatesPage } from "./pages/CertificatesPage";
 import { ZetaDoorsPage } from "./pages/ZetaDoorsPage";
 import { Rank100Page } from "./pages/Rank100Page";
+import { GaussianDoorsPage } from "./pages/GaussianDoorsPage";
 import { HireSpectrumPage } from "./pages/HireSpectrumPage";
 import { HireLabPage } from "./pages/HireLabPage";
 import { PaperPage } from "./pages/PaperPage";
@@ -80,6 +81,7 @@ export default function App() {
         <Route path="/certificates" element={<CertificatesPage />} />
         <Route path="/zeta-doors" element={<ZetaDoorsPage />} />
         <Route path="/rank100" element={<Rank100Page />} />
+        <Route path="/gaussian-doors" element={<GaussianDoorsPage />} />
         <Route path="/certs" element={<Navigate to="/certificates" replace />} />
         <Route path="/hire-spectrum" element={<HireSpectrumPage />} />
         <Route path="/hire-lab" element={<HireLabPage />} />

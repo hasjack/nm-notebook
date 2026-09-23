@@ -45,6 +45,10 @@ const pages: Record<string, PageMeta> = {
     description: "Lab hunt: 3-free neighbours of zeta denominators.",
   },
   "/rank100": { title: "Rank 100 floor" },
+  "/gaussian-doors": {
+    title: "Gaussian doors",
+    description: "3-free doors as a route from two squares to x²+3y².",
+  },
   "/alphabet": { title: "Alphabet" },
   "/alphabet/notes": { title: "Alphabet benefits" },
   "/solve": { title: "Solve" },
