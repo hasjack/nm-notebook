@@ -42,15 +42,15 @@
     }
   },
   "rank100": {
-    "k124_snapshot": {
+    "k124": {
       "host": "xeon",
       "k": 124,
       "eps": 1,
       "expr": "284332*2^12918431-123",
-      "pfgw_elapsed": "18h 48m",
-      "as_of": "2026-09-23",
-      "status": "running",
-      "note": "past the ~4 h trial-factor bound; likely FFT PRP. No k124.log until PFGW exits."
+      "status": "composite",
+      "seconds": 92473.666,
+      "pfgw": "is composite: RES64: [C639D96377D4F918] (81311.6811s+11161.9716s)",
+      "as_of": "2026-09-23"
     }
   }
 }

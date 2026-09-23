@@ -52,6 +52,8 @@ def parse_pfgw(text: str) -> dict:
             factors.extend(x.strip() for x in rhs.replace("*", " ").split() if x.strip().isdigit())
     if "has factors" in low or "trivially factors" in low:
         return {"status": "composite", "factors": factors}
+    if "is composite" in low:
+        return {"status": "composite", "factors": factors}
     if "is prp" in low or "is 3-prp" in low or "fermat prp" in low:
         return {"status": "prp", "factors": factors}
     if "is prime" in low:
