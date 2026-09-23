@@ -379,6 +379,42 @@ Then \(r\in S_X\) and \(r\le X\), so \(r\) is an owner of the window; since \(q\
 Thus Question~\ref{q:infinite} is answered in the affirmative.
 The same argument gives the Mersenne and Fermat corollaries: every \(2\)-power-door satellite is absorbed into \(\mathrm{comp}(5)\) in some finite window.
 
+The same Dirichlet counting extends from a prime ingredient to any fixed odd factor not divisible by \(3\).
+
+\begin{lemma}[Two-class coverage]
+\label{lem:two-class}
+Let \(Q>1\) be odd with \(3\nmid Q\), and write \(s=\chi_3(Q)\in\{\pm 1\}\).
+For every prime \(p>3\),
+\[
+Q\mid m_0(p)
+\quad\Longleftrightarrow\quad
+p\equiv 2Q-s\ \text{or}\ 4Q+s\pmod{6Q}.
+\]
+\end{lemma}
+
+\begin{proof}
+A door divisible by \(Q\) is an even multiple of \(Q\).
+Excluding multiples of \(3\) leaves multipliers congruent to \(2\) or \(4\) modulo \(6\).
+The sign \(s=\chi_3(Q)\) then follows from the door rule \(m_0(p)=p+\chi_3(p)\), which forces the two residue classes above.
+(Lean: \texttt{two\_class\_coverage} in \texttt{Hire/TwoClassCoverage.lean}.)
+\end{proof}
+
+\begin{corollary}[Infinite hire of a fixed ingredient]
+\label{cor:infinite-hire}
+Let \(Q>1\) be odd with \(3\nmid Q\).
+Then infinitely many primes \(p\) satisfy \(Q\mid m_0(p)\).
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:two-class}, \(Q\mid m_0(p)\) if and only if
+\(p\equiv 2Q-s\) or \(p\equiv 4Q+s\pmod{6Q}\) with \(s=\chi_3(Q)\).
+Both residues are coprime to the modulus \(6Q\).
+Dirichlet's theorem~\cite{Dirichlet} therefore supplies infinitely many primes in each class.
+(Lean: \texttt{infinite\_primes\_hire}, \texttt{exists\_prime\_hire\_gt} in \texttt{Hire/InfiniteHire.lean}.)
+\end{proof}
+
+When \(Q\) is an odd prime this recovers the ownership count already stated after the definition of owners; the lemma extends it to composite ingredients such as \(Q=49\).
+
 \begin{question}
 \label{q:infmany}
 Is the undirected gold graph disconnected for infinitely many finite \(X\)?
