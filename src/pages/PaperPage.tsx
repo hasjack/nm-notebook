@@ -27,7 +27,7 @@ export function PaperPage() {
         </sub>
         )=1 fails for some finite <em>X</em>. Every odd prime other than 3 lies in the infinite gold
         component of 5: a Dirichlet bridge in one of two classes modulo{" "}
-        15<em>q</em> yields a common owner of 5 and <em>q</em>. Whether gold
+        15<em>q</em> yields a common owner of 5 and <em>q</em>. The same Dirichlet counting on the two hire classes modulo 6<em>Q</em> gives infinitely many primes hiring any fixed odd <em>Q</em> not divisible by 3. Whether gold
         is disconnected for infinitely many finite windows remains open.
       </p>
 
@@ -35,7 +35,7 @@ export function PaperPage() {
         <iframe
           className="paper-frame"
           title="hire-graph-of-the-3-free-door.pdf"
-          src="/paper/hire-graph-of-the-3-free-door.pdf?v=1789857354#view=FitH"
+          src="/paper/hire-graph-of-the-3-free-door.pdf?v=1790184964#view=FitH"
         />
       </div>
 
@@ -107,6 +107,28 @@ export function PaperPage() {
             </li>
             <li>
               <code>fermat_prime_in_gold_component_of_5</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <code>Hire/TwoClassCoverage.lean</code>
+          <ul>
+            <li>
+              <code>two_class_coverage</code>
+            </li>
+            <li>
+              <code>hire_gap_mod</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <code>Hire/InfiniteHire.lean</code>
+          <ul>
+            <li>
+              <code>infinite_primes_hire</code>
+            </li>
+            <li>
+              <code>exists_prime_hire_gt</code>
             </li>
           </ul>
         </li>
