@@ -4,7 +4,7 @@
     python3 cert.py kitchen-prp/hits.jsonl
     python3 cert.py --all kitchen-prp/hits.jsonl
 """
-import argparse, json, sys
+import argparse, json, sys, time
 from pathlib import Path
 import hunt
 
@@ -13,7 +13,9 @@ def prove(row):
         return row
     q=int(row['candidate'])
     df={int(p):e for p,e in row['door_factors'].items()}
+    t=time.monotonic()
     cert=hunt.certificate(q,df)
+    row['cert_seconds']=round(time.monotonic()-t,3)
     if not cert:
         row['status']='probable'
         return row

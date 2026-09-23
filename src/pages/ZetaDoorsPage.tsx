@@ -258,6 +258,9 @@ export function ZetaDoorsPage() {
           Longest certified: <strong>18,365 digits</strong> (lions71;
           ζ(1−k) at k = 1522610689958516981964050). 1,598 factors of N−1
           below 2<sup>64</sup>, 19 listed cofactors, F<sup>2</sup> &gt; N.
+          Pocklington wall <strong>9 h 2 min</strong> on the Studio (M2 Max,
+          12 cores, 32 GB), reconstructed from the certificate file’s create
+          and mtime. <code>cert.py</code> now writes <code>cert_seconds</code>.
           Also 16,213 and 16,165 probable in that run.
         </li>
         <li>
@@ -269,7 +272,8 @@ export function ZetaDoorsPage() {
         <li>Farm Boolean length: 3,361 digits (q = 31).</li>
       </ul>
       <p>
-        Code: <code>analysis/zeta/zeta-door-safari/</code>,{" "}
+        Timing log: <code>analysis/lab-metrics.json</code>. Code:{" "}
+        <code>analysis/zeta/zeta-door-safari/</code>,{" "}
         <code>analysis/zeta/zeta-targeted/</code>,{" "}
         <code>lean/Hire/ZetaDoors.lean</code>. Note:{" "}
         <Link to="/notes/zeta-doors">Prime neighbours of zeta denominators</Link>
