@@ -26,7 +26,12 @@
       "source": "hits.certified.jsonl create-to-mtime (cert.py opens destination at start)",
       "witnesses": 1617,
       "factors_below_2_64": 1598,
-      "cofactors": 19
+      "cofactors": 19,
+      "verify": {
+        "status": "VERIFIED",
+        "as_of": "2026-09-24",
+        "note": "verify.py: Pocklington F from 1598 primes < 2^64; 19 cofactors proved from index"
+      }
     },
     "giraffes_night1": {
       "host": "studio",
@@ -51,6 +56,16 @@
       "seconds": 92473.666,
       "pfgw": "is composite: RES64: [C639D96377D4F918] (81311.6811s+11161.9716s)",
       "as_of": "2026-09-23"
+    },
+    "k142_snapshot": {
+      "host": "xeon",
+      "k": 142,
+      "eps": 1,
+      "expr": "325606*2^12918431-141",
+      "pfgw_elapsed": "12h 20m",
+      "as_of": "2026-09-24",
+      "status": "running",
+      "note": "past ~4 h trial-factor bound; likely Fermat PRP. No k142.log until PFGW exits."
     }
   }
 }
