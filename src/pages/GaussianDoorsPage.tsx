@@ -8,7 +8,7 @@ export function GaussianDoorsPage() {
         Can a prime’s factored 3-free door be built as two squares, then the
         ±1 carried back as a representation by x²+3y²? Same m<sub>0</sub> as
         hire and zeta, different job: quadratic forms, not ownership and not
-        Bernoulli denominators. Lab, not the hire graph.
+        Bernoulli denominators.
       </p>
 
       <h2>19</h2>

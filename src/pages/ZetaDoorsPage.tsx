@@ -7,8 +7,7 @@ export function ZetaDoorsPage() {
       <p className="lede">
         Bernoulli denominators of ζ(1−k) for k ≡ 2 (mod 12) produce 3-free
         even doors. Same χ₃ neighbour as hire, different job: the door divides
-        the index, rather than a prime dividing another prime’s door. Lab, not
-        the hire graph.
+        the index, rather than a prime dividing another prime’s door.
       </p>
 
       <aside className="lab-theorem" aria-label="Zeta-door selection rule">
