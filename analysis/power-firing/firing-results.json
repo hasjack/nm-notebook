@@ -1,0 +1,3904 @@
+{
+  "limit": 10000000,
+  "total_primes_gt3": 664577,
+  "bases": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "rows": [
+    {
+      "q": 5,
+      "exponent": 1,
+      "power": 5,
+      "cumulative": {
+        "opportunities": 666666,
+        "hits": 166111,
+        "success_rate": 0.24916674916674916,
+        "first_prime": 11,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 166110,
+          "mean": 60.20083077478779,
+          "variance": 2600.156163297532,
+          "median": 38,
+          "p90": 120,
+          "p99": 240,
+          "maximum": 630
+        },
+        "missed_opportunities": {
+          "count": 166110,
+          "mean": 3.013388718319186,
+          "variance": 11.481947044069942,
+          "median": 2,
+          "p90": 7,
+          "p99": 15,
+          "maximum": 41
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 533333,
+        "hits": 132914,
+        "success_rate": 0.2492139057586911,
+        "first_prime": 11,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 132913,
+          "mean": 75.2368842776854,
+          "variance": 4131.035599967777,
+          "median": 60,
+          "p90": 158,
+          "p99": 300,
+          "maximum": 690
+        },
+        "missed_opportunities": {
+          "count": 132913,
+          "mean": 3.012632323399517,
+          "variance": 11.545400301919393,
+          "median": 2,
+          "p90": 8,
+          "p99": 15,
+          "maximum": 36
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.2499499681752453,
+      "next_power_share": 0.19984829421290584,
+      "first_door_factors": {
+        "2": 1,
+        "5": 1
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 38,
+        "1": 51875,
+        "2": 81287,
+        "3": 30418,
+        "4": 2478,
+        "5": 15
+      },
+      "companions": [
+        {
+          "prime": 7,
+          "count": 27734,
+          "share": 0.16696064679641925
+        },
+        {
+          "prime": 11,
+          "count": 16582,
+          "share": 0.09982481593633173
+        },
+        {
+          "prime": 13,
+          "count": 13754,
+          "share": 0.08280005538465243
+        },
+        {
+          "prime": 17,
+          "count": 10346,
+          "share": 0.0622836537014406
+        },
+        {
+          "prime": 19,
+          "count": 9211,
+          "share": 0.05545087321128643
+        },
+        {
+          "prime": 23,
+          "count": 7516,
+          "share": 0.04524685300792843
+        },
+        {
+          "prime": 29,
+          "count": 5961,
+          "share": 0.03588564273287139
+        },
+        {
+          "prime": 31,
+          "count": 5570,
+          "share": 0.03353179500454515
+        },
+        {
+          "prime": 37,
+          "count": 4626,
+          "share": 0.02784884805943014
+        },
+        {
+          "prime": 41,
+          "count": 4120,
+          "share": 0.02480269217571383
+        }
+      ]
+    },
+    {
+      "q": 5,
+      "exponent": 2,
+      "power": 25,
+      "cumulative": {
+        "opportunities": 133333,
+        "hits": 33197,
+        "success_rate": 0.24897812244530612,
+        "first_prime": 101,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 33196,
+          "mean": 301.220026509218,
+          "variance": 66217.10630577109,
+          "median": 202,
+          "p90": 652,
+          "p99": 1200,
+          "maximum": 2550
+        },
+        "missed_opportunities": {
+          "count": 33196,
+          "mean": 3.0162670201229065,
+          "variance": 11.735185438279721,
+          "median": 2,
+          "p90": 8,
+          "p99": 15,
+          "maximum": 33
+        },
+        "trailing_misses": 7,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 106667,
+        "hits": 26592,
+        "success_rate": 0.24929922093993456,
+        "first_prime": 101,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 26591,
+          "mean": 376.04076567259597,
+          "variance": 103364.39651799522,
+          "median": 300,
+          "p90": 802,
+          "p99": 1500,
+          "maximum": 3352
+        },
+        "missed_opportunities": {
+          "count": 26591,
+          "mean": 3.0110939791658833,
+          "variance": 11.544346857062392,
+          "median": 2,
+          "p90": 8,
+          "p99": 15,
+          "maximum": 35
+        },
+        "trailing_misses": 6,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.04995207477839287,
+      "next_power_share": 0.19896376178570352,
+      "first_door_factors": {
+        "2": 2,
+        "5": 2
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 26,
+        "1": 12217,
+        "2": 16383,
+        "3": 4387,
+        "4": 184
+      },
+      "companions": [
+        {
+          "prime": 7,
+          "count": 5533,
+          "share": 0.16667168720065065
+        },
+        {
+          "prime": 11,
+          "count": 3293,
+          "share": 0.09919571045576407
+        },
+        {
+          "prime": 13,
+          "count": 2733,
+          "share": 0.08232671626954242
+        },
+        {
+          "prime": 17,
+          "count": 2063,
+          "share": 0.06214416965388439
+        },
+        {
+          "prime": 19,
+          "count": 1830,
+          "share": 0.05512546314426002
+        },
+        {
+          "prime": 23,
+          "count": 1498,
+          "share": 0.045124559448142906
+        },
+        {
+          "prime": 29,
+          "count": 1218,
+          "share": 0.03669006235503208
+        },
+        {
+          "prime": 31,
+          "count": 1117,
+          "share": 0.03364761876073139
+        },
+        {
+          "prime": 37,
+          "count": 950,
+          "share": 0.028617043708768865
+        },
+        {
+          "prime": 41,
+          "count": 827,
+          "share": 0.024911889628580895
+        }
+      ]
+    },
+    {
+      "q": 5,
+      "exponent": 3,
+      "power": 125,
+      "cumulative": {
+        "opportunities": 26666,
+        "hits": 6605,
+        "success_rate": 0.24769369234230856,
+        "first_prime": 251,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 6604,
+          "mean": 1514.0063597819503,
+          "variance": 1618846.708015277,
+          "median": 1252,
+          "p90": 3000,
+          "p99": 6000,
+          "maximum": 13500
+        },
+        "missed_opportunities": {
+          "count": 6604,
+          "mean": 3.0374015748031495,
+          "variance": 11.454839765448762,
+          "median": 2,
+          "p90": 7,
+          "p99": 15,
+          "maximum": 35
+        },
+        "trailing_misses": 2,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 21333,
+        "hits": 5292,
+        "success_rate": 0.24806637603712559,
+        "first_prime": 251,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 5291,
+          "mean": 1888.8206388206388,
+          "variance": 2590402.6401032396,
+          "median": 1500,
+          "p90": 3998,
+          "p99": 7500,
+          "maximum": 16500
+        },
+        "missed_opportunities": {
+          "count": 5291,
+          "mean": 3.0294840294840295,
+          "variance": 11.66422235709705,
+          "median": 2,
+          "p90": 8,
+          "p99": 15,
+          "maximum": 35
+        },
+        "trailing_misses": 12,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.00993865270690981,
+      "next_power_share": 0.1987887963663891,
+      "first_door_factors": {
+        "2": 1,
+        "5": 3
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 18,
+        "1": 2904,
+        "2": 3148,
+        "3": 528,
+        "4": 7
+      },
+      "companions": [
+        {
+          "prime": 7,
+          "count": 1123,
+          "share": 0.17002271006813022
+        },
+        {
+          "prime": 11,
+          "count": 660,
+          "share": 0.09992429977289932
+        },
+        {
+          "prime": 13,
+          "count": 548,
+          "share": 0.08296744890234671
+        },
+        {
+          "prime": 17,
+          "count": 416,
+          "share": 0.06298258894776684
+        },
+        {
+          "prime": 19,
+          "count": 375,
+          "share": 0.05677517032551098
+        },
+        {
+          "prime": 23,
+          "count": 308,
+          "share": 0.046631339894019685
+        },
+        {
+          "prime": 29,
+          "count": 242,
+          "share": 0.03663890991672975
+        },
+        {
+          "prime": 31,
+          "count": 225,
+          "share": 0.03406510219530658
+        },
+        {
+          "prime": 37,
+          "count": 187,
+          "share": 0.028311884935654806
+        },
+        {
+          "prime": 41,
+          "count": 161,
+          "share": 0.02437547312641938
+        }
+      ]
+    },
+    {
+      "q": 5,
+      "exponent": 4,
+      "power": 625,
+      "cumulative": {
+        "opportunities": 5333,
+        "hits": 1313,
+        "success_rate": 0.24620288768048004,
+        "first_prime": 1249,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 1312,
+          "mean": 7620.045731707317,
+          "variance": 41042226.308884226,
+          "median": 6248,
+          "p90": 15000,
+          "p99": 31252,
+          "maximum": 45000
+        },
+        "missed_opportunities": {
+          "count": 1312,
+          "mean": 3.0640243902439024,
+          "variance": 11.575169170136823,
+          "median": 2,
+          "p90": 7,
+          "p99": 16,
+          "maximum": 23
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 4267,
+        "hits": 1037,
+        "success_rate": 0.24302788844621515,
+        "first_prime": 1249,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 1036,
+          "mean": 9650.096525096526,
+          "variance": 66855504.284119196,
+          "median": 7500,
+          "p90": 20002,
+          "p99": 38752,
+          "maximum": 53752
+        },
+        "missed_opportunities": {
+          "count": 1036,
+          "mean": 3.117760617760618,
+          "variance": 12.036325487097688,
+          "median": 2,
+          "p90": 8,
+          "p99": 16,
+          "maximum": 22
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.001975692809110156,
+      "next_power_share": 0.2102056359482102,
+      "first_door_factors": {
+        "2": 1,
+        "5": 4
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 13,
+        "1": 726,
+        "2": 536,
+        "3": 38
+      },
+      "companions": [
+        {
+          "prime": 7,
+          "count": 228,
+          "share": 0.17364813404417365
+        },
+        {
+          "prime": 11,
+          "count": 123,
+          "share": 0.09367859862909368
+        },
+        {
+          "prime": 13,
+          "count": 105,
+          "share": 0.07996953541507996
+        },
+        {
+          "prime": 17,
+          "count": 81,
+          "share": 0.06169078446306169
+        },
+        {
+          "prime": 19,
+          "count": 73,
+          "share": 0.055597867479055596
+        },
+        {
+          "prime": 23,
+          "count": 59,
+          "share": 0.04493526275704494
+        },
+        {
+          "prime": 29,
+          "count": 52,
+          "share": 0.039603960396039604
+        },
+        {
+          "prime": 31,
+          "count": 50,
+          "share": 0.03808073115003808
+        },
+        {
+          "prime": 37,
+          "count": 35,
+          "share": 0.026656511805026657
+        },
+        {
+          "prime": 41,
+          "count": 32,
+          "share": 0.024371667936024372
+        }
+      ]
+    },
+    {
+      "q": 5,
+      "exponent": 5,
+      "power": 3125,
+      "cumulative": {
+        "opportunities": 1066,
+        "hits": 276,
+        "success_rate": 0.2589118198874296,
+        "first_prime": 31249,
+        "first_preceding_misses": 3,
+        "number_line_gaps": {
+          "count": 275,
+          "mean": 35931.818181818184,
+          "variance": 1003941126.5269423,
+          "median": 24998,
+          "p90": 81248,
+          "p99": 150000,
+          "maximum": 193748
+        },
+        "missed_opportunities": {
+          "count": 275,
+          "mean": 2.8327272727272725,
+          "variance": 11.3465652892562,
+          "median": 2,
+          "p90": 8,
+          "p99": 15,
+          "maximum": 20
+        },
+        "trailing_misses": 8,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 853,
+        "hits": 219,
+        "success_rate": 0.2567409144196952,
+        "first_prime": 49999,
+        "first_preceding_misses": 4,
+        "number_line_gaps": {
+          "count": 218,
+          "mean": 45240.8256880734,
+          "variance": 1410127785.2631934,
+          "median": 37500,
+          "p90": 93750,
+          "p99": 168750,
+          "maximum": 262500
+        },
+        "missed_opportunities": {
+          "count": 218,
+          "mean": 2.8577981651376145,
+          "variance": 9.865099739079202,
+          "median": 2,
+          "p90": 7,
+          "p99": 13,
+          "maximum": 21
+        },
+        "trailing_misses": 7,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.00041530176337730617,
+      "next_power_share": 0.20652173913043478,
+      "first_door_factors": {
+        "2": 1,
+        "5": 6
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 9,
+        "1": 182,
+        "2": 84,
+        "3": 1
+      },
+      "companions": [
+        {
+          "prime": 7,
+          "count": 47,
+          "share": 0.17028985507246377
+        },
+        {
+          "prime": 11,
+          "count": 24,
+          "share": 0.08695652173913043
+        },
+        {
+          "prime": 13,
+          "count": 22,
+          "share": 0.07971014492753623
+        },
+        {
+          "prime": 19,
+          "count": 19,
+          "share": 0.06884057971014493
+        },
+        {
+          "prime": 17,
+          "count": 17,
+          "share": 0.06159420289855073
+        },
+        {
+          "prime": 23,
+          "count": 16,
+          "share": 0.057971014492753624
+        },
+        {
+          "prime": 29,
+          "count": 11,
+          "share": 0.03985507246376811
+        },
+        {
+          "prime": 53,
+          "count": 8,
+          "share": 0.028985507246376812
+        },
+        {
+          "prime": 37,
+          "count": 8,
+          "share": 0.028985507246376812
+        },
+        {
+          "prime": 31,
+          "count": 6,
+          "share": 0.021739130434782608
+        }
+      ]
+    },
+    {
+      "q": 5,
+      "exponent": 6,
+      "power": 15625,
+      "cumulative": {
+        "opportunities": 213,
+        "hits": 57,
+        "success_rate": 0.2676056338028169,
+        "first_prime": 31249,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 56,
+          "mean": 175781.25,
+          "variance": 18469725588.223213,
+          "median": 93750,
+          "p90": 375000,
+          "p99": 562500,
+          "maximum": 562500
+        },
+        "missed_opportunities": {
+          "count": 56,
+          "mean": 2.75,
+          "variance": 8.651785714285714,
+          "median": 1,
+          "p90": 7,
+          "p99": 11,
+          "maximum": 11
+        },
+        "trailing_misses": 2,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 171,
+        "hits": 46,
+        "success_rate": 0.26900584795321636,
+        "first_prime": 31249,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 45,
+          "mean": 218750.0,
+          "variance": 24175458335.822224,
+          "median": 187500,
+          "p90": 468750,
+          "p99": 593752,
+          "maximum": 593752
+        },
+        "missed_opportunities": {
+          "count": 45,
+          "mean": 2.7333333333333334,
+          "variance": 7.262222222222222,
+          "median": 2,
+          "p90": 7,
+          "p99": 9,
+          "maximum": 9
+        },
+        "trailing_misses": 2,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 8.576884243661757e-05,
+      "next_power_share": 0.19298245614035087,
+      "first_door_factors": {
+        "2": 1,
+        "5": 6
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 6,
+        "1": 38,
+        "2": 13
+      },
+      "companions": [
+        {
+          "prime": 7,
+          "count": 13,
+          "share": 0.22807017543859648
+        },
+        {
+          "prime": 11,
+          "count": 7,
+          "share": 0.12280701754385964
+        },
+        {
+          "prime": 19,
+          "count": 6,
+          "share": 0.10526315789473684
+        },
+        {
+          "prime": 13,
+          "count": 5,
+          "share": 0.08771929824561403
+        },
+        {
+          "prime": 17,
+          "count": 4,
+          "share": 0.07017543859649122
+        },
+        {
+          "prime": 23,
+          "count": 4,
+          "share": 0.07017543859649122
+        },
+        {
+          "prime": 53,
+          "count": 3,
+          "share": 0.05263157894736842
+        },
+        {
+          "prime": 71,
+          "count": 2,
+          "share": 0.03508771929824561
+        },
+        {
+          "prime": 73,
+          "count": 2,
+          "share": 0.03508771929824561
+        },
+        {
+          "prime": 29,
+          "count": 2,
+          "share": 0.03508771929824561
+        }
+      ]
+    },
+    {
+      "q": 5,
+      "exponent": 7,
+      "power": 78125,
+      "cumulative": {
+        "opportunities": 42,
+        "hits": 11,
+        "success_rate": 0.2619047619047619,
+        "first_prime": 1093751,
+        "first_preceding_misses": 4,
+        "number_line_gaps": {
+          "count": 10,
+          "mean": 718749.8,
+          "variance": 249999600001.95996,
+          "median": 468750,
+          "p90": 1093748,
+          "p99": 1875000,
+          "maximum": 1875000
+        },
+        "missed_opportunities": {
+          "count": 10,
+          "mean": 2.1,
+          "variance": 4.890000000000001,
+          "median": 1,
+          "p90": 4,
+          "p99": 7,
+          "maximum": 7
+        },
+        "trailing_misses": 6,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 34,
+        "hits": 9,
+        "success_rate": 0.2647058823529412,
+        "first_prime": 1093751,
+        "first_preceding_misses": 3,
+        "number_line_gaps": {
+          "count": 8,
+          "mean": 898437.25,
+          "variance": 456237773438.9375,
+          "median": 468750,
+          "p90": 2343750,
+          "p99": 2343750,
+          "maximum": 2343750
+        },
+        "missed_opportunities": {
+          "count": 8,
+          "mean": 2.125,
+          "variance": 5.359375,
+          "median": 1,
+          "p90": 7,
+          "p99": 7,
+          "maximum": 7
+        },
+        "trailing_misses": 5,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 1.6551881873733216e-05,
+      "next_power_share": 0.18181818181818182,
+      "first_door_factors": {
+        "2": 1,
+        "5": 7,
+        "7": 1
+      },
+      "other_distinct_odd_factor_counts": {
+        "1": 7,
+        "0": 4
+      },
+      "companions": [
+        {
+          "prime": 11,
+          "count": 2,
+          "share": 0.18181818181818182
+        },
+        {
+          "prime": 7,
+          "count": 1,
+          "share": 0.09090909090909091
+        },
+        {
+          "prime": 13,
+          "count": 1,
+          "share": 0.09090909090909091
+        },
+        {
+          "prime": 29,
+          "count": 1,
+          "share": 0.09090909090909091
+        },
+        {
+          "prime": 19,
+          "count": 1,
+          "share": 0.09090909090909091
+        },
+        {
+          "prime": 53,
+          "count": 1,
+          "share": 0.09090909090909091
+        }
+      ]
+    },
+    {
+      "q": 5,
+      "exponent": 8,
+      "power": 390625,
+      "cumulative": {
+        "opportunities": 8,
+        "hits": 2,
+        "success_rate": 0.25,
+        "first_prime": 3124999,
+        "first_preceding_misses": 2,
+        "number_line_gaps": {
+          "count": 1,
+          "mean": 4687500.0,
+          "variance": 0.0,
+          "median": 4687500,
+          "p90": 4687500,
+          "p99": 4687500,
+          "maximum": 4687500
+        },
+        "missed_opportunities": {
+          "count": 1,
+          "mean": 3.0,
+          "variance": 0.0,
+          "median": 3,
+          "p90": 3,
+          "p99": 3,
+          "maximum": 3
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 6,
+        "hits": 1,
+        "success_rate": 0.16666666666666666,
+        "first_prime": 3124999,
+        "first_preceding_misses": 2,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 3,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 3.009433067951494e-06,
+      "next_power_share": 0.5,
+      "first_door_factors": {
+        "2": 3,
+        "5": 8
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 2
+      },
+      "companions": []
+    },
+    {
+      "q": 5,
+      "exponent": 9,
+      "power": 1953125,
+      "cumulative": {
+        "opportunities": 2,
+        "hits": 1,
+        "success_rate": 0.5,
+        "first_prime": 7812499,
+        "first_preceding_misses": 1,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 2,
+        "hits": 1,
+        "success_rate": 0.5,
+        "first_prime": 7812499,
+        "first_preceding_misses": 1,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 1.504716533975747e-06,
+      "next_power_share": 0.0,
+      "first_door_factors": {
+        "2": 2,
+        "5": 9
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 1
+      },
+      "companions": []
+    },
+    {
+      "q": 7,
+      "exponent": 1,
+      "power": 7,
+      "cumulative": {
+        "opportunities": 476190,
+        "hits": 110749,
+        "success_rate": 0.23257313257313258,
+        "first_prime": 13,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 110748,
+          "mean": 90.2938563224618,
+          "variance": 5791.689572180462,
+          "median": 68,
+          "p90": 194,
+          "p99": 362,
+          "maximum": 882
+        },
+        "missed_opportunities": {
+          "count": 110748,
+          "mean": 3.2997074439267524,
+          "variance": 13.13304177521204,
+          "median": 2,
+          "p90": 8,
+          "p99": 16,
+          "maximum": 41
+        },
+        "trailing_misses": 5,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 408163,
+        "hits": 94978,
+        "success_rate": 0.23269625125256332,
+        "first_prime": 13,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 94977,
+          "mean": 105.28721690514546,
+          "variance": 7964.650789244181,
+          "median": 84,
+          "p90": 226,
+          "p99": 420,
+          "maximum": 1024
+        },
+        "missed_opportunities": {
+          "count": 94977,
+          "mean": 3.297440432946924,
+          "variance": 13.094847255327599,
+          "median": 2,
+          "p90": 8,
+          "p99": 16,
+          "maximum": 41
+        },
+        "trailing_misses": 4,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.16664585142128,
+      "next_power_share": 0.14240309167577134,
+      "first_door_factors": {
+        "2": 1,
+        "7": 1
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 32,
+        "1": 31865,
+        "2": 53951,
+        "3": 22782,
+        "4": 2104,
+        "5": 15
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 27734,
+          "share": 0.25042212570768135
+        },
+        {
+          "prime": 11,
+          "count": 11103,
+          "share": 0.10025372689595391
+        },
+        {
+          "prime": 13,
+          "count": 9241,
+          "share": 0.08344093400391878
+        },
+        {
+          "prime": 17,
+          "count": 6905,
+          "share": 0.062348192760205506
+        },
+        {
+          "prime": 19,
+          "count": 6203,
+          "share": 0.056009535074808804
+        },
+        {
+          "prime": 23,
+          "count": 5033,
+          "share": 0.04544510559914762
+        },
+        {
+          "prime": 29,
+          "count": 3988,
+          "share": 0.03600935448627075
+        },
+        {
+          "prime": 31,
+          "count": 3727,
+          "share": 0.03365267406477711
+        },
+        {
+          "prime": 37,
+          "count": 3036,
+          "share": 0.02741334007530542
+        },
+        {
+          "prime": 41,
+          "count": 2725,
+          "share": 0.024605188308698046
+        }
+      ]
+    },
+    {
+      "q": 7,
+      "exponent": 2,
+      "power": 49,
+      "cumulative": {
+        "opportunities": 68027,
+        "hits": 15771,
+        "success_rate": 0.23183441868669794,
+        "first_prime": 97,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 15770,
+          "mean": 634.0295497780596,
+          "variance": 291550.71085794567,
+          "median": 488,
+          "p90": 1370,
+          "p99": 2546,
+          "maximum": 4998
+        },
+        "missed_opportunities": {
+          "count": 15770,
+          "mean": 3.313126188966392,
+          "variance": 13.346466891495496,
+          "median": 2,
+          "p90": 8,
+          "p99": 16,
+          "maximum": 33
+        },
+        "trailing_misses": 8,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 58309,
+        "hits": 13519,
+        "success_rate": 0.23185100070315046,
+        "first_prime": 97,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 13518,
+          "mean": 739.6542387927208,
+          "variance": 400809.9082639531,
+          "median": 588,
+          "p90": 1470,
+          "p99": 2940,
+          "maximum": 5880
+        },
+        "missed_opportunities": {
+          "count": 13518,
+          "mean": 3.3128421364107115,
+          "variance": 13.358484287995198,
+          "median": 2,
+          "p90": 8,
+          "p99": 16,
+          "maximum": 33
+        },
+        "trailing_misses": 7,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.023730884457331507,
+      "next_power_share": 0.14279373533701098,
+      "first_door_factors": {
+        "2": 1,
+        "7": 2
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 23,
+        "1": 5488,
+        "2": 7971,
+        "3": 2212,
+        "4": 77
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 3940,
+          "share": 0.2498256293196373
+        },
+        {
+          "prime": 11,
+          "count": 1573,
+          "share": 0.09974002916745926
+        },
+        {
+          "prime": 13,
+          "count": 1329,
+          "share": 0.08426859425527868
+        },
+        {
+          "prime": 17,
+          "count": 974,
+          "share": 0.06175892460845856
+        },
+        {
+          "prime": 19,
+          "count": 870,
+          "share": 0.055164542514742246
+        },
+        {
+          "prime": 23,
+          "count": 712,
+          "share": 0.045146154333904
+        },
+        {
+          "prime": 29,
+          "count": 571,
+          "share": 0.03620569399530784
+        },
+        {
+          "prime": 31,
+          "count": 538,
+          "share": 0.034113245830955555
+        },
+        {
+          "prime": 37,
+          "count": 430,
+          "share": 0.027265233656711685
+        },
+        {
+          "prime": 41,
+          "count": 396,
+          "share": 0.025109377972227506
+        }
+      ]
+    },
+    {
+      "q": 7,
+      "exponent": 3,
+      "power": 343,
+      "cumulative": {
+        "opportunities": 9718,
+        "hits": 2252,
+        "success_rate": 0.2317349248816629,
+        "first_prime": 1373,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 2251,
+          "mean": 4439.342514438027,
+          "variance": 14673001.941768711,
+          "median": 3428,
+          "p90": 9602,
+          "p99": 17834,
+          "maximum": 39102
+        },
+        "missed_opportunities": {
+          "count": 2251,
+          "mean": 3.3140826299422477,
+          "variance": 13.870699058476601,
+          "median": 2,
+          "p90": 8,
+          "p99": 16,
+          "maximum": 37
+        },
+        "trailing_misses": 5,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 8330,
+        "hits": 1934,
+        "success_rate": 0.23217286914765906,
+        "first_prime": 1373,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 1933,
+          "mean": 5169.663735126746,
+          "variance": 20042830.452885583,
+          "median": 4116,
+          "p90": 10290,
+          "p99": 20580,
+          "maximum": 39102
+        },
+        "missed_opportunities": {
+          "count": 1933,
+          "mean": 3.30574236937403,
+          "variance": 13.725973233160863,
+          "median": 2,
+          "p90": 8,
+          "p99": 16,
+          "maximum": 32
+        },
+        "trailing_misses": 5,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.003388621634513382,
+      "next_power_share": 0.14120781527531084,
+      "first_door_factors": {
+        "2": 2,
+        "7": 3
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 14,
+        "1": 1014,
+        "2": 1076,
+        "3": 147,
+        "4": 1
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 556,
+          "share": 0.2468916518650089
+        },
+        {
+          "prime": 11,
+          "count": 223,
+          "share": 0.09902309058614565
+        },
+        {
+          "prime": 13,
+          "count": 186,
+          "share": 0.08259325044404973
+        },
+        {
+          "prime": 17,
+          "count": 140,
+          "share": 0.06216696269982238
+        },
+        {
+          "prime": 19,
+          "count": 124,
+          "share": 0.055062166962699825
+        },
+        {
+          "prime": 23,
+          "count": 99,
+          "share": 0.04396092362344583
+        },
+        {
+          "prime": 29,
+          "count": 86,
+          "share": 0.03818827708703375
+        },
+        {
+          "prime": 31,
+          "count": 69,
+          "share": 0.03063943161634103
+        },
+        {
+          "prime": 41,
+          "count": 61,
+          "share": 0.02708703374777975
+        },
+        {
+          "prime": 37,
+          "count": 54,
+          "share": 0.023978685612788632
+        }
+      ]
+    },
+    {
+      "q": 7,
+      "exponent": 4,
+      "power": 2401,
+      "cumulative": {
+        "opportunities": 1388,
+        "hits": 318,
+        "success_rate": 0.22910662824207492,
+        "first_prime": 4801,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 317,
+          "mean": 31508.397476340695,
+          "variance": 801603529.6969022,
+          "median": 19210,
+          "p90": 72030,
+          "p99": 129654,
+          "maximum": 187278
+        },
+        "missed_opportunities": {
+          "count": 317,
+          "mean": 3.3753943217665614,
+          "variance": 15.130372478579744,
+          "median": 2,
+          "p90": 9,
+          "p99": 17,
+          "maximum": 25
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 1190,
+        "hits": 276,
+        "success_rate": 0.2319327731092437,
+        "first_prime": 4801,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 275,
+          "mean": 36320.58909090909,
+          "variance": 1282720083.3038812,
+          "median": 24008,
+          "p90": 86436,
+          "p99": 168068,
+          "maximum": 292924
+        },
+        "missed_opportunities": {
+          "count": 275,
+          "mean": 3.3236363636363637,
+          "variance": 17.96435041322314,
+          "median": 2,
+          "p90": 9,
+          "p99": 19,
+          "maximum": 34
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.0004784998578042875,
+      "next_power_share": 0.1320754716981132,
+      "first_door_factors": {
+        "2": 1,
+        "7": 4
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 13,
+        "1": 183,
+        "2": 120,
+        "3": 2
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 75,
+          "share": 0.2358490566037736
+        },
+        {
+          "prime": 11,
+          "count": 35,
+          "share": 0.11006289308176101
+        },
+        {
+          "prime": 13,
+          "count": 26,
+          "share": 0.08176100628930817
+        },
+        {
+          "prime": 17,
+          "count": 16,
+          "share": 0.050314465408805034
+        },
+        {
+          "prime": 19,
+          "count": 15,
+          "share": 0.04716981132075472
+        },
+        {
+          "prime": 23,
+          "count": 14,
+          "share": 0.0440251572327044
+        },
+        {
+          "prime": 31,
+          "count": 12,
+          "share": 0.03773584905660377
+        },
+        {
+          "prime": 41,
+          "count": 10,
+          "share": 0.031446540880503145
+        },
+        {
+          "prime": 37,
+          "count": 9,
+          "share": 0.02830188679245283
+        },
+        {
+          "prime": 67,
+          "count": 7,
+          "share": 0.0220125786163522
+        }
+      ]
+    },
+    {
+      "q": 7,
+      "exponent": 5,
+      "power": 16807,
+      "cumulative": {
+        "opportunities": 198,
+        "hits": 42,
+        "success_rate": 0.21212121212121213,
+        "first_prime": 33613,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 41,
+          "mean": 241036.9756097561,
+          "variance": 45245651786.7555,
+          "median": 201684,
+          "p90": 470594,
+          "p99": 1277330,
+          "maximum": 1277330
+        },
+        "missed_opportunities": {
+          "count": 41,
+          "mean": 3.7804878048780486,
+          "variance": 17.439619274241522,
+          "median": 3,
+          "p90": 8,
+          "p99": 24,
+          "maximum": 24
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 170,
+        "hits": 33,
+        "success_rate": 0.19411764705882353,
+        "first_prime": 33613,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 32,
+          "mean": 308828.625,
+          "variance": 61892807193.859375,
+          "median": 235300,
+          "p90": 537826,
+          "p99": 1277330,
+          "maximum": 1277330
+        },
+        "missed_opportunities": {
+          "count": 32,
+          "mean": 4.25,
+          "variance": 16.625,
+          "median": 3,
+          "p90": 8,
+          "p99": 20,
+          "maximum": 20
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 6.319809442698137e-05,
+      "next_power_share": 0.21428571428571427,
+      "first_door_factors": {
+        "2": 1,
+        "7": 5
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 7,
+        "1": 32,
+        "2": 3
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 8,
+          "share": 0.19047619047619047
+        },
+        {
+          "prime": 11,
+          "count": 5,
+          "share": 0.11904761904761904
+        },
+        {
+          "prime": 13,
+          "count": 3,
+          "share": 0.07142857142857142
+        },
+        {
+          "prime": 53,
+          "count": 2,
+          "share": 0.047619047619047616
+        },
+        {
+          "prime": 59,
+          "count": 2,
+          "share": 0.047619047619047616
+        },
+        {
+          "prime": 73,
+          "count": 2,
+          "share": 0.047619047619047616
+        },
+        {
+          "prime": 19,
+          "count": 2,
+          "share": 0.047619047619047616
+        },
+        {
+          "prime": 37,
+          "count": 1,
+          "share": 0.023809523809523808
+        },
+        {
+          "prime": 43,
+          "count": 1,
+          "share": 0.023809523809523808
+        },
+        {
+          "prime": 103,
+          "count": 1,
+          "share": 0.023809523809523808
+        }
+      ]
+    },
+    {
+      "q": 7,
+      "exponent": 6,
+      "power": 117649,
+      "cumulative": {
+        "opportunities": 28,
+        "hits": 9,
+        "success_rate": 0.32142857142857145,
+        "first_prime": 470597,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 8,
+          "mean": 970604.25,
+          "variance": 615070435262.4375,
+          "median": 705894,
+          "p90": 2588276,
+          "p99": 2588276,
+          "maximum": 2588276
+        },
+        "missed_opportunities": {
+          "count": 8,
+          "mean": 1.75,
+          "variance": 4.1875,
+          "median": 1,
+          "p90": 6,
+          "p99": 6,
+          "maximum": 6
+        },
+        "trailing_misses": 4,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 24,
+        "hits": 6,
+        "success_rate": 0.25,
+        "first_prime": 470597,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 5,
+          "mean": 1364728.0,
+          "variance": 695383972472.0,
+          "median": 1411788,
+          "p90": 2588276,
+          "p99": 2588276,
+          "maximum": 2588276
+        },
+        "missed_opportunities": {
+          "count": 5,
+          "mean": 2.2,
+          "variance": 4.16,
+          "median": 2,
+          "p90": 5,
+          "p99": 5,
+          "maximum": 5
+        },
+        "trailing_misses": 6,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 1.3542448805781723e-05,
+      "next_power_share": 0.3333333333333333,
+      "first_door_factors": {
+        "2": 2,
+        "7": 6
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 4,
+        "1": 5
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 2,
+          "share": 0.2222222222222222
+        },
+        {
+          "prime": 13,
+          "count": 1,
+          "share": 0.1111111111111111
+        },
+        {
+          "prime": 17,
+          "count": 1,
+          "share": 0.1111111111111111
+        },
+        {
+          "prime": 31,
+          "count": 1,
+          "share": 0.1111111111111111
+        }
+      ]
+    },
+    {
+      "q": 7,
+      "exponent": 7,
+      "power": 823543,
+      "cumulative": {
+        "opportunities": 4,
+        "hits": 3,
+        "success_rate": 0.75,
+        "first_prime": 3294173,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 2,
+          "mean": 2470629.0,
+          "variance": 678219778681.0,
+          "median": 1647088,
+          "p90": 3294170,
+          "p99": 3294170,
+          "maximum": 3294170
+        },
+        "missed_opportunities": {
+          "count": 2,
+          "mean": 0.0,
+          "variance": 0.0,
+          "median": 0,
+          "p90": 0,
+          "p99": 0,
+          "maximum": 0
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 4,
+        "hits": 3,
+        "success_rate": 0.75,
+        "first_prime": 3294173,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 2,
+          "mean": 2470629.0,
+          "variance": 678219778681.0,
+          "median": 1647088,
+          "p90": 3294170,
+          "p99": 3294170,
+          "maximum": 3294170
+        },
+        "missed_opportunities": {
+          "count": 2,
+          "mean": 0.0,
+          "variance": 0.0,
+          "median": 0,
+          "p90": 0,
+          "p99": 0,
+          "maximum": 0
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 4.5141496019272406e-06,
+      "next_power_share": 0.0,
+      "first_door_factors": {
+        "2": 2,
+        "7": 7
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 2,
+        "1": 1
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 1,
+          "share": 0.3333333333333333
+        }
+      ]
+    },
+    {
+      "q": 11,
+      "exponent": 1,
+      "power": 11,
+      "cumulative": {
+        "opportunities": 303030,
+        "hits": 66487,
+        "success_rate": 0.21940731940731942,
+        "first_prime": 23,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 66486,
+          "mean": 150.40576963571277,
+          "variance": 16643.2422035732,
+          "median": 112,
+          "p90": 330,
+          "p99": 594,
+          "maximum": 1254
+        },
+        "missed_opportunities": {
+          "count": 66486,
+          "mean": 3.5577565201696597,
+          "variance": 15.13376823635876,
+          "median": 2,
+          "p90": 9,
+          "p99": 17,
+          "maximum": 37
+        },
+        "trailing_misses": 2,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 275482,
+        "hits": 60473,
+        "success_rate": 0.21951706463580198,
+        "first_prime": 23,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 60472,
+          "mean": 165.36377166291837,
+          "variance": 20249.715533651262,
+          "median": 132,
+          "p90": 350,
+          "p99": 660,
+          "maximum": 1894
+        },
+        "missed_opportunities": {
+          "count": 60472,
+          "mean": 3.5554802222516204,
+          "variance": 15.052881727978994,
+          "median": 2,
+          "p90": 9,
+          "p99": 17,
+          "maximum": 50
+        },
+        "trailing_misses": 2,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.10004408819444549,
+      "next_power_share": 0.09045377291801404,
+      "first_door_factors": {
+        "2": 1,
+        "11": 1
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 15,
+        "1": 18401,
+        "2": 32117,
+        "3": 14475,
+        "4": 1464,
+        "5": 15
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 16582,
+          "share": 0.24940213876396888
+        },
+        {
+          "prime": 7,
+          "count": 11103,
+          "share": 0.16699505166423512
+        },
+        {
+          "prime": 13,
+          "count": 5566,
+          "share": 0.0837156135785943
+        },
+        {
+          "prime": 17,
+          "count": 4177,
+          "share": 0.06282431151954518
+        },
+        {
+          "prime": 19,
+          "count": 3689,
+          "share": 0.05548453081053439
+        },
+        {
+          "prime": 23,
+          "count": 3074,
+          "share": 0.04623460225307203
+        },
+        {
+          "prime": 29,
+          "count": 2399,
+          "share": 0.036082241641223096
+        },
+        {
+          "prime": 31,
+          "count": 2207,
+          "share": 0.033194459067186065
+        },
+        {
+          "prime": 37,
+          "count": 1839,
+          "share": 0.027659542466948427
+        },
+        {
+          "prime": 41,
+          "count": 1652,
+          "share": 0.024846962564110276
+        }
+      ]
+    },
+    {
+      "q": 11,
+      "exponent": 2,
+      "power": 121,
+      "cumulative": {
+        "opportunities": 27548,
+        "hits": 6014,
+        "success_rate": 0.21830985915492956,
+        "first_prime": 241,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 6013,
+          "mean": 1662.6885082321637,
+          "variance": 1922985.6839474335,
+          "median": 1208,
+          "p90": 3630,
+          "p99": 6534,
+          "maximum": 10646
+        },
+        "missed_opportunities": {
+          "count": 6013,
+          "mean": 3.5804091135872276,
+          "variance": 14.493991716876861,
+          "median": 2,
+          "p90": 9,
+          "p99": 17,
+          "maximum": 28
+        },
+        "trailing_misses": 5,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 25044,
+        "hits": 5474,
+        "success_rate": 0.21857530745887238,
+        "first_prime": 241,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 5473,
+          "mean": 1826.7396309154028,
+          "variance": 2395121.283021022,
+          "median": 1452,
+          "p90": 3630,
+          "p99": 7260,
+          "maximum": 14038
+        },
+        "missed_opportunities": {
+          "count": 5473,
+          "mean": 3.5748218527315916,
+          "variance": 14.775737338079008,
+          "median": 2,
+          "p90": 9,
+          "p99": 17,
+          "maximum": 34
+        },
+        "trailing_misses": 5,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.009049365235330143,
+      "next_power_share": 0.08979048885932824,
+      "first_door_factors": {
+        "2": 1,
+        "11": 2
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 9,
+        "1": 2183,
+        "2": 2982,
+        "3": 815,
+        "4": 25
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 1492,
+          "share": 0.24808779514466245
+        },
+        {
+          "prime": 7,
+          "count": 1013,
+          "share": 0.16844030595277684
+        },
+        {
+          "prime": 13,
+          "count": 512,
+          "share": 0.08513468573328899
+        },
+        {
+          "prime": 17,
+          "count": 363,
+          "share": 0.060359161955437314
+        },
+        {
+          "prime": 19,
+          "count": 337,
+          "share": 0.05603591619554373
+        },
+        {
+          "prime": 23,
+          "count": 294,
+          "share": 0.04888593282341204
+        },
+        {
+          "prime": 29,
+          "count": 229,
+          "share": 0.038077818423678085
+        },
+        {
+          "prime": 31,
+          "count": 204,
+          "share": 0.03392085134685733
+        },
+        {
+          "prime": 37,
+          "count": 162,
+          "share": 0.02693714665779847
+        },
+        {
+          "prime": 41,
+          "count": 155,
+          "share": 0.02577319587628866
+        }
+      ]
+    },
+    {
+      "q": 11,
+      "exponent": 3,
+      "power": 1331,
+      "cumulative": {
+        "opportunities": 2504,
+        "hits": 540,
+        "success_rate": 0.21565495207667731,
+        "first_prime": 2663,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 539,
+          "mean": 18535.224489795917,
+          "variance": 267801788.03680283,
+          "median": 13312,
+          "p90": 39930,
+          "p99": 77200,
+          "maximum": 93172
+        },
+        "missed_opportunities": {
+          "count": 539,
+          "mean": 3.641929499072356,
+          "variance": 16.582360655511994,
+          "median": 2,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 22
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 2276,
+        "hits": 491,
+        "success_rate": 0.2157293497363796,
+        "first_prime": 2663,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 490,
+          "mean": 20388.74693877551,
+          "variance": 318079637.4910621,
+          "median": 15972,
+          "p90": 42590,
+          "p99": 82520,
+          "maximum": 109144
+        },
+        "missed_opportunities": {
+          "count": 490,
+          "mean": 3.6408163265306124,
+          "variance": 16.07915035401916,
+          "median": 3,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 24
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.0008125469283469034,
+      "next_power_share": 0.09074074074074075,
+      "first_door_factors": {
+        "2": 1,
+        "11": 3
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 5,
+        "1": 269,
+        "2": 238,
+        "3": 28
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 128,
+          "share": 0.23703703703703705
+        },
+        {
+          "prime": 7,
+          "count": 97,
+          "share": 0.17962962962962964
+        },
+        {
+          "prime": 13,
+          "count": 50,
+          "share": 0.09259259259259259
+        },
+        {
+          "prime": 17,
+          "count": 35,
+          "share": 0.06481481481481481
+        },
+        {
+          "prime": 23,
+          "count": 30,
+          "share": 0.05555555555555555
+        },
+        {
+          "prime": 19,
+          "count": 30,
+          "share": 0.05555555555555555
+        },
+        {
+          "prime": 29,
+          "count": 21,
+          "share": 0.03888888888888889
+        },
+        {
+          "prime": 31,
+          "count": 20,
+          "share": 0.037037037037037035
+        },
+        {
+          "prime": 43,
+          "count": 15,
+          "share": 0.027777777777777776
+        },
+        {
+          "prime": 37,
+          "count": 14,
+          "share": 0.025925925925925925
+        }
+      ]
+    },
+    {
+      "q": 11,
+      "exponent": 4,
+      "power": 14641,
+      "cumulative": {
+        "opportunities": 228,
+        "hits": 49,
+        "success_rate": 0.2149122807017544,
+        "first_prime": 117127,
+        "first_preceding_misses": 2,
+        "number_line_gaps": {
+          "count": 48,
+          "mean": 201313.75,
+          "variance": 28603352134.9375,
+          "median": 117130,
+          "p90": 497792,
+          "p99": 673484,
+          "maximum": 673484
+        },
+        "missed_opportunities": {
+          "count": 48,
+          "mean": 3.5833333333333335,
+          "variance": 14.284722222222221,
+          "median": 2,
+          "p90": 10,
+          "p99": 14,
+          "maximum": 14
+        },
+        "trailing_misses": 5,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 207,
+        "hits": 46,
+        "success_rate": 0.2222222222222222,
+        "first_prime": 117127,
+        "first_preceding_misses": 2,
+        "number_line_gaps": {
+          "count": 45,
+          "mean": 214734.66666666666,
+          "variance": 33840017902.400005,
+          "median": 146408,
+          "p90": 527076,
+          "p99": 790614,
+          "maximum": 790614
+        },
+        "missed_opportunities": {
+          "count": 45,
+          "mean": 3.4444444444444446,
+          "variance": 12.958024691358023,
+          "median": 2,
+          "p90": 9,
+          "p99": 15,
+          "maximum": 15
+        },
+        "trailing_misses": 4,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 7.37311101648116e-05,
+      "next_power_share": 0.061224489795918366,
+      "first_door_factors": {
+        "2": 3,
+        "11": 4
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 2,
+        "1": 38,
+        "2": 9
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 10,
+          "share": 0.20408163265306123
+        },
+        {
+          "prime": 7,
+          "count": 7,
+          "share": 0.14285714285714285
+        },
+        {
+          "prime": 13,
+          "count": 6,
+          "share": 0.12244897959183673
+        },
+        {
+          "prime": 17,
+          "count": 5,
+          "share": 0.10204081632653061
+        },
+        {
+          "prime": 29,
+          "count": 4,
+          "share": 0.08163265306122448
+        },
+        {
+          "prime": 23,
+          "count": 3,
+          "share": 0.061224489795918366
+        },
+        {
+          "prime": 67,
+          "count": 2,
+          "share": 0.04081632653061224
+        },
+        {
+          "prime": 97,
+          "count": 2,
+          "share": 0.04081632653061224
+        },
+        {
+          "prime": 59,
+          "count": 1,
+          "share": 0.02040816326530612
+        },
+        {
+          "prime": 61,
+          "count": 1,
+          "share": 0.02040816326530612
+        }
+      ]
+    },
+    {
+      "q": 11,
+      "exponent": 5,
+      "power": 161051,
+      "cumulative": {
+        "opportunities": 21,
+        "hits": 3,
+        "success_rate": 0.14285714285714285,
+        "first_prime": 6442039,
+        "first_preceding_misses": 13,
+        "number_line_gaps": {
+          "count": 2,
+          "mean": 1449459.0,
+          "variance": 233436821409.0,
+          "median": 966306,
+          "p90": 1932612,
+          "p99": 1932612,
+          "maximum": 1932612
+        },
+        "missed_opportunities": {
+          "count": 2,
+          "mean": 2.0,
+          "variance": 1.0,
+          "median": 1,
+          "p90": 3,
+          "p99": 3,
+          "maximum": 3
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 19,
+        "hits": 3,
+        "success_rate": 0.15789473684210525,
+        "first_prime": 6442039,
+        "first_preceding_misses": 12,
+        "number_line_gaps": {
+          "count": 2,
+          "mean": 1449459.0,
+          "variance": 233436821409.0,
+          "median": 966306,
+          "p90": 1932612,
+          "p99": 1932612,
+          "maximum": 1932612
+        },
+        "missed_opportunities": {
+          "count": 2,
+          "mean": 1.5,
+          "variance": 0.25,
+          "median": 1,
+          "p90": 2,
+          "p99": 2,
+          "maximum": 2
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 4.5141496019272406e-06,
+      "next_power_share": 0.0,
+      "first_door_factors": {
+        "2": 3,
+        "5": 1,
+        "11": 5
+      },
+      "other_distinct_odd_factor_counts": {
+        "1": 3
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 1,
+          "share": 0.3333333333333333
+        },
+        {
+          "prime": 13,
+          "count": 1,
+          "share": 0.3333333333333333
+        },
+        {
+          "prime": 29,
+          "count": 1,
+          "share": 0.3333333333333333
+        }
+      ]
+    },
+    {
+      "q": 11,
+      "exponent": 6,
+      "power": 1771561,
+      "cumulative": {
+        "opportunities": 2,
+        "hits": 0,
+        "success_rate": 0.0,
+        "first_prime": null,
+        "first_preceding_misses": null,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 2,
+        "no_hit_is_censored": true
+      },
+      "exact": {
+        "opportunities": 2,
+        "hits": 0,
+        "success_rate": 0.0,
+        "first_prime": null,
+        "first_preceding_misses": null,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 2,
+        "no_hit_is_censored": true
+      },
+      "share_of_all_primes": 0.0,
+      "next_power_share": null,
+      "first_door_factors": null,
+      "other_distinct_odd_factor_counts": {},
+      "companions": []
+    },
+    {
+      "q": 13,
+      "exponent": 1,
+      "power": 13,
+      "cumulative": {
+        "opportunities": 256410,
+        "hits": 55427,
+        "success_rate": 0.21616551616551616,
+        "first_prime": 53,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 55426,
+          "mean": 180.41864828780717,
+          "variance": 23645.423838724237,
+          "median": 156,
+          "p90": 390,
+          "p99": 702,
+          "maximum": 1432
+        },
+        "missed_opportunities": {
+          "count": 55426,
+          "mean": 3.626114098076715,
+          "variance": 15.514036056263192,
+          "median": 3,
+          "p90": 9,
+          "p99": 17,
+          "maximum": 36
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 236686,
+        "hits": 51185,
+        "success_rate": 0.21625698182402,
+        "first_prime": 53,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 51184,
+          "mean": 195.37128790246953,
+          "variance": 28013.215536978383,
+          "median": 156,
+          "p90": 418,
+          "p99": 780,
+          "maximum": 1766
+        },
+        "missed_opportunities": {
+          "count": 51184,
+          "mean": 3.6241598937167865,
+          "variance": 15.48864809072034,
+          "median": 2,
+          "p90": 9,
+          "p99": 17,
+          "maximum": 41
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.08340192332867373,
+      "next_power_share": 0.0765330975878182,
+      "first_door_factors": {
+        "2": 2,
+        "13": 1
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 13,
+        "1": 15328,
+        "2": 26795,
+        "3": 12046,
+        "4": 1234,
+        "5": 11
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 13754,
+          "share": 0.24814621033070525
+        },
+        {
+          "prime": 7,
+          "count": 9241,
+          "share": 0.16672379887058653
+        },
+        {
+          "prime": 11,
+          "count": 5566,
+          "share": 0.1004203727425262
+        },
+        {
+          "prime": 17,
+          "count": 3459,
+          "share": 0.06240640842910495
+        },
+        {
+          "prime": 19,
+          "count": 3068,
+          "share": 0.055352084724051454
+        },
+        {
+          "prime": 23,
+          "count": 2537,
+          "share": 0.045771916214119475
+        },
+        {
+          "prime": 29,
+          "count": 1986,
+          "share": 0.035830912732061994
+        },
+        {
+          "prime": 31,
+          "count": 1853,
+          "share": 0.033431360167427426
+        },
+        {
+          "prime": 37,
+          "count": 1528,
+          "share": 0.02756779187038808
+        },
+        {
+          "prime": 41,
+          "count": 1349,
+          "share": 0.02433831886986487
+        }
+      ]
+    },
+    {
+      "q": 13,
+      "exponent": 2,
+      "power": 169,
+      "cumulative": {
+        "opportunities": 19724,
+        "hits": 4242,
+        "success_rate": 0.21506793753802475,
+        "first_prime": 337,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 4241,
+          "mean": 2357.472294270219,
+          "variance": 4207544.095966653,
+          "median": 2028,
+          "p90": 5070,
+          "p99": 9800,
+          "maximum": 18252
+        },
+        "missed_opportunities": {
+          "count": 4241,
+          "mean": 3.6498467342607874,
+          "variance": 16.20019391661808,
+          "median": 3,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 35
+        },
+        "trailing_misses": 3,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 18207,
+        "hits": 3913,
+        "success_rate": 0.21491733948481354,
+        "first_prime": 337,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 3912,
+          "mean": 2555.7361963190183,
+          "variance": 4962232.4539250005,
+          "median": 2028,
+          "p90": 5070,
+          "p99": 10140,
+          "maximum": 18252
+        },
+        "missed_opportunities": {
+          "count": 3912,
+          "mean": 3.653118609406953,
+          "variance": 16.151912564663917,
+          "median": 2,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 32
+        },
+        "trailing_misses": 3,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.006383007537125118,
+      "next_power_share": 0.07755775577557755,
+      "first_door_factors": {
+        "2": 1,
+        "13": 2
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 8,
+        "1": 1593,
+        "2": 2093,
+        "3": 535,
+        "4": 13
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 1064,
+          "share": 0.2508250825082508
+        },
+        {
+          "prime": 7,
+          "count": 706,
+          "share": 0.16643092880716642
+        },
+        {
+          "prime": 11,
+          "count": 442,
+          "share": 0.10419613389910419
+        },
+        {
+          "prime": 17,
+          "count": 263,
+          "share": 0.061999057048562
+        },
+        {
+          "prime": 19,
+          "count": 231,
+          "share": 0.054455445544554455
+        },
+        {
+          "prime": 23,
+          "count": 179,
+          "share": 0.0421970768505422
+        },
+        {
+          "prime": 29,
+          "count": 151,
+          "share": 0.035596416784535595
+        },
+        {
+          "prime": 31,
+          "count": 130,
+          "share": 0.030645921735030647
+        },
+        {
+          "prime": 41,
+          "count": 115,
+          "share": 0.02710985384252711
+        },
+        {
+          "prime": 37,
+          "count": 105,
+          "share": 0.024752475247524754
+        }
+      ]
+    },
+    {
+      "q": 13,
+      "exponent": 3,
+      "power": 2197,
+      "cumulative": {
+        "opportunities": 1517,
+        "hits": 329,
+        "success_rate": 0.2168754119973632,
+        "first_prime": 30757,
+        "first_preceding_misses": 4,
+        "number_line_gaps": {
+          "count": 328,
+          "mean": 30114.981707317074,
+          "variance": 647073670.0484459,
+          "median": 21968,
+          "p90": 65910,
+          "p99": 118638,
+          "maximum": 127424
+        },
+        "missed_opportunities": {
+          "count": 328,
+          "mean": 3.5701219512195124,
+          "variance": 14.665814619274244,
+          "median": 2,
+          "p90": 9,
+          "p99": 17,
+          "maximum": 18
+        },
+        "trailing_misses": 13,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 1400,
+        "hits": 306,
+        "success_rate": 0.21857142857142858,
+        "first_prime": 30757,
+        "first_preceding_misses": 4,
+        "number_line_gaps": {
+          "count": 305,
+          "mean": 32385.947540983605,
+          "variance": 734112111.1316743,
+          "median": 26364,
+          "p90": 70306,
+          "p99": 118638,
+          "maximum": 127424
+        },
+        "missed_opportunities": {
+          "count": 305,
+          "mean": 3.5344262295081967,
+          "variance": 13.645536146197259,
+          "median": 2,
+          "p90": 9,
+          "p99": 16,
+          "maximum": 16
+        },
+        "trailing_misses": 12,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.0004950517396780208,
+      "next_power_share": 0.06990881458966565,
+      "first_door_factors": {
+        "2": 1,
+        "7": 1,
+        "13": 3
+      },
+      "other_distinct_odd_factor_counts": {
+        "1": 189,
+        "0": 3,
+        "2": 124,
+        "3": 13
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 78,
+          "share": 0.23708206686930092
+        },
+        {
+          "prime": 7,
+          "count": 55,
+          "share": 0.16717325227963525
+        },
+        {
+          "prime": 11,
+          "count": 32,
+          "share": 0.0972644376899696
+        },
+        {
+          "prime": 17,
+          "count": 21,
+          "share": 0.06382978723404255
+        },
+        {
+          "prime": 19,
+          "count": 18,
+          "share": 0.0547112462006079
+        },
+        {
+          "prime": 23,
+          "count": 14,
+          "share": 0.0425531914893617
+        },
+        {
+          "prime": 43,
+          "count": 12,
+          "share": 0.0364741641337386
+        },
+        {
+          "prime": 29,
+          "count": 12,
+          "share": 0.0364741641337386
+        },
+        {
+          "prime": 61,
+          "count": 10,
+          "share": 0.030395136778115502
+        },
+        {
+          "prime": 31,
+          "count": 9,
+          "share": 0.02735562310030395
+        }
+      ]
+    },
+    {
+      "q": 13,
+      "exponent": 4,
+      "power": 28561,
+      "cumulative": {
+        "opportunities": 117,
+        "hits": 23,
+        "success_rate": 0.19658119658119658,
+        "first_prime": 285611,
+        "first_preceding_misses": 3,
+        "number_line_gaps": {
+          "count": 22,
+          "mean": 418029.0909090909,
+          "variance": 89993158686.80992,
+          "median": 342732,
+          "p90": 799706,
+          "p99": 1199562,
+          "maximum": 1199562
+        },
+        "missed_opportunities": {
+          "count": 22,
+          "mean": 3.8636363636363638,
+          "variance": 12.026859504132233,
+          "median": 3,
+          "p90": 8,
+          "p99": 13,
+          "maximum": 13
+        },
+        "trailing_misses": 6,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 108,
+        "hits": 22,
+        "success_rate": 0.2037037037037037,
+        "first_prime": 285611,
+        "first_preceding_misses": 3,
+        "number_line_gaps": {
+          "count": 21,
+          "mean": 437935.2380952381,
+          "variance": 116325547442.46712,
+          "median": 342732,
+          "p90": 1028196,
+          "p99": 1199562,
+          "maximum": 1199562
+        },
+        "missed_opportunities": {
+          "count": 21,
+          "mean": 3.7142857142857144,
+          "variance": 13.061224489795919,
+          "median": 2,
+          "p90": 10,
+          "p99": 12,
+          "maximum": 12
+        },
+        "trailing_misses": 5,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 3.460848028144218e-05,
+      "next_power_share": 0.043478260869565216,
+      "first_door_factors": {
+        "2": 1,
+        "5": 1,
+        "13": 4
+      },
+      "other_distinct_odd_factor_counts": {
+        "1": 20,
+        "0": 2,
+        "2": 1
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 6,
+          "share": 0.2608695652173913
+        },
+        {
+          "prime": 7,
+          "count": 2,
+          "share": 0.08695652173913043
+        },
+        {
+          "prime": 41,
+          "count": 2,
+          "share": 0.08695652173913043
+        },
+        {
+          "prime": 19,
+          "count": 1,
+          "share": 0.043478260869565216
+        },
+        {
+          "prime": 37,
+          "count": 1,
+          "share": 0.043478260869565216
+        },
+        {
+          "prime": 61,
+          "count": 1,
+          "share": 0.043478260869565216
+        },
+        {
+          "prime": 43,
+          "count": 1,
+          "share": 0.043478260869565216
+        },
+        {
+          "prime": 53,
+          "count": 1,
+          "share": 0.043478260869565216
+        },
+        {
+          "prime": 113,
+          "count": 1,
+          "share": 0.043478260869565216
+        },
+        {
+          "prime": 11,
+          "count": 1,
+          "share": 0.043478260869565216
+        }
+      ]
+    },
+    {
+      "q": 13,
+      "exponent": 5,
+      "power": 371293,
+      "cumulative": {
+        "opportunities": 9,
+        "hits": 1,
+        "success_rate": 0.1111111111111111,
+        "first_prime": 2970343,
+        "first_preceding_misses": 2,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 6,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 8,
+        "hits": 1,
+        "success_rate": 0.125,
+        "first_prime": 2970343,
+        "first_preceding_misses": 2,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 5,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 1.504716533975747e-06,
+      "next_power_share": 0.0,
+      "first_door_factors": {
+        "2": 3,
+        "13": 5
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 1
+      },
+      "companions": []
+    },
+    {
+      "q": 13,
+      "exponent": 6,
+      "power": 4826809,
+      "cumulative": {
+        "opportunities": 1,
+        "hits": 0,
+        "success_rate": 0.0,
+        "first_prime": null,
+        "first_preceding_misses": null,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 1,
+        "no_hit_is_censored": true
+      },
+      "exact": {
+        "opportunities": 1,
+        "hits": 0,
+        "success_rate": 0.0,
+        "first_prime": null,
+        "first_preceding_misses": null,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 1,
+        "no_hit_is_censored": true
+      },
+      "share_of_all_primes": 0.0,
+      "next_power_share": null,
+      "first_door_factors": null,
+      "other_distinct_odd_factor_counts": {},
+      "companions": []
+    },
+    {
+      "q": 17,
+      "exponent": 1,
+      "power": 17,
+      "cumulative": {
+        "opportunities": 196078,
+        "hits": 41534,
+        "success_rate": 0.21182386601250522,
+        "first_prime": 67,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 41533,
+          "mean": 240.76941227457684,
+          "variance": 42779.838794725976,
+          "median": 204,
+          "p90": 510,
+          "p99": 950,
+          "maximum": 2480
+        },
+        "missed_opportunities": {
+          "count": 41533,
+          "mean": 3.7209688681289577,
+          "variance": 16.55785298949622,
+          "median": 3,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 48
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 184544,
+        "hits": 39084,
+        "success_rate": 0.21178689093116004,
+        "first_prime": 67,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 39083,
+          "mean": 255.86254893431928,
+          "variance": 49059.841404520506,
+          "median": 204,
+          "p90": 542,
+          "p99": 1020,
+          "maximum": 2480
+        },
+        "missed_opportunities": {
+          "count": 39083,
+          "mean": 3.721797200829005,
+          "variance": 16.647086993439952,
+          "median": 3,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 45
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.062496896522148675,
+      "next_power_share": 0.05898781720999663,
+      "first_door_factors": {
+        "2": 2,
+        "17": 1
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 14,
+        "1": 11411,
+        "2": 20086,
+        "3": 9082,
+        "4": 934,
+        "5": 7
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 10346,
+          "share": 0.24909712524678576
+        },
+        {
+          "prime": 7,
+          "count": 6905,
+          "share": 0.16624933789184765
+        },
+        {
+          "prime": 11,
+          "count": 4177,
+          "share": 0.10056820917802282
+        },
+        {
+          "prime": 13,
+          "count": 3459,
+          "share": 0.08328116723648095
+        },
+        {
+          "prime": 19,
+          "count": 2315,
+          "share": 0.055737468098425384
+        },
+        {
+          "prime": 23,
+          "count": 1883,
+          "share": 0.04533635094139741
+        },
+        {
+          "prime": 29,
+          "count": 1486,
+          "share": 0.035777916887369386
+        },
+        {
+          "prime": 31,
+          "count": 1427,
+          "share": 0.034357393942312325
+        },
+        {
+          "prime": 37,
+          "count": 1182,
+          "share": 0.02845861222131266
+        },
+        {
+          "prime": 41,
+          "count": 1018,
+          "share": 0.02451003996725574
+        }
+      ]
+    },
+    {
+      "q": 17,
+      "exponent": 2,
+      "power": 289,
+      "cumulative": {
+        "opportunities": 11534,
+        "hits": 2450,
+        "success_rate": 0.21241546731402808,
+        "first_prime": 577,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 2449,
+          "mean": 4082.8191098407515,
+          "variance": 12327121.872137878,
+          "median": 3468,
+          "p90": 8670,
+          "p99": 16760,
+          "maximum": 22542
+        },
+        "missed_opportunities": {
+          "count": 2449,
+          "mean": 3.7092690894242546,
+          "variance": 16.145773618485126,
+          "median": 3,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 25
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 10856,
+        "hits": 2316,
+        "success_rate": 0.2133382461311717,
+        "first_prime": 577,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 2315,
+          "mean": 4319.1464362850975,
+          "variance": 14018727.147022938,
+          "median": 3468,
+          "p90": 9250,
+          "p99": 17340,
+          "maximum": 27164
+        },
+        "missed_opportunities": {
+          "count": 2315,
+          "mean": 3.688984881209503,
+          "variance": 16.229835470613754,
+          "median": 2,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 29
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.00368655550824058,
+      "next_power_share": 0.054693877551020405,
+      "first_door_factors": {
+        "2": 1,
+        "17": 2
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 8,
+        "1": 944,
+        "2": 1231,
+        "3": 262,
+        "4": 5
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 612,
+          "share": 0.24979591836734694
+        },
+        {
+          "prime": 7,
+          "count": 389,
+          "share": 0.15877551020408162
+        },
+        {
+          "prime": 11,
+          "count": 261,
+          "share": 0.10653061224489796
+        },
+        {
+          "prime": 13,
+          "count": 195,
+          "share": 0.07959183673469387
+        },
+        {
+          "prime": 19,
+          "count": 133,
+          "share": 0.054285714285714284
+        },
+        {
+          "prime": 23,
+          "count": 105,
+          "share": 0.04285714285714286
+        },
+        {
+          "prime": 31,
+          "count": 89,
+          "share": 0.036326530612244896
+        },
+        {
+          "prime": 29,
+          "count": 80,
+          "share": 0.0326530612244898
+        },
+        {
+          "prime": 37,
+          "count": 70,
+          "share": 0.02857142857142857
+        },
+        {
+          "prime": 41,
+          "count": 62,
+          "share": 0.025306122448979593
+        }
+      ]
+    },
+    {
+      "q": 17,
+      "exponent": 3,
+      "power": 4913,
+      "cumulative": {
+        "opportunities": 678,
+        "hits": 134,
+        "success_rate": 0.1976401179941003,
+        "first_prime": 78607,
+        "first_preceding_misses": 5,
+        "number_line_gaps": {
+          "count": 133,
+          "mean": 74249.0977443609,
+          "variance": 4190749902.644581,
+          "median": 58956,
+          "p90": 147390,
+          "p99": 294780,
+          "maximum": 471648
+        },
+        "missed_opportunities": {
+          "count": 133,
+          "mean": 4.037593984962406,
+          "variance": 19.20911300808412,
+          "median": 3,
+          "p90": 9,
+          "p99": 19,
+          "maximum": 31
+        },
+        "trailing_misses": 2,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 638,
+        "hits": 125,
+        "success_rate": 0.19592476489028213,
+        "first_prime": 78607,
+        "first_preceding_misses": 5,
+        "number_line_gaps": {
+          "count": 124,
+          "mean": 79638.14516129032,
+          "variance": 4990758379.107962,
+          "median": 58956,
+          "p90": 167044,
+          "p99": 314434,
+          "maximum": 471648
+        },
+        "missed_opportunities": {
+          "count": 124,
+          "mean": 4.080645161290323,
+          "variance": 20.090270551508844,
+          "median": 3,
+          "p90": 9,
+          "p99": 19,
+          "maximum": 29
+        },
+        "trailing_misses": 2,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.0002016320155527501,
+      "next_power_share": 0.06716417910447761,
+      "first_door_factors": {
+        "2": 4,
+        "17": 3
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 4,
+        "1": 75,
+        "2": 52,
+        "3": 3
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 39,
+          "share": 0.291044776119403
+        },
+        {
+          "prime": 7,
+          "count": 24,
+          "share": 0.1791044776119403
+        },
+        {
+          "prime": 11,
+          "count": 13,
+          "share": 0.09701492537313433
+        },
+        {
+          "prime": 13,
+          "count": 9,
+          "share": 0.06716417910447761
+        },
+        {
+          "prime": 19,
+          "count": 7,
+          "share": 0.05223880597014925
+        },
+        {
+          "prime": 29,
+          "count": 6,
+          "share": 0.04477611940298507
+        },
+        {
+          "prime": 37,
+          "count": 5,
+          "share": 0.03731343283582089
+        },
+        {
+          "prime": 23,
+          "count": 5,
+          "share": 0.03731343283582089
+        },
+        {
+          "prime": 59,
+          "count": 5,
+          "share": 0.03731343283582089
+        },
+        {
+          "prime": 47,
+          "count": 4,
+          "share": 0.029850746268656716
+        }
+      ]
+    },
+    {
+      "q": 17,
+      "exponent": 4,
+      "power": 83521,
+      "cumulative": {
+        "opportunities": 40,
+        "hits": 9,
+        "success_rate": 0.225,
+        "first_prime": 1169293,
+        "first_preceding_misses": 4,
+        "number_line_gaps": {
+          "count": 8,
+          "mean": 897851.0,
+          "variance": 208836540029.0,
+          "median": 1002252,
+          "p90": 1503378,
+          "p99": 1503378,
+          "maximum": 1503378
+        },
+        "missed_opportunities": {
+          "count": 8,
+          "mean": 2.625,
+          "variance": 3.234375,
+          "median": 3,
+          "p90": 5,
+          "p99": 5,
+          "maximum": 5
+        },
+        "trailing_misses": 6,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 38,
+        "hits": 9,
+        "success_rate": 0.23684210526315788,
+        "first_prime": 1169293,
+        "first_preceding_misses": 4,
+        "number_line_gaps": {
+          "count": 8,
+          "mean": 897851.0,
+          "variance": 208836540029.0,
+          "median": 1002252,
+          "p90": 1503378,
+          "p99": 1503378,
+          "maximum": 1503378
+        },
+        "missed_opportunities": {
+          "count": 8,
+          "mean": 2.375,
+          "variance": 2.234375,
+          "median": 3,
+          "p90": 4,
+          "p99": 4,
+          "maximum": 4
+        },
+        "trailing_misses": 6,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 1.3542448805781723e-05,
+      "next_power_share": 0.0,
+      "first_door_factors": {
+        "2": 1,
+        "7": 1,
+        "17": 4
+      },
+      "other_distinct_odd_factor_counts": {
+        "1": 7,
+        "0": 2
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 4,
+          "share": 0.4444444444444444
+        },
+        {
+          "prime": 7,
+          "count": 1,
+          "share": 0.1111111111111111
+        },
+        {
+          "prime": 31,
+          "count": 1,
+          "share": 0.1111111111111111
+        },
+        {
+          "prime": 23,
+          "count": 1,
+          "share": 0.1111111111111111
+        }
+      ]
+    },
+    {
+      "q": 17,
+      "exponent": 5,
+      "power": 1419857,
+      "cumulative": {
+        "opportunities": 2,
+        "hits": 0,
+        "success_rate": 0.0,
+        "first_prime": null,
+        "first_preceding_misses": null,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 2,
+        "no_hit_is_censored": true
+      },
+      "exact": {
+        "opportunities": 2,
+        "hits": 0,
+        "success_rate": 0.0,
+        "first_prime": null,
+        "first_preceding_misses": null,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 2,
+        "no_hit_is_censored": true
+      },
+      "share_of_all_primes": 0.0,
+      "next_power_share": null,
+      "first_door_factors": null,
+      "other_distinct_odd_factor_counts": {},
+      "companions": []
+    },
+    {
+      "q": 19,
+      "exponent": 1,
+      "power": 19,
+      "cumulative": {
+        "opportunities": 175438,
+        "hits": 36880,
+        "success_rate": 0.2102167147368301,
+        "first_prime": 37,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 36879,
+          "mean": 271.15409853846364,
+          "variance": 54139.00212202083,
+          "median": 188,
+          "p90": 570,
+          "p99": 1100,
+          "maximum": 2240
+        },
+        "missed_opportunities": {
+          "count": 36879,
+          "mean": 3.7570975351826243,
+          "variance": 16.492694479789748,
+          "median": 2,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 38
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 166204,
+        "hits": 34954,
+        "success_rate": 0.21030781449303265,
+        "first_prime": 37,
+        "first_preceding_misses": 0,
+        "number_line_gaps": {
+          "count": 34953,
+          "mean": 286.0953852315967,
+          "variance": 60919.337796058644,
+          "median": 228,
+          "p90": 610,
+          "p99": 1140,
+          "maximum": 2320
+        },
+        "missed_opportunities": {
+          "count": 34953,
+          "mean": 3.7550424856235516,
+          "variance": 16.54034485629013,
+          "median": 2,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 38
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.05549394577302555,
+      "next_power_share": 0.0522234273318872,
+      "first_door_factors": {
+        "2": 1,
+        "19": 1
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 12,
+        "1": 10121,
+        "2": 17960,
+        "3": 7969,
+        "4": 812,
+        "5": 6
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 9211,
+          "share": 0.24975596529284164
+        },
+        {
+          "prime": 7,
+          "count": 6203,
+          "share": 0.1681941431670282
+        },
+        {
+          "prime": 11,
+          "count": 3689,
+          "share": 0.10002711496746204
+        },
+        {
+          "prime": 13,
+          "count": 3068,
+          "share": 0.08318872017353579
+        },
+        {
+          "prime": 17,
+          "count": 2315,
+          "share": 0.06277114967462039
+        },
+        {
+          "prime": 23,
+          "count": 1683,
+          "share": 0.045634490238611713
+        },
+        {
+          "prime": 29,
+          "count": 1323,
+          "share": 0.03587310195227766
+        },
+        {
+          "prime": 31,
+          "count": 1215,
+          "share": 0.03294468546637744
+        },
+        {
+          "prime": 37,
+          "count": 1040,
+          "share": 0.028199566160520606
+        },
+        {
+          "prime": 41,
+          "count": 908,
+          "share": 0.024620390455531452
+        }
+      ]
+    },
+    {
+      "q": 19,
+      "exponent": 2,
+      "power": 361,
+      "cumulative": {
+        "opportunities": 9234,
+        "hits": 1926,
+        "success_rate": 0.20857699805068225,
+        "first_prime": 2887,
+        "first_preceding_misses": 2,
+        "number_line_gaps": {
+          "count": 1925,
+          "mean": 5192.774025974026,
+          "variance": 20461393.023740936,
+          "median": 3608,
+          "p90": 10830,
+          "p99": 20936,
+          "maximum": 34656
+        },
+        "missed_opportunities": {
+          "count": 1925,
+          "mean": 3.794805194805195,
+          "variance": 17.39010288412886,
+          "median": 2,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 31
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 8748,
+        "hits": 1812,
+        "success_rate": 0.20713305898491083,
+        "first_prime": 2887,
+        "first_preceding_misses": 2,
+        "number_line_gaps": {
+          "count": 1811,
+          "mean": 5519.652125897294,
+          "variance": 23125743.867939986,
+          "median": 4332,
+          "p90": 11554,
+          "p99": 21660,
+          "maximum": 38988
+        },
+        "missed_opportunities": {
+          "count": 1811,
+          "mean": 3.82827167310878,
+          "variance": 17.342679453526685,
+          "median": 2,
+          "p90": 9,
+          "p99": 18,
+          "maximum": 33
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.0028980840444372885,
+      "next_power_share": 0.059190031152647975,
+      "first_door_factors": {
+        "2": 3,
+        "19": 2
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 7,
+        "1": 740,
+        "2": 967,
+        "3": 211,
+        "4": 1
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 505,
+          "share": 0.26220145379023885
+        },
+        {
+          "prime": 7,
+          "count": 323,
+          "share": 0.16770508826583594
+        },
+        {
+          "prime": 11,
+          "count": 202,
+          "share": 0.10488058151609553
+        },
+        {
+          "prime": 13,
+          "count": 153,
+          "share": 0.0794392523364486
+        },
+        {
+          "prime": 17,
+          "count": 122,
+          "share": 0.06334371754932502
+        },
+        {
+          "prime": 23,
+          "count": 80,
+          "share": 0.04153686396677051
+        },
+        {
+          "prime": 29,
+          "count": 72,
+          "share": 0.037383177570093455
+        },
+        {
+          "prime": 31,
+          "count": 63,
+          "share": 0.03271028037383177
+        },
+        {
+          "prime": 41,
+          "count": 58,
+          "share": 0.030114226375908618
+        },
+        {
+          "prime": 37,
+          "count": 56,
+          "share": 0.029075804776739357
+        }
+      ]
+    },
+    {
+      "q": 19,
+      "exponent": 3,
+      "power": 6859,
+      "cumulative": {
+        "opportunities": 486,
+        "hits": 114,
+        "success_rate": 0.2345679012345679,
+        "first_prime": 27437,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 113,
+          "mean": 87406.72566371682,
+          "variance": 5752656841.207926,
+          "median": 68588,
+          "p90": 205770,
+          "p99": 356666,
+          "maximum": 370386
+        },
+        "missed_opportunities": {
+          "count": 113,
+          "mean": 3.247787610619469,
+          "variance": 13.01824731772261,
+          "median": 2,
+          "p90": 9,
+          "p99": 16,
+          "maximum": 17
+        },
+        "trailing_misses": 4,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 460,
+        "hits": 109,
+        "success_rate": 0.23695652173913043,
+        "first_prime": 27437,
+        "first_preceding_misses": 1,
+        "number_line_gaps": {
+          "count": 108,
+          "mean": 90945.24074074074,
+          "variance": 6647657050.942045,
+          "median": 68588,
+          "p90": 205770,
+          "p99": 356666,
+          "maximum": 370386
+        },
+        "missed_opportunities": {
+          "count": 108,
+          "mean": 3.185185185185185,
+          "variance": 13.354595336076818,
+          "median": 2,
+          "p90": 8,
+          "p99": 15,
+          "maximum": 16
+        },
+        "trailing_misses": 6,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 0.00017153768487323514,
+      "next_power_share": 0.043859649122807015,
+      "first_door_factors": {
+        "2": 2,
+        "19": 3
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 3,
+        "1": 68,
+        "2": 41,
+        "3": 2
+      },
+      "companions": [
+        {
+          "prime": 5,
+          "count": 32,
+          "share": 0.2807017543859649
+        },
+        {
+          "prime": 7,
+          "count": 21,
+          "share": 0.18421052631578946
+        },
+        {
+          "prime": 11,
+          "count": 13,
+          "share": 0.11403508771929824
+        },
+        {
+          "prime": 13,
+          "count": 9,
+          "share": 0.07894736842105263
+        },
+        {
+          "prime": 23,
+          "count": 7,
+          "share": 0.06140350877192982
+        },
+        {
+          "prime": 41,
+          "count": 6,
+          "share": 0.05263157894736842
+        },
+        {
+          "prime": 17,
+          "count": 5,
+          "share": 0.043859649122807015
+        },
+        {
+          "prime": 47,
+          "count": 4,
+          "share": 0.03508771929824561
+        },
+        {
+          "prime": 29,
+          "count": 3,
+          "share": 0.02631578947368421
+        },
+        {
+          "prime": 73,
+          "count": 3,
+          "share": 0.02631578947368421
+        }
+      ]
+    },
+    {
+      "q": 19,
+      "exponent": 4,
+      "power": 130321,
+      "cumulative": {
+        "opportunities": 26,
+        "hits": 5,
+        "success_rate": 0.19230769230769232,
+        "first_prime": 3648989,
+        "first_preceding_misses": 9,
+        "number_line_gaps": {
+          "count": 4,
+          "mean": 1563852.0,
+          "variance": 917112404214.0,
+          "median": 781926,
+          "p90": 3127704,
+          "p99": 3127704,
+          "maximum": 3127704
+        },
+        "missed_opportunities": {
+          "count": 4,
+          "mean": 3.0,
+          "variance": 6.0,
+          "median": 1,
+          "p90": 7,
+          "p99": 7,
+          "maximum": 7
+        },
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 24,
+        "hits": 4,
+        "success_rate": 0.16666666666666666,
+        "first_prime": 3648989,
+        "first_preceding_misses": 9,
+        "number_line_gaps": {
+          "count": 3,
+          "mean": 1824494.0,
+          "variance": 951079530296.0,
+          "median": 1563852,
+          "p90": 3127704,
+          "p99": 3127704,
+          "maximum": 3127704
+        },
+        "missed_opportunities": {
+          "count": 3,
+          "mean": 3.3333333333333335,
+          "variance": 6.888888888888889,
+          "median": 2,
+          "p90": 7,
+          "p99": 7,
+          "maximum": 7
+        },
+        "trailing_misses": 1,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 7.523582669878735e-06,
+      "next_power_share": 0.2,
+      "first_door_factors": {
+        "2": 2,
+        "7": 1,
+        "19": 4
+      },
+      "other_distinct_odd_factor_counts": {
+        "1": 3,
+        "2": 1,
+        "0": 1
+      },
+      "companions": [
+        {
+          "prime": 7,
+          "count": 2,
+          "share": 0.4
+        },
+        {
+          "prime": 5,
+          "count": 2,
+          "share": 0.4
+        },
+        {
+          "prime": 23,
+          "count": 1,
+          "share": 0.2
+        }
+      ]
+    },
+    {
+      "q": 19,
+      "exponent": 5,
+      "power": 2476099,
+      "cumulative": {
+        "opportunities": 2,
+        "hits": 1,
+        "success_rate": 0.5,
+        "first_prime": 9904397,
+        "first_preceding_misses": 1,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "exact": {
+        "opportunities": 2,
+        "hits": 1,
+        "success_rate": 0.5,
+        "first_prime": 9904397,
+        "first_preceding_misses": 1,
+        "number_line_gaps": null,
+        "missed_opportunities": null,
+        "trailing_misses": 0,
+        "no_hit_is_censored": false
+      },
+      "share_of_all_primes": 1.504716533975747e-06,
+      "next_power_share": 0.0,
+      "first_door_factors": {
+        "2": 2,
+        "19": 5
+      },
+      "other_distinct_odd_factor_counts": {
+        "0": 1
+      },
+      "companions": []
+    }
+  ],
+  "verification": "Independent trial division through 10000; full-window nested-count and door-factorisation checks.",
+  "seconds": 4.101307703000089
+}

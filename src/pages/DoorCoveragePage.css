@@ -32,3 +32,29 @@
   .coverage-controls { gap: .75rem; }
   .coverage-controls label { flex: 1 1 120px; }
 }
+
+/* Power firing Lab charts */
+.power-firing-chart {
+  margin: 1rem 0 1.25rem;
+  max-width: 42rem;
+}
+.power-firing-chart.thin {
+  margin-top: 0.35rem;
+}
+.power-firing-chart svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #faf7f1;
+  border: 1px solid #c8bfb0;
+  border-radius: 8px;
+}
+.door-table tr.sparse-row td {
+  color: #8a7a68;
+  font-style: italic;
+}
+.lab-footnote {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #6b5e4e;
+}

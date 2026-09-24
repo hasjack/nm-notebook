@@ -13,7 +13,8 @@ export function DoorWaitsPage() {
         Opportunity waits and small-prime blockers inside the two-class lattice.
         Related: <Link to="/two-class">Two-class coverage</Link>,{" "}
         <Link to="/coverage-lattice">Coverage lattice</Link>,{" "}
-        <Link to="/cube-doors">Cube doors</Link>.
+        <Link to="/cube-doors">Cube doors</Link>,{" "}
+        <Link to="/power-firing">Power firing</Link>.
       </p>
 
       <h2>Waiting inside the lattice</h2>
