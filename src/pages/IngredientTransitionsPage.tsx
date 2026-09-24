@@ -558,7 +558,9 @@ export function IngredientTransitionsPage() {
         2<sup>v+k</sup> A → 2<sup>v</sup> r (with k, v ≥ 1), then m₀(r) = r − 1
         = 2<sup>k</sup> A and the gap is 2<sup>v</sup>. The odd block{" "}
         <code>A</code> disappears from the immediate factorisation but survives
-        intact in m₀(r). This is door arithmetic.
+        intact in m₀(r). This is door arithmetic — Lean{" "}
+        <code>m0_of_two_pow_mul_add_one</code> in{" "}
+        <code>Hire/Doors.lean</code>.
       </p>
       <p>
         <strong>2. Observed in the census (repeated factor in A).</strong>{" "}
