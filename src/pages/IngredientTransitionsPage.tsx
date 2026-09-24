@@ -461,86 +461,102 @@ export function IngredientTransitionsPage() {
 
       <h2>Swallow shapes</h2>
       <p>
-        Albert&apos;s one structural eye on the {fmt(power.swallowShapes.n)}{" "}
-        whole-odd-part preservations: how does the arriving door{" "}
-        <code>m₀(r)</code> sit relative to the old odd block <code>A</code>? Clean
-        door-rule shape means <code>m₀(r) = 2ᵏ · A</code> (so <code>r</code> is a
-        χ₃-neighbour of <code>2ᵏ A</code>). Messier means <code>A</code> divides{" "}
-        <code>m₀(r)</code> but the odd part of <code>m₀(r)</code> properly exceeds{" "}
-        <code>A</code>.
+        Jack&apos;s tighter classification of the {fmt(power.swallowShapes.n)}{" "}
+        whole-odd-part preservations through {fmt(power.limit)}. Every case in
+        this cohort fits one normal form. Exactly one preserving{" "}
+        <code>r</code> per transition; <code>B = 1</code> always (no extra odd
+        multiplier). Findings only — exact classification of this census, not a
+        theorem for all such transitions.
       </p>
+      <aside className="lab-theorem" aria-label="Whole-odd-part normal form">
+        <p className="lab-theorem-implies">
+          d<sub>old</sub> = 2<sup>v+k</sup> A
+          <br />
+          d<sub>new</sub> = 2<sup>v</sup> (2<sup>k</sup> A + 1)
+          <br />
+          r = 2<sup>k</sup> A + 1 &nbsp;(prime, ≡ 2 mod 3)
+          <br />
+          m₀(r) = 2<sup>k</sup> A
+          <br />
+          gap = d<sub>new</sub> − d<sub>old</sub> = 2<sup>v</sup>
+        </p>
+        <p>
+          with k, v ≥ 1. All {fmt(power.swallowShapes.normalForm.matching)} of{" "}
+          {fmt(power.swallowShapes.n)} match.
+        </p>
+      </aside>
+
+      <h3>Preserving door shares</h3>
       <div className="door-table-wrap">
         <table className="door-table">
           <thead>
             <tr>
-              <th>Shape</th>
+              <th>m₀(r)</th>
               <th>Count</th>
-              <th>Share of 1,336</th>
+              <th>Share</th>
             </tr>
           </thead>
           <tbody>
-            {power.swallowShapes.byK.map((r) => (
-              <tr key={r.k}>
+            {power.swallowShapes.doorShares.map((r) => (
+              <tr key={r.label}>
                 <td>
-                  <code>
-                    m₀(r) = 2^{r.k} · A
-                  </code>
+                  <code>{r.label}</code>
                 </td>
                 <td>{fmt(r.count)}</td>
                 <td>{r.pct.toFixed(2)}%</td>
               </tr>
             ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Normal-form door gaps</h3>
+      <p>
+        Gap is always a pure power of two (exactly 2<sup>v</sup>):{" "}
+        {power.swallowShapes.normalForm.doorGaps
+          .map((g) => `${g.gap}: ${fmt(g.count)}`)
+          .join("; ")}
+        .
+      </p>
+
+      <h3>Prototypes</h3>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
             <tr>
-              <td>messier (extra odd factors beyond A)</td>
-              <td>{fmt(power.swallowShapes.messier)}</td>
-              <td>
-                {(
-                  (100 * power.swallowShapes.messier) /
-                  power.swallowShapes.n
-                ).toFixed(2)}
-                %
-              </td>
+              <th>A</th>
+              <th>k, v</th>
+              <th>Doors</th>
+              <th>Arriving</th>
             </tr>
+          </thead>
+          <tbody>
+            {power.swallowShapes.normalForm.prototypes.map((e) => (
+              <tr key={e.A}>
+                <td>{fmt(e.A)}</td>
+                <td>
+                  k = {e.k}, v = {e.v}
+                </td>
+                <td>
+                  <code>
+                    {fmt(e.dOld)} → {fmt(e.dNew)}
+                  </code>
+                </td>
+                <td>
+                  <code>
+                    r = {fmt(e.r)}, m₀ = {fmt(e.m0r)}
+                  </code>
+                  <br />
+                  {e.note}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
       <p>
-        All {fmt(power.swallowShapes.clean)} are clean; the messier bucket is
-        empty through {fmt(power.limit)}. Half land at <code>k = 1</code> (prototype{" "}
-        499 → 503: <code>m₀(251) = 2 · 125</code>); another quarter at{" "}
-        <code>k = 2</code> (2801 → 2803: <code>m₀(701) = 4 · 175</code>). Clean{" "}
-        <code>2ᵏ A</code> is door arithmetic, not a new adjacency law. Findings
-        only. Stop — no new fishing.
+        {power.swallowShapes.normalForm.note} No adjacency law claimed. Stop.
       </p>
-      <details>
-        <summary>Shape examples</summary>
-        <div className="door-table-wrap">
-          <table className="door-table">
-            <thead>
-              <tr>
-                <th>Primes</th>
-                <th>k</th>
-                <th>A</th>
-                <th>Arriving path</th>
-              </tr>
-            </thead>
-            <tbody>
-              {power.swallowShapes.examples.map((e) => (
-                <tr key={e.p}>
-                  <td>
-                    {fmt(e.p)} → {fmt(e.next)}
-                  </td>
-                  <td>{e.k}</td>
-                  <td>{fmt(e.A)}</td>
-                  <td>
-                    <code>{e.path}</code>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </details>
 
       <p className="lab-footnote">
         Exact sieve; gcd identity on every adjacent pair; deeper census tracks
@@ -553,7 +569,7 @@ export function IngredientTransitionsPage() {
         <code>analysis/deeper-door-continuity/</code>,{" "}
         <code>analysis/matched-door-continuity/</code>,{" "}
         <code>analysis/full-power-door-continuity/</code>{" "}
-        (incl. <code>swallow-shapes.json</code>).
+        (plus <code>analysis/whole-odd-block-shapes/</code>).
       </p>
     </main>
   );

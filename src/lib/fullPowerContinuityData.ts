@@ -1,5 +1,5 @@
 // Generated from analysis/full-power-door-continuity/power-continuity.json
-// and swallow-shapes.json.
+// and analysis/whole-odd-block-shapes/swallow-shape.json (normal form).
 export const fullPowerContinuityData = {
   limit: 10_000_000,
   /** Consecutive pairs with disjoint odd support and at least one departing odd factor with exponent ≥2. */
@@ -60,53 +60,60 @@ export const fullPowerContinuityData = {
       note: "Both 5² and 7 reappear in one arriving door. Gap 2 — outside matched controls.",
     },
   ],
-  /** Shape of m₀(r) relative to old odd block A, among the 1,336 whole-odd-part preservations. */
+  /** Exact normal-form classification of the 1,336 whole-odd-part preservations (census through 10M). */
   swallowShapes: {
     n: 1_336,
-    clean: 1_336,
-    messier: 0,
-    byK: [
-      { k: 1, count: 678, pct: 50.75 },
-      { k: 2, count: 325, pct: 24.33 },
-      { k: 3, count: 178, pct: 13.32 },
-      { k: 4, count: 67, pct: 5.01 },
-      { k: 5, count: 39, pct: 2.92 },
-      { k: 6, count: 29, pct: 2.17 },
-      { k: 7, count: 7, pct: 0.52 },
-      { k: 8, count: 7, pct: 0.52 },
-      { k: 9, count: 4, pct: 0.3 },
-      { k: 10, count: 2, pct: 0.15 },
+    /** B = 1 always; exactly one preserving r per transition. */
+    BAlwaysOne: true,
+    onePreservingRPerTransition: true,
+    /** Preserving door shares by m₀(r) = 2ᵏ A. */
+    doorShares: [
+      { label: "2A", k: 1, count: 678, pct: 50.75 },
+      { label: "4A", k: 2, count: 325, pct: 24.33 },
+      { label: "8A", k: 3, count: 178, pct: 13.32 },
+      { label: "16A", k: 4, count: 67, pct: 5.01 },
+      { label: "32A…1024A", kMin: 5, kMax: 10, count: 88, pct: 6.59 },
     ],
-    examples: [
-      {
-        p: 499,
-        next: 503,
-        k: 1,
-        A: 125,
-        path: "m₀(251) = 250 = 2¹ · 125",
+    normalForm: {
+      matching: 1_336,
+      /** Observed for every case in this cohort (k, v ≥ 1; r prime ≡ 2 mod 3). */
+      form: {
+        dOld: "2^{v+k} A",
+        dNew: "2^v (2^k A + 1)",
+        r: "2^k A + 1",
+        m0r: "2^k A",
+        gap: "2^v",
       },
-      {
-        p: 2801,
-        next: 2803,
-        k: 2,
-        A: 175,
-        path: "m₀(701) = 700 = 2² · 175",
-      },
-      {
-        p: 23201,
-        next: 23203,
-        k: 3,
-        A: 725,
-        path: "m₀(5801) = 5800 = 2³ · 725",
-      },
-      {
-        p: 51199,
-        next: 51203,
-        k: 10,
-        A: 25,
-        path: "m₀(25601) = 25600 = 2¹⁰ · 25",
-      },
-    ],
-    note: "Every one of the 1,336 is clean m₀(r) = 2ᵏ · A (messier bucket empty through 10M). Clean 2ᵏ A is door arithmetic: r is a χ₃-neighbour of 2ᵏ A — not a new adjacency law.",
+      doorGaps: [
+        { gap: 2, count: 753 },
+        { gap: 4, count: 360 },
+        { gap: 8, count: 173 },
+        { gap: 16, count: 42 },
+        { gap: 32, count: 8 },
+      ],
+      prototypes: [
+        {
+          A: 125,
+          k: 1,
+          v: 1,
+          dOld: 500,
+          dNew: 502,
+          r: 251,
+          m0r: 250,
+          note: "d_old = 4A, d_new = 2(2A+1), m₀(251) = 2A",
+        },
+        {
+          A: 175,
+          k: 2,
+          v: 2,
+          dOld: 2800,
+          dNew: 2804,
+          r: 701,
+          m0r: 700,
+          note: "d_old = 16A, d_new = 4(4A+1), m₀(701) = 4A",
+        },
+      ],
+      note: "Exact classification of this cohort through 10⁷ — census finding, not a theorem for all such transitions.",
+    },
   },
 } as const;
