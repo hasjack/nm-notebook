@@ -63,7 +63,7 @@ export const fullPowerContinuityData = {
   /** Exact normal-form classification of the 1,336 whole-odd-part preservations (census through 10M). */
   swallowShapes: {
     n: 1_336,
-    /** B = 1 always; exactly one preserving r per transition. */
+    /** Within the repeated-A cohort of 1,336: B = 1 always; exactly one preserving r per transition. */
     BAlwaysOne: true,
     onePreservingRPerTransition: true,
     /** Preserving door shares by m₀(r) = 2ᵏ A. */
@@ -113,7 +113,21 @@ export const fullPowerContinuityData = {
           note: "d_old = 16A, d_new = 4(4A+1), m₀(701) = 4A",
         },
       ],
-      note: "Construction ⇒ swallow is door arithmetic; all 1,336 match in the census (B=1); sharp conjecture that messy B>1 never occurs under consecutive primes + surface-disjoint odd support + A|m₀(r) — window says yes, not proved.",
+      note: "Construction ⇒ swallow is door arithmetic. Repeated-A cohort (1,336): all B=1 through 10⁷. Broad form (no repeated-factor hyp) is false — see counterexample.",
+    },
+    /** Broad (no repeated factor in A) conjecture is false. Only mess among 8,924 nonempty whole-block preservations through 10⁷. */
+    broadCounterexample: {
+      p: 1_310_719,
+      next: 1_310_723,
+      oldDoor: "2¹⁸ · 5",
+      newDoor: "2 · 7 · 251 · 373",
+      A: 5,
+      r: 251,
+      m0r: "250 = 2 · 5³ = 2A · 25",
+      B: 25,
+      nonemptyWholePreservations: 8_924,
+      messyAmongThem: 1,
+      note: "Messy = extra multiplicity of primes already in A, not a new odd species.",
     },
   },
 } as const;
