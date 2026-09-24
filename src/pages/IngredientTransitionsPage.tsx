@@ -459,6 +459,89 @@ export function IngredientTransitionsPage() {
         Phenomenon is real and rare. Adjacency is not adding a law here. Stop.
       </p>
 
+      <h2>Swallow shapes</h2>
+      <p>
+        Albert&apos;s one structural eye on the {fmt(power.swallowShapes.n)}{" "}
+        whole-odd-part preservations: how does the arriving door{" "}
+        <code>m₀(r)</code> sit relative to the old odd block <code>A</code>? Clean
+        door-rule shape means <code>m₀(r) = 2ᵏ · A</code> (so <code>r</code> is a
+        χ₃-neighbour of <code>2ᵏ A</code>). Messier means <code>A</code> divides{" "}
+        <code>m₀(r)</code> but the odd part of <code>m₀(r)</code> properly exceeds{" "}
+        <code>A</code>.
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>Shape</th>
+              <th>Count</th>
+              <th>Share of 1,336</th>
+            </tr>
+          </thead>
+          <tbody>
+            {power.swallowShapes.byK.map((r) => (
+              <tr key={r.k}>
+                <td>
+                  <code>
+                    m₀(r) = 2^{r.k} · A
+                  </code>
+                </td>
+                <td>{fmt(r.count)}</td>
+                <td>{r.pct.toFixed(2)}%</td>
+              </tr>
+            ))}
+            <tr>
+              <td>messier (extra odd factors beyond A)</td>
+              <td>{fmt(power.swallowShapes.messier)}</td>
+              <td>
+                {(
+                  (100 * power.swallowShapes.messier) /
+                  power.swallowShapes.n
+                ).toFixed(2)}
+                %
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        All {fmt(power.swallowShapes.clean)} are clean; the messier bucket is
+        empty through {fmt(power.limit)}. Half land at <code>k = 1</code> (prototype{" "}
+        499 → 503: <code>m₀(251) = 2 · 125</code>); another quarter at{" "}
+        <code>k = 2</code> (2801 → 2803: <code>m₀(701) = 4 · 175</code>). Clean{" "}
+        <code>2ᵏ A</code> is door arithmetic, not a new adjacency law. Findings
+        only. Stop — no new fishing.
+      </p>
+      <details>
+        <summary>Shape examples</summary>
+        <div className="door-table-wrap">
+          <table className="door-table">
+            <thead>
+              <tr>
+                <th>Primes</th>
+                <th>k</th>
+                <th>A</th>
+                <th>Arriving path</th>
+              </tr>
+            </thead>
+            <tbody>
+              {power.swallowShapes.examples.map((e) => (
+                <tr key={e.p}>
+                  <td>
+                    {fmt(e.p)} → {fmt(e.next)}
+                  </td>
+                  <td>{e.k}</td>
+                  <td>{fmt(e.A)}</td>
+                  <td>
+                    <code>{e.path}</code>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+
       <p className="lab-footnote">
         Exact sieve; gcd identity on every adjacent pair; deeper census tracks
         prime ingredients; full-power census tracks exact exponents on the
@@ -469,7 +552,8 @@ export function IngredientTransitionsPage() {
         <code>analysis/gap-ingredients/</code>,{" "}
         <code>analysis/deeper-door-continuity/</code>,{" "}
         <code>analysis/matched-door-continuity/</code>,{" "}
-        <code>analysis/full-power-door-continuity/</code>.
+        <code>analysis/full-power-door-continuity/</code>{" "}
+        (incl. <code>swallow-shapes.json</code>).
       </p>
     </main>
   );
