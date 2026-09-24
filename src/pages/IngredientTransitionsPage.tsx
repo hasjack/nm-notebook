@@ -600,8 +600,38 @@ export function IngredientTransitionsPage() {
         seeds than matched other blocks is untested: a fair A/B would give
         both groups the same exponent range and sieve, then compare hits per
         candidate. Until that runs cold, the form is recycled kitchen
-        machinery, not an educated-guess claim. Stop.
+        machinery, not an educated-guess claim.
       </p>
+      <h3>Pilot A/B (swallow blocks vs matched controls)</h3>
+      <p>
+        Two fixed prediction tests generated fresh r = 2<sup>k</sup> A + 1
+        beyond the original 10⁷ window, comparing swallow blocks to matched
+        non-swallow blocks under the same size and mod-3 rules.
+      </p>
+      <p>
+        Small pilot (32–36 bit, 1,598 + 1,598 candidates): 17.46% vs 16.52%
+        primes per candidate; bootstrap interval for the gap includes zero.
+      </p>
+      <p>
+        Larger fixed test (64–255 bit, 60,000 + 60,000; all 5,109 primes
+        Proth-certified): 4.435% vs 4.080% primes per candidate (~8.7%
+        relative; +0.355pp absolute; paired bootstrap +0.083 to +0.632). The
+        lead is sieve survival through 1,000 (20,372 vs 18,448). Post-sieve
+        hit rates are tied (13.06% vs 13.27%). So swallow-A enriches the
+        candidate pool a bit in this band; it does not make a survivor more
+        likely to be prime. Not a record-kitchen edge until cost-to-certificate
+        shows up.
+      </p>
+      <h3>Mersenne doors</h3>
+      <p>
+        If P = 2<sup>t</sup> − 1 &gt; 3 is prime, then t is odd and P ≡ 1
+        (mod 3), so m₀(P) = P + 1 = 2<sup>t</sup> — a pure 2-power door, no
+        odd gold out. Example: P = 2<sup>31</sup> − 1 has m₀(P) = 2<sup>31</sup>.
+        Hiring P is the usual structured search for Q with P | m₀(Q). Nearest
+        primes on the number line stay hard to predict. Door arithmetic, not
+        crystal ball.
+      </p>
+      <p>Parked. No Lean, no Paper 1. Stop.</p>
 
       <p className="lab-footnote">
         Exact sieve; gcd identity on every adjacent pair; deeper census tracks
