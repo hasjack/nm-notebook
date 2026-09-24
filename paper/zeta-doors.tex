@@ -261,25 +261,30 @@ For the 5522-digit entry the index is
 The author reports that all $5$, $3$, and $7$ larger listed factors,
 respectively, were subsequently proved prime from their index
 factorisations. A 18365-digit candidate at
-$k=1522610689958516981964050$ is now certified
+$k=1522610689958516981964050$ is certified
 (\path{lions71/hits.certified.jsonl}): 1598 factors of $N-1$ below $2^{64}$,
-19 listed cofactors, and $F^2>N$ from the 64-bit part. Independent
-\path{verify.py} on that row has not been repeated in this draft.
+19 listed cofactors, and $F^2>N$ from the 64-bit part. Pocklington
+construction (\path{cert.py}) took about 9 hours 2 minutes on a Mac Studio
+(Apple M2 Max, 12 cores, 32\,GB). Independent \path{verify.py} on that row
+passed on 24 September 2026:
+$F$ from 1598 primes below $2^{64}$, 19 cofactors proved from the
+factored index.
 
-The source snapshot for this draft is repository revision
-\texttt{c04d373} \cite{repo}. Change into the directory
+The source snapshot for this draft is 24 September 2026 \cite{repo}.
+Change into the directory
 \begin{center}
 \path{analysis/zeta/zeta-targeted}
 \end{center}
-and run the main reproducibility command:
+and run
 \begin{verbatim}
 python3 verify.py kitchen8/hits.jsonl
+python3 verify.py lions71/hits.certified.jsonl
 \end{verbatim}
 Use ordinary Python execution, without optimisation flags that disable
 assertions. The JSON lines contain the exact candidates, indices,
-factorisations, and candidate witnesses; they are preferable to printing
-thousands of decimal digits in the note. Reported long certificate runs
-have not been independently repeated during preparation of this draft.
+factorisations, and witnesses; they are preferable to printing thousands
+of decimal digits in the note. The 18365-digit certificate has been
+independently rechecked as above. Other long certificate runs have not.
 
 \paragraph{Outstanding audit item for this draft.}
 Revision \texttt{c04d373} searches bases $2,\ldots,501$ when proving
