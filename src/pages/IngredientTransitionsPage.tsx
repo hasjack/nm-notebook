@@ -587,7 +587,18 @@ export function IngredientTransitionsPage() {
         {power.swallowShapes.broadCounterexample.B} &gt; 1.{" "}
         {power.swallowShapes.broadCounterexample.note} The repeated-
         <code>A</code> purity of the {fmt(power.swallowShapes.n)} stays an
-        in-window observation, not a theorem. Stop.
+        in-window observation, not a theorem.
+      </p>
+      <h3>Candidates from the form</h3>
+      <p>
+        The construction also writes candidates as r = 2<sup>k</sup> A + 1 with
+        A already factored, so r − 1 is known — the same certification
+        advantage the zeta-door kitchen already uses. That half does not need
+        the swallow story. Whether odd blocks seen in swallows are luckier
+        seeds than matched other blocks is untested: a fair A/B would give
+        both groups the same exponent range and sieve, then compare hits per
+        candidate. Until that runs cold, the form is recycled kitchen
+        machinery, not an educated-guess claim. Stop.
       </p>
 
       <p className="lab-footnote">
