@@ -244,7 +244,8 @@ export function PowerFiringPage() {
         </em>{" "}
         inside 3-free doors. Related: <Link to="/door-waits">Door waits</Link>,{" "}
         <Link to="/two-class">Two-class coverage</Link>,{" "}
-        <Link to="/coverage-lattice">Coverage lattice</Link>.
+        <Link to="/coverage-lattice">Coverage lattice</Link>,{" "}
+        <Link to="/ingredient-transitions">Ingredient transitions</Link>.
       </p>
 
       <h2>What the census measures</h2>

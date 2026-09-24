@@ -36,6 +36,7 @@ import { CubeDoorPage } from "./pages/CubeDoorPage";
 import { CoverageLatticePage } from "./pages/CoverageLatticePage";
 import { DoorWaitsPage } from "./pages/DoorWaitsPage";
 import { PowerFiringPage } from "./pages/PowerFiringPage";
+import { IngredientTransitionsPage } from "./pages/IngredientTransitionsPage";
 import { GaussianDoorsPage } from "./pages/GaussianDoorsPage";
 import { HireSpectrumPage } from "./pages/HireSpectrumPage";
 import { HireLabPage } from "./pages/HireLabPage";
@@ -93,6 +94,7 @@ export default function App() {
         <Route path="/coverage-lattice" element={<CoverageLatticePage />} />
         <Route path="/door-waits" element={<DoorWaitsPage />} />
         <Route path="/power-firing" element={<PowerFiringPage />} />
+        <Route path="/ingredient-transitions" element={<IngredientTransitionsPage />} />
         <Route path="/gaussian-doors" element={<GaussianDoorsPage />} />
         <Route path="/certs" element={<Navigate to="/certificates" replace />} />
         <Route path="/hire-spectrum" element={<HireSpectrumPage />} />

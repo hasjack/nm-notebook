@@ -14,7 +14,8 @@ export function DoorWaitsPage() {
         Related: <Link to="/two-class">Two-class coverage</Link>,{" "}
         <Link to="/coverage-lattice">Coverage lattice</Link>,{" "}
         <Link to="/cube-doors">Cube doors</Link>,{" "}
-        <Link to="/power-firing">Power firing</Link>.
+        <Link to="/power-firing">Power firing</Link>,{" "}
+        <Link to="/ingredient-transitions">Ingredient transitions</Link>.
       </p>
 
       <h2>Waiting inside the lattice</h2>

@@ -83,6 +83,7 @@ const tree: NavGroup[] = [
           { to: "/two-class", label: "Two-class coverage" },
           { to: "/door-waits", label: "Door waits" },
           { to: "/power-firing", label: "Power firing" },
+          { to: "/ingredient-transitions", label: "Ingredient transitions" },
           { to: "/coverage-lattice", label: "Coverage lattice" },
           { to: "/cube-doors", label: "Cube doors" },
         ],
