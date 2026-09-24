@@ -1,0 +1,2547 @@
+{
+  "limit": 10000000,
+  "seconds": 15.05999134600006,
+  "total_disjoint": 623281,
+  "total_linked": 114709,
+  "max_observed_gap": 154,
+  "eligible_nonconsecutive_pairs": 5080240,
+  "summaries": [
+    {
+      "level": "Exact gap + location",
+      "min_controls_per_stratum": 1,
+      "matched_observed": 505681,
+      "coverage": 0.811321057436373,
+      "observed_linked": 82323,
+      "observed_rate": 0.16279630834458877,
+      "standardized_control_rate": 0.17474330256534912,
+      "difference_percentage_points": -1.1946994220760347,
+      "controls": 4278101,
+      "raw_control_rate": 0.17200996423413098,
+      "by_gap": {
+        "6": {
+          "observed": 99987,
+          "linked": 14423,
+          "expected_links": 20410.857171322554
+        },
+        "8": {
+          "observed": 54431,
+          "linked": 11066,
+          "expected_links": 10485.62020485888
+        },
+        "10": {
+          "observed": 30500,
+          "linked": 3114,
+          "expected_links": 2722.4877952513843
+        },
+        "12": {
+          "observed": 65513,
+          "linked": 13917,
+          "expected_links": 15431.044773642556
+        },
+        "14": {
+          "observed": 21117,
+          "linked": 986,
+          "expected_links": 937.3256480860688
+        },
+        "16": {
+          "observed": 35394,
+          "linked": 3778,
+          "expected_links": 3505.8855122187633
+        },
+        "18": {
+          "observed": 43851,
+          "linked": 10750,
+          "expected_links": 10394.755822252451
+        },
+        "20": {
+          "observed": 11665,
+          "linked": 514,
+          "expected_links": 477.0492004930301
+        },
+        "22": {
+          "observed": 20009,
+          "linked": 1957,
+          "expected_links": 2103.5225025801415
+        },
+        "24": {
+          "observed": 27170,
+          "linked": 5087,
+          "expected_links": 4869.791571224972
+        },
+        "26": {
+          "observed": 12223,
+          "linked": 2609,
+          "expected_links": 2659.3052129250423
+        },
+        "28": {
+          "observed": 8752,
+          "linked": 1888,
+          "expected_links": 1901.7359193131324
+        },
+        "30": {
+          "observed": 16144,
+          "linked": 1968,
+          "expected_links": 1961.7982881815967
+        },
+        "32": {
+          "observed": 6721,
+          "linked": 1438,
+          "expected_links": 1577.4986603246987
+        },
+        "34": {
+          "observed": 6032,
+          "linked": 1229,
+          "expected_links": 1229.7717702854065
+        },
+        "36": {
+          "observed": 10194,
+          "linked": 1593,
+          "expected_links": 1640.4988274008797
+        },
+        "38": {
+          "observed": 5037,
+          "linked": 922,
+          "expected_links": 831.5645167898499
+        },
+        "40": {
+          "observed": 3156,
+          "linked": 345,
+          "expected_links": 336.29355107816497
+        },
+        "42": {
+          "observed": 5941,
+          "linked": 1156,
+          "expected_links": 1226.9740539651336
+        },
+        "44": {
+          "observed": 2056,
+          "linked": 222,
+          "expected_links": 225.94301663485214
+        },
+        "46": {
+          "observed": 2671,
+          "linked": 273,
+          "expected_links": 288.67622665301303
+        },
+        "48": {
+          "observed": 3784,
+          "linked": 859,
+          "expected_links": 871.2189368583009
+        },
+        "50": {
+          "observed": 896,
+          "linked": 90,
+          "expected_links": 93.08707684419824
+        },
+        "52": {
+          "observed": 1824,
+          "linked": 277,
+          "expected_links": 311.82050309813627
+        },
+        "54": {
+          "observed": 2403,
+          "linked": 412,
+          "expected_links": 418.0118570658824
+        },
+        "56": {
+          "observed": 891,
+          "linked": 181,
+          "expected_links": 168.88712669848977
+        },
+        "58": {
+          "observed": 1033,
+          "linked": 250,
+          "expected_links": 244.37326227845165
+        },
+        "60": {
+          "observed": 1394,
+          "linked": 148,
+          "expected_links": 165.86282614517413
+        },
+        "62": {
+          "observed": 547,
+          "linked": 124,
+          "expected_links": 121.80432694281143
+        },
+        "64": {
+          "observed": 543,
+          "linked": 99,
+          "expected_links": 117.39654870705611
+        },
+        "66": {
+          "observed": 908,
+          "linked": 147,
+          "expected_links": 135.03857081586574
+        },
+        "68": {
+          "observed": 492,
+          "linked": 91,
+          "expected_links": 90.09684274313614
+        },
+        "70": {
+          "observed": 203,
+          "linked": 11,
+          "expected_links": 11.456527075036536
+        },
+        "72": {
+          "observed": 468,
+          "linked": 117,
+          "expected_links": 116.09209869879099
+        },
+        "74": {
+          "observed": 191,
+          "linked": 16,
+          "expected_links": 20.16630287727012
+        },
+        "76": {
+          "observed": 198,
+          "linked": 23,
+          "expected_links": 22.97115152198319
+        },
+        "78": {
+          "observed": 338,
+          "linked": 79,
+          "expected_links": 66.00591304618027
+        },
+        "80": {
+          "observed": 54,
+          "linked": 6,
+          "expected_links": 7.007661103604587
+        },
+        "82": {
+          "observed": 160,
+          "linked": 28,
+          "expected_links": 33.73532575196191
+        },
+        "84": {
+          "observed": 199,
+          "linked": 30,
+          "expected_links": 25.86605342331983
+        },
+        "86": {
+          "observed": 71,
+          "linked": 21,
+          "expected_links": 17.85143825037045
+        },
+        "88": {
+          "observed": 60,
+          "linked": 10,
+          "expected_links": 14.093673289991644
+        },
+        "90": {
+          "observed": 112,
+          "linked": 8,
+          "expected_links": 9.337144090855283
+        },
+        "92": {
+          "observed": 36,
+          "linked": 12,
+          "expected_links": 9.34683494888874
+        },
+        "94": {
+          "observed": 37,
+          "linked": 8,
+          "expected_links": 9.17443417611193
+        },
+        "96": {
+          "observed": 65,
+          "linked": 12,
+          "expected_links": 11.790515278040585
+        },
+        "98": {
+          "observed": 29,
+          "linked": 4,
+          "expected_links": 3.2887867266620923
+        },
+        "100": {
+          "observed": 22,
+          "linked": 1,
+          "expected_links": 1.862834374063929
+        },
+        "102": {
+          "observed": 31,
+          "linked": 8,
+          "expected_links": 7.812829891664954
+        },
+        "104": {
+          "observed": 10,
+          "linked": 0,
+          "expected_links": 0.49926265746221976
+        },
+        "106": {
+          "observed": 21,
+          "linked": 1,
+          "expected_links": 1.0319180751069426
+        },
+        "108": {
+          "observed": 26,
+          "linked": 3,
+          "expected_links": 6.6525988206610585
+        },
+        "110": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.48360571215205733
+        },
+        "112": {
+          "observed": 8,
+          "linked": 3,
+          "expected_links": 1.1602791046077232
+        },
+        "114": {
+          "observed": 11,
+          "linked": 1,
+          "expected_links": 1.9594367528508756
+        },
+        "116": {
+          "observed": 4,
+          "linked": 2,
+          "expected_links": 0.9201188029121392
+        },
+        "118": {
+          "observed": 7,
+          "linked": 4,
+          "expected_links": 1.7995934064634211
+        },
+        "120": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.45494058350329303
+        },
+        "122": {
+          "observed": 4,
+          "linked": 0,
+          "expected_links": 1.0672792597130707
+        },
+        "124": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.5212757210114649
+        },
+        "126": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.8106310719668253
+        },
+        "128": {
+          "observed": 1,
+          "linked": 1,
+          "expected_links": 0.21917139544816644
+        },
+        "130": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.11926969636832704
+        },
+        "132": {
+          "observed": 3,
+          "linked": 0,
+          "expected_links": 0.5358799838820001
+        },
+        "134": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.25624161696361375
+        },
+        "136": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.11543680688783867
+        },
+        "138": {
+          "observed": 2,
+          "linked": 1,
+          "expected_links": 0.4842272736063676
+        },
+        "142": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.3715250777412476
+        },
+        "146": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.4068915993411522
+        },
+        "148": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.22725452684966854
+        },
+        "152": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.24365945206440523
+        },
+        "154": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.1698389458272328
+        }
+      }
+    },
+    {
+      "level": "Exact gap + location",
+      "min_controls_per_stratum": 10,
+      "matched_observed": 505605,
+      "coverage": 0.8111991220653285,
+      "observed_linked": 82321,
+      "observed_rate": 0.16281682340957862,
+      "standardized_control_rate": 0.17475653740698655,
+      "difference_percentage_points": -1.193971399740791,
+      "controls": 4278028,
+      "raw_control_rate": 0.17201126313338763,
+      "by_gap": {
+        "6": {
+          "observed": 99942,
+          "linked": 14422,
+          "expected_links": 20405.757171322555
+        },
+        "8": {
+          "observed": 54424,
+          "linked": 11065,
+          "expected_links": 10484.575760414436
+        },
+        "10": {
+          "observed": 30479,
+          "linked": 3114,
+          "expected_links": 2722.4877952513843
+        },
+        "12": {
+          "observed": 65513,
+          "linked": 13917,
+          "expected_links": 15431.044773642556
+        },
+        "14": {
+          "observed": 21117,
+          "linked": 986,
+          "expected_links": 937.3256480860688
+        },
+        "16": {
+          "observed": 35391,
+          "linked": 3778,
+          "expected_links": 3505.441067774319
+        },
+        "18": {
+          "observed": 43851,
+          "linked": 10750,
+          "expected_links": 10394.755822252451
+        },
+        "20": {
+          "observed": 11665,
+          "linked": 514,
+          "expected_links": 477.0492004930301
+        },
+        "22": {
+          "observed": 20009,
+          "linked": 1957,
+          "expected_links": 2103.5225025801415
+        },
+        "24": {
+          "observed": 27170,
+          "linked": 5087,
+          "expected_links": 4869.791571224972
+        },
+        "26": {
+          "observed": 12223,
+          "linked": 2609,
+          "expected_links": 2659.3052129250423
+        },
+        "28": {
+          "observed": 8752,
+          "linked": 1888,
+          "expected_links": 1901.7359193131324
+        },
+        "30": {
+          "observed": 16144,
+          "linked": 1968,
+          "expected_links": 1961.7982881815967
+        },
+        "32": {
+          "observed": 6721,
+          "linked": 1438,
+          "expected_links": 1577.4986603246987
+        },
+        "34": {
+          "observed": 6032,
+          "linked": 1229,
+          "expected_links": 1229.7717702854065
+        },
+        "36": {
+          "observed": 10194,
+          "linked": 1593,
+          "expected_links": 1640.4988274008797
+        },
+        "38": {
+          "observed": 5037,
+          "linked": 922,
+          "expected_links": 831.5645167898499
+        },
+        "40": {
+          "observed": 3156,
+          "linked": 345,
+          "expected_links": 336.29355107816497
+        },
+        "42": {
+          "observed": 5941,
+          "linked": 1156,
+          "expected_links": 1226.9740539651336
+        },
+        "44": {
+          "observed": 2056,
+          "linked": 222,
+          "expected_links": 225.94301663485214
+        },
+        "46": {
+          "observed": 2671,
+          "linked": 273,
+          "expected_links": 288.67622665301303
+        },
+        "48": {
+          "observed": 3784,
+          "linked": 859,
+          "expected_links": 871.2189368583009
+        },
+        "50": {
+          "observed": 896,
+          "linked": 90,
+          "expected_links": 93.08707684419824
+        },
+        "52": {
+          "observed": 1824,
+          "linked": 277,
+          "expected_links": 311.82050309813627
+        },
+        "54": {
+          "observed": 2403,
+          "linked": 412,
+          "expected_links": 418.0118570658824
+        },
+        "56": {
+          "observed": 891,
+          "linked": 181,
+          "expected_links": 168.88712669848977
+        },
+        "58": {
+          "observed": 1033,
+          "linked": 250,
+          "expected_links": 244.37326227845165
+        },
+        "60": {
+          "observed": 1394,
+          "linked": 148,
+          "expected_links": 165.86282614517413
+        },
+        "62": {
+          "observed": 547,
+          "linked": 124,
+          "expected_links": 121.80432694281143
+        },
+        "64": {
+          "observed": 543,
+          "linked": 99,
+          "expected_links": 117.39654870705611
+        },
+        "66": {
+          "observed": 908,
+          "linked": 147,
+          "expected_links": 135.03857081586574
+        },
+        "68": {
+          "observed": 492,
+          "linked": 91,
+          "expected_links": 90.09684274313614
+        },
+        "70": {
+          "observed": 203,
+          "linked": 11,
+          "expected_links": 11.456527075036536
+        },
+        "72": {
+          "observed": 468,
+          "linked": 117,
+          "expected_links": 116.09209869879099
+        },
+        "74": {
+          "observed": 191,
+          "linked": 16,
+          "expected_links": 20.16630287727012
+        },
+        "76": {
+          "observed": 198,
+          "linked": 23,
+          "expected_links": 22.97115152198319
+        },
+        "78": {
+          "observed": 338,
+          "linked": 79,
+          "expected_links": 66.00591304618027
+        },
+        "80": {
+          "observed": 54,
+          "linked": 6,
+          "expected_links": 7.007661103604587
+        },
+        "82": {
+          "observed": 160,
+          "linked": 28,
+          "expected_links": 33.73532575196191
+        },
+        "84": {
+          "observed": 199,
+          "linked": 30,
+          "expected_links": 25.86605342331983
+        },
+        "86": {
+          "observed": 71,
+          "linked": 21,
+          "expected_links": 17.85143825037045
+        },
+        "88": {
+          "observed": 60,
+          "linked": 10,
+          "expected_links": 14.093673289991644
+        },
+        "90": {
+          "observed": 112,
+          "linked": 8,
+          "expected_links": 9.337144090855283
+        },
+        "92": {
+          "observed": 36,
+          "linked": 12,
+          "expected_links": 9.34683494888874
+        },
+        "94": {
+          "observed": 37,
+          "linked": 8,
+          "expected_links": 9.17443417611193
+        },
+        "96": {
+          "observed": 65,
+          "linked": 12,
+          "expected_links": 11.790515278040585
+        },
+        "98": {
+          "observed": 29,
+          "linked": 4,
+          "expected_links": 3.2887867266620923
+        },
+        "100": {
+          "observed": 22,
+          "linked": 1,
+          "expected_links": 1.862834374063929
+        },
+        "102": {
+          "observed": 31,
+          "linked": 8,
+          "expected_links": 7.812829891664954
+        },
+        "104": {
+          "observed": 10,
+          "linked": 0,
+          "expected_links": 0.49926265746221976
+        },
+        "106": {
+          "observed": 21,
+          "linked": 1,
+          "expected_links": 1.0319180751069426
+        },
+        "108": {
+          "observed": 26,
+          "linked": 3,
+          "expected_links": 6.6525988206610585
+        },
+        "110": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.48360571215205733
+        },
+        "112": {
+          "observed": 8,
+          "linked": 3,
+          "expected_links": 1.1602791046077232
+        },
+        "114": {
+          "observed": 11,
+          "linked": 1,
+          "expected_links": 1.9594367528508756
+        },
+        "116": {
+          "observed": 4,
+          "linked": 2,
+          "expected_links": 0.9201188029121392
+        },
+        "118": {
+          "observed": 7,
+          "linked": 4,
+          "expected_links": 1.7995934064634211
+        },
+        "120": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.45494058350329303
+        },
+        "122": {
+          "observed": 4,
+          "linked": 0,
+          "expected_links": 1.0672792597130707
+        },
+        "124": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.5212757210114649
+        },
+        "126": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.8106310719668253
+        },
+        "128": {
+          "observed": 1,
+          "linked": 1,
+          "expected_links": 0.21917139544816644
+        },
+        "130": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.11926969636832704
+        },
+        "132": {
+          "observed": 3,
+          "linked": 0,
+          "expected_links": 0.5358799838820001
+        },
+        "134": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.25624161696361375
+        },
+        "136": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.11543680688783867
+        },
+        "138": {
+          "observed": 2,
+          "linked": 1,
+          "expected_links": 0.4842272736063676
+        },
+        "142": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.3715250777412476
+        },
+        "146": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.4068915993411522
+        },
+        "148": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.22725452684966854
+        },
+        "152": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.24365945206440523
+        },
+        "154": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.1698389458272328
+        }
+      }
+    },
+    {
+      "level": "Exact gap + location",
+      "min_controls_per_stratum": 30,
+      "matched_observed": 505246,
+      "coverage": 0.8106231378784208,
+      "observed_linked": 82294,
+      "observed_rate": 0.16287907276851277,
+      "standardized_control_rate": 0.17482940631094668,
+      "difference_percentage_points": -1.1950333542433904,
+      "controls": 4277665,
+      "raw_control_rate": 0.17201837918584087,
+      "by_gap": {
+        "6": {
+          "observed": 99736,
+          "linked": 14404,
+          "expected_links": 20388.156521971905
+        },
+        "8": {
+          "observed": 54400,
+          "linked": 11063,
+          "expected_links": 10482.325760414436
+        },
+        "10": {
+          "observed": 30379,
+          "linked": 3110,
+          "expected_links": 2718.500782264372
+        },
+        "12": {
+          "observed": 65505,
+          "linked": 13916,
+          "expected_links": 15429.751791186414
+        },
+        "14": {
+          "observed": 21107,
+          "linked": 985,
+          "expected_links": 936.9923147527354
+        },
+        "16": {
+          "observed": 35384,
+          "linked": 3777,
+          "expected_links": 3505.441067774319
+        },
+        "18": {
+          "observed": 43850,
+          "linked": 10750,
+          "expected_links": 10394.548925700727
+        },
+        "20": {
+          "observed": 11664,
+          "linked": 514,
+          "expected_links": 477.0492004930301
+        },
+        "22": {
+          "observed": 20008,
+          "linked": 1957,
+          "expected_links": 2103.5225025801415
+        },
+        "24": {
+          "observed": 27170,
+          "linked": 5087,
+          "expected_links": 4869.791571224972
+        },
+        "26": {
+          "observed": 12223,
+          "linked": 2609,
+          "expected_links": 2659.3052129250423
+        },
+        "28": {
+          "observed": 8752,
+          "linked": 1888,
+          "expected_links": 1901.7359193131324
+        },
+        "30": {
+          "observed": 16144,
+          "linked": 1968,
+          "expected_links": 1961.7982881815967
+        },
+        "32": {
+          "observed": 6720,
+          "linked": 1438,
+          "expected_links": 1577.2486603246987
+        },
+        "34": {
+          "observed": 6032,
+          "linked": 1229,
+          "expected_links": 1229.7717702854065
+        },
+        "36": {
+          "observed": 10194,
+          "linked": 1593,
+          "expected_links": 1640.4988274008797
+        },
+        "38": {
+          "observed": 5037,
+          "linked": 922,
+          "expected_links": 831.5645167898499
+        },
+        "40": {
+          "observed": 3156,
+          "linked": 345,
+          "expected_links": 336.29355107816497
+        },
+        "42": {
+          "observed": 5941,
+          "linked": 1156,
+          "expected_links": 1226.9740539651336
+        },
+        "44": {
+          "observed": 2056,
+          "linked": 222,
+          "expected_links": 225.94301663485214
+        },
+        "46": {
+          "observed": 2671,
+          "linked": 273,
+          "expected_links": 288.67622665301303
+        },
+        "48": {
+          "observed": 3784,
+          "linked": 859,
+          "expected_links": 871.2189368583009
+        },
+        "50": {
+          "observed": 896,
+          "linked": 90,
+          "expected_links": 93.08707684419824
+        },
+        "52": {
+          "observed": 1824,
+          "linked": 277,
+          "expected_links": 311.82050309813627
+        },
+        "54": {
+          "observed": 2403,
+          "linked": 412,
+          "expected_links": 418.0118570658824
+        },
+        "56": {
+          "observed": 891,
+          "linked": 181,
+          "expected_links": 168.88712669848977
+        },
+        "58": {
+          "observed": 1033,
+          "linked": 250,
+          "expected_links": 244.37326227845165
+        },
+        "60": {
+          "observed": 1394,
+          "linked": 148,
+          "expected_links": 165.86282614517413
+        },
+        "62": {
+          "observed": 547,
+          "linked": 124,
+          "expected_links": 121.80432694281143
+        },
+        "64": {
+          "observed": 543,
+          "linked": 99,
+          "expected_links": 117.39654870705611
+        },
+        "66": {
+          "observed": 908,
+          "linked": 147,
+          "expected_links": 135.03857081586574
+        },
+        "68": {
+          "observed": 492,
+          "linked": 91,
+          "expected_links": 90.09684274313614
+        },
+        "70": {
+          "observed": 203,
+          "linked": 11,
+          "expected_links": 11.456527075036536
+        },
+        "72": {
+          "observed": 468,
+          "linked": 117,
+          "expected_links": 116.09209869879099
+        },
+        "74": {
+          "observed": 191,
+          "linked": 16,
+          "expected_links": 20.16630287727012
+        },
+        "76": {
+          "observed": 198,
+          "linked": 23,
+          "expected_links": 22.97115152198319
+        },
+        "78": {
+          "observed": 338,
+          "linked": 79,
+          "expected_links": 66.00591304618027
+        },
+        "80": {
+          "observed": 54,
+          "linked": 6,
+          "expected_links": 7.007661103604587
+        },
+        "82": {
+          "observed": 160,
+          "linked": 28,
+          "expected_links": 33.73532575196191
+        },
+        "84": {
+          "observed": 199,
+          "linked": 30,
+          "expected_links": 25.86605342331983
+        },
+        "86": {
+          "observed": 71,
+          "linked": 21,
+          "expected_links": 17.85143825037045
+        },
+        "88": {
+          "observed": 60,
+          "linked": 10,
+          "expected_links": 14.093673289991644
+        },
+        "90": {
+          "observed": 112,
+          "linked": 8,
+          "expected_links": 9.337144090855283
+        },
+        "92": {
+          "observed": 36,
+          "linked": 12,
+          "expected_links": 9.34683494888874
+        },
+        "94": {
+          "observed": 37,
+          "linked": 8,
+          "expected_links": 9.17443417611193
+        },
+        "96": {
+          "observed": 65,
+          "linked": 12,
+          "expected_links": 11.790515278040585
+        },
+        "98": {
+          "observed": 29,
+          "linked": 4,
+          "expected_links": 3.2887867266620923
+        },
+        "100": {
+          "observed": 22,
+          "linked": 1,
+          "expected_links": 1.862834374063929
+        },
+        "102": {
+          "observed": 31,
+          "linked": 8,
+          "expected_links": 7.812829891664954
+        },
+        "104": {
+          "observed": 10,
+          "linked": 0,
+          "expected_links": 0.49926265746221976
+        },
+        "106": {
+          "observed": 21,
+          "linked": 1,
+          "expected_links": 1.0319180751069426
+        },
+        "108": {
+          "observed": 26,
+          "linked": 3,
+          "expected_links": 6.6525988206610585
+        },
+        "110": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.48360571215205733
+        },
+        "112": {
+          "observed": 8,
+          "linked": 3,
+          "expected_links": 1.1602791046077232
+        },
+        "114": {
+          "observed": 11,
+          "linked": 1,
+          "expected_links": 1.9594367528508756
+        },
+        "116": {
+          "observed": 4,
+          "linked": 2,
+          "expected_links": 0.9201188029121392
+        },
+        "118": {
+          "observed": 7,
+          "linked": 4,
+          "expected_links": 1.7995934064634211
+        },
+        "120": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.45494058350329303
+        },
+        "122": {
+          "observed": 4,
+          "linked": 0,
+          "expected_links": 1.0672792597130707
+        },
+        "124": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.5212757210114649
+        },
+        "126": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.8106310719668253
+        },
+        "128": {
+          "observed": 1,
+          "linked": 1,
+          "expected_links": 0.21917139544816644
+        },
+        "130": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.11926969636832704
+        },
+        "132": {
+          "observed": 3,
+          "linked": 0,
+          "expected_links": 0.5358799838820001
+        },
+        "134": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.25624161696361375
+        },
+        "136": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.11543680688783867
+        },
+        "138": {
+          "observed": 2,
+          "linked": 1,
+          "expected_links": 0.4842272736063676
+        },
+        "142": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.3715250777412476
+        },
+        "146": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.4068915993411522
+        },
+        "148": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.22725452684966854
+        },
+        "152": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.24365945206440523
+        },
+        "154": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.1698389458272328
+        }
+      }
+    },
+    {
+      "level": "Exact gap + location + both ingredient profiles",
+      "min_controls_per_stratum": 1,
+      "matched_observed": 501484,
+      "coverage": 0.804587337011717,
+      "observed_linked": 81088,
+      "observed_rate": 0.16169608601670243,
+      "standardized_control_rate": 0.16165788718134524,
+      "difference_percentage_points": 0.003819883535718363,
+      "controls": 2351073,
+      "raw_control_rate": 0.1503100924556575,
+      "by_gap": {
+        "6": {
+          "observed": 98541,
+          "linked": 14023,
+          "expected_links": 14136.218457534467
+        },
+        "8": {
+          "observed": 53421,
+          "linked": 10723,
+          "expected_links": 10817.36993907158
+        },
+        "10": {
+          "observed": 29937,
+          "linked": 2991,
+          "expected_links": 3209.283354614977
+        },
+        "12": {
+          "observed": 65120,
+          "linked": 13808,
+          "expected_links": 14013.663181832966
+        },
+        "14": {
+          "observed": 21089,
+          "linked": 983,
+          "expected_links": 904.2631527905266
+        },
+        "16": {
+          "observed": 35263,
+          "linked": 3740,
+          "expected_links": 3598.026562160167
+        },
+        "18": {
+          "observed": 43656,
+          "linked": 10668,
+          "expected_links": 10265.949741216285
+        },
+        "20": {
+          "observed": 11648,
+          "linked": 510,
+          "expected_links": 460.44104328174734
+        },
+        "22": {
+          "observed": 19970,
+          "linked": 1949,
+          "expected_links": 1864.1494235306523
+        },
+        "24": {
+          "observed": 27056,
+          "linked": 5047,
+          "expected_links": 5057.223607626153
+        },
+        "26": {
+          "observed": 12162,
+          "linked": 2592,
+          "expected_links": 2617.727492455191
+        },
+        "28": {
+          "observed": 8732,
+          "linked": 1883,
+          "expected_links": 1891.0099150603905
+        },
+        "30": {
+          "observed": 16129,
+          "linked": 1963,
+          "expected_links": 1932.2667819043552
+        },
+        "32": {
+          "observed": 6698,
+          "linked": 1434,
+          "expected_links": 1453.3540444643218
+        },
+        "34": {
+          "observed": 5996,
+          "linked": 1216,
+          "expected_links": 1244.9742122551102
+        },
+        "36": {
+          "observed": 10176,
+          "linked": 1585,
+          "expected_links": 1620.0321108229516
+        },
+        "38": {
+          "observed": 5014,
+          "linked": 912,
+          "expected_links": 897.8759661642555
+        },
+        "40": {
+          "observed": 3151,
+          "linked": 344,
+          "expected_links": 356.59939048455766
+        },
+        "42": {
+          "observed": 5932,
+          "linked": 1150,
+          "expected_links": 1155.1761894040865
+        },
+        "44": {
+          "observed": 2052,
+          "linked": 222,
+          "expected_links": 215.8917950457837
+        },
+        "46": {
+          "observed": 2668,
+          "linked": 273,
+          "expected_links": 275.38059324202385
+        },
+        "48": {
+          "observed": 3775,
+          "linked": 855,
+          "expected_links": 871.6945020827488
+        },
+        "50": {
+          "observed": 893,
+          "linked": 89,
+          "expected_links": 84.51007293565675
+        },
+        "52": {
+          "observed": 1816,
+          "linked": 275,
+          "expected_links": 284.6392580758344
+        },
+        "54": {
+          "observed": 2398,
+          "linked": 409,
+          "expected_links": 405.90396622474356
+        },
+        "56": {
+          "observed": 890,
+          "linked": 181,
+          "expected_links": 179.44797650055798
+        },
+        "58": {
+          "observed": 1029,
+          "linked": 250,
+          "expected_links": 250.95105980512196
+        },
+        "60": {
+          "observed": 1392,
+          "linked": 147,
+          "expected_links": 152.04903271258476
+        },
+        "62": {
+          "observed": 547,
+          "linked": 124,
+          "expected_links": 121.95898413608776
+        },
+        "64": {
+          "observed": 542,
+          "linked": 98,
+          "expected_links": 105.77335130911487
+        },
+        "66": {
+          "observed": 905,
+          "linked": 146,
+          "expected_links": 134.7698482254602
+        },
+        "68": {
+          "observed": 491,
+          "linked": 91,
+          "expected_links": 89.36814914975653
+        },
+        "70": {
+          "observed": 201,
+          "linked": 11,
+          "expected_links": 10.839745298072012
+        },
+        "72": {
+          "observed": 465,
+          "linked": 114,
+          "expected_links": 116.60489742077245
+        },
+        "74": {
+          "observed": 191,
+          "linked": 16,
+          "expected_links": 16.966627375162624
+        },
+        "76": {
+          "observed": 198,
+          "linked": 23,
+          "expected_links": 20.758292784175655
+        },
+        "78": {
+          "observed": 338,
+          "linked": 79,
+          "expected_links": 65.23428102124625
+        },
+        "80": {
+          "observed": 54,
+          "linked": 6,
+          "expected_links": 9.97899616171168
+        },
+        "82": {
+          "observed": 159,
+          "linked": 28,
+          "expected_links": 28.902129697706403
+        },
+        "84": {
+          "observed": 199,
+          "linked": 30,
+          "expected_links": 29.513418202733376
+        },
+        "86": {
+          "observed": 71,
+          "linked": 21,
+          "expected_links": 18.014172476021635
+        },
+        "88": {
+          "observed": 59,
+          "linked": 10,
+          "expected_links": 12.044512843741284
+        },
+        "90": {
+          "observed": 112,
+          "linked": 8,
+          "expected_links": 8.13874865895455
+        },
+        "92": {
+          "observed": 36,
+          "linked": 12,
+          "expected_links": 11.632383581176803
+        },
+        "94": {
+          "observed": 37,
+          "linked": 8,
+          "expected_links": 11.60679393093908
+        },
+        "96": {
+          "observed": 65,
+          "linked": 12,
+          "expected_links": 9.162845450125504
+        },
+        "98": {
+          "observed": 29,
+          "linked": 4,
+          "expected_links": 2.0133362496453615
+        },
+        "100": {
+          "observed": 22,
+          "linked": 1,
+          "expected_links": 2.0942535149258465
+        },
+        "102": {
+          "observed": 31,
+          "linked": 8,
+          "expected_links": 6.500360155354089
+        },
+        "104": {
+          "observed": 10,
+          "linked": 0,
+          "expected_links": 0.3476708989093658
+        },
+        "106": {
+          "observed": 21,
+          "linked": 1,
+          "expected_links": 1.136877806237666
+        },
+        "108": {
+          "observed": 26,
+          "linked": 3,
+          "expected_links": 7.082140321638779
+        },
+        "110": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.32109589154476903
+        },
+        "112": {
+          "observed": 8,
+          "linked": 3,
+          "expected_links": 1.1724857980185859
+        },
+        "114": {
+          "observed": 11,
+          "linked": 1,
+          "expected_links": 1.806806341909534
+        },
+        "116": {
+          "observed": 4,
+          "linked": 2,
+          "expected_links": 0.921680009418413
+        },
+        "118": {
+          "observed": 7,
+          "linked": 4,
+          "expected_links": 2.519543887159525
+        },
+        "120": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.734659581461451
+        },
+        "122": {
+          "observed": 4,
+          "linked": 0,
+          "expected_links": 0.7419191919191919
+        },
+        "124": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.17763157894736842
+        },
+        "126": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 1.162578650571772
+        },
+        "128": {
+          "observed": 1,
+          "linked": 1,
+          "expected_links": 0.4796747967479675
+        },
+        "130": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.0
+        },
+        "132": {
+          "observed": 3,
+          "linked": 0,
+          "expected_links": 0.03966612142788415
+        },
+        "134": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.15147679324894514
+        },
+        "136": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.4074074074074074
+        },
+        "138": {
+          "observed": 2,
+          "linked": 1,
+          "expected_links": 0.4559386973180076
+        },
+        "142": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.19325396825396826
+        },
+        "146": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.11645789968510467
+        },
+        "148": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.02
+        },
+        "152": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.3448275862068966
+        },
+        "154": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.5611510791366906
+        }
+      }
+    },
+    {
+      "level": "Exact gap + location + both ingredient profiles",
+      "min_controls_per_stratum": 10,
+      "matched_observed": 463609,
+      "coverage": 0.7438202030865693,
+      "observed_linked": 70978,
+      "observed_rate": 0.1530988397550522,
+      "standardized_control_rate": 0.153072082478394,
+      "difference_percentage_points": 0.002675727665822756,
+      "controls": 2323982,
+      "raw_control_rate": 0.148717158738751,
+      "by_gap": {
+        "6": {
+          "observed": 85369,
+          "linked": 10867,
+          "expected_links": 10977.749409915421
+        },
+        "8": {
+          "observed": 44765,
+          "linked": 7965,
+          "expected_links": 7987.202875579521
+        },
+        "10": {
+          "observed": 24460,
+          "linked": 1955,
+          "expected_links": 2123.5480371546596
+        },
+        "12": {
+          "observed": 61415,
+          "linked": 12686,
+          "expected_links": 12970.709610404396
+        },
+        "14": {
+          "observed": 20798,
+          "linked": 944,
+          "expected_links": 869.49648612386
+        },
+        "16": {
+          "observed": 34121,
+          "linked": 3454,
+          "expected_links": 3342.312673271277
+        },
+        "18": {
+          "observed": 42072,
+          "linked": 10113,
+          "expected_links": 9720.364820581368
+        },
+        "20": {
+          "observed": 11551,
+          "linked": 499,
+          "expected_links": 452.1497734404774
+        },
+        "22": {
+          "observed": 19595,
+          "linked": 1882,
+          "expected_links": 1795.5248203560493
+        },
+        "24": {
+          "observed": 26020,
+          "linked": 4678,
+          "expected_links": 4679.151385403933
+        },
+        "26": {
+          "observed": 11570,
+          "linked": 2425,
+          "expected_links": 2463.59376229646
+        },
+        "28": {
+          "observed": 8564,
+          "linked": 1833,
+          "expected_links": 1839.734121409597
+        },
+        "30": {
+          "observed": 15998,
+          "linked": 1930,
+          "expected_links": 1900.8052739678471
+        },
+        "32": {
+          "observed": 6452,
+          "linked": 1379,
+          "expected_links": 1389.7365841468618
+        },
+        "34": {
+          "observed": 5708,
+          "linked": 1125,
+          "expected_links": 1148.2646884455864
+        },
+        "36": {
+          "observed": 9986,
+          "linked": 1501,
+          "expected_links": 1544.016237807078
+        },
+        "38": {
+          "observed": 4780,
+          "linked": 836,
+          "expected_links": 815.8926328309224
+        },
+        "40": {
+          "observed": 3099,
+          "linked": 332,
+          "expected_links": 346.7108984210655
+        },
+        "42": {
+          "observed": 5882,
+          "linked": 1134,
+          "expected_links": 1137.5361100390073
+        },
+        "44": {
+          "observed": 2025,
+          "linked": 217,
+          "expected_links": 211.32631885530753
+        },
+        "46": {
+          "observed": 2629,
+          "linked": 261,
+          "expected_links": 267.2714662578969
+        },
+        "48": {
+          "observed": 3706,
+          "linked": 828,
+          "expected_links": 846.7087877970348
+        },
+        "50": {
+          "observed": 882,
+          "linked": 87,
+          "expected_links": 84.17673960232342
+        },
+        "52": {
+          "observed": 1766,
+          "linked": 257,
+          "expected_links": 267.61624220281874
+        },
+        "54": {
+          "observed": 2340,
+          "linked": 390,
+          "expected_links": 392.6285693993467
+        },
+        "56": {
+          "observed": 874,
+          "linked": 176,
+          "expected_links": 174.48369078627223
+        },
+        "58": {
+          "observed": 995,
+          "linked": 240,
+          "expected_links": 237.6657423448045
+        },
+        "60": {
+          "observed": 1384,
+          "linked": 144,
+          "expected_links": 149.77046128401332
+        },
+        "62": {
+          "observed": 538,
+          "linked": 120,
+          "expected_links": 118.84787302497665
+        },
+        "64": {
+          "observed": 535,
+          "linked": 96,
+          "expected_links": 103.99557353133709
+        },
+        "66": {
+          "observed": 889,
+          "linked": 142,
+          "expected_links": 130.9365148921269
+        },
+        "68": {
+          "observed": 481,
+          "linked": 85,
+          "expected_links": 84.77291105451845
+        },
+        "70": {
+          "observed": 201,
+          "linked": 11,
+          "expected_links": 10.839745298072012
+        },
+        "72": {
+          "observed": 457,
+          "linked": 112,
+          "expected_links": 113.9620402779153
+        },
+        "74": {
+          "observed": 187,
+          "linked": 14,
+          "expected_links": 15.588849597384845
+        },
+        "76": {
+          "observed": 196,
+          "linked": 22,
+          "expected_links": 20.508292784175655
+        },
+        "78": {
+          "observed": 333,
+          "linked": 79,
+          "expected_links": 65.10928102124625
+        },
+        "80": {
+          "observed": 52,
+          "linked": 5,
+          "expected_links": 9.47899616171168
+        },
+        "82": {
+          "observed": 157,
+          "linked": 28,
+          "expected_links": 28.902129697706403
+        },
+        "84": {
+          "observed": 198,
+          "linked": 29,
+          "expected_links": 29.013418202733376
+        },
+        "86": {
+          "observed": 70,
+          "linked": 21,
+          "expected_links": 18.014172476021635
+        },
+        "88": {
+          "observed": 58,
+          "linked": 9,
+          "expected_links": 11.044512843741284
+        },
+        "90": {
+          "observed": 112,
+          "linked": 8,
+          "expected_links": 8.13874865895455
+        },
+        "92": {
+          "observed": 33,
+          "linked": 11,
+          "expected_links": 9.632383581176803
+        },
+        "94": {
+          "observed": 34,
+          "linked": 7,
+          "expected_links": 10.606793930939082
+        },
+        "96": {
+          "observed": 65,
+          "linked": 12,
+          "expected_links": 9.162845450125504
+        },
+        "98": {
+          "observed": 29,
+          "linked": 4,
+          "expected_links": 2.0133362496453615
+        },
+        "100": {
+          "observed": 22,
+          "linked": 1,
+          "expected_links": 2.0942535149258465
+        },
+        "102": {
+          "observed": 30,
+          "linked": 8,
+          "expected_links": 6.389249044242979
+        },
+        "104": {
+          "observed": 10,
+          "linked": 0,
+          "expected_links": 0.3476708989093658
+        },
+        "106": {
+          "observed": 21,
+          "linked": 1,
+          "expected_links": 1.136877806237666
+        },
+        "108": {
+          "observed": 25,
+          "linked": 3,
+          "expected_links": 6.582140321638779
+        },
+        "110": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.32109589154476903
+        },
+        "112": {
+          "observed": 8,
+          "linked": 3,
+          "expected_links": 1.1724857980185859
+        },
+        "114": {
+          "observed": 11,
+          "linked": 1,
+          "expected_links": 1.806806341909534
+        },
+        "116": {
+          "observed": 4,
+          "linked": 2,
+          "expected_links": 0.921680009418413
+        },
+        "118": {
+          "observed": 7,
+          "linked": 4,
+          "expected_links": 2.519543887159525
+        },
+        "120": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.734659581461451
+        },
+        "122": {
+          "observed": 3,
+          "linked": 0,
+          "expected_links": 0.7419191919191919
+        },
+        "124": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.17763157894736842
+        },
+        "126": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 1.162578650571772
+        },
+        "128": {
+          "observed": 1,
+          "linked": 1,
+          "expected_links": 0.4796747967479675
+        },
+        "130": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.0
+        },
+        "132": {
+          "observed": 3,
+          "linked": 0,
+          "expected_links": 0.03966612142788415
+        },
+        "134": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.15147679324894514
+        },
+        "136": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.4074074074074074
+        },
+        "138": {
+          "observed": 2,
+          "linked": 1,
+          "expected_links": 0.4559386973180076
+        },
+        "142": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.19325396825396826
+        },
+        "146": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.11645789968510467
+        },
+        "148": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.02
+        },
+        "152": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.3448275862068966
+        },
+        "154": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.5611510791366906
+        }
+      }
+    },
+    {
+      "level": "Exact gap + location + both ingredient profiles",
+      "min_controls_per_stratum": 30,
+      "matched_observed": 394651,
+      "coverage": 0.6331831068169894,
+      "observed_linked": 55922,
+      "observed_rate": 0.14169988166759998,
+      "standardized_control_rate": 0.14090452192099245,
+      "difference_percentage_points": 0.0795359746607535,
+      "controls": 2234684,
+      "raw_control_rate": 0.14373128370722663,
+      "by_gap": {
+        "6": {
+          "observed": 62677,
+          "linked": 6596,
+          "expected_links": 6520.476061187183
+        },
+        "8": {
+          "observed": 30576,
+          "linked": 4522,
+          "expected_links": 4532.297667905157
+        },
+        "10": {
+          "observed": 15779,
+          "linked": 940,
+          "expected_links": 991.3986793132589
+        },
+        "12": {
+          "observed": 54025,
+          "linked": 10788,
+          "expected_links": 11067.766625203049
+        },
+        "14": {
+          "observed": 20071,
+          "linked": 870,
+          "expected_links": 796.0102915397622
+        },
+        "16": {
+          "observed": 31568,
+          "linked": 2973,
+          "expected_links": 2873.8922883072687
+        },
+        "18": {
+          "observed": 38488,
+          "linked": 8889,
+          "expected_links": 8534.068331741544
+        },
+        "20": {
+          "observed": 11253,
+          "linked": 460,
+          "expected_links": 414.18086018889903
+        },
+        "22": {
+          "observed": 18740,
+          "linked": 1727,
+          "expected_links": 1641.8669247557318
+        },
+        "24": {
+          "observed": 23658,
+          "linked": 3870,
+          "expected_links": 3889.411537758913
+        },
+        "26": {
+          "observed": 10205,
+          "linked": 2022,
+          "expected_links": 2048.1137387731646
+        },
+        "28": {
+          "observed": 8092,
+          "linked": 1693,
+          "expected_links": 1695.1498852309367
+        },
+        "30": {
+          "observed": 15696,
+          "linked": 1856,
+          "expected_links": 1824.0595303648076
+        },
+        "32": {
+          "observed": 5849,
+          "linked": 1191,
+          "expected_links": 1204.218785679631
+        },
+        "34": {
+          "observed": 4975,
+          "linked": 920,
+          "expected_links": 934.9562980361529
+        },
+        "36": {
+          "observed": 9478,
+          "linked": 1351,
+          "expected_links": 1381.126537834152
+        },
+        "38": {
+          "observed": 4352,
+          "linked": 713,
+          "expected_links": 686.4529573494808
+        },
+        "40": {
+          "observed": 2936,
+          "linked": 300,
+          "expected_links": 313.7046223304449
+        },
+        "42": {
+          "observed": 5775,
+          "linked": 1097,
+          "expected_links": 1097.7410265685162
+        },
+        "44": {
+          "observed": 1971,
+          "linked": 202,
+          "expected_links": 200.8238382307277
+        },
+        "46": {
+          "observed": 2566,
+          "linked": 247,
+          "expected_links": 253.5152188321592
+        },
+        "48": {
+          "observed": 3530,
+          "linked": 757,
+          "expected_links": 777.8739950095238
+        },
+        "50": {
+          "observed": 832,
+          "linked": 77,
+          "expected_links": 73.1303240052499
+        },
+        "52": {
+          "observed": 1635,
+          "linked": 217,
+          "expected_links": 230.33005744408192
+        },
+        "54": {
+          "observed": 2226,
+          "linked": 356,
+          "expected_links": 349.8370419206442
+        },
+        "56": {
+          "observed": 835,
+          "linked": 168,
+          "expected_links": 161.7454312101493
+        },
+        "58": {
+          "observed": 898,
+          "linked": 203,
+          "expected_links": 206.99638324682047
+        },
+        "60": {
+          "observed": 1362,
+          "linked": 139,
+          "expected_links": 144.6875980899642
+        },
+        "62": {
+          "observed": 518,
+          "linked": 115,
+          "expected_links": 111.87037588408738
+        },
+        "64": {
+          "observed": 518,
+          "linked": 93,
+          "expected_links": 99.60224726870133
+        },
+        "66": {
+          "observed": 848,
+          "linked": 132,
+          "expected_links": 118.00474605113308
+        },
+        "68": {
+          "observed": 455,
+          "linked": 75,
+          "expected_links": 75.20021950884797
+        },
+        "70": {
+          "observed": 198,
+          "linked": 10,
+          "expected_links": 10.06146475508559
+        },
+        "72": {
+          "observed": 437,
+          "linked": 106,
+          "expected_links": 106.52323303689393
+        },
+        "74": {
+          "observed": 184,
+          "linked": 12,
+          "expected_links": 14.984453992989241
+        },
+        "76": {
+          "observed": 190,
+          "linked": 20,
+          "expected_links": 19.212232178115045
+        },
+        "78": {
+          "observed": 323,
+          "linked": 74,
+          "expected_links": 61.33047024815628
+        },
+        "80": {
+          "observed": 46,
+          "linked": 4,
+          "expected_links": 7.465211700558797
+        },
+        "82": {
+          "observed": 145,
+          "linked": 23,
+          "expected_links": 24.310660382707677
+        },
+        "84": {
+          "observed": 196,
+          "linked": 29,
+          "expected_links": 28.66075362593087
+        },
+        "86": {
+          "observed": 64,
+          "linked": 18,
+          "expected_links": 15.549037610886769
+        },
+        "88": {
+          "observed": 51,
+          "linked": 7,
+          "expected_links": 8.964426263654707
+        },
+        "90": {
+          "observed": 112,
+          "linked": 8,
+          "expected_links": 8.13874865895455
+        },
+        "92": {
+          "observed": 30,
+          "linked": 8,
+          "expected_links": 7.537145485938709
+        },
+        "94": {
+          "observed": 30,
+          "linked": 7,
+          "expected_links": 8.920896495041648
+        },
+        "96": {
+          "observed": 59,
+          "linked": 10,
+          "expected_links": 7.621298479250039
+        },
+        "98": {
+          "observed": 29,
+          "linked": 4,
+          "expected_links": 2.0133362496453615
+        },
+        "100": {
+          "observed": 22,
+          "linked": 1,
+          "expected_links": 2.0942535149258465
+        },
+        "102": {
+          "observed": 28,
+          "linked": 7,
+          "expected_links": 5.296391901385834
+        },
+        "104": {
+          "observed": 10,
+          "linked": 0,
+          "expected_links": 0.3476708989093658
+        },
+        "106": {
+          "observed": 21,
+          "linked": 1,
+          "expected_links": 1.136877806237666
+        },
+        "108": {
+          "observed": 24,
+          "linked": 3,
+          "expected_links": 6.519640321638779
+        },
+        "110": {
+          "observed": 5,
+          "linked": 0,
+          "expected_links": 0.14868209844132074
+        },
+        "112": {
+          "observed": 8,
+          "linked": 3,
+          "expected_links": 1.1724857980185859
+        },
+        "114": {
+          "observed": 10,
+          "linked": 1,
+          "expected_links": 1.494306341909534
+        },
+        "116": {
+          "observed": 4,
+          "linked": 2,
+          "expected_links": 0.921680009418413
+        },
+        "118": {
+          "observed": 6,
+          "linked": 3,
+          "expected_links": 2.069543887159525
+        },
+        "120": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 0.734659581461451
+        },
+        "122": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.6055555555555556
+        },
+        "124": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.17763157894736842
+        },
+        "126": {
+          "observed": 6,
+          "linked": 0,
+          "expected_links": 1.162578650571772
+        },
+        "128": {
+          "observed": 1,
+          "linked": 1,
+          "expected_links": 0.4796747967479675
+        },
+        "130": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.0
+        },
+        "132": {
+          "observed": 3,
+          "linked": 0,
+          "expected_links": 0.03966612142788415
+        },
+        "134": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.15147679324894514
+        },
+        "136": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.4074074074074074
+        },
+        "138": {
+          "observed": 2,
+          "linked": 1,
+          "expected_links": 0.4559386973180076
+        },
+        "142": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.19325396825396826
+        },
+        "146": {
+          "observed": 2,
+          "linked": 0,
+          "expected_links": 0.11645789968510467
+        },
+        "148": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.02
+        },
+        "154": {
+          "observed": 1,
+          "linked": 0,
+          "expected_links": 0.5611510791366906
+        }
+      }
+    }
+  ],
+  "gap_observed": {
+    "4": [
+      58979,
+      15098
+    ],
+    "2": [
+      58621,
+      17288
+    ],
+    "6": [
+      99987,
+      14423
+    ],
+    "10": [
+      30500,
+      3114
+    ],
+    "16": [
+      35394,
+      3778
+    ],
+    "8": [
+      54431,
+      11066
+    ],
+    "12": [
+      65513,
+      13917
+    ],
+    "18": [
+      43851,
+      10750
+    ],
+    "22": [
+      20009,
+      1957
+    ],
+    "32": [
+      6721,
+      1438
+    ],
+    "24": [
+      27170,
+      5087
+    ],
+    "14": [
+      21117,
+      986
+    ],
+    "20": [
+      11665,
+      514
+    ],
+    "28": [
+      8752,
+      1888
+    ],
+    "26": [
+      12223,
+      2609
+    ],
+    "30": [
+      16144,
+      1968
+    ],
+    "34": [
+      6032,
+      1229
+    ],
+    "36": [
+      10194,
+      1593
+    ],
+    "46": [
+      2671,
+      273
+    ],
+    "38": [
+      5037,
+      922
+    ],
+    "50": [
+      896,
+      90
+    ],
+    "48": [
+      3784,
+      859
+    ],
+    "40": [
+      3156,
+      345
+    ],
+    "72": [
+      468,
+      117
+    ],
+    "52": [
+      1824,
+      277
+    ],
+    "64": [
+      543,
+      99
+    ],
+    "42": [
+      5941,
+      1156
+    ],
+    "54": [
+      2403,
+      412
+    ],
+    "56": [
+      891,
+      181
+    ],
+    "44": [
+      2056,
+      222
+    ],
+    "58": [
+      1033,
+      250
+    ],
+    "62": [
+      547,
+      124
+    ],
+    "60": [
+      1394,
+      148
+    ],
+    "88": [
+      60,
+      10
+    ],
+    "66": [
+      908,
+      147
+    ],
+    "68": [
+      492,
+      91
+    ],
+    "78": [
+      338,
+      79
+    ],
+    "74": [
+      191,
+      16
+    ],
+    "80": [
+      54,
+      6
+    ],
+    "96": [
+      65,
+      12
+    ],
+    "110": [
+      6,
+      0
+    ],
+    "70": [
+      203,
+      11
+    ],
+    "98": [
+      29,
+      4
+    ],
+    "76": [
+      198,
+      23
+    ],
+    "90": [
+      112,
+      8
+    ],
+    "84": [
+      199,
+      30
+    ],
+    "114": [
+      11,
+      1
+    ],
+    "82": [
+      160,
+      28
+    ],
+    "86": [
+      71,
+      21
+    ],
+    "100": [
+      22,
+      1
+    ],
+    "94": [
+      37,
+      8
+    ],
+    "104": [
+      10,
+      0
+    ],
+    "92": [
+      36,
+      12
+    ],
+    "116": [
+      4,
+      2
+    ],
+    "106": [
+      21,
+      1
+    ],
+    "102": [
+      31,
+      8
+    ],
+    "112": [
+      8,
+      3
+    ],
+    "132": [
+      3,
+      0
+    ],
+    "126": [
+      6,
+      0
+    ],
+    "146": [
+      2,
+      0
+    ],
+    "108": [
+      26,
+      3
+    ],
+    "120": [
+      6,
+      0
+    ],
+    "138": [
+      2,
+      1
+    ],
+    "152": [
+      1,
+      0
+    ],
+    "128": [
+      1,
+      1
+    ],
+    "118": [
+      7,
+      4
+    ],
+    "148": [
+      1,
+      0
+    ],
+    "134": [
+      2,
+      0
+    ],
+    "124": [
+      2,
+      0
+    ],
+    "122": [
+      4,
+      0
+    ],
+    "136": [
+      1,
+      0
+    ],
+    "142": [
+      2,
+      0
+    ],
+    "154": [
+      1,
+      0
+    ],
+    "130": [
+      1,
+      0
+    ]
+  }
+}

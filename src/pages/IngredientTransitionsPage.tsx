@@ -309,28 +309,60 @@ export function IngredientTransitionsPage() {
           p<sub>new</sub> → r → q
         </em>
         ). Non-5 continuity is {cont.deeper.deeperNon5Pct}%; when the old door
-        lacks 5, the deeper rate is still {cont.deeper.oldWithout5DeeperPct}% —
-        not everything routes through 5.
+        lacks 5, the rate is still {cont.deeper.oldWithout5DeeperPct}%.
       </p>
       <p>
         Prototype: {cont.deeper.example.p} → {cont.deeper.example.next}. Surface
         swap {cont.deeper.example.oldDoor} → {cont.deeper.example.newDoor}, but
-        gold still holds {cont.deeper.example.path}.
+        gold still holds {cont.deeper.example.path}. {cont.deeper.example.note}
       </p>
       <p>
-        Local re-pairs inside blocks of 1,000 (offsets{" "}
-        {cont.deeper.baselines.map((b) => b.offset).join(", ")}) land around{" "}
-        {cont.deeper.baselines[0].deeperPct}–{cont.deeper.baselines[2].deeperPct}
-        % — about 2.3pp below true neighbours. That is a hint, not a verdict:
-        the shuffle changes the gap distribution. Hold any adjacency claim until
-        a gap-matched control.
+        Neighbours are not special once gap, location, and ingredient profile are
+        held. Against nonconsecutive controls matched on those (covering ~80% of
+        the disjoint pairs), continuity is {cont.matched.rows[0].observedPct}% vs{" "}
+        {cont.matched.rows[0].controlPct}% — the earlier excess over crude
+        re-pairs does not survive. Gaps 2 and 4 sit outside this test.
       </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>Min controls / stratum</th>
+              <th>Neighbours matched</th>
+              <th>Coverage</th>
+              <th>Actual continuity</th>
+              <th>Matched control</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cont.matched.rows.map((r) => (
+              <tr key={r.minControls}>
+                <td>{r.minControls}</td>
+                <td>{fmt(r.matched)}</td>
+                <td>{r.coveragePct.toFixed(2)}%</td>
+                <td>{r.observedPct.toFixed(3)}%</td>
+                <td>{r.controlPct.toFixed(3)}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Sharper next eye is whole-power preservation: when the census counts a
+        shared 5, how often is the entire 5<sup>k</sup> still in{" "}
+        <em>m₀(r)</em>? The 499→503 case preserves 5<sup>3</sup>, not just the
+        prime 5 — that rate is not measured here.
+      </p>
+
       <p className="lab-footnote">
         Exact sieve; gcd identity on every adjacent pair; deeper census tracks
-        prime ingredients (not exact powers). Findings only. Sources:{" "}
+        prime ingredients (not exact powers). Matched controls are real
+        nonconsecutive pairs standardized to the neighbour distribution.
+        Findings only. Sources:{" "}
         <code>analysis/ingredient-transitions/</code>,{" "}
         <code>analysis/gap-ingredients/</code>,{" "}
-        <code>analysis/deeper-door-continuity/</code>.
+        <code>analysis/deeper-door-continuity/</code>,{" "}
+        <code>analysis/matched-door-continuity/</code>.
       </p>
     </main>
   );
