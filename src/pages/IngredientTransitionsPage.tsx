@@ -461,12 +461,12 @@ export function IngredientTransitionsPage() {
 
       <h2>Swallow shapes</h2>
       <p>
-        Jack&apos;s tighter classification of the {fmt(power.swallowShapes.n)}{" "}
-        whole-odd-part preservations through {fmt(power.limit)}. Every case in
-        this cohort fits one normal form. Exactly one preserving{" "}
-        <code>r</code> per transition; <code>B = 1</code> always (no extra odd
-        multiplier). Findings only — exact classification of this census, not a
-        theorem for all such transitions.
+        Albert&apos;s wording split on the {fmt(power.swallowShapes.n)}{" "}
+        whole-odd-part preservations through {fmt(power.limit)}. Distinguish
+        three statements: what the door formula proves, what the census shows,
+        and the sharp conjecture the window suggests. Exactly one preserving{" "}
+        <code>r</code> per transition in this cohort; <code>B = 1</code>{" "}
+        always. Findings only — do not read the conjecture as proved.
       </p>
       <aside className="lab-theorem" aria-label="Whole-odd-part normal form">
         <p className="lab-theorem-implies">
@@ -480,10 +480,7 @@ export function IngredientTransitionsPage() {
           <br />
           gap = d<sub>new</sub> − d<sub>old</sub> = 2<sup>v</sup>
         </p>
-        <p>
-          with k, v ≥ 1. All {fmt(power.swallowShapes.normalForm.matching)} of{" "}
-          {fmt(power.swallowShapes.n)} match.
-        </p>
+        <p>with k, v ≥ 1. Construction ⇒ swallow (door arithmetic).</p>
       </aside>
 
       <h3>Preserving door shares</h3>
@@ -554,8 +551,31 @@ export function IngredientTransitionsPage() {
           </tbody>
         </table>
       </div>
+      <h3>Three statements</h3>
       <p>
-        {power.swallowShapes.normalForm.note} No adjacency law claimed. Stop.
+        <strong>1. Proved by the formula (construction ⇒ swallow).</strong> If{" "}
+        r = 2<sup>k</sup> A + 1 is prime and ≡ 2 (mod 3), and the doors are{" "}
+        2<sup>v+k</sup> A → 2<sup>v</sup> r (with k, v ≥ 1), then m₀(r) = r − 1
+        = 2<sup>k</sup> A and the gap is 2<sup>v</sup>. The odd block{" "}
+        <code>A</code> disappears from the immediate factorisation but survives
+        intact in m₀(r). This is door arithmetic.
+      </p>
+      <p>
+        <strong>2. Observed in the census.</strong> Every one of the{" "}
+        {fmt(power.swallowShapes.n)} whole-block preservations through 10⁷
+        (consecutive primes, surface-disjoint odd support, departing repeated
+        odd factor) takes exactly this form — no odd multiplier B &gt; 1. All{" "}
+        {fmt(power.swallowShapes.normalForm.matching)} of{" "}
+        {fmt(power.swallowShapes.n)} match; k-table, gaps, and prototypes above
+        are that census.
+      </p>
+      <p>
+        <strong>3. Sharp conjecture.</strong> Under consecutive primes,
+        surface-disjoint odd support, and an arriving <code>r</code> with A |
+        m₀(r) for the whole old odd block <code>A</code>, must m₀(r) ={" "}
+        2<sup>k</sup> A (no odd B &gt; 1)? The window says yes; a counterexample
+        would be the first messy swallow. Not proved. No adjacency law claimed.
+        Stop.
       </p>
 
       <p className="lab-footnote">

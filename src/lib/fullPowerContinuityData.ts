@@ -113,7 +113,7 @@ export const fullPowerContinuityData = {
           note: "d_old = 16A, d_new = 4(4A+1), m₀(701) = 4A",
         },
       ],
-      note: "Exact classification of this cohort through 10⁷ — census finding, not a theorem for all such transitions.",
+      note: "Construction ⇒ swallow is door arithmetic; all 1,336 match in the census (B=1); sharp conjecture that messy B>1 never occurs under consecutive primes + surface-disjoint odd support + A|m₀(r) — window says yes, not proved.",
     },
   },
 } as const;
