@@ -48,6 +48,20 @@ export function HomePage() {
           </Link>
         </p>
       </section>
+
+      <figure className="figure-block">
+        <img
+          src="/figures/hire/H_hire_tree.png"
+          alt="Hire trees under Fermat and Mersenne doors"
+        />
+        <figcaption className="figure-caption">
+          <strong>Hire trees under Fermat and Mersenne doors.</strong> Gold
+          descending from the small 2-power doors — Fermat 5, 17, 257 and
+          Mersenne 7, 31, 127, 8191. Each row is one hire generation; filled
+          nodes sit in those trees. 5 and 7 carry most of the mass; 257 and
+          8191 stay thin.
+        </figcaption>
+      </figure>
     </main>
   );
 }

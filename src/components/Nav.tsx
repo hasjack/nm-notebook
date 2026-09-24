@@ -355,7 +355,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
                 @hasjack
               </a>
             </p>
-            <p className="nav-about-blurb">Independent researcher, UK.</p>
+            <p className="nav-about-blurb">3-free door · hire graph · Lean. UK.</p>
             <a
               className="nav-about-repo"
               href={REPO_URL}
