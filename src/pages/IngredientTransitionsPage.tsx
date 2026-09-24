@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ingredientTransitionData as data } from "../lib/ingredientTransitionData";
+import { doorContinuityData as cont } from "../lib/doorContinuityData";
 import "./DoorCoveragePage.css";
 
 const fmt = (n: number) => n.toLocaleString("en-GB");
@@ -261,9 +262,75 @@ export function IngredientTransitionsPage() {
         </div>
       </details>
 
+
+      <h2>How far vs what arrives</h2>
+      <p>
+        Retention has an exact floor: an odd factor <em>q</em> cannot stay unless
+        the door gap is at least 2<em>q</em>. Arrival size is another story. In the
+        1–10 million band, the share of transitions where the largest odd factor
+        grows at least tenfold sits near 30% across every gap bin — tiny leaps
+        bring huge newcomers about as often as larger ones. Partial correlation
+        of log gap with log arriving size (controlling for door size) is only{" "}
+        {cont.gapArrival.partialCorr}. “How far?” is a weak guide; “where that
+        leap lands?” is sharper.
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>Door gap</th>
+              <th>Transitions</th>
+              <th>Largest odd grows ≥10×</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cont.gapArrival.bins.map((b) => (
+              <tr key={b.gapBin}>
+                <td>{b.gapBin}</td>
+                <td>{fmt(b.pairs)}</td>
+                <td>{b.tenfoldPct.toFixed(2)}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>One level deeper</h2>
+      <p>
+        Immediate factor lists miss short hire paths. Among{" "}
+        {fmt(cont.deeper.disjoint)} consecutive pairs with disjoint odd support,{" "}
+        {cont.deeper.deeperPct}% still reconnect one step deeper: a departing
+        odd prime divides the door of an arriving odd prime (
+        <em>
+          p<sub>old</sub> → q
+        </em>
+        ,{" "}
+        <em>
+          p<sub>new</sub> → r → q
+        </em>
+        ). Non-5 continuity is {cont.deeper.deeperNon5Pct}%; when the old door
+        lacks 5, the deeper rate is still {cont.deeper.oldWithout5DeeperPct}% —
+        not everything routes through 5.
+      </p>
+      <p>
+        Prototype: {cont.deeper.example.p} → {cont.deeper.example.next}. Surface
+        swap {cont.deeper.example.oldDoor} → {cont.deeper.example.newDoor}, but
+        gold still holds {cont.deeper.example.path}.
+      </p>
+      <p>
+        Local re-pairs inside blocks of 1,000 (offsets{" "}
+        {cont.deeper.baselines.map((b) => b.offset).join(", ")}) land around{" "}
+        {cont.deeper.baselines[0].deeperPct}–{cont.deeper.baselines[2].deeperPct}
+        % — about 2.3pp below true neighbours. That is a hint, not a verdict:
+        the shuffle changes the gap distribution. Hold any adjacency claim until
+        a gap-matched control.
+      </p>
       <p className="lab-footnote">
-        Exact sieve; every adjacent pair checked against the gcd identity.
-        Findings only. Source: <code>analysis/ingredient-transitions/</code>.
+        Exact sieve; gcd identity on every adjacent pair; deeper census tracks
+        prime ingredients (not exact powers). Findings only. Sources:{" "}
+        <code>analysis/ingredient-transitions/</code>,{" "}
+        <code>analysis/gap-ingredients/</code>,{" "}
+        <code>analysis/deeper-door-continuity/</code>.
       </p>
     </main>
   );

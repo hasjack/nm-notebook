@@ -1,0 +1,471 @@
+{
+  "limit": 10000000,
+  "seconds": 7.356615660999978,
+  "counts": {
+    "pairs": 664576,
+    "direct": 41295,
+    "deeper_any": 134678,
+    "disjoint": 623281,
+    "disjoint_with_deeper": 114709,
+    "disjoint_with_deeper_other_than_5": 63588,
+    "disjoint_old_has_5": 135629,
+    "disjoint_old_without_5": 487652,
+    "disjoint_old_without_5_deeper": 47797
+  },
+  "shared_ancestors": [
+    [
+      5,
+      60003
+    ],
+    [
+      7,
+      30128
+    ],
+    [
+      11,
+      11396
+    ],
+    [
+      13,
+      6328
+    ],
+    [
+      17,
+      3573
+    ],
+    [
+      19,
+      3263
+    ],
+    [
+      23,
+      2135
+    ],
+    [
+      29,
+      1321
+    ],
+    [
+      31,
+      1187
+    ],
+    [
+      37,
+      860
+    ],
+    [
+      41,
+      770
+    ],
+    [
+      43,
+      589
+    ],
+    [
+      53,
+      499
+    ],
+    [
+      47,
+      369
+    ],
+    [
+      61,
+      258
+    ],
+    [
+      83,
+      251
+    ],
+    [
+      79,
+      251
+    ],
+    [
+      67,
+      239
+    ],
+    [
+      59,
+      228
+    ],
+    [
+      73,
+      203
+    ]
+  ],
+  "baselines": [
+    {
+      "offset": 137,
+      "pairs": 560214,
+      "deeper": 90315,
+      "other_than_5": 50096,
+      "origin_without_5": 460119,
+      "origin_without_5_deeper": 41014
+    },
+    {
+      "offset": 389,
+      "pairs": 560610,
+      "deeper": 90551,
+      "other_than_5": 50277,
+      "origin_without_5": 460484,
+      "origin_without_5_deeper": 41139
+    },
+    {
+      "offset": 613,
+      "pairs": 560477,
+      "deeper": 90534,
+      "other_than_5": 50315,
+      "origin_without_5": 460307,
+      "origin_without_5_deeper": 41159
+    }
+  ],
+  "examples": [
+    {
+      "previous_prime": 19,
+      "prime": 23,
+      "old_factors": [
+        5
+      ],
+      "new_factors": [
+        11
+      ],
+      "paths": [
+        [
+          11,
+          [
+            5
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 41,
+      "prime": 43,
+      "old_factors": [
+        5
+      ],
+      "new_factors": [
+        11
+      ],
+      "paths": [
+        [
+          11,
+          [
+            5
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 43,
+      "prime": 47,
+      "old_factors": [
+        11
+      ],
+      "new_factors": [
+        23
+      ],
+      "paths": [
+        [
+          23,
+          [
+            11
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 79,
+      "prime": 83,
+      "old_factors": [
+        5
+      ],
+      "new_factors": [
+        41
+      ],
+      "paths": [
+        [
+          41,
+          [
+            5
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 103,
+      "prime": 107,
+      "old_factors": [
+        13
+      ],
+      "new_factors": [
+        53
+      ],
+      "paths": [
+        [
+          53,
+          [
+            13
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 163,
+      "prime": 167,
+      "old_factors": [
+        41
+      ],
+      "new_factors": [
+        83
+      ],
+      "paths": [
+        [
+          83,
+          [
+            41
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 223,
+      "prime": 227,
+      "old_factors": [
+        7
+      ],
+      "new_factors": [
+        113
+      ],
+      "paths": [
+        [
+          113,
+          [
+            7
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 281,
+      "prime": 283,
+      "old_factors": [
+        5,
+        7
+      ],
+      "new_factors": [
+        71
+      ],
+      "paths": [
+        [
+          71,
+          [
+            5,
+            7
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 349,
+      "prime": 353,
+      "old_factors": [
+        5,
+        7
+      ],
+      "new_factors": [
+        11
+      ],
+      "paths": [
+        [
+          11,
+          [
+            5
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 379,
+      "prime": 383,
+      "old_factors": [
+        5,
+        19
+      ],
+      "new_factors": [
+        191
+      ],
+      "paths": [
+        [
+          191,
+          [
+            19,
+            5
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 409,
+      "prime": 419,
+      "old_factors": [
+        5,
+        41
+      ],
+      "new_factors": [
+        11,
+        19
+      ],
+      "paths": [
+        [
+          11,
+          [
+            5
+          ]
+        ],
+        [
+          19,
+          [
+            5
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 463,
+      "prime": 467,
+      "old_factors": [
+        29
+      ],
+      "new_factors": [
+        233
+      ],
+      "paths": [
+        [
+          233,
+          [
+            29
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 499,
+      "prime": 503,
+      "old_factors": [
+        5
+      ],
+      "new_factors": [
+        251
+      ],
+      "paths": [
+        [
+          251,
+          [
+            5
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 521,
+      "prime": 523,
+      "old_factors": [
+        5,
+        13
+      ],
+      "new_factors": [
+        131
+      ],
+      "paths": [
+        [
+          131,
+          [
+            5,
+            13
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 619,
+      "prime": 631,
+      "old_factors": [
+        5,
+        31
+      ],
+      "new_factors": [
+        79
+      ],
+      "paths": [
+        [
+          79,
+          [
+            5
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 859,
+      "prime": 863,
+      "old_factors": [
+        5,
+        43
+      ],
+      "new_factors": [
+        431
+      ],
+      "paths": [
+        [
+          431,
+          [
+            43,
+            5
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 883,
+      "prime": 887,
+      "old_factors": [
+        13,
+        17
+      ],
+      "new_factors": [
+        443
+      ],
+      "paths": [
+        [
+          443,
+          [
+            17,
+            13
+          ]
+        ]
+      ]
+    },
+    {
+      "previous_prime": 941,
+      "prime": 947,
+      "old_factors": [
+        5,
+        47
+      ],
+      "new_factors": [
+        11,
+        43
+      ],
+      "paths": [
+        [
+          11,
+          [
+            5
+          ]
+        ]
+      ]
+    }
+  ]
+}
