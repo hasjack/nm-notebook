@@ -22,6 +22,21 @@ const FLOORS: {
   { k: 134, eps: "−1", expr: "307262·2^n−135", factor: "7", seconds: "0.28" },
   { k: 136, eps: "+1", expr: "311848·2^n−135", factor: "439", seconds: "0.29" },
   { k: 140, eps: "−1", expr: "321020·2^n−141", factor: "37", seconds: "0.29" },
+  { k: 142, eps: "+1", expr: "325606·2^n−141", factor: "Fermat composite", seconds: "89,852" },
+  { k: 146, eps: "−1", expr: "334778·2^n−147", factor: "23", seconds: "0.28" },
+  { k: 148, eps: "+1", expr: "339364·2^n−147", factor: "(none stored)", seconds: "0.27" },
+  { k: 152, eps: "−1", expr: "348536·2^n−153", factor: "(none stored)", seconds: "0.28" },
+  { k: 154, eps: "+1", expr: "353122·2^n−153", factor: "79", seconds: "0.32" },
+  { k: 158, eps: "−1", expr: "362294·2^n−159", factor: "61", seconds: "0.32" },
+  { k: 160, eps: "+1", expr: "366880·2^n−159", factor: "7", seconds: "0.27" },
+  { k: 164, eps: "−1", expr: "376052·2^n−165", factor: "59", seconds: "0.27" },
+  { k: 166, eps: "+1", expr: "380638·2^n−165", factor: "19", seconds: "0.28" },
+  { k: 170, eps: "−1", expr: "389810·2^n−171", factor: "11", seconds: "0.27" },
+  { k: 172, eps: "+1", expr: "394396·2^n−171", factor: "41", seconds: "0.28" },
+  { k: 176, eps: "−1", expr: "403568·2^n−177", factor: "7", seconds: "0.28" },
+  { k: 178, eps: "+1", expr: "408154·2^n−177", factor: "5", seconds: "0.28" },
+  { k: 182, eps: "−1", expr: "417326·2^n−183", factor: "5", seconds: "0.28" },
+  { k: 184, eps: "+1", expr: "421912·2^n−183", factor: "373", seconds: "0.28" },
 ];
 
 export function Rank100Page() {
@@ -32,12 +47,13 @@ export function Rank100Page() {
         PrimePages rank 100 is the Riesel q = 2293·2<sup>12918431</sup>−1
         (3,888,839 digits). Thin sieve at B = 10<sup>7</sup> left K
         <sub>cert</sub> = 98: first un-killed admissible multiplier. PFGW has
-        since killed every admissible k through 140. No owner.
+        since killed every admissible k through 184. No owner. k = 188 is in
+        PFGW.
       </p>
       <p>
         PFGW 4.1.8 on has-ams3-01, Intel Xeon Platinum 8280 @ 2.70 GHz, 8
         cores, 16 GB. n = 12,918,431. Admissible k are even and not divisible
-        by 3. Skip 102, 108, 114, 120, 126, 132, 138. Snapshot 23 Sep 2026.
+        by 3. Skip multiples of 3. Snapshot 24 Sep 2026.
       </p>
       <div className="door-table-wrap">
         <table className="door-table">
@@ -75,9 +91,13 @@ export function Rank100Page() {
         s other) and returned composite, RES64 C639D96377D4F918. The walker
         first logged that as unknown: it did not parse <code>is composite</code>.
         k = 128–140 died in 0.28 s on tiny primes the thin sieve never saw,
-        because it stopped at the first survivor (k = 98). Next admissible is
-        142. A 40-hour gmpy2 Fermat on the Studio was the k = 98 check without
-        the trial-factor gate.
+        because it stopped at the first survivor (k = 98). k = 142 was the
+        second Fermat exam: 24.96 h (78,715 s PRP + 11,137 s other), composite,
+        RES64 AC5D60C90B54F88D. Then 146–184 were 0.28 s jokes again. k = 148
+        and 152 returned composite with no factor stored. k = 188 is in PFGW.
+        Two exams, two composites. Density, not the test, is the problem. A
+        40-hour gmpy2 Fermat on the Studio was the k = 98 check without the
+        trial-factor gate.
       </p>
       <p>
         No owner yet. Walker: <code>analysis/rank100_pfgw_floors.py</code>.
