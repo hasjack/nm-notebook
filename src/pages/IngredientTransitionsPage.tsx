@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ingredientTransitionData as data } from "../lib/ingredientTransitionData";
 import { doorContinuityData as cont } from "../lib/doorContinuityData";
+import { fullPowerContinuityData as power } from "../lib/fullPowerContinuityData";
 import "./DoorCoveragePage.css";
 
 const fmt = (n: number) => n.toLocaleString("en-GB");
@@ -347,22 +348,128 @@ export function IngredientTransitionsPage() {
           </tbody>
         </table>
       </div>
+      <h2>Full-power continuity</h2>
       <p>
-        Sharper next eye is whole-power preservation: when the census counts a
-        shared 5, how often is the entire 5<sup>k</sup> still in{" "}
-        <em>m₀(r)</em>? The 499→503 case preserves 5<sup>3</sup>, not just the
-        prime 5 — that rate is not measured here.
+        Deeper continuity counts whether a departing odd prime base reconnects.
+        Ask the sharper question: among consecutive pairs with disjoint odd
+        support and at least one departing odd factor of exponent ≥2 (
+        {fmt(power.eligible)} eligible through {fmt(power.limit)}), how often
+        does the full power — or the whole previous odd part — land in one
+        arriving door?
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>Measure</th>
+              <th>Count</th>
+              <th>Share of eligible</th>
+            </tr>
+          </thead>
+          <tbody>
+            {power.rates.map((r) => (
+              <tr key={r.label}>
+                <td>{r.label}</td>
+                <td>{fmt(r.count)}</td>
+                <td>{r.pct.toFixed(2)}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Examples</h3>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>Primes</th>
+              <th>Doors</th>
+              <th>Arriving path</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            {power.examples.map((e) => (
+              <tr key={e.p}>
+                <td>
+                  {fmt(e.p)} → {fmt(e.next)}
+                </td>
+                <td>
+                  <code>
+                    {fmt(e.oldDoor)} = {e.oldFactors}
+                  </code>
+                  <br />
+                  <code>
+                    {fmt(e.newDoor)} = {e.newFactors}
+                  </code>
+                </td>
+                <td>
+                  <code>{e.path}</code>
+                </td>
+                <td>{e.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <details>
+        <summary>By departing exponent</summary>
+        <p>
+          Opportunity-level rows (transition × departing repeated prime); a
+          transition can contribute to more than one row.
+        </p>
+        <div className="door-table-wrap">
+          <table className="door-table">
+            <thead>
+              <tr>
+                <th>Exponent</th>
+                <th>Opportunities</th>
+                <th>Prime reconnects</th>
+                <th>Full power</th>
+              </tr>
+            </thead>
+            <tbody>
+              {power.byExponent.map((r) => (
+                <tr key={r.exp}>
+                  <td>{r.exp}</td>
+                  <td>{fmt(r.opportunities)}</td>
+                  <td>{fmt(r.linked)}</td>
+                  <td>{fmt(r.full)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <h3>Matched comparison</h3>
+      <p>
+        Against nonconsecutive controls matched on gap, location, and a
+        stricter ingredient profile (exact exponents of 5 and 7, repeated-factor
+        count, max odd exponent, …), full-power rate is{" "}
+        {power.matched.fullPowerObservedPct.toFixed(2)}% observed vs{" "}
+        {power.matched.fullPowerControlPct.toFixed(2)}% controls at
+        min_controls ≥ {power.matched.minControls} (~
+        {power.matched.coveragePct.toFixed(0)}% coverage of eligible pairs). No
+        neighbour advantage on the matched subset. {power.matched.note}
+      </p>
+      <p>
+        Phenomenon is real and rare. Adjacency is not adding a law here. Stop.
       </p>
 
       <p className="lab-footnote">
         Exact sieve; gcd identity on every adjacent pair; deeper census tracks
-        prime ingredients (not exact powers). Matched controls are real
+        prime ingredients; full-power census tracks exact exponents on the
+        eligible repeated-factor slice. Matched controls are real
         nonconsecutive pairs standardized to the neighbour distribution.
         Findings only. Sources:{" "}
         <code>analysis/ingredient-transitions/</code>,{" "}
         <code>analysis/gap-ingredients/</code>,{" "}
         <code>analysis/deeper-door-continuity/</code>,{" "}
-        <code>analysis/matched-door-continuity/</code>.
+        <code>analysis/matched-door-continuity/</code>,{" "}
+        <code>analysis/full-power-door-continuity/</code>.
       </p>
     </main>
   );

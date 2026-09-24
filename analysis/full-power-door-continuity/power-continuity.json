@@ -1,0 +1,262 @@
+{
+  "limit": 10000000,
+  "seconds": 8.193991978000213,
+  "counts": {
+    "disjoint": 623281,
+    "whole_odd_part_preserved_all": 8924,
+    "nonempty_old_odd_part": 623271,
+    "repeated_factor_opportunities": 58666,
+    "repeated_factor_reconnects": 18285,
+    "full_power_preserved": 2927,
+    "whole_odd_part_preserved_repeated": 1336
+  },
+  "small_window": {
+    "opportunities": 107,
+    "linked": 25,
+    "full": 4,
+    "whole": 4
+  },
+  "by_departing_exponent": {
+    "2": {
+      "opportunities": 52298,
+      "linked": 15336,
+      "full": 2732
+    },
+    "3": {
+      "opportunities": 7062,
+      "linked": 2571,
+      "full": 229
+    },
+    "4": {
+      "opportunities": 1181,
+      "linked": 458,
+      "full": 21
+    },
+    "6": {
+      "opportunities": 43,
+      "linked": 15,
+      "full": 1
+    },
+    "5": {
+      "opportunities": 222,
+      "linked": 78,
+      "full": 8
+    },
+    "7": {
+      "opportunities": 9,
+      "linked": 3,
+      "full": 0
+    },
+    "8": {
+      "opportunities": 1,
+      "linked": 0,
+      "full": 0
+    }
+  },
+  "matched": [
+    {
+      "min_controls": 1,
+      "observed_pairs": 35209,
+      "coverage": 0.6001602290935124,
+      "controls": 91957,
+      "observed_hits": [
+        10141,
+        1193,
+        163
+      ],
+      "expected_hits": [
+        10206.731097500791,
+        1217.681859906644,
+        194.020953500251
+      ],
+      "observed_rates": [
+        0.28802294867789485,
+        0.03388338208980658,
+        0.0046294981396801955
+      ],
+      "control_rates": [
+        0.28988983207420804,
+        0.03458439205619711,
+        0.005510549958824477
+      ]
+    },
+    {
+      "min_controls": 10,
+      "observed_pairs": 15186,
+      "coverage": 0.2588552142637984,
+      "controls": 69792,
+      "observed_hits": [
+        4691,
+        577,
+        46
+      ],
+      "expected_hits": [
+        4680.321970516656,
+        600.1719392717253,
+        51.73444556374309
+      ],
+      "observed_rates": [
+        0.30890293691558013,
+        0.037995522191492166,
+        0.003029105755300935
+      ],
+      "control_rates": [
+        0.3081997873381177,
+        0.039521397291697964,
+        0.003406719713139937
+      ]
+    },
+    {
+      "min_controls": 30,
+      "observed_pairs": 5775,
+      "coverage": 0.09843861862066615,
+      "controls": 42243,
+      "observed_hits": [
+        1934,
+        251,
+        3
+      ],
+      "expected_hits": [
+        1924.8563003408485,
+        232.76984511425385,
+        2.9612218576246465
+      ],
+      "observed_rates": [
+        0.3348917748917749,
+        0.04346320346320346,
+        0.0005194805194805195
+      ],
+      "control_rates": [
+        0.3333084502754716,
+        0.04030646668645088,
+        0.0005127656896319735
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "previous_prime": 499,
+      "prime": 503,
+      "previous_door": 500,
+      "door": 502,
+      "old_factorisation": [
+        [
+          5,
+          3
+        ]
+      ],
+      "new_factorisation": [
+        [
+          251,
+          1
+        ]
+      ],
+      "paths": [
+        {
+          "arriving": 251,
+          "departing": 5,
+          "power": 3,
+          "child_door": 250
+        }
+      ],
+      "whole_odd_part": true
+    },
+    {
+      "previous_prime": 2801,
+      "prime": 2803,
+      "previous_door": 2800,
+      "door": 2804,
+      "old_factorisation": [
+        [
+          5,
+          2
+        ],
+        [
+          7,
+          1
+        ]
+      ],
+      "new_factorisation": [
+        [
+          701,
+          1
+        ]
+      ],
+      "paths": [
+        {
+          "arriving": 701,
+          "departing": 5,
+          "power": 2,
+          "child_door": 700
+        }
+      ],
+      "whole_odd_part": true
+    },
+    {
+      "previous_prime": 7699,
+      "prime": 7703,
+      "previous_door": 7700,
+      "door": 7702,
+      "old_factorisation": [
+        [
+          5,
+          2
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          11,
+          1
+        ]
+      ],
+      "new_factorisation": [
+        [
+          3851,
+          1
+        ]
+      ],
+      "paths": [
+        {
+          "arriving": 3851,
+          "departing": 5,
+          "power": 2,
+          "child_door": 3850
+        }
+      ],
+      "whole_odd_part": true
+    },
+    {
+      "previous_prime": 9463,
+      "prime": 9467,
+      "previous_door": 9464,
+      "door": 9466,
+      "old_factorisation": [
+        [
+          7,
+          1
+        ],
+        [
+          13,
+          2
+        ]
+      ],
+      "new_factorisation": [
+        [
+          4733,
+          1
+        ]
+      ],
+      "paths": [
+        {
+          "arriving": 4733,
+          "departing": 13,
+          "power": 2,
+          "child_door": 4732
+        }
+      ],
+      "whole_odd_part": true
+    }
+  ]
+}
