@@ -35,6 +35,7 @@ import { TwoClassCoveragePage } from "./pages/TwoClassCoveragePage";
 import { CubeDoorPage } from "./pages/CubeDoorPage";
 import { CoverageLatticePage } from "./pages/CoverageLatticePage";
 import { DoorWaitsPage } from "./pages/DoorWaitsPage";
+import { SubstackHireDoorsPage } from "./pages/SubstackHireDoorsPage";
 import { GaussianDoorsPage } from "./pages/GaussianDoorsPage";
 import { HireSpectrumPage } from "./pages/HireSpectrumPage";
 import { HireLabPage } from "./pages/HireLabPage";
@@ -46,6 +47,7 @@ import { AlphabetSpiralPage } from "./pages/AlphabetSpiralPage";
 import { CountPage } from "./pages/CountPage";
 import { BellToyPage } from "./pages/BellToyPage";
 import { AtlasPage } from "./pages/AtlasPage";
+import { FlockersPage } from "./pages/FlockersPage";
 
 export default function App() {
   return (
@@ -90,6 +92,7 @@ export default function App() {
         <Route path="/cube-doors" element={<CubeDoorPage />} />
         <Route path="/coverage-lattice" element={<CoverageLatticePage />} />
         <Route path="/door-waits" element={<DoorWaitsPage />} />
+        <Route path="/compose/hire-doors" element={<SubstackHireDoorsPage />} />
         <Route path="/gaussian-doors" element={<GaussianDoorsPage />} />
         <Route path="/certs" element={<Navigate to="/certificates" replace />} />
         <Route path="/hire-spectrum" element={<HireSpectrumPage />} />
@@ -109,6 +112,7 @@ export default function App() {
         <Route path="/alphabet/notes" element={<NotesPage />} />
         <Route path="/toys/bell" element={<BellToyPage />} />
         <Route path="/toys/atlas" element={<AtlasPage />} />
+        <Route path="/toys/flockers" element={<FlockersPage />} />
         <Route
           path="/notes/natural-mathematics-bell-toy"
           element={<Navigate to="/toys/bell" replace />}

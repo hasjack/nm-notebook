@@ -63,11 +63,12 @@ const tree: NavGroup[] = [
   {
     id: "toys",
     label: "Toys",
-    blurb: "Waves, (σ, p) Bell, switching atlas.",
+    blurb: "Waves, (σ, p) Bell, switching atlas, flock sandbox.",
     links: [
       { to: "/physics", label: "Physics" },
       { to: "/toys/bell", label: "Bell" },
       { to: "/toys/atlas", label: "Atlas" },
+      { to: "/toys/flockers", label: "Flockers" },
     ],
   },
   {
