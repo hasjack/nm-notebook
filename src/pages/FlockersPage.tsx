@@ -5,8 +5,7 @@ export function FlockersPage() {
     <main className="page notes">
       <h1>Flockers</h1>
       <p className="lede">
-        A playable UE flock sandbox and the Unreal plugin behind it. Toys shelf
-        only — not Lab, not Paper 1.
+        A playable UE flock sandbox and the Unreal plugin behind it.
       </p>
 
       <h2>What it is</h2>
