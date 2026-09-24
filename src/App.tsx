@@ -35,7 +35,6 @@ import { TwoClassCoveragePage } from "./pages/TwoClassCoveragePage";
 import { CubeDoorPage } from "./pages/CubeDoorPage";
 import { CoverageLatticePage } from "./pages/CoverageLatticePage";
 import { DoorWaitsPage } from "./pages/DoorWaitsPage";
-import { SubstackHireDoorsPage } from "./pages/SubstackHireDoorsPage";
 import { GaussianDoorsPage } from "./pages/GaussianDoorsPage";
 import { HireSpectrumPage } from "./pages/HireSpectrumPage";
 import { HireLabPage } from "./pages/HireLabPage";
@@ -92,7 +91,6 @@ export default function App() {
         <Route path="/cube-doors" element={<CubeDoorPage />} />
         <Route path="/coverage-lattice" element={<CoverageLatticePage />} />
         <Route path="/door-waits" element={<DoorWaitsPage />} />
-        <Route path="/compose/hire-doors" element={<SubstackHireDoorsPage />} />
         <Route path="/gaussian-doors" element={<GaussianDoorsPage />} />
         <Route path="/certs" element={<Navigate to="/certificates" replace />} />
         <Route path="/hire-spectrum" element={<HireSpectrumPage />} />
