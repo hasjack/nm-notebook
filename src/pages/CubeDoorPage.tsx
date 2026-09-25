@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { CubeCurvePlot } from "../components/CubeCurvePlot";
 import "./DoorCoveragePage.css";
 
 const fmt = (n: number) => n.toLocaleString("en-GB");
@@ -10,8 +11,10 @@ export function CubeDoorPage() {
       <h1>Cube doors</h1>
       <p className="lede">
         How cubing enlarges a 3-free door, what happens when two cube doors are
-        added, and the fifth-power twin where 5 can sit in the door and accumulate.
-        Related: <Link to="/two-class">Two-class coverage</Link>,{" "}
+        added, the fifth-power twin where 5 can sit in the door and accumulate,
+        and a real-curve plot of y = (c³ − x³)<sup>1/3</sup> against nearby
+        lattice mismatches R. Related:{" "}
+        <Link to="/two-class">Two-class coverage</Link>,{" "}
         <Link to="/door-waits">Door waits</Link>,{" "}
         <Link to="/notes/hire-graph">Paper 1</Link>.
       </p>
@@ -119,6 +122,15 @@ export function CubeDoorPage() {
         Example: 5³ + 7³ = 124 + 344 = 468. Each door is 3-free; the sum brings 3
         back.
       </p>
+
+      <h2>Continuous curve vs lattice</h2>
+      <p>
+        Over reals, y = (c³ − x³)<sup>1/3</sup> balances cubes for every x in
+        [0, c]. Integer points (a, b) miss that balance by R = a³ + b³ − c³. The
+        plot keeps the continuous arc and the discrete hits distinct: reals have
+        no doors.
+      </p>
+      <CubeCurvePlot />
 
       <h2>Factorisation of the sum</h2>
       <p>

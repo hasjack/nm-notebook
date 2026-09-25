@@ -58,3 +58,14 @@
   font-size: 0.9rem;
   color: #6b5e4e;
 }
+
+/* Cube curve plot on /cube-doors */
+.cube-curve-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 0.65rem;
+}
+.cube-curve-plot svg text {
+  font-family: system-ui, sans-serif;
+}
