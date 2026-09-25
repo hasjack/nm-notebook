@@ -109,6 +109,7 @@ const tree: NavGroup[] = [
           { to: "/analysis-3", label: "A3" },
           { to: "/analysis-4", label: "A4" },
           { to: "/analysis-5", label: "A5" },
+          { to: "/psi-stair", label: "ψ stair" },
         ],
       },
       {

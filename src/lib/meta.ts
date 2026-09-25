@@ -44,6 +44,10 @@ const pages: Record<string, PageMeta> = {
     title: "Zeta doors",
     description: "Lab hunt: 3-free neighbours of zeta denominators.",
   },
+  "/psi-stair": {
+    title: "ψ stair",
+    description: "Chebyshev ψ stair vs truncated explicit-formula waves from critical zeros (critical line assumed).",
+  },
   "/rank100": { title: "Rank 100 floor" },
   "/gaussian-doors": {
     title: "Gaussian doors",

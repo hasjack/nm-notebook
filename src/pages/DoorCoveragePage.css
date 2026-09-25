@@ -69,3 +69,20 @@
 .cube-curve-plot svg text {
   font-family: system-ui, sans-serif;
 }
+
+/* ψ stair Lab plot */
+.psi-stair-controls label {
+  flex: 1 1 220px;
+  min-width: 180px;
+}
+.psi-stair-controls input[type="range"] {
+  width: 100%;
+  min-height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  accent-color: #2b617f;
+}
+.psi-stair-chart svg text {
+  font-family: system-ui, sans-serif;
+}
