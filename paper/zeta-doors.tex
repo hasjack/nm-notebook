@@ -260,17 +260,26 @@ For the 5522-digit entry the index is
 \]
 The author reports that all $5$, $3$, and $7$ larger listed factors,
 respectively, were subsequently proved prime from their index
-factorisations. A 18365-digit candidate at
-$k=1522610689958516981964050$ is certified
-(\path{lions71/hits.certified.jsonl}): 1598 factors of $N-1$ below $2^{64}$,
-19 listed cofactors, and $F^2>N$ from the 64-bit part. Pocklington
-construction (\path{cert.py}) took about 9 hours 2 minutes on a Mac Studio
-(Apple M2 Max, 12 cores, 32\,GB). Independent \path{verify.py} on that row
-passed on 24 September 2026:
-$F$ from 1598 primes below $2^{64}$, 19 cofactors proved from the
-factored index.
+factorisations. Three plus-side candidates from the same
+\texttt{lions71} hunt are certified and independently verified
+(Mac Studio, Apple M2 Max, 12 cores, 32\,GB):
+\begin{center}
+\begin{tabular}{@{}rrrrl@{}}
+\toprule
+Digits of $Q_k$ & \path{cert.py} & $F$ primes ${}<2^{64}$ & Cofactors & \path{verify.py}\\
+\midrule
+18365 & 9 h 2 min & 1598 & 19 & 24 Sep 2026\\
+16213 & 5 h 19 min & 1215 & 58 & 25 Sep 2026\\
+16165 & 5 h 19 min & 1221 & 62 & 25 Sep 2026\\
+\bottomrule
+\end{tabular}
+\end{center}
+The 18365-digit index is $k=1522610689958516981964050$
+(\path{lions71/hits.certified.jsonl}). The two smaller rows are
+\path{lions71/hits.smaller.certified.jsonl}. In each case $F^2>N$ from the
+64-bit part, and listed cofactors were proved from the factored index.
 
-The source snapshot for this draft is 24 September 2026 \cite{repo}.
+The source snapshot for this draft is 25 September 2026 \cite{repo}.
 Change into the directory
 \begin{center}
 \path{analysis/zeta/zeta-targeted}
@@ -279,12 +288,13 @@ and run
 \begin{verbatim}
 python3 verify.py kitchen8/hits.jsonl
 python3 verify.py lions71/hits.certified.jsonl
+python3 verify.py lions71/hits.smaller.certified.jsonl
 \end{verbatim}
 Use ordinary Python execution, without optimisation flags that disable
 assertions. The JSON lines contain the exact candidates, indices,
 factorisations, and witnesses; they are preferable to printing thousands
-of decimal digits in the note. The 18365-digit certificate has been
-independently rechecked as above. Other long certificate runs have not.
+of decimal digits in the note. All three \texttt{lions71} certificates
+have been independently rechecked as above.
 
 \paragraph{Outstanding audit item for this draft.}
 Revision \texttt{c04d373} searches bases $2,\ldots,501$ when proving
