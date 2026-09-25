@@ -262,7 +262,9 @@ export function ZetaDoorsPage() {
           1,598 primes below 2<sup>64</sup>, 19 cofactors proved from the
           index. <code>cert.py</code> writes <code>cert_seconds</code>.
           Same run: 16,213 and 16,165 digits also certified (5 h 19 min
-          each). Independent <code>verify.py</code> on those two not yet run.
+          each). Independent <code>verify.py</code> passed on 16,213 (1,215
+          primes below 2<sup>64</sup>, 58 cofactors from the index). 16,165
+          verify in progress.
         </li>
         <li>
           Certified kitchen: <strong>5,522 digits</strong> (also 5,118 and

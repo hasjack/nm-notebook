@@ -39,7 +39,11 @@
       "host": "studio",
       "cert_seconds": 19135.587,
       "cert_wall": "5h 19m",
-      "verify": null
+      "verify": {
+        "status": "VERIFIED",
+        "as_of": "2026-09-25",
+        "note": "F from 1215 primes < 2^64; 58 cofactors proved from index"
+      }
     },
     "lions71_16165_cert": {
       "digits": 16165,
