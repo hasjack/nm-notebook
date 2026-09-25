@@ -37,6 +37,12 @@ const FLOORS: {
   { k: 178, eps: "+1", expr: "408154·2^n−177", factor: "5", seconds: "0.28" },
   { k: 182, eps: "−1", expr: "417326·2^n−183", factor: "5", seconds: "0.28" },
   { k: 184, eps: "+1", expr: "421912·2^n−183", factor: "373", seconds: "0.28" },
+  { k: 188, eps: "−1", expr: "431084·2^n−189", factor: "Fermat composite", seconds: "90,080" },
+  { k: 190, eps: "+1", expr: "435670·2^n−189", factor: "13", seconds: "0.28" },
+  { k: 194, eps: "−1", expr: "444842·2^n−195", factor: "293", seconds: "0.29" },
+  { k: 196, eps: "+1", expr: "449428·2^n−195", factor: "17", seconds: "0.28" },
+  { k: 200, eps: "−1", expr: "458600·2^n−201", factor: "13", seconds: "0.27" },
+  { k: 202, eps: "+1", expr: "463186·2^n−201", factor: "7", seconds: "0.28" },
 ];
 
 export function Rank100Page() {
@@ -47,13 +53,13 @@ export function Rank100Page() {
         PrimePages rank 100 is the Riesel q = 2293·2<sup>12918431</sup>−1
         (3,888,839 digits). Thin sieve at B = 10<sup>7</sup> left K
         <sub>cert</sub> = 98: first un-killed admissible multiplier. PFGW has
-        since killed every admissible k through 184. No owner. k = 188 is in
+        since killed every admissible k through 202. No owner. k = 206 is in
         PFGW.
       </p>
       <p>
         PFGW 4.1.8 on has-ams3-01, Intel Xeon Platinum 8280 @ 2.70 GHz, 8
         cores, 16 GB. n = 12,918,431. Admissible k are even and not divisible
-        by 3. Skip multiples of 3. Snapshot 24 Sep 2026.
+        by 3. Skip multiples of 3. Snapshot 25 Sep 2026.
       </p>
       <div className="door-table-wrap">
         <table className="door-table">
@@ -94,8 +100,10 @@ export function Rank100Page() {
         because it stopped at the first survivor (k = 98). k = 142 was the
         second Fermat exam: 24.96 h (78,715 s PRP + 11,137 s other), composite,
         RES64 AC5D60C90B54F88D. Then 146–184 were 0.28 s jokes again. k = 148
-        and 152 returned composite with no factor stored. k = 188 is in PFGW.
-        Two exams, two composites. Density, not the test, is the problem. A
+        and 152 returned composite with no factor stored. k = 188 was the
+        third Fermat exam: 25.02 h (79,056 s PRP + 11,024 s other), composite,
+        RES64 85DDFCE797224332. Then 190–202 were 0.28 s again. k = 206 is in
+        PFGW. Three exams, three composites. Density, not the test. A
         40-hour gmpy2 Fermat on the Studio was the k = 98 check without the
         trial-factor gate.
       </p>
