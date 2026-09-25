@@ -51,7 +51,11 @@
       "host": "studio",
       "cert_seconds": 19137.899,
       "cert_wall": "5h 19m",
-      "verify": null
+      "verify": {
+        "status": "VERIFIED",
+        "as_of": "2026-09-25",
+        "note": "F from 1221 primes < 2^64; 62 cofactors proved from index"
+      }
     },
     "giraffes_night1": {
       "host": "studio",
