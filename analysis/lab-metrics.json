@@ -33,6 +33,22 @@
         "note": "verify.py: Pocklington F from 1598 primes < 2^64; 19 cofactors proved from index"
       }
     },
+    "lions71_16213_cert": {
+      "digits": 16213,
+      "status": "certified",
+      "host": "studio",
+      "cert_seconds": 19135.587,
+      "cert_wall": "5h 19m",
+      "verify": null
+    },
+    "lions71_16165_cert": {
+      "digits": 16165,
+      "status": "certified",
+      "host": "studio",
+      "cert_seconds": 19137.899,
+      "cert_wall": "5h 19m",
+      "verify": null
+    },
     "giraffes_night1": {
       "host": "studio",
       "band": [100000, 150000],

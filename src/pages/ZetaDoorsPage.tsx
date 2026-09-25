@@ -261,7 +261,8 @@ export function ZetaDoorsPage() {
           12 cores, 32 GB). Independent <code>verify.py</code> passed: F from
           1,598 primes below 2<sup>64</sup>, 19 cofactors proved from the
           index. <code>cert.py</code> writes <code>cert_seconds</code>.
-          Also 16,213 and 16,165 probable in that run.
+          Same run: 16,213 and 16,165 digits also certified (5 h 19 min
+          each). Independent <code>verify.py</code> on those two not yet run.
         </li>
         <li>
           Certified kitchen: <strong>5,522 digits</strong> (also 5,118 and
