@@ -9,8 +9,9 @@ export function CubeDoorPage() {
     <main className="page notes lab-note-page door-coverage-page">
       <h1>Cube doors</h1>
       <p className="lede">
-        How cubing enlarges a 3-free door, and what happens when two cube doors
-        are added. Related: <Link to="/two-class">Two-class coverage</Link>,{" "}
+        How cubing enlarges a 3-free door, what happens when two cube doors are
+        added, and the fifth-power twin where 5 can sit in the door and accumulate.
+        Related: <Link to="/two-class">Two-class coverage</Link>,{" "}
         <Link to="/door-waits">Door waits</Link>,{" "}
         <Link to="/notes/hire-graph">Paper 1</Link>.
       </p>
@@ -64,6 +65,38 @@ export function CubeDoorPage() {
           </tbody>
         </table>
       </div>
+
+
+      <h2>Fifth-power doors</h2>
+      <p>
+        For odd a with 3 ∤ a, write s = χ₃(a), D = m₀(a), and
+      </p>
+      <aside className="lab-theorem" aria-label="Fifth-power door identity">
+        <p className="lab-theorem-implies">
+          m₀(a⁵) = D · H,  H = a⁴ − s a³ + a² − s a + 1.
+        </p>
+      </aside>
+      <p>
+        Cubing excluded 3 from the door, so the new factor stayed coprime to D.
+        Fifth powers allow 5 in the door: gcd(D, H) = gcd(D, 5). Expanding H after
+        a = −s + D gives H ≡ 5 (mod 25) when 5 ∣ D, and H ≡ 1 (mod 5) when 5 ∤ D.
+        So v₅(H) is exactly 1 or 0:
+      </p>
+      <aside className="lab-theorem" aria-label="v5 ladder">
+        <p className="lab-theorem-implies">
+          v₅(m₀(a⁵)) = v₅(m₀(a)) + 1 if 5 ∣ m₀(a), else 0.
+        </p>
+      </aside>
+      <p>
+        Iterated fifth powering therefore builds a ladder. If the initial door
+        carries 5ᵉ, the doors of a, a⁵, a²⁵, a¹²⁵, … carry exactly 5ᵉ, 5ᵉ⁺¹,
+        5ᵉ⁺², 5ᵉ⁺³, … while the power of 2 stays put. Example: m₀(11) = 10 =
+        2 · 5, and m₀(11⁵) = 161050 = 2 · 5² · 3221.
+      </p>
+      <p>
+        Clean door dynamics — how an existing ingredient accumulates under
+        powering. Not an FLT contradiction.
+      </p>
 
       <h2>Adding two cubes</h2>
       <p>
