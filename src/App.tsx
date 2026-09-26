@@ -41,6 +41,7 @@ import { IngredientTransitionsPage } from "./pages/IngredientTransitionsPage";
 import { GaussianDoorsPage } from "./pages/GaussianDoorsPage";
 import { HireSpectrumPage } from "./pages/HireSpectrumPage";
 import { HireLabPage } from "./pages/HireLabPage";
+import { TorusPage } from "./pages/TorusPage";
 import { PaperPage } from "./pages/PaperPage";
 import { WhenGoldDisconnectsPage } from "./pages/WhenGoldDisconnectsPage";
 import { ZetaDoorsNotePage } from "./pages/ZetaDoorsNotePage";
@@ -91,6 +92,7 @@ export default function App() {
         <Route path="/rank100" element={<Rank100Page />} />
         <Route path="/two-class" element={<TwoClassCoveragePage />} />
         <Route path="/door-coverage" element={<TwoClassCoveragePage />} />
+        <Route path="/torus" element={<TorusPage />} />
         <Route path="/cube-doors" element={<CubeDoorPage />} />
         <Route path="/coverage-lattice" element={<CoverageLatticePage />} />
         <Route path="/door-waits" element={<DoorWaitsPage />} />

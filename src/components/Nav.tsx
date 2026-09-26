@@ -80,6 +80,7 @@ const tree: NavGroup[] = [
         id: "lab-doors",
         label: "Door coverage",
         links: [
+          { to: "/torus", label: "Torus" },
           { to: "/two-class", label: "Two-class coverage" },
           { to: "/door-waits", label: "Door waits" },
           { to: "/power-firing", label: "Power firing" },

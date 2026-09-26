@@ -49,6 +49,10 @@ const pages: Record<string, PageMeta> = {
     description: "Chebyshev ψ stair vs truncated explicit-formula waves from critical zeros (critical line assumed).",
   },
   "/rank100": { title: "Rank 100 floor" },
+  "/torus": {
+    title: "Torus",
+    description: "Why two doors: χ₃ names split vs inert; Williams’ nonsplit order is m₁; hire keeps m₀.",
+  },
   "/gaussian-doors": {
     title: "Gaussian doors",
     description: "3-free doors as a route from two squares to x²+3y².",
