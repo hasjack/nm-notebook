@@ -125,10 +125,9 @@ export function CubeDoorPage() {
       </aside>
       <p>
         School algebra plus the door — same family as the peel above. Summing
-        gives D(X) − mid(X) = −Σ χ₃(p)/(p² − 1) through primes ≤ X. Absolute
-        convergence (O(1/p²)) is why the gap froze by a few hundred: the
-        infinite sum is ≈ 0.02598841679, matching the unsieved three-curve
-        offset. See also the signed and unsieved plots on{" "}
+        gives D − mid = −Σ χ₃(p)/(p² − 1). Absolute convergence (O(1/p²)) is
+        why the gap froze by a few hundred. The constant ≈ 0.02598841679… is
+        the value of that series — not a π/√3 hunt. Plots on{" "}
         <Link to="/hire-lab">Hire rate</Link>.
       </p>
       <div className="door-table-wrap">

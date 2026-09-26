@@ -265,14 +265,20 @@ export function HireLabPage() {
           </figcaption>
         </figure>
         <h3>Unsieved neighbours vs sluice</h3>
+        <aside className="lab-theorem" aria-label="Door versus midpoint">
+          <p className="lab-theorem-implies">
+            1/m₀(p) − ½(1/(p − 1) + 1/(p + 1)) = −χ₃(p)/(p² − 1)
+            for primes p &gt; 3.
+          </p>
+        </aside>
         <p>
-          Three climbing curves through p &gt; 3 to 10<sup>6</sup>: Σ 1/(p − 1),
-          D(1) = Σ 1/m₀(p), and Σ 1/(p + 1). Gaps freeze by a few hundred;
-          D − mid ≈ +0.025988 and stuck. The sluice sits nearer p − 1 (~36% of
-          the neighbour gap) — not the midpoint. Absolute-convergent identity
-          on <Link to="/cube-doors">Cube doors</Link>: D − mid =
-          −Σ χ₃(p)/(p² − 1). Signed −0.241 was cancellation; this is no
-          cancellation plus a frozen offset.
+          Summing: D − mid = −Σ χ₃(p)/(p² − 1). Absolute convergence explains
+          the early freeze. The constant ≈ 0.02598841679… is the value of that
+          series — not a π/√3 form (wrong L-shape: primes, even powers). Also on{" "}
+          <Link to="/cube-doors">Cube doors</Link> next to the peel. Three
+          climbing curves through p &gt; 3 to 10<sup>6</sup> below: Σ 1/(p − 1),
+          D(1) = Σ 1/m₀(p), Σ 1/(p + 1). Sluice nearer p − 1; signed −0.241 was
+          cancellation, this is no cancellation plus a frozen offset.
         </p>
         <figure className="hire-lab-figure">
           <img
