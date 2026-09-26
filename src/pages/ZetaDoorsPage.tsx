@@ -388,6 +388,57 @@ export function ZetaDoorsPage() {
         </code>
         .
       </p>
+      <h3>Mixed Pratt receipt (split-eq1 · 111 digits)</h3>
+      <p className="figure-caption">
+        First door already splits for Q ≡ 1; still sack 3 on the ≡1 leaves
+        deeper — not “always shorter.” Lab scale, not a lion.
+      </p>
+      <p>
+        Q ≡ 1 (mod 3), so classical opens Q−1 (has 3) and mixed opens m₀ = Q+1
+        (3-free) — first door already splits. Forest A = odd primes of Q−1;
+        Forest B = odd primes of Q+1. The single mixed has_3 in Forest A is the
+        door-prime 3 leaf only.
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Classical p−1</th>
+              <th>Mixed m₀</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Forest A · hires 3 (of 32)</td>
+              <td>24</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>Forest A · depth vs classical</td>
+              <td>—</td>
+              <td>11 shorter · 12 equal · 9 longer</td>
+            </tr>
+            <tr>
+              <td>Forest B · hires 3 (of 27)</td>
+              <td>21</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Forest B · depth vs classical</td>
+              <td>—</td>
+              <td>6 shorter · 14 equal · 7 longer</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Source:{" "}
+        <code>
+          analysis/zeta/zeta-targeted/split-eq1/mixed_pratt_split_eq1_111.md
+        </code>
+        .
+      </p>
       <p>
         Timing log: <code>analysis/lab-metrics.json</code>. Code:{" "}
         <code>analysis/zeta/zeta-door-safari/</code>,{" "}
