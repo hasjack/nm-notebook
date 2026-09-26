@@ -1908,3 +1908,14 @@ code.pow sup {
 .notes ul {
   max-width: var(--prose-width);
 }
+
+.hire-lab-figure {
+  margin: 1.25rem 0 0.5rem;
+}
+.hire-lab-figure img {
+  display: block;
+  width: 100%;
+  max-width: 960px;
+  height: auto;
+  border-radius: 6px;
+}

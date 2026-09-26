@@ -241,6 +241,32 @@ export function HireLabPage() {
       </section>
 
       <section className="hire-beat">
+        <h2>Signed door series</h2>
+        <p>
+          Partial sums through primes p &gt; 3 up to 10<sup>6</sup>. Red is the
+          door twin Σ χ₃(p)/m₀(p); blue is Σ χ₃(p)/p on the same primes. Leave
+          p = 2 out (m₀(2) = 1). Checkpoints for the door twin: already ≈ −0.239
+          by 10<sup>3</sup>, then −0.241 and held through 10<sup>6</sup>. Blue
+          sits near −0.142. Same sign pattern; the p ≡ 2 (mod 3) terms −1/(p − 1)
+          outweigh +1/(p + 1), so red sits lower. Convergent-looking — not a slow
+          log log, not a drunk walk. The limit is an unnamed Lab constant: not
+          π/(3√3), not log L(1, χ₃). Those belong to other series.
+        </p>
+        <figure className="hire-lab-figure">
+          <img
+            src="/figures/hire/signed_door_series.png"
+            alt="Partial sums of χ₃(p)/m₀(p) and χ₃(p)/p through primes from 5 to 10^6; both flatten, door twin near −0.241"
+            width={960}
+            height={540}
+          />
+          <figcaption className="figure-caption">
+            Signed door series next to the <em>R</em>/<em>C</em> band — Lab only;
+            no identity claimed.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section className="hire-beat">
         <h2>Hiring frontier</h2>
         <p>
           Bin residual (tip <em>X</em>=2·10<sup>10</sup>): the ~1.4% excess lives
