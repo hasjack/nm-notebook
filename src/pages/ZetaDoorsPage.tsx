@@ -276,7 +276,7 @@ export function ZetaDoorsPage() {
       </ul>
       <h3>Mixed Pratt receipt (kitchen8 · 5,522 digits)</h3>
       <p className="figure-caption">
-        Same first door, sack 3 on the ≡1 leaves. One Q — not “always shorter.”
+        Same first door, sack 3 on the ≡1 leaves — not “always shorter.”
       </p>
       <p>
         Q ≡ 2 (mod 3), so the first step is classical Q−1 = m₀(Q); door 3-free
@@ -311,6 +311,42 @@ export function ZetaDoorsPage() {
       <p>
         Certificate strategy, not “gold = Pratt.” Source:{" "}
         <code>analysis/zeta/zeta-targeted/kitchen8/mixed_pratt_receipt.md</code>.
+      </p>
+      <h3>Mixed Pratt receipt (lions71 · 16,165 digits)</h3>
+      <p className="figure-caption">
+        Same first door, sack 3 on the ≡1 leaves — not “always shorter.”
+      </p>
+      <p>
+        Same root shape: Q ≡ 2 (mod 3), door = Q−1, 1,282 odd factors, all also
+        ≡ 2 (mod 3), no 3 in the door. Split leaves &#123;7, 13, 43&#125; (31
+        absent vs kitchen8’s four).
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Classical p−1</th>
+              <th>Mixed m₀</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hires 3 (of 1,282 trees)</td>
+              <td>1,278</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Depth vs classical</td>
+              <td>—</td>
+              <td>292 shorter · 990 equal · 0 longer</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Source:{" "}
+        <code>analysis/zeta/zeta-targeted/lions71/mixed_pratt_receipt.md</code>.
       </p>
       <p>
         Timing log: <code>analysis/lab-metrics.json</code>. Code:{" "}
