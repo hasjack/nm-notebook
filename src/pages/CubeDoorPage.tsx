@@ -117,6 +117,20 @@ export function CubeDoorPage() {
         Cubes are n = 3. Checked Lean for that height:{" "}
         <code>cube_sub_sq_eq_sq_mul_m0</code> in <code>Hire/Doors.lean</code>.
       </p>
+      <aside className="lab-theorem" aria-label="Door versus midpoint">
+        <p className="lab-theorem-implies">
+          1/m₀(p) − ½(1/(p − 1) + 1/(p + 1)) = −χ₃(p)/(p² − 1)
+          for primes p &gt; 3.
+        </p>
+      </aside>
+      <p>
+        School algebra plus the door — same family as the peel above. Summing
+        gives D(X) − mid(X) = −Σ χ₃(p)/(p² − 1) through primes ≤ X. Absolute
+        convergence (O(1/p²)) is why the gap froze by a few hundred: the
+        infinite sum is ≈ 0.02598841679, matching the unsieved three-curve
+        offset. See also the signed and unsieved plots on{" "}
+        <Link to="/hire-lab">Hire rate</Link>.
+      </p>
       <div className="door-table-wrap">
         <table className="door-table">
           <thead>

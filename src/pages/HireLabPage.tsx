@@ -261,7 +261,29 @@ export function HireLabPage() {
           />
           <figcaption className="figure-caption">
             Signed door series next to the <em>R</em>/<em>C</em> band — Lab only;
-            no identity claimed.
+            no identity claimed for −0.241.
+          </figcaption>
+        </figure>
+        <h3>Unsieved neighbours vs sluice</h3>
+        <p>
+          Three climbing curves through p &gt; 3 to 10<sup>6</sup>: Σ 1/(p − 1),
+          D(1) = Σ 1/m₀(p), and Σ 1/(p + 1). Gaps freeze by a few hundred;
+          D − mid ≈ +0.025988 and stuck. The sluice sits nearer p − 1 (~36% of
+          the neighbour gap) — not the midpoint. Absolute-convergent identity
+          on <Link to="/cube-doors">Cube doors</Link>: D − mid =
+          −Σ χ₃(p)/(p² − 1). Signed −0.241 was cancellation; this is no
+          cancellation plus a frozen offset.
+        </p>
+        <figure className="hire-lab-figure">
+          <img
+            src="/figures/hire/unsieved_neighbours_sluice.png"
+            alt="Partial sums of 1/(p−1), 1/m₀(p), and 1/(p+1) through primes to 10^6, with midpoint dashed; sluice sits above the midpoint"
+            width={960}
+            height={540}
+          />
+          <figcaption className="figure-caption">
+            Unsieved three-curve — frozen offset ≈ +0.026; same Lab folder as
+            the signed pair.
           </figcaption>
         </figure>
       </section>
