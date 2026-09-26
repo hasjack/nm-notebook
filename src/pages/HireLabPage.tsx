@@ -300,6 +300,24 @@ export function HireLabPage() {
             the signed pair.
           </figcaption>
         </figure>
+        <h3>Why the sluice exists</h3>
+        <p className="figure-caption">
+          Why the sluice exists. Not an elliptic-curve method.
+        </p>
+        <p>
+          For odd primes <em>p</em> ≠ 3, χ₃(<em>p</em>) = (−3/<em>p</em>).
+          Williams’ <em>p</em>+1 test at discriminant <em>D</em> = −3 uses the
+          torus order <em>p</em> − χ₃(<em>p</em>) = <em>m</em>
+          <sub>1</sub>(<em>p</em>) — the neighbour we sack. The kept door{" "}
+          <em>m</em>
+          <sub>0</sub>(<em>p</em>) = <em>p</em> + χ₃(<em>p</em>) is the
+          complementary order in ℚ(√−3). Split primes (<em>p</em> ≡ 1 mod 3)
+          keep <em>p</em>+1; inert primes keep <em>p</em>−1. Same field as the
+          Eisenstein integers and as the CM curve <em>y</em>² = <em>x</em>³ +{" "}
+          <em>B</em>; different group. This explains the two doors — not gold
+          connectivity, not hire-rate. One-screen:{" "}
+          <Link to="/torus">Torus</Link>.
+        </p>
       </section>
 
       <section className="hire-beat">
