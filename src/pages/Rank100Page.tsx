@@ -108,8 +108,12 @@ export function Rank100Page() {
         trial-factor gate.
       </p>
       <p>
-        No owner yet. Walker: <code>analysis/rank100_pfgw_floors.py</code>.
-        Timing: <code>analysis/lab-metrics.json</code>.
+        No owner yet. Walker: <code>analysis/rank100_pfgw_floors.py</code>
+        (Xeon, k = 206 in PFGW — do not mix). Discount sieve:{" "}
+        <code>analysis/rank100_discount.py</code> — special-form trial factor
+        of every admissible k without building N, so 0.28 s jokes die before
+        FFT. Survivors at B are the Fermat queue. Timing:{" "}
+        <code>analysis/lab-metrics.json</code>.
       </p>
       <p className="home-actions">
         <Link className="nav-link" to="/certificates">

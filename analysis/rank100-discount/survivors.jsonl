@@ -1,0 +1,9 @@
+{"k": 98, "eps": -1, "expr": "224714*2^12918431-99", "status": "survivor", "factor": null, "B": 100000000, "seconds": 26.439}
+{"k": 100, "eps": 1, "expr": "229300*2^12918431-99", "status": "survivor", "factor": null, "B": 100000000, "seconds": 26.439}
+{"k": 124, "eps": 1, "expr": "284332*2^12918431-123", "status": "survivor", "factor": null, "B": 100000000, "seconds": 26.439}
+{"k": 142, "eps": 1, "expr": "325606*2^12918431-141", "status": "survivor", "factor": null, "B": 100000000, "seconds": 26.439}
+{"k": 188, "eps": -1, "expr": "431084*2^12918431-189", "status": "survivor", "factor": null, "B": 100000000, "seconds": 26.439}
+{"k": 206, "eps": -1, "expr": "472358*2^12918431-207", "status": "survivor", "factor": null, "B": 100000000, "seconds": 26.439}
+{"k": 214, "eps": 1, "expr": "490702*2^12918431-213", "status": "survivor", "factor": null, "B": 100000000, "seconds": 26.439}
+{"k": 230, "eps": -1, "expr": "527390*2^12918431-231", "status": "survivor", "factor": null, "B": 100000000, "seconds": 26.439}
+{"k": 326, "eps": -1, "expr": "747518*2^12918431-327", "status": "survivor", "factor": null, "B": 100000000, "seconds": 26.439}
