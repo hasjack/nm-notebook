@@ -98,11 +98,11 @@ export function CubeDoorPage() {
       </p>
       <p>
         Clean door dynamics — how an existing ingredient accumulates under
-        powering. Not an FLT contradiction.
+        powering.
       </p>
 
       <h2>Three boxes</h2>
-      <p>Not FLT. Lab checks hung 26 Sep 2026.</p>
+      <p>Lab checks hung 26 Sep 2026.</p>
 
       <h3>Cube door</h3>
       <p>
