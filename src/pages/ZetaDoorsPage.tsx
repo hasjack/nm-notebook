@@ -348,6 +348,46 @@ export function ZetaDoorsPage() {
         Source:{" "}
         <code>analysis/zeta/zeta-targeted/lions71/mixed_pratt_receipt.md</code>.
       </p>
+      <h3>Mixed Pratt receipt (lions71 · 18,365 digits)</h3>
+      <p className="figure-caption">
+        Same first door, sack 3 on the ≡1 leaves — not “always shorter.” On
+        this Q, mixed is longer more often than shorter.
+      </p>
+      <p>
+        Same root shape: Q ≡ 2 (mod 3), door = Q−1, 1,616 odd factors, all also
+        ≡ 2 (mod 3), no 3 in the door. Split leaves &#123;7, 13, 37, 61&#125;
+        (37 and 61 new; no 43/31).
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Classical p−1</th>
+              <th>Mixed m₀</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hires 3 (of 1,616 trees)</td>
+              <td>1,598</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Depth vs classical</td>
+              <td>—</td>
+              <td>6 shorter · 1,470 equal · 140 longer</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Source:{" "}
+        <code>
+          analysis/zeta/zeta-targeted/lions71/mixed_pratt_receipt_18365.md
+        </code>
+        .
+      </p>
       <p>
         Timing log: <code>analysis/lab-metrics.json</code>. Code:{" "}
         <code>analysis/zeta/zeta-door-safari/</code>,{" "}
