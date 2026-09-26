@@ -245,7 +245,8 @@ export function PowerFiringPage() {
         inside 3-free doors. Related: <Link to="/door-waits">Door waits</Link>,{" "}
         <Link to="/two-class">Two-class coverage</Link>,{" "}
         <Link to="/coverage-lattice">Coverage lattice</Link>,{" "}
-        <Link to="/ingredient-transitions">Ingredient transitions</Link>.
+        <Link to="/ingredient-transitions">Ingredient transitions</Link>,{" "}
+        <Link to="/cube-doors">Cube doors</Link>.
       </p>
 
       <h2>What the census measures</h2>
@@ -292,6 +293,13 @@ export function PowerFiringPage() {
           </div>
         ))}
       </details>
+
+      <h2>Euclid miss</h2>
+      <p>
+        Saturday scratch for the 2<sup>k</sup> Euclid subfamily (Mersenne miss,
+        including composite 15) lives with the three boxes on{" "}
+        <Link to="/cube-doors">Cube doors</Link>.
+      </p>
 
       <p className="lab-footnote">
         {data.verification}. Source:{" "}

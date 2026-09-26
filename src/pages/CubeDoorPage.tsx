@@ -69,7 +69,6 @@ export function CubeDoorPage() {
         </table>
       </div>
 
-
       <h2>Fifth-power doors</h2>
       <p>
         For odd a with 3 ∤ a, write s = χ₃(a), D = m₀(a), and
@@ -79,6 +78,7 @@ export function CubeDoorPage() {
           m₀(a⁵) = D · H,  H = a⁴ − s a³ + a² − s a + 1.
         </p>
       </aside>
+
       <p>
         Cubing excluded 3 from the door, so the new factor stayed coprime to D.
         Fifth powers allow 5 in the door: gcd(D, H) = gcd(D, 5). Expanding H after
@@ -100,6 +100,149 @@ export function CubeDoorPage() {
         Clean door dynamics — how an existing ingredient accumulates under
         powering. Not an FLT contradiction.
       </p>
+
+      <h2>Three boxes</h2>
+      <p>Not FLT. Lab checks hung 26 Sep 2026.</p>
+
+      <h3>Cube door</h3>
+      <p>
+        When p ≡ 2 (mod 3), χ₃(p) = −1, so m₀(p) = p − 1 and
+      </p>
+      <aside className="lab-theorem" aria-label="Cube door times square">
+        <p className="lab-theorem-implies">
+          p³ − p² = p² m₀(p).
+        </p>
+      </aside>
+      <p>
+        Checked Lean: <code>cube_sub_sq_eq_sq_mul_m0</code> in{" "}
+        <code>Hire/Doors.lean</code>.
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>p</th>
+              <th>p³ − p²</th>
+              <th>p² · m₀(p)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>5</td>
+              <td>125 − 25 = 100</td>
+              <td>25 × 4</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>1331 − 121 = 1210</td>
+              <td>121 × 10</td>
+            </tr>
+            <tr>
+              <td>17</td>
+              <td>4913 − 289 = 4624</td>
+              <td>289 × 16</td>
+            </tr>
+            <tr>
+              <td>23</td>
+              <td>12167 − 529 = 11638</td>
+              <td>529 × 22</td>
+            </tr>
+            <tr>
+              <td>29</td>
+              <td>24389 − 841 = 23548</td>
+              <td>841 × 28</td>
+            </tr>
+            <tr>
+              <td>41</td>
+              <td>68921 − 1681 = 67240</td>
+              <td>1681 × 40</td>
+            </tr>
+            <tr>
+              <td>47</td>
+              <td>103823 − 2209 = 101614</td>
+              <td>2209 × 46</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Contrast</h3>
+      <p>
+        When p ≡ 1 (mod 3), the same remainder p³ − p² = p²(p − 1) hits the
+        other neighbour, not the 3-free door m₀(p) = p + 1.
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>p</th>
+              <th>p³ − p² = p²(p − 1)</th>
+              <th>Door m₀(p)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>7</td>
+              <td>343 − 49 = 294 = 49 × 6</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>2197 − 169 = 2028 = 169 × 12</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td>31</td>
+              <td>29791 − 961 = 28830 = 961 × 30</td>
+              <td>32</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2<sup>k</sup> triples</h3>
+      <p>
+        Euclid subfamily u = 2<sup>k</sup>, v = 1: triple{" "}
+        (2<sup>2k</sup> − 1, 2<sup>k+1</sup>, 2<sup>2k</sup> + 1) up to order;
+        miss = 2<sup>k+1</sup> − 1 (Mersenne; not always prime — see 15).
+        Saturday scratch.
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>Triple</th>
+              <th>Miss</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>3, 4, 5</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>8, 15, 17</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td>16, 63, 65</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>32, 255, 257</td>
+              <td>31</td>
+            </tr>
+            <tr>
+              <td>64, 1023, 1025</td>
+              <td>63</td>
+            </tr>
+            <tr>
+              <td>128, 4095, 4097</td>
+              <td>127</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h2>Adding two cubes</h2>
       <p>
