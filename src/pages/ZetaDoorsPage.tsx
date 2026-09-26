@@ -274,6 +274,44 @@ export function ZetaDoorsPage() {
         </li>
         <li>Farm Boolean length: 3,361 digits (q = 31).</li>
       </ul>
+      <h3>Mixed Pratt receipt (kitchen8 · 5,522 digits)</h3>
+      <p className="figure-caption">
+        Same first door, sack 3 on the ≡1 leaves. One Q — not “always shorter.”
+      </p>
+      <p>
+        Q ≡ 2 (mod 3), so the first step is classical Q−1 = m₀(Q); door 3-free
+        by construction. All 514 odd door primes are also ≡ 2 (mod 3), so each
+        opens q−1 too. The mix only fires when a later prime is ≡ 1 (mod 3) —
+        here &#123;7, 13, 31, 43&#125;: mixed opens a 2-power (or a 3-free
+        neighbour) and classical factors p−1 and pulls 3.
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Classical p−1</th>
+              <th>Mixed m₀</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hires 3 (of 514 trees)</td>
+              <td>508</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Depth vs classical</td>
+              <td>—</td>
+              <td>317 shorter · 197 equal · 0 longer</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Certificate strategy, not “gold = Pratt.” Source:{" "}
+        <code>analysis/zeta/zeta-targeted/kitchen8/mixed_pratt_receipt.md</code>.
+      </p>
       <p>
         Timing log: <code>analysis/lab-metrics.json</code>. Code:{" "}
         <code>analysis/zeta/zeta-door-safari/</code>,{" "}

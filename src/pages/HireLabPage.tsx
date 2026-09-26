@@ -55,8 +55,15 @@ export function HireLabPage() {
 
       <section className="hire-beat">
         <h2>Leading counts</h2>
+        <aside className="lab-theorem" aria-label="H frozen">
+          <p className="lab-theorem-implies">
+            H(X) = #&#123;q prime : 5 ≤ q ≤ X, ∃ p ≤ X, p ≠ 3, q | m₀(p)&#125;
+            with P = X (hire_rate_HX).
+          </p>
+        </aside>
         <p>
-          Odd hires through window <em>X</em>: <em>H</em>(<em>X</em>)=|
+          Odd hires through window <em>X</em>: that count is also written{" "}
+          <em>H</em>(<em>X</em>)=|
           <em>S</em>
           <sub>
             <em>X</em>
@@ -67,7 +74,8 @@ export function HireLabPage() {
           <sub>1</sub>=(<em>R</em>
           <sub>Pois</sub>−1) log <em>X</em> and <em>E</em>
           <sub>2</sub>=(<em>R</em>
-          <sub>Pois</sub>−1)(log <em>X</em>)<sup>2</sup>.
+          <sub>Pois</sub>−1)(log <em>X</em>)<sup>2</sup>. Keep this{" "}
+          <em>H</em>(<em>X</em>) off the cube-doors polynomial <em>H</em>.
         </p>
         <div className="door-table-wrap hire-rate-wrap">
           <table className="door-table hire-rate-table">
