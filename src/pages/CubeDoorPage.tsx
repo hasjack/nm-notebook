@@ -110,12 +110,12 @@ export function CubeDoorPage() {
       </p>
       <aside className="lab-theorem" aria-label="Cube door times square">
         <p className="lab-theorem-implies">
-          p³ − p² = p² m₀(p).
+          pⁿ − pⁿ⁻¹ = pⁿ⁻¹(p − 1),  and p − 1 = m₀(p) iff p ≡ 2 (mod 3).
         </p>
       </aside>
       <p>
-        Checked Lean: <code>cube_sub_sq_eq_sq_mul_m0</code> in{" "}
-        <code>Hire/Doors.lean</code>.
+        Cubes are n = 3. Checked Lean for that height:{" "}
+        <code>cube_sub_sq_eq_sq_mul_m0</code> in <code>Hire/Doors.lean</code>.
       </p>
       <div className="door-table-wrap">
         <table className="door-table">
@@ -166,10 +166,92 @@ export function CubeDoorPage() {
         </table>
       </div>
 
+      <h3>Same lemma, next height (n = 4)</h3>
+      <p>
+        Fourth power is the same peel at n = 4 — no new phenomenon. Door class
+        p ≡ 2 (mod 3):
+      </p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>p</th>
+              <th>p⁴ − p³</th>
+              <th>p³ · m₀(p)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>5</td>
+              <td>625 − 125 = 500</td>
+              <td>125 × 4</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>14641 − 1331 = 13310</td>
+              <td>1331 × 10</td>
+            </tr>
+            <tr>
+              <td>17</td>
+              <td>83521 − 4913 = 78608</td>
+              <td>4913 × 16</td>
+            </tr>
+            <tr>
+              <td>23</td>
+              <td>279841 − 12167 = 267674</td>
+              <td>12167 × 22</td>
+            </tr>
+            <tr>
+              <td>29</td>
+              <td>707281 − 24389 = 682892</td>
+              <td>24389 × 28</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>One prime, every height (11):</p>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>Height</th>
+              <th>Difference</th>
+              <th>Factor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>11² − 11</td>
+              <td>110</td>
+              <td>11 × 10</td>
+            </tr>
+            <tr>
+              <td>11³ − 11²</td>
+              <td>1210</td>
+              <td>121 × 10</td>
+            </tr>
+            <tr>
+              <td>11⁴ − 11³</td>
+              <td>13310</td>
+              <td>1331 × 10</td>
+            </tr>
+            <tr>
+              <td>11⁵ − 11⁴</td>
+              <td>146410</td>
+              <td>14641 × 10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        A non-consecutive gap is a different shelf: 11⁴ − 11² = 14520 = 121 ×
+        120, and 120 = (11 − 1)(11 + 1) — both neighbours at once.
+      </p>
+
       <h3>Contrast</h3>
       <p>
-        When p ≡ 1 (mod 3), the same remainder p³ − p² = p²(p − 1) hits the
-        other neighbour, not the 3-free door m₀(p) = p + 1.
+        When p ≡ 1 (mod 3), the same remainder pⁿ − pⁿ⁻¹ = pⁿ⁻¹(p − 1) hits the
+        other neighbour, not the 3-free door m₀(p) = p + 1. Fourth-power checks:
       </p>
       <div className="door-table-wrap">
         <table className="door-table">
@@ -194,6 +276,34 @@ export function CubeDoorPage() {
             <tr>
               <td>31</td>
               <td>29791 − 961 = 28830 = 961 × 30</td>
+              <td>32</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="door-table-wrap">
+        <table className="door-table">
+          <thead>
+            <tr>
+              <th>p</th>
+              <th>p⁴ − p³ = p³(p − 1)</th>
+              <th>Door m₀(p)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>7</td>
+              <td>2401 − 343 = 2058 = 343 × 6</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>28561 − 2197 = 26364 = 2197 × 12</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td>31</td>
+              <td>923521 − 29791 = 893730 = 29791 × 30</td>
               <td>32</td>
             </tr>
           </tbody>
