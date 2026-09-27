@@ -20,7 +20,7 @@ Paper 1 closes the question that every odd prime ≠ 3 eventually sits in the in
 
 ## Lean
 
-Checked under `lean/Hire/` (build with `elan` / `lake` on a machine with Mathlib cache — not on a Mac with ~26GB free). Spine is `lean/Hire.lean`.
+Checked under `lean/Hire/` (build with `elan` / `lake`; Mathlib is not vendored). Spine is `lean/Hire.lean`.
 
 - `Doors`, `HireSet`, `Graph`, `Finite` — 3-free door, hire set, star + gold; `mid_gap_m0`, `chi3_eq_legendreSym_neg_three`
 - `StarLap`, `Lemma8`, `Cone` — Laplacian cone; `λ₂ = 1` iff gold-on-leaves is disconnected
