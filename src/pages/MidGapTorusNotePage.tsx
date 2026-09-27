@@ -19,7 +19,7 @@ export function MidGapTorusNotePage() {
         <iframe
           className="paper-frame"
           title="mid-gap-and-torus.pdf"
-          src="/paper/mid-gap-and-torus.pdf?v=1758986700#view=FitH"
+          src="/paper/mid-gap-and-torus.pdf?v=1790500714#view=FitH"
         />
       </div>
 

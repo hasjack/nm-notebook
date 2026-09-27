@@ -20,7 +20,7 @@ export function ZetaDoorsNotePage() {
         <iframe
           className="paper-frame"
           title="zeta-doors.pdf"
-          src="/paper/zeta-doors.pdf?v=1758800000#view=FitH"
+          src="/paper/zeta-doors.pdf?v=1790500714#view=FitH"
         />
       </div>
 
