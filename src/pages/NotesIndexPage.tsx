@@ -16,6 +16,11 @@ export function NotesIndexPage() {
             Prime neighbours of zeta denominators
           </Link>
         </li>
+        <li>
+          <Link to="/notes/mid-gap-and-torus">
+            A midpoint identity for the complementary torus order
+          </Link>
+        </li>
       </ul>
     </main>
   );

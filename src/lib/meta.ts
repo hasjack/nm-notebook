@@ -35,6 +35,10 @@ const pages: Record<string, PageMeta> = {
     description:
       "Gold is disconnected for infinitely many windows iff infinitely many Mersenne or Fermat primes.",
   },
+  "/notes/mid-gap-and-torus": {
+    title: "A midpoint identity for the complementary torus order",
+    description: "Mid-gap is the identity; offset is the series; not an H(X) claim.",
+  },
   "/notes/zeta-doors": {
     title: "Prime neighbours of zeta denominators",
     description:

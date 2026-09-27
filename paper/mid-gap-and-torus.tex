@@ -1,0 +1,91 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={A midpoint identity for the complementary torus order at discriminant -3},pdfauthor={Jack Pickett}}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+
+\title{A midpoint identity for the complementary torus order at discriminant \(-3\)}
+\author{Jack Pickett \textperiodcentered\ 27th September 2026}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+For an odd prime \(p\neq 3\), write \(\chi_3(p)=(-3/p)\) and \(m_0(p)=p+\chi_3(p)\). Then
+\[
+\frac1{m_0(p)}-\frac12\Bigl(\frac1{p-1}+\frac1{p+1}\Bigr)=-\frac{\chi_3(p)}{p^2-1}.
+\]
+The identity is elementary. Summing the right-hand side gives an explicit convergent series for the offset between the selected neighbour and the midpoint of \(\{p-1,p+1\}\). The same character is the Kronecker symbol that distinguishes the two torus orders of Williams' \(p+1\) test at \(D=-3\). No asymptotic for the associated hire-count is claimed, nor a relation to \(L(s,\chi_3)\) beyond the identification \(\chi_3=(-3/\cdot)\).
+\end{abstract}
+
+\section{The door}
+
+Let \(p>3\) be prime and let \(\chi_3\) be the non-principal Dirichlet character modulo \(3\), equivalently the Kronecker symbol \(\bigl(\frac{-3}{\cdot}\bigr)\). Set
+\[
+m_0(p)=p+\chi_3(p)=
+\begin{cases}
+p+1 & \text{if }p\equiv 1\pmod{3},\\
+p-1 & \text{if }p\equiv 2\pmod{3}.
+\end{cases}
+\]
+Thus \(m_0(p)\) is one of the two even neighbours of \(p\). Williams' \(p+1\) method at discriminant \(D=-3\) uses the complementary order
+\[
+m_1(p)=p-\chi_3(p).
+\]
+The pair \(\{m_0,m_1\}\) is \(\{p-1,p+1\}\). The hire graph keeps \(m_0\) and discards \(m_1\). Same quadratic field as the Eisenstein integers and as the CM curve \(y^2=x^3+B\); different group.
+
+\section{The identity}
+
+\begin{lemma}
+\label{lem:midgap}
+For every prime \(p>3\),
+\[
+\frac1{m_0(p)}-\frac12\Bigl(\frac1{p-1}+\frac1{p+1}\Bigr)=-\frac{\chi_3(p)}{p^2-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+The midpoint reciprocal is \(p/(p^2-1)\). If \(p\equiv 1\pmod{3}\), then \(\chi_3(p)=+1\) and \(m_0(p)=p+1\), so the left-hand side is
+\[
+\frac1{p+1}-\frac{p}{p^2-1}=\frac{p-1-p}{(p+1)(p-1)}=-\frac1{p^2-1}.
+\]
+If \(p\equiv 2\pmod{3}\), then \(\chi_3(p)=-1\) and \(m_0(p)=p-1\), so the left-hand side is
+\[
+\frac1{p-1}-\frac{p}{p^2-1}=\frac{p+1-p}{(p-1)(p+1)}=+\frac1{p^2-1}.
+\]
+In both cases this equals \(-\chi_3(p)/(p^2-1)\).
+\end{proof}
+
+\begin{remark}
+Equivalently, the midpoint is \(p/(p^2-1)\) and the gap is the unit \(\pm 1/(p^2-1)\). Adding them recovers \(1/m_0(p)\).
+\end{remark}
+
+\section{The offset}
+
+Summing Lemma~\ref{lem:midgap} over primes \(p>3\) up to \(X\) gives
+\[
+\sum_{5\le p\le X}\frac1{m_0(p)}-\frac12\sum_{5\le p\le X}\Bigl(\frac1{p-1}+\frac1{p+1}\Bigr)=-\sum_{5\le p\le X}\frac{\chi_3(p)}{p^2-1}.
+\]
+The right-hand side converges absolutely as \(X\to\infty\). Its value is
+\[
+-\sum_{p>3}\frac{\chi_3(p)}{p^2-1}\approx 0.02598841679.
+\]
+There is no reason to expect a form in \(\pi\) and \(\sqrt{3}\): \(L(1,\chi_3)=\pi/(3\sqrt{3})\) and \(L(3,\chi_3)=4\pi^3/(81\sqrt{3})\) are odd arguments of an odd character; the present series is a character-prime-zeta at even powers. The series is left as the series.
+
+The unsigned neighbour sums \(\sum 1/(p-1)\) and \(\sum 1/(p+1)\) each diverge like \(\tfrac12\log\log X\). The identity says the selected door tracks the midpoint of those two diverging curves at a frozen gap. The signed series \(\sum\chi_3(p)/m_0(p)\) is a different object (cancellation at \(1/p\), numerical value \(\approx-0.241\)) and is not used here.
+
+\section{Refusal}
+
+Lemma~\ref{lem:midgap} does not yield an asymptotic for
+\[
+H(X)=\#\{q\text{ prime}:5\le q\le X,\ \exists\,p\le X,\ q\mid m_0(p)\}.
+\]
+It is not an elliptic-curve method. It records one elementary relation between the complementary torus order at \(D=-3\) and the two neighbours of \(p\).
+
+\end{document}

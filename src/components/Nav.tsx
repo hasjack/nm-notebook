@@ -45,6 +45,11 @@ const tree: NavGroup[] = [
             label: "When gold disconnects",
             icon: "pdf",
           },
+          {
+            to: "/notes/mid-gap-and-torus",
+            label: "A midpoint identity for the complementary torus order",
+            icon: "pdf",
+          },
         ],
       },
     ],
@@ -149,6 +154,11 @@ const tree: NavGroup[] = [
       {
         to: "/notes/zeta-doors",
         label: "Prime neighbours of zeta denominators",
+        icon: "pdf",
+      },
+      {
+        to: "/notes/mid-gap-and-torus",
+        label: "A midpoint identity for the complementary torus order",
         icon: "pdf",
       },
     ],
