@@ -10,7 +10,7 @@ Barrel: `Hire.lean`. Layer map: [`LEMMA8_PROOF_MAP.md`](LEMMA8_PROOF_MAP.md).
 
 | Module | Contents |
 |--------|----------|
-| `Hire/Doors.lean` | `chi3`, `m0` / `m1`, 3-free + even + `6 ∣ m1`, poster checks 11/13 |
+| `Hire/Doors.lean` | `chi3`, `m0` / `m1`, 3-free + even + `6 ∣ m1`, poster checks 11/13; Saturday: `mid_gap_m0`, `chi3_eq_legendreSym_neg_three` |
 | `Hire/HireSet.lean` | Finite owners `≤ X`, inductive `Hired`, **3 ∉ S**, directed `GoldArc`, hire bounds |
 | `Hire/Graph.lean` | `G` / `GX` as Mathlib `SimpleGraph` on hired vertices; star on 2 + gold chords |
 | `Hire/Finite.lean` | `Finite` / `Fintype` for `HireVertex (owners X)`; classical `DecidableRel` Adj |
