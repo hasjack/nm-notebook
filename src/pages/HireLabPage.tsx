@@ -458,6 +458,51 @@ export function HireLabPage() {
             </tbody>
           </table>
         </div>
+        <h3>The tail is the theorem</h3>
+        <p className="figure-caption">
+          The tail is the theorem. Small <em>q</em> saturate; only the tail is
+          new.
+        </p>
+        <p>
+          Write <em>H</em>(<em>X</em>) = π(√<em>X</em>) + Tail(<em>X</em>) and
+          delete the cheap half. Below √<em>X</em> every <em>q</em> is already
+          hired. The mass — where <em>C</em>(<em>X</em>) ≈ 1.09 lives — is{" "}
+          <em>q</em> &gt; √<em>X</em>, especially <em>X</em>
+          <sup>0.7</sup> &lt; <em>q</em> ≤ <em>X</em>. A large{" "}
+          <em>q</em> | <em>m</em>
+          <sub>0</sub>(<em>p</em>) means a prime <em>p</em> ≤ <em>X</em> in one
+          of two progressions mod <em>q</em> (<em>p</em> ≡ ±1, class chosen by
+          χ₃). For <em>q</em> &gt; <em>X</em>
+          <sup>0.7</sup> that is one or two classes with modulus past the square
+          root of the length — past Bombieri–Vinogradov. Elliott–Halberstam would
+          buy mid-tail, not <em>q</em> ∼ <em>X</em>.
+        </p>
+        <aside className="lab-theorem" aria-label="Tail is the theorem">
+          <p className="lab-theorem-implies">
+            To prove H(X) ∼ C X log log X/(log X)² you must prove that
+            &#123;q prime : X^θ &lt; q ≤ X, ∃ p ≤ X, q | m₀(p)&#125; has that
+            order for some θ &gt; 1/2. Everything below √X is π(√X) and drops from
+            the leading term.
+          </p>
+        </aside>
+        <p>
+          Chewable first slice — not “BV ⇒ baby <em>C</em>”: an upper bound of
+          the right order. Each door has O(log <em>p</em>/log log <em>p</em>)
+          distinct prime factors, so
+        </p>
+        <aside className="lab-theorem" aria-label="One log too fat">
+          <p className="lab-theorem-implies">
+            H(X) ≪ Σ<sub>p≤X</sub> ω(m₀(p)) ≪ π(X) log log X,
+          </p>
+        </aside>
+        <p>
+          which is one log too fat (<em>X</em> log log <em>X</em>/log <em>X</em>{" "}
+          rather than <em>X</em> log log <em>X</em>/(log <em>X</em>)
+          <sup>2</sup>). The missing log is “most factors are repeats of small{" "}
+          <em>q</em>.” Turning that into a proof is exactly: small ones saturate,
+          only the tail is new. The ~85% least-factor slot is the same sentence
+          on a thinner vertex set.
+        </p>
       </section>
 
       <section className="hire-beat">
