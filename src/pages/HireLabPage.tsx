@@ -246,6 +246,103 @@ export function HireLabPage() {
           <em>X</em> only a vanishing fraction of π(<em>X</em>) is hired. That
           is why islands can breathe.
         </p>
+        <h3>Easy moduli are all hired</h3>
+        <p className="figure-caption">
+          Easy moduli are all hired. Bombieri–Vinogradov does not give a baby{" "}
+          <em>C</em>.
+        </p>
+        <p>
+          Restrict hires to <em>q</em> ≤ √<em>X</em>. Through{" "}
+          <em>X</em> = 2·10<sup>6</sup> every such <em>q</em> is already hired,
+          so <em>H</em>
+          <sub>√<em>X</em></sub> = π(√<em>X</em>) ∼ 2√<em>X</em>/log{" "}
+          <em>X</em> — not <em>X</em> log log <em>X</em>/(log <em>X</em>)
+          <sup>2</sup>. Plug that count into the full formula and{" "}
+          <em>C</em>
+          <sub>√</sub> → 0, as it must. The measured shape to 10<sup>10</sup>{" "}
+          lives in the unsaturated tail √<em>X</em> &lt; <em>q</em> ≤{" "}
+          <em>X</em>. Vertex <em>H</em>(<em>X</em>) is a large-moduli statement;
+          the ~85% least-factor slot is where that tail lives. Small{" "}
+          <em>q</em> saturate early.
+        </p>
+        <div className="door-table-wrap hire-rate-wrap">
+          <table className="door-table hire-rate-table">
+            <thead>
+              <tr>
+                <th>
+                  <em>X</em>
+                </th>
+                <th>
+                  <em>H</em>
+                </th>
+                <th>
+                  <em>H</em>
+                  <sub>√</sub>
+                </th>
+                <th>π(√)</th>
+                <th>
+                  <em>H</em>
+                  <sub>√</sub>/π(√)
+                </th>
+                <th>
+                  <em>C</em>
+                  <sub>full</sub>
+                </th>
+                <th>
+                  <em>C</em>
+                  <sub>√</sub>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>10<sup>3</sup></td>
+                <td>60</td>
+                <td>9</td>
+                <td>9</td>
+                <td>1.000</td>
+                <td>1.48</td>
+                <td>0.22</td>
+              </tr>
+              <tr>
+                <td>10<sup>4</sup></td>
+                <td>361</td>
+                <td>23</td>
+                <td>23</td>
+                <td>1.000</td>
+                <td>1.38</td>
+                <td>0.09</td>
+              </tr>
+              <tr>
+                <td>10<sup>5</sup></td>
+                <td>2,401</td>
+                <td>63</td>
+                <td>63</td>
+                <td>1.000</td>
+                <td>1.30</td>
+                <td>0.03</td>
+              </tr>
+              <tr>
+                <td>10<sup>6</sup></td>
+                <td>16,688</td>
+                <td>166</td>
+                <td>166</td>
+                <td>1.000</td>
+                <td>1.21</td>
+                <td>0.01</td>
+              </tr>
+              <tr>
+                <td>2·10<sup>6</sup></td>
+                <td>30,539</td>
+                <td>221</td>
+                <td>221</td>
+                <td>1.000</td>
+                <td>1.20</td>
+                <td>0.009</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section className="hire-beat">
