@@ -2,23 +2,27 @@
 
 The hire graph of the 3-free door. Alphabet toys and Lean live in the same repo.
 
+Live site: [halfasecond.com](https://halfasecond.com)
+
 ## Hire graph
 
 Lead shelf: the **hire graph of the 3-free door**.
 
-- **Paper 1** — [*The hire graph of the 3-free door*](public/paper/hire-graph-of-the-3-free-door.pdf) ([TeX](paper/two_doors.tex)) · site: [`/notes/hire-graph`](/notes/hire-graph)
-- **Sequel** — [*When gold disconnects*](public/paper/when-gold-disconnects.pdf) ([TeX](paper/when_gold_disconnects.tex)) · site: [`/notes/when-gold-disconnects`](/notes/when-gold-disconnects)
-- **Zeta doors** — [*Prime neighbours of zeta denominators*](public/paper/zeta-doors.pdf) ([TeX](paper/zeta-doors.tex)) · site: [`/notes/zeta-doors`](/notes/zeta-doors)
-- **Islands** — last-island / black-swan spotlight and the thin M₃₁ corridor · site: [`/islands`](/islands)
-- **Introduction / Basins** — door table and drain lattice · [`/hire`](/hire) · [`/basins`](/basins)
+- **Paper 1** — [*The hire graph of the 3-free door*](https://halfasecond.com/paper/hire-graph-of-the-3-free-door.pdf) ([TeX](paper/two_doors.tex)) · [note](https://halfasecond.com/notes/hire-graph)
+- **Sequel** — [*When gold disconnects*](https://halfasecond.com/paper/when-gold-disconnects.pdf) ([TeX](paper/when_gold_disconnects.tex)) · [note](https://halfasecond.com/notes/when-gold-disconnects)
+- **Zeta doors** — [*Prime neighbours of zeta denominators*](https://halfasecond.com/paper/zeta-doors.pdf) ([TeX](paper/zeta-doors.tex)) · [note](https://halfasecond.com/notes/zeta-doors)
+- **Mid-gap / torus** — [*A midpoint identity for the complementary torus order at discriminant −3*](https://halfasecond.com/paper/mid-gap-and-torus.pdf) ([TeX](paper/mid-gap-and-torus.tex)) · [note](https://halfasecond.com/notes/mid-gap-and-torus)
+- **Islands** — last-island / black-swan spotlight and the thin M₃₁ corridor · [site](https://halfasecond.com/islands)
+- **Introduction / Basins** — door table and drain lattice · [hire](https://halfasecond.com/hire) · [basins](https://halfasecond.com/basins)
+- **Hire lab** — rate, tail, mid-gap shelf · [hire-lab](https://halfasecond.com/hire-lab) · [torus](https://halfasecond.com/torus)
 
-Paper 1 closes the question that every odd prime ≠ 3 eventually sits in the infinite gold component of 5 (Dirichlet bridge). The leftover is whether gold is disconnected for infinitely many finite windows — equivalent to infinitely many Mersenne or Fermat primes (*When gold disconnects*).
+Paper 1 closes the question that every odd prime ≠ 3 eventually sits in the infinite gold component of 5 (Dirichlet bridge). The leftover is whether gold is disconnected for infinitely many finite windows — equivalent to infinitely many Mersenne or Fermat primes (*When gold disconnects*). The mid-gap note is Saturday Lab: elementary identity + frozen offset series; not an \(H(X)\) claim.
 
 ## Lean
 
-Checked under `lean/Hire/` (build with `elan` / `lake`; Mathlib is not vendored). Spine is `lean/Hire.lean`.
+Checked under `lean/Hire/` (build with `elan` / `lake` on a machine with Mathlib cache — not on a Mac with ~26GB free). Spine is `lean/Hire.lean`.
 
-- `Doors`, `HireSet`, `Graph`, `Finite` — 3-free door, hire set, star + gold
+- `Doors`, `HireSet`, `Graph`, `Finite` — 3-free door, hire set, star + gold; `mid_gap_m0`, `chi3_eq_legendreSym_neg_three`
 - `StarLap`, `Lemma8`, `Cone` — Laplacian cone; `λ₂ = 1` iff gold-on-leaves is disconnected
 - `WitnessXstar` — connecting witness at `X*`
 - `GoldBridge` — strong Q2, 0 sorry: every odd prime ≠ 3 lies in the infinite gold component of 5
