@@ -280,6 +280,9 @@ export function HireLabPage() {
           </p>
         </aside>
         <p>
+          Checked Lean: <code>mid_gap_m0</code> in <code>Hire/Doors.lean</code>.
+        </p>
+        <p>
           Summing: D − mid = −Σ χ₃(p)/(p² − 1). Absolute convergence explains
           the early freeze. The constant ≈ 0.02598841679… is the value of that
           series — not a π/√3 form (wrong L-shape: primes, even powers). Also on{" "}

@@ -22,6 +22,10 @@ export function TorusPage() {
           .
         </p>
       </aside>
+      <p>
+        Checked Lean: <code>chi3_eq_legendreSym_neg_three</code> in{" "}
+        <code>Hire/Doors.lean</code>.
+      </p>
 
       <p>
         Williams’ <em>p</em>+1 test for discriminant <em>D</em> = −3 uses the
