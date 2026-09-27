@@ -201,7 +201,7 @@ Both \(p\) and \(q\) are adjacent to \(2\) by construction.
 
 Let \(H_X\) be the combinatorial Laplacian of the undirected graph on \(S_X\) (spokes plus undirected gold), and let \(L'_X\) be the Laplacian of the undirected gold graph on \(S_X\setminus\{2\}\).
 Thus \(G_X\) is the cone on its gold subgraph.
-We record the block computation of its Laplacian spectrum for completeness; algebraic connectivity is due to Fiedler~\cite{Fiedler}.
+The block computation of its Laplacian spectrum is recorded for completeness; algebraic connectivity is due to Fiedler~\cite{Fiedler}.
 \footnote{Door identities and the window cone block are checked in Lean~4 (\texttt{Hire/Doors.lean}, \texttt{Hire/Lemma8.lean}); the connecting witness at \(X^*\) is \texttt{Hire/WitnessXstar.lean}; the Dirichlet bridge is \texttt{Hire/GoldBridge.lean}. The Mathlib card bound is only the coarse estimate \(\lambda\le |V|\), not the cone identity.}
 
 \begin{lemma}

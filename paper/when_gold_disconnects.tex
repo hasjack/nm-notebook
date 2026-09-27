@@ -29,7 +29,7 @@ The companion note settles the infinite component of \(5\); this note records th
 
 \section{Setup}
 
-We use the notation of the hire-graph note~\cite{Hire}: the 3-free door \(m_0\), the hire set \(S_X\), directed gold arcs \(q\mid m_0(p)\), and the undirected gold graph on \(S_X\setminus\{2\}\).
+Notation follows the hire-graph note~\cite{Hire}: the 3-free door \(m_0\), the hire set \(S_X\), directed gold arcs \(q\mid m_0(p)\), and the undirected gold graph on \(S_X\setminus\{2\}\).
 A prime \(M\neq 3\) is a \emph{\(2\)-power door} if \(m_0(M)=2^k\) for some \(k\ge 1\).
 Every Mersenne prime \(M_p=2^p-1\) with \(p\) odd, and every Fermat prime greater than \(3\), is of this form.
 The first owner \(r_0\) of \(M\) is the least prime \(r\) with \(M\mid m_0(r)\); by the door bound, \(r_0\ge 2M-1\).
@@ -49,7 +49,7 @@ The first owner itself is not hired at this window: nothing smaller than \(r_0\)
 As a \(2\)-power door, \(M\) has gold out-degree zero.
 No other owner of \(M\) exists below \(r_0\), so no incoming gold arc is live either.
 Thus \(M\) meets no other odd hired prime by a gold edge.
-Since \(M>5\) and \(r_0\ge 2M-1>11\), we also have \(5\in S_{r_0}\) (for example \(5\mid m_0(11)=10\)), so \(M\) is an isolated vertex distinct from another vertex of the gold graph.
+Since \(M>5\) and \(r_0\ge 2M-1>11\), also \(5\in S_{r_0}\) (for example \(5\mid m_0(11)=10\)), so \(M\) is an isolated vertex distinct from another vertex of the gold graph.
 \end{proof}
 
 As of September 2026, every known Mersenne prime from \(M_{31}\) onward has first owner larger than the connecting window \(X^*=92\,274\,421\) of the hire-graph note, so Lemma~\ref{lem:isolated} already supplies many concrete disconnected windows.
@@ -75,7 +75,7 @@ Then \(S\) contains a \(2\)-power door.
 
 \begin{proof}
 Take a least element \(p\in S\).
-If \(m_0(p)=2^k\), we are done.
+If \(m_0(p)=2^k\), the claim follows.
 Otherwise some odd prime \(q\neq 3\) divides \(m_0(p)\).
 Closure puts \(q\in S\), and the size bound \(q\le m_0(p)/2<(p+1)/2\) forces \(q<p\), contradicting minimality.
 \end{proof}

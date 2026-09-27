@@ -19,11 +19,11 @@ For positive even indices $k$ with $3\nmid k$, let $D_k$ be the reduced
 positive denominator of $\zeta(1-k)$. Classical Bernoulli arithmetic gives
 $D_k=3\cdot2^{1+v_2(k)}T_k$, where every prime factor of $T_k$ is $2$
 modulo $3$. If also $4\nmid k$, these factors are $11$ modulo $12$;
-otherwise factors congruent to $5$ modulo $12$ are also permitted. We select the unique neighbour of $D_k/3$ that is not divisible by
-$3$ and investigate when it is prime. The construction provides known
+otherwise factors congruent to $5$ modulo $12$ are also permitted. The unique neighbour of $D_k/3$ that is not divisible by
+$3$ is selected, and the question is when it is prime. The construction provides known
 factorisations on one side of each candidate and therefore supports
-classical primality certificates. We give the elementary selection rule,
-describe its limited Lean formalisation, and record computational examples
+classical primality certificates. The elementary selection rule is given,
+together with its limited Lean formalisation, computational examples,
 and the verification conditions needed for their interpretation. No claim
 of an infinite prime family or of priority for the construction is made.
 \end{abstract}
@@ -35,9 +35,9 @@ The equality
 \]
 motivated an examination of arguments $1-k$ with $k\equiv2\pmod{12}$.
 The equality itself does not establish a period of the zeta function.
-Our object is the denominator at these arguments, rather than equality
+The object is the denominator at these arguments, rather than equality
 of their values. The construction extends to all positive even indices
-not divisible by $3$, namely $k\equiv2,4,8,10\pmod{12}$. We call
+not divisible by $3$, namely $k\equiv2,4,8,10\pmod{12}$. Call
 $k\equiv2\pmod{12}$ the original family and the other three residue
 classes the added family.
 
@@ -115,7 +115,7 @@ The \emph{zeta-door candidate} at $k$ is
 \[
  Q_k=d_k+\chi_3(d_k).
 \]
-We call it a zeta-door prime when $Q_k$ is prime.
+Call it a zeta-door prime when $Q_k$ is prime.
 \end{definition}
 This selects exactly one of $d_k-1$ and $d_k+1$: the other is divisible
 by $3$. If $Q_k$ is prime, its residue modulo $3$ is opposite to that
