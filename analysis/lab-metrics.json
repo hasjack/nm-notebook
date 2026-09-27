@@ -110,6 +110,16 @@
       "seconds": 87633.028,
       "pfgw": "is composite: RES64: [A911EA4A4320C250] (76646.8354s+10986.1803s)",
       "as_of": "2026-09-26"
+    },
+    "k214": {
+      "host": "xeon",
+      "k": 214,
+      "eps": 1,
+      "expr": "490702*2^12918431-213",
+      "status": "composite",
+      "seconds": 88767.289,
+      "pfgw": "is composite: RES64: [58D5F4C09BC76650] (77765.5594s+11001.7147s)",
+      "as_of": "2026-09-27"
     }
   }
 }
