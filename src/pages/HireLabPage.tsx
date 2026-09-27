@@ -343,6 +343,121 @@ export function HireLabPage() {
             </tbody>
           </table>
         </div>
+        <h3>The tail is the whole curve</h3>
+        <p className="figure-caption">
+          The tail is the whole curve. Almost all of <em>H</em> sits above{" "}
+          <em>X</em>
+          <sup>0.7</sup>.
+        </p>
+        <p>
+          Band split through <em>X</em> = 3·10<sup>6</sup>: at the tip,{" "}
+          39,808/43,459 ≈ 92% of hires have <em>q</em> &gt; <em>X</em>
+          <sup>0.7</sup>, and <em>C</em>
+          <sub>tail</sub> ≈ <em>C</em>
+          <sub>full</sub>. The baby-BV slice is a rounding error on the vertex
+          count. Edges grow like π(<em>X</em>) log log <em>X</em> — different
+          object, different shape; useful as a check, not a twin of{" "}
+          <em>H</em>. Σ 1/<em>q</em> is still climbing (1.15 → 1.97); if the
+          heuristic is right it converges, but the remaining increment is ∼ log
+          log <em>X</em>/log <em>X</em>, so it will not sit tonight. Proving{" "}
+          <em>H</em> is proving that primes <em>q</em> ∈ (<em>X</em>
+          <sup>0.7</sup>, <em>X</em>] keep appearing as factors of doors with{" "}
+          <em>p</em> ≤ <em>X</em> — progressions mod <em>q</em> past √
+          <em>X</em>. Reweighting (edges or Σ 1/<em>q</em>) does not dodge that
+          band.
+        </p>
+        <div className="door-table-wrap hire-rate-wrap">
+          <table className="door-table hire-rate-table">
+            <thead>
+              <tr>
+                <th>
+                  <em>X</em>
+                </th>
+                <th>
+                  <em>H</em>
+                </th>
+                <th>
+                  <em>q</em> ≤ √<em>X</em>
+                </th>
+                <th>
+                  √<em>X</em> &lt; <em>q</em> ≤ <em>X</em>
+                  <sup>0.7</sup>
+                </th>
+                <th>
+                  <em>X</em>
+                  <sup>0.7</sup> &lt; <em>q</em> ≤ <em>X</em>
+                </th>
+                <th>edges</th>
+                <th>Σ 1/<em>q</em></th>
+                <th>
+                  <em>C</em>
+                  <sub>full</sub>
+                </th>
+                <th>
+                  <em>C</em>
+                  <sub>tail</sub>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>10<sup>3</sup></td>
+                <td>60</td>
+                <td>9</td>
+                <td>18</td>
+                <td>33</td>
+                <td>216</td>
+                <td>1.15</td>
+                <td>1.48</td>
+                <td>1.26</td>
+              </tr>
+              <tr>
+                <td>10<sup>4</sup></td>
+                <td>361</td>
+                <td>23</td>
+                <td>89</td>
+                <td>249</td>
+                <td>2,017</td>
+                <td>1.45</td>
+                <td>1.38</td>
+                <td>1.29</td>
+              </tr>
+              <tr>
+                <td>10<sup>5</sup></td>
+                <td>2,401</td>
+                <td>63</td>
+                <td>381</td>
+                <td>1,957</td>
+                <td>18,072</td>
+                <td>1.70</td>
+                <td>1.30</td>
+                <td>1.27</td>
+              </tr>
+              <tr>
+                <td>10<sup>6</sup></td>
+                <td>16,688</td>
+                <td>166</td>
+                <td>1,679</td>
+                <td>14,843</td>
+                <td>164,104</td>
+                <td>1.89</td>
+                <td>1.21</td>
+                <td>1.20</td>
+              </tr>
+              <tr>
+                <td>3·10<sup>6</sup></td>
+                <td>43,459</td>
+                <td>267</td>
+                <td>3,384</td>
+                <td>39,808</td>
+                <td>471,040</td>
+                <td>1.97</td>
+                <td>1.19</td>
+                <td>1.19</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section className="hire-beat">
