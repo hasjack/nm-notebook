@@ -42,7 +42,11 @@
       "verify": {
         "status": "VERIFIED",
         "as_of": "2026-09-25",
-        "note": "F from 1215 primes < 2^64; 58 cofactors proved from index"
+        "note": "F from 1215 primes < 2^64; 58 cofactors from index",
+        "origin": {"divisors": 39366, "prime": 1274, "composite": 38092, "unresolved": 0},
+        "pair_file_wall_seconds": 36853.28,
+        "implied_row_seconds": 18711,
+        "wall_note": "first row of hits.smaller.certified.jsonl; pair wall 10.2 h, 16165 solo 5.04 h so this row ~5.2 h"
       }
     },
     "lions71_16165_cert": {
@@ -54,7 +58,10 @@
       "verify": {
         "status": "VERIFIED",
         "as_of": "2026-09-25",
-        "note": "F from 1221 primes < 2^64; 62 cofactors proved from index"
+        "note": "F from 1221 primes < 2^64; 62 cofactors from index",
+        "origin": {"divisors": 39366, "prime": 1284, "composite": 38082, "unresolved": 0},
+        "wall_seconds": 18141.84,
+        "wall_note": "solo hits.16165.certified.jsonl ~5.04 h; matches the second half of the pair run"
       }
     },
     "giraffes_night1": {

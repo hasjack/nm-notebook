@@ -262,9 +262,12 @@ export function ZetaDoorsPage() {
           1,598 primes below 2<sup>64</sup>, 19 cofactors proved from the
           index. <code>cert.py</code> writes <code>cert_seconds</code>.
           Same run: 16,213 and 16,165 digits also certified (5 h 19 min
-          each) and independently verified. 16,213: F from 1,215 primes below
-          2<sup>64</sup>, 58 cofactors. 16,165: F from 1,221 primes below
-          2<sup>64</sup>, 62 cofactors.
+          each) and independently verified. Origin rebuild enumerates all
+          39,366 divisors of k (n=9, e=2): 1,274 and 1,284 von Staudt primes
+          respectively, <em>unresolved 0</em>. 16,213: F from 1,215 primes
+          below 2<sup>64</sup>, 58 cofactors. 16,165: F from 1,221 primes
+          below 2<sup>64</sup>, 62 cofactors. Pair-file verify wall 10.2 h;
+          16,165 solo 5.0 h.
         </li>
         <li>
           Certified kitchen: <strong>5,522 digits</strong> (also 5,118 and
