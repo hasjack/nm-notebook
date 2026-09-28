@@ -51,6 +51,7 @@ const FLOORS: {
   { k: 220, eps: "+1", expr: "504460·2^n−219", factor: "18481", seconds: "0.55" },
   { k: 224, eps: "−1", expr: "513632·2^n−225", factor: "641", seconds: "0.31" },
   { k: 226, eps: "+1", expr: "518218·2^n−225", factor: "11", seconds: "0.33" },
+  { k: 230, eps: "−1", expr: "527390·2^n−231", factor: "127891349", seconds: "970" },
 ];
 
 export function Rank100Page() {
@@ -61,13 +62,13 @@ export function Rank100Page() {
         PrimePages rank 100 is the Riesel q = 2293·2<sup>12918431</sup>−1
         (3,888,839 digits). Thin sieve at B = 10<sup>7</sup> left K
         <sub>cert</sub> = 98: first un-killed admissible multiplier. PFGW has
-        since killed every admissible k through 226. No owner. k = 230 is in
-        PFGW (next discount survivor after 214).
+        since killed every admissible k through 322. No owner. k = 326 is in
+        PFGW — last B=10<sup>8</sup> survivor through 400.
       </p>
       <p>
         PFGW 4.1.8 on has-ams3-01, Intel Xeon Platinum 8280 @ 2.70 GHz, 8
         cores, 16 GB. n = 12,918,431. Admissible k are even and not divisible
-        by 3. Skip multiples of 3. Snapshot 27 Sep 2026.
+        by 3. Skip multiples of 3. Snapshot 28 Sep 2026.
       </p>
       <div className="door-table-wrap">
         <table className="door-table">
@@ -115,14 +116,17 @@ export function Rank100Page() {
         RES64 A911EA4A4320C250. Then 208 and 212 died on 5. k = 214 was the
         fifth Fermat exam: 24.66 h (77,766 s PRP + 11,002 s other), composite,
         RES64 58D5F4C09BC76650. Then 218–226 were cheap kills (7, 18481, 641,
-        11). k = 230 is in PFGW — next B=10<sup>8</sup> survivor. Five exams,
-        five composites. Density, not the test. A
+        11). k = 230 was a discount miss: factor 127891349 in 16 min (above
+        B=10<sup>8</sup>, so not a Fermat). Then 232–322 were cheap kills
+        again (296 took 124 s, factor 14146369). k = 326 is in PFGW at 13.5 h
+        — last B=10<sup>8</sup> survivor through 400, past the trial-factor
+        bound. Five Fermat exams, five composites. Density, not the test. A
         40-hour gmpy2 Fermat on the Studio was the k = 98 check without the
         trial-factor gate.
       </p>
       <p>
         No owner yet. Walker: <code>analysis/rank100_pfgw_floors.py</code>
-        (Xeon, k = 230 in PFGW — do not mix). Discount sieve:{" "}
+        (Xeon, k = 326 in PFGW — do not mix). Discount sieve:{" "}
         <code>analysis/rank100_discount.py</code> — special-form trial factor
         of every admissible k without building N, so 0.28 s jokes die before
         FFT. Survivors at B are the Fermat queue. Timing:{" "}

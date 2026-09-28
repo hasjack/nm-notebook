@@ -127,6 +127,27 @@
       "seconds": 88767.289,
       "pfgw": "is composite: RES64: [58D5F4C09BC76650] (77765.5594s+11001.7147s)",
       "as_of": "2026-09-27"
+    },
+    "k230": {
+      "host": "xeon",
+      "k": 230,
+      "eps": -1,
+      "expr": "527390*2^12918431-231",
+      "status": "composite",
+      "seconds": 970.389,
+      "factor": "127891349",
+      "as_of": "2026-09-28",
+      "note": "above B=1e8; not a Fermat exam"
+    },
+    "k326_snapshot": {
+      "host": "xeon",
+      "k": 326,
+      "eps": -1,
+      "expr": "747518*2^12918431-327",
+      "pfgw_elapsed": "13h 30m",
+      "as_of": "2026-09-28",
+      "status": "running",
+      "note": "last B=1e8 survivor through k=400; past TF bound"
     }
   }
 }
