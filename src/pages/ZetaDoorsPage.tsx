@@ -258,9 +258,9 @@ export function ZetaDoorsPage() {
           ζ(1−k) at k = 1522610689958516981964050). 1,598 factors of N−1
           below 2<sup>64</sup>, 19 listed cofactors, F<sup>2</sup> &gt; N.
           Pocklington wall <strong>9 h 2 min</strong> on the Studio (M2 Max,
-          12 cores, 32 GB). Independent <code>verify.py</code> passed: F from
-          1,598 primes below 2<sup>64</sup>, 19 cofactors proved from the
-          index. <code>cert.py</code> writes <code>cert_seconds</code>.
+          12 cores, 32 GB). Independent <code>verify.py</code> origin re-audit 28 Sep 2026:
+          1,618 / 37,748 / unresolved 0 of 39,366 divisors; F from 1,598
+          primes below 2<sup>64</sup>, 19 cofactors; wall 8.9 h. <code>cert.py</code> writes <code>cert_seconds</code>.
           Same run: 16,213 and 16,165 digits also certified (5 h 19 min
           each) and independently verified. Origin rebuild enumerates all
           39,366 divisors of k (n=9, e=2): 1,274 and 1,284 von Staudt primes

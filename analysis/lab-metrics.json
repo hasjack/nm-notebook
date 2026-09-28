@@ -29,8 +29,10 @@
       "cofactors": 19,
       "verify": {
         "status": "VERIFIED",
-        "as_of": "2026-09-24",
-        "note": "verify.py: Pocklington F from 1598 primes < 2^64; 19 cofactors proved from index"
+        "as_of": "2026-09-28",
+        "note": "origin 1618 prime / 37748 composite / 0 unresolved of 39366; F from 1598 primes < 2^64; 19 cofactors",
+        "origin": {"divisors": 39366, "prime": 1618, "composite": 37748, "unresolved": 0},
+        "wall_seconds": 32074.74
       }
     },
     "lions71_16213_cert": {

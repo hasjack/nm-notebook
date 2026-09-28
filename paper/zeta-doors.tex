@@ -268,7 +268,7 @@ factorisations. Three plus-side candidates from the same
 \toprule
 Digits of $Q_k$ & \path{cert.py} & $F$ primes ${}<2^{64}$ & Cofactors & \path{verify.py}\\
 \midrule
-18365 & 9 h 2 min & 1598 & 19 & 24 Sep 2026\\
+18365 & 9 h 2 min & 1598 & 19 & 28 Sep 2026 (origin 1618/37748/0, 8.9 h)\\
 16213 & 5 h 19 min & 1215 & 58 & 25 Sep 2026\\
 16165 & 5 h 19 min & 1221 & 62 & 25 Sep 2026\\
 \bottomrule
@@ -279,7 +279,9 @@ The 18365-digit index is $k=1522610689958516981964050$
 \path{lions71/hits.smaller.certified.jsonl}. In each case $F^2>N$ from the
 64-bit part, and listed cofactors were proved from the factored index.
 
-The source snapshot for this draft is 25 September 2026 \cite{repo}.
+The source snapshot for this draft is 28 September 2026 \cite{repo}.
+Origin rebuild for all three \texttt{lions71} rows enumerated $\tau(k)=39366$
+divisors; every $d+1$ was classified prime or composite (unresolved 0).
 Change into the directory
 \begin{center}
 \path{analysis/zeta/zeta-targeted}
@@ -296,17 +298,15 @@ factorisations, and witnesses; they are preferable to printing thousands
 of decimal digits in the note. All three \texttt{lions71} certificates
 have been independently rechecked as above.
 
-\paragraph{Outstanding audit item for this draft.}
-Revision \texttt{c04d373} searches bases $2,\ldots,501$ when proving
-large divisor-derived candidates. Exhausting this bounded search returns
-\texttt{False}, which the denominator loop treats as a reason to omit the
-candidate. Failure to find a primality witness is not a compositeness
-proof. A publication-ready exact-origin receipt must distinguish
-\emph{prime}, \emph{composite}, and \emph{unresolved}, and must not finish
-successfully with unresolved divisor candidates. The successful proofs
-of all included large factors do not by themselves settle this
-exhaustiveness issue. This qualification concerns denominator provenance,
-not the separate partial-Pocklington proof of $Q_k$.
+\paragraph{Origin audit (closed).}
+The three \texttt{lions71} \path{verify.py} runs now print an origin
+census \(\{\texttt{prime},\texttt{composite},\texttt{unresolved}\}\) over
+all $\tau(k)=39366$ index divisors. Each finished with
+\texttt{unresolved}=0 (king: 1618 prime, 37748 composite, wall $8.9$\,h).
+A bounded witness search that returns \texttt{False} is no longer treated
+as a silent omit: the receipt distinguishes the three classes. This
+settles denominator provenance for those three rows, separately from the
+partial-Pocklington proof of $Q_k$.
 
 \section{Formalisation and further questions}
 The file \path{lean/Hire/ZetaDoors.lean} now contains the following

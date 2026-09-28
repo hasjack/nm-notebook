@@ -10,9 +10,9 @@ export function ZetaDoorsNotePage() {
         primes are 2 (mod 3);
         11 (mod 12) when 4 ∤ k, else 5 or 11 (mod 12). Plus-side candidates have
         a factored Q−1. Lean records the selection rule, not von Staudt–Clausen.
-        Lab snapshot, not an infinite family. 25 September 2026: lions71
-        18365, 16213, and 16165-digit candidates certified and independently
-        verified. Live hunt:{" "}
+        Lab snapshot, not an infinite family. 28 September 2026: lions71
+        origin audit closed (39366 divisors, unresolved 0) for 18365, 16213,
+        and 16165. Live hunt:{" "}
         <Link to="/zeta-doors">Zeta doors</Link>.
       </p>
 
@@ -20,7 +20,7 @@ export function ZetaDoorsNotePage() {
         <iframe
           className="paper-frame"
           title="zeta-doors.pdf"
-          src="/paper/zeta-doors.pdf?v=1790500714#view=FitH"
+          src="/paper/zeta-doors.pdf?v=1759051200#view=FitH"
         />
       </div>
 
