@@ -52,6 +52,76 @@ const FLOORS: {
   { k: 224, eps: "−1", expr: "513632·2^n−225", factor: "641", seconds: "0.31" },
   { k: 226, eps: "+1", expr: "518218·2^n−225", factor: "11", seconds: "0.33" },
   { k: 230, eps: "−1", expr: "527390·2^n−231", factor: "127891349", seconds: "970" },
+  { k: 232, eps: "+1", expr: "531976·2^n−231", factor: "269", seconds: "0.28" },
+  { k: 236, eps: "−1", expr: "541148·2^n−237", factor: "11", seconds: "0.27" },
+  { k: 238, eps: "+1", expr: "545734·2^n−237", factor: "5", seconds: "0.28" },
+  { k: 242, eps: "−1", expr: "554906·2^n−243", factor: "5", seconds: "0.28" },
+  { k: 244, eps: "+1", expr: "559492·2^n−243", factor: "7", seconds: "0.28" },
+  { k: 248, eps: "−1", expr: "568664·2^n−249", factor: "479", seconds: "0.28" },
+  { k: 250, eps: "+1", expr: "573250·2^n−249", factor: "43", seconds: "0.28" },
+  { k: 254, eps: "−1", expr: "582422·2^n−255", factor: "28433", seconds: "0.7" },
+  { k: 256, eps: "+1", expr: "587008·2^n−255", factor: "32003", seconds: "0.74" },
+  { k: 260, eps: "−1", expr: "596180·2^n−261", factor: "(none stored)", seconds: "0.28" },
+  { k: 262, eps: "+1", expr: "600766·2^n−261", factor: "105499", seconds: "1.57" },
+  { k: 266, eps: "−1", expr: "609938·2^n−267", factor: "43", seconds: "0.27" },
+  { k: 268, eps: "+1", expr: "614524·2^n−267", factor: "5", seconds: "0.28" },
+  { k: 272, eps: "−1", expr: "623696·2^n−273", factor: "5", seconds: "0.27" },
+  { k: 274, eps: "+1", expr: "628282·2^n−273", factor: "67", seconds: "0.28" },
+  { k: 278, eps: "−1", expr: "637454·2^n−279", factor: "13", seconds: "0.27" },
+  { k: 280, eps: "+1", expr: "642040·2^n−279", factor: "19", seconds: "0.27" },
+  { k: 284, eps: "−1", expr: "651212·2^n−285", factor: "23", seconds: "0.28" },
+  { k: 286, eps: "+1", expr: "655798·2^n−285", factor: "7", seconds: "0.27" },
+  { k: 290, eps: "−1", expr: "664970·2^n−291", factor: "19", seconds: "0.27" },
+  { k: 292, eps: "+1", expr: "669556·2^n−291", factor: "11", seconds: "0.27" },
+  { k: 296, eps: "−1", expr: "678728·2^n−297", factor: "14146369", seconds: "124" },
+  { k: 298, eps: "+1", expr: "683314·2^n−297", factor: "(none stored)", seconds: "0.27" },
+  { k: 302, eps: "−1", expr: "692486·2^n−303", factor: "(none stored)", seconds: "0.27" },
+  { k: 304, eps: "+1", expr: "697072·2^n−303", factor: "37", seconds: "0.27" },
+  { k: 308, eps: "−1", expr: "706244·2^n−309", factor: "2437", seconds: "0.3" },
+  { k: 310, eps: "+1", expr: "710830·2^n−309", factor: "3083", seconds: "0.33" },
+  { k: 314, eps: "−1", expr: "720002·2^n−315", factor: "17", seconds: "0.27" },
+  { k: 316, eps: "+1", expr: "724588·2^n−315", factor: "2161", seconds: "0.31" },
+  { k: 320, eps: "−1", expr: "733760·2^n−321", factor: "31", seconds: "0.27" },
+  { k: 322, eps: "+1", expr: "738346·2^n−321", factor: "4723", seconds: "0.34" },
+  { k: 326, eps: "−1", expr: "747518·2^n−327", factor: "Fermat composite", seconds: "89,468" },
+  { k: 328, eps: "+1", expr: "752104·2^n−327", factor: "5", seconds: "0.27" },
+  { k: 332, eps: "−1", expr: "761276·2^n−333", factor: "5", seconds: "0.27" },
+  { k: 334, eps: "+1", expr: "765862·2^n−333", factor: "103", seconds: "0.32" },
+  { k: 338, eps: "−1", expr: "775034·2^n−339", factor: "53", seconds: "0.32" },
+  { k: 340, eps: "+1", expr: "779620·2^n−339", factor: "643", seconds: "0.28" },
+  { k: 344, eps: "−1", expr: "788792·2^n−345", factor: "7", seconds: "0.27" },
+  { k: 346, eps: "+1", expr: "793378·2^n−345", factor: "13", seconds: "0.27" },
+  { k: 350, eps: "−1", expr: "802550·2^n−351", factor: "83", seconds: "0.27" },
+  { k: 352, eps: "+1", expr: "807136·2^n−351", factor: "251", seconds: "0.28" },
+  { k: 356, eps: "−1", expr: "816308·2^n−357", factor: "13", seconds: "0.27" },
+  { k: 358, eps: "+1", expr: "820894·2^n−357", factor: "5", seconds: "0.27" },
+  { k: 362, eps: "−1", expr: "830066·2^n−363", factor: "5", seconds: "0.27" },
+  { k: 364, eps: "+1", expr: "834652·2^n−363", factor: "8101", seconds: "0.4" },
+  { k: 368, eps: "−1", expr: "843824·2^n−369", factor: "11", seconds: "0.28" },
+  { k: 370, eps: "+1", expr: "848410·2^n−369", factor: "7", seconds: "0.35" },
+  { k: 374, eps: "−1", expr: "857582·2^n−375", factor: "1373", seconds: "0.4" },
+  { k: 376, eps: "+1", expr: "862168·2^n−375", factor: "941", seconds: "0.39" },
+  { k: 380, eps: "−1", expr: "871340·2^n−381", factor: "337", seconds: "0.38" },
+  { k: 382, eps: "+1", expr: "875926·2^n−381", factor: "5081", seconds: "0.44" },
+  { k: 386, eps: "−1", expr: "885098·2^n−387", factor: "7", seconds: "0.33" },
+  { k: 388, eps: "+1", expr: "889684·2^n−387", factor: "5", seconds: "0.38" },
+  { k: 392, eps: "−1", expr: "898856·2^n−393", factor: "5", seconds: "0.35" },
+  { k: 394, eps: "+1", expr: "903442·2^n−393", factor: "19", seconds: "0.34" },
+  { k: 398, eps: "−1", expr: "912614·2^n−399", factor: "30773", seconds: "0.79" },
+  { k: 400, eps: "+1", expr: "917200·2^n−399", factor: "17", seconds: "0.31" },
+  { k: 404, eps: "−1", expr: "926372·2^n−405", factor: "19", seconds: "0.3" },
+  { k: 406, eps: "+1", expr: "930958·2^n−405", factor: "23", seconds: "0.28" },
+  { k: 410, eps: "−1", expr: "940130·2^n−411", factor: "6397", seconds: "0.37" },
+  { k: 412, eps: "+1", expr: "944716·2^n−411", factor: "7", seconds: "0.27" },
+  { k: 416, eps: "−1", expr: "953888·2^n−417", factor: "17", seconds: "0.27" },
+  { k: 418, eps: "+1", expr: "958474·2^n−417", factor: "5", seconds: "0.26" },
+  { k: 422, eps: "−1", expr: "967646·2^n−423", factor: "5", seconds: "0.26" },
+  { k: 424, eps: "+1", expr: "972232·2^n−423", factor: "11", seconds: "0.27" },
+  { k: 428, eps: "−1", expr: "981404·2^n−429", factor: "7", seconds: "0.27" },
+  { k: 430, eps: "+1", expr: "985990·2^n−429", factor: "47", seconds: "0.27" },
+  { k: 434, eps: "−1", expr: "995162·2^n−435", factor: "11", seconds: "0.26" },
+  { k: 436, eps: "+1", expr: "999748·2^n−435", factor: "2969", seconds: "0.32" },
+  { k: 440, eps: "−1", expr: "1008920·2^n−441", factor: "457", seconds: "0.28" },
 ];
 
 export function Rank100Page() {
@@ -62,13 +132,13 @@ export function Rank100Page() {
         PrimePages rank 100 is the Riesel q = 2293·2<sup>12918431</sup>−1
         (3,888,839 digits). Thin sieve at B = 10<sup>7</sup> left K
         <sub>cert</sub> = 98: first un-killed admissible multiplier. PFGW has
-        since killed every admissible k through 322. No owner. k = 326 is in
-        PFGW — last B=10<sup>8</sup> survivor through 400.
+        since killed every admissible k through 440. No owner. k = 442 is in
+        PFGW now.
       </p>
       <p>
         PFGW 4.1.8 on has-ams3-01, Intel Xeon Platinum 8280 @ 2.70 GHz, 8
         cores, 16 GB. n = 12,918,431. Admissible k are even and not divisible
-        by 3. Skip multiples of 3. Snapshot 28 Sep 2026.
+        by 3. Skip multiples of 3. Snapshot 29 Sep 2026.
       </p>
       <div className="door-table-wrap">
         <table className="door-table">
@@ -118,15 +188,16 @@ export function Rank100Page() {
         RES64 58D5F4C09BC76650. Then 218–226 were cheap kills (7, 18481, 641,
         11). k = 230 was a discount miss: factor 127891349 in 16 min (above
         B=10<sup>8</sup>, so not a Fermat). Then 232–322 were cheap kills
-        again (296 took 124 s, factor 14146369). k = 326 is in PFGW at 13.5 h
-        — last B=10<sup>8</sup> survivor through 400, past the trial-factor
-        bound. Five Fermat exams, five composites. Density, not the test. A
+        again (296 took 124 s, factor 14146369). k = 326 was the sixth Fermat
+        exam: 24.85 h, composite. Then 328–440 were cheap kills again. k = 442
+        is in PFGW now — next survivor past the trial-factor bound. Six Fermat
+        exams, six composites. Density, not the test. A
         40-hour gmpy2 Fermat on the Studio was the k = 98 check without the
         trial-factor gate.
       </p>
       <p>
         No owner yet. Walker: <code>analysis/rank100_pfgw_floors.py</code>
-        (Xeon, k = 326 in PFGW — do not mix). Discount sieve:{" "}
+        (Xeon, k = 442 in PFGW — do not mix). Discount sieve:{" "}
         <code>analysis/rank100_discount.py</code> — special-form trial factor
         of every admissible k without building N, so 0.28 s jokes die before
         FFT. Survivors at B are the Fermat queue. Timing:{" "}
