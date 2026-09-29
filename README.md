@@ -26,11 +26,12 @@ Checked under `lean/Hire/` (build with `elan` / `lake`; Mathlib is not vendored)
 - `StarLap`, `Lemma8`, `Cone` — Laplacian cone; `λ₂ = 1` iff gold-on-leaves is disconnected
 - `WitnessXstar` — connecting witness at `X*`
 - `GoldBridge` — strong Q2, 0 sorry: every odd prime ≠ 3 lies in the infinite gold component of 5
-- `GoldDisconnects` — sequel A (first-owner isolation + sink chains)
-- `Dirichlet.lean` — still a stub (`eventually_hired`)
+- `GoldDisconnects` — size bound, door closure, descent, sink reduction, window monotonicity, finite-set bridge, and arbitrarily large disconnected windows iff infinitely many prime 2-power doors
+- `Dirichlet.lean` — Mathlib primes in AP wrapper; no sorry
+- `TwoClassCoverage`, `InfiniteHire` — two hire classes modulo `6Q`, infinitely many prime owners of odd `Q` with `3 ∤ Q`, and `eventually_hired`
 - `FltTwoDoor.lean` — exploratory, not in the barrel
 
-The cone bound `λ ≤ |V|` is the comparison with the complete graph. Same argument is proposed for Mathlib as [mathlib4#43953](https://github.com/leanprover-community/mathlib4/pull/43953); `Cone.lean` still carries a local copy until that lands.
+The cone bound `λ ≤ |V|` is the comparison with the complete graph. Same argument is proposed for Mathlib as [mathlib4#43953](https://github.com/leanprover-community/mathlib4/pull/43953); `Cone.lean` still carries a local copy until that lands. The gold-disconnects slice has no `sorry`, `admit`, or `axiom`.
 
 ## Run
 
