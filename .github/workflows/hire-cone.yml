@@ -1,14 +1,14 @@
-name: Hire.Cone
+name: Hire
 
 on:
   pull_request:
   push:
-    branches: [note/lemma8-proof-map]
+    branches: [note/lemma8-proof-map, lean/gold-size-descent]
   workflow_dispatch:
 
 jobs:
   build:
-    name: lake build Hire.Cone
+    name: lake build Hire
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,5 +17,5 @@ jobs:
           lake-package-directory: lean
           auto-config: false
           build: "true"
-          build-args: Hire.Cone
+          build-args: Hire
           use-mathlib-cache: "true"

@@ -18,7 +18,7 @@ Barrel: `Hire.lean`. Layer map: [`LEMMA8_PROOF_MAP.md`](LEMMA8_PROOF_MAP.md).
 | `Hire/Lemma8.lean` | Gold-free ⇒ `G = Gstar` + eigenvalue `1`; card-3 converse; card-4 chord keeps `1` |
 | `Hire/Cone.lean` | Layer C block `[k -1ᵀ; -1 I+L']`; ordered shift `λᵢ = 1 + μᵢ`; Layer D `λ₂ = 1` iff gold-on-leaves disconnected |
 | `Hire/WitnessXstar.lean` | Connecting window `X* = 92274421`; bridge `46137211`; island `M₁₉` facts by `native_decide` |
-| `Hire/WeakQ2.lean` | Definitions: `IsTwoPowerDoor`, `UndirectedGold`, `InGoldComponentOf5`. No sorry |
+| `Hire/WeakQ2.lean` | Definitions: `IsTwoPowerDoor`, `UndirectedGold` (endpoints other than `2` and `3`), `InGoldComponentOf5`. No sorry |
 | `Hire/GoldBridge.lean` | Strong Q2, 0 sorry: Dirichlet bridge ⇒ every odd prime ≠ 3 in infinite gold component of 5 |
 | `Hire/GoldDisconnects.lean` | Sequel A: size bound `2q ≤ p + 1`; door closure; descent to a 2-power door; first-owner isolation; infinitude package |
 | `Hire/Dirichlet.lean` | `exists_owner_prime_in_AP` (Mathlib primes in AP). No sorry |

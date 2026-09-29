@@ -432,6 +432,7 @@ theorem goldDisconnected_firstOwner_of_twoPowerDoor_ge_twelve
 
 /-! ## Package -/
 
+/-- A prime 2-power door other than `3` has shape `2^k - 1` or `2^k + 1`. -/
 theorem twoPowerDoor_mersenne_or_fermat_shape
     {M : ℕ} (hM : M.Prime) (h3 : M ≠ 3) (hdoor : IsTwoPowerDoor M) :
     (∃ k : ℕ, M = 2 ^ k - 1) ∨ (∃ k : ℕ, M = 2 ^ k + 1) := by

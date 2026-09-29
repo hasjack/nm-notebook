@@ -20,7 +20,8 @@ For `q ≠ 5`, CRT classes mod `15q`
 * (A) `r ≡ 1 [MOD 3]` and `r ≡ -1 [MOD 5q]`
 * (B) `r ≡ 2 [MOD 3]` and `r ≡ +1 [MOD 5q]`
 are coprime to `15q`. Dirichlet supplies a prime bridge `r` in either class; then
-`5q ∣ m0 r`, hence undirected gold edges `r—5` and `r—q`, so path `q–r–5`.
+`5q ∣ m0 r`, hence undirected gold edges `r—5` and `r—q`
+(neither endpoint is `2`), so path `q–r–5`.
 
 ## Main results
 
@@ -181,23 +182,24 @@ theorem exists_gold_bridge_prime (q : ℕ) (hq : q.Prime) (h3 : q ≠ 3) :
 /-! ## Undirected gold edges from a bridge -/
 
 theorem undirectedGold_five_of_bridge {q r : ℕ}
-    (hr : r.Prime) (h3r : r ≠ 3) (hne5 : r ≠ 5)
+    (hr : r.Prime) (h2r : r ≠ 2) (h3r : r ≠ 3) (hne5 : r ≠ 5)
     (hdvd : 5 * q ∣ m0 r) :
     UndirectedGold 5 r := by
-  refine ⟨hne5.symm, Nat.prime_five, hr, by decide, h3r, Or.inr ?_⟩
+  refine ⟨hne5.symm, Nat.prime_five, hr, by decide, h2r, by decide, h3r, Or.inr ?_⟩
   exact dvd_trans (Nat.dvd_mul_right 5 q) hdvd
 
 theorem undirectedGold_q_of_bridge {q r : ℕ}
-    (hq : q.Prime) (hr : r.Prime) (h3q : q ≠ 3) (h3r : r ≠ 3) (hneq : r ≠ q)
+    (hq : q.Prime) (hr : r.Prime) (h2q : q ≠ 2) (h2r : r ≠ 2)
+    (h3q : q ≠ 3) (h3r : r ≠ 3) (hneq : r ≠ q)
     (hdvd : 5 * q ∣ m0 r) :
     UndirectedGold r q := by
-  refine ⟨hneq, hr, hq, h3r, h3q, Or.inl ?_⟩
+  refine ⟨hneq, hr, hq, h2r, h2q, h3r, h3q, Or.inl ?_⟩
   exact dvd_trans (Nat.dvd_mul_left q 5) hdvd
 
 /-! ## Strong Q2 (infinite undirected-gold component of 5) -/
 
 /-- **Strong Q2.** Every odd prime `q ≠ 3` is gold-connected to `5`. -/
-theorem strong_Q2 (q : ℕ) (hq : q.Prime) (_hodd : Odd q) (h3 : q ≠ 3) :
+theorem strong_Q2 (q : ℕ) (hq : q.Prime) (hodd : Odd q) (h3 : q ≠ 3) :
     InGoldComponentOf5 q := by
   classical
   by_cases h5 : q = 5
@@ -205,12 +207,19 @@ theorem strong_Q2 (q : ℕ) (hq : q.Prime) (_hodd : Odd q) (h3 : q ≠ 3) :
     exact Relation.ReflTransGen.refl
   · obtain ⟨r, hrP, h3r, hrBig, hdvd⟩ := exists_gold_bridge_prime q hq h3
     have hqpos : 0 < q := hq.pos
+    have h2q : q ≠ 2 := by
+      intro h
+      rw [h] at hodd
+      exact (by decide : ¬ Odd 2) hodd
+    have h2r : r ≠ 2 := by omega
     have hne5 : r ≠ 5 := by
       intro h; subst h; omega
     have hneq : r ≠ q := by
       intro h; subst h; omega
-    have e1 : UndirectedGold 5 r := undirectedGold_five_of_bridge hrP h3r hne5 hdvd
-    have e2 : UndirectedGold r q := undirectedGold_q_of_bridge hq hrP h3 h3r hneq hdvd
+    have e1 : UndirectedGold 5 r :=
+      undirectedGold_five_of_bridge hrP h2r h3r hne5 hdvd
+    have e2 : UndirectedGold r q :=
+      undirectedGold_q_of_bridge hq hrP h2q h2r h3 h3r hneq hdvd
     exact (Relation.ReflTransGen.single e1).trans (Relation.ReflTransGen.single e2)
 
 /-- Alias: membership packaging of `strong_Q2`. -/
