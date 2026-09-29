@@ -3,17 +3,16 @@ Copyright (c) 2026 Jack Pickett. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jack Pickett
 
-Exploratory lab note (Albert two-class coverage). Not part of the Hire.lean
-import barrel. Public voice: no ζ; doors and hire classes only.
+Two residue classes of owners. Public voice: doors and hire classes only.
 -/
 import Hire.Doors
 import Mathlib.Data.Nat.ModEq
 import Mathlib.Tactic
 
 /-!
-# Two-class coverage (lab)
+# Two-class coverage
 
-Not the hire-graph barrel. Albert's lemma: for odd `Q > 1` with `3 ∤ Q` and
+For odd `Q > 1` with `3 ∤ Q` and
 `s = χ₃(Q) ∈ {-1,1}`, a prime `p > 3` hires `Q` (i.e. `Q ∣ m0 p`) exactly when
 it lies in one of two residue classes mod `6Q`:
 

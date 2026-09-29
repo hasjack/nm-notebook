@@ -100,6 +100,12 @@ theorem even_m0 {p : ℕ} (hp : p.Prime) (hodd : Odd p) (h3 : p ≠ 3) : Even (m
       have := Nat.odd_iff.mp hodd
       omega)
 
+/-- An odd divisor of the door of an odd prime `p ≠ 3` brings the factor `2`. -/
+theorem two_mul_dvd_m0 {p q : ℕ} (hp : p.Prime) (hodd : Odd p) (hp3 : p ≠ 3)
+    (hq : Odd q) (hd : q ∣ m0 p) : 2 * q ∣ m0 p :=
+  Nat.Coprime.mul_dvd_of_dvd_of_dvd hq.coprime_two_left
+    (even_iff_two_dvd.mp (even_m0 hp hodd hp3)) hd
+
 /-- Other face divisible by 3. -/
 theorem three_dvd_m1 {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) : 3 ∣ m1 p := by
   rcases prime_ne_three_mod_eq_one_or_two hp h3 with h | h

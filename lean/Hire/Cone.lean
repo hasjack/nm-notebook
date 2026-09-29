@@ -16,6 +16,7 @@ import Mathlib.Data.Matrix.Mul
 import Mathlib.GroupTheory.Perm.Fin
 import Mathlib.LinearAlgebra.Matrix.Adjugate
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+import Mathlib.Tactic.GRewrite
 
 /-!
 # Layer C — cone block of the hire Laplacian
@@ -60,9 +61,11 @@ The shift starts at `μ₂`, not `μ₁`. `μ₁ = 0` is the leaf all-ones vecto
 mixed with the seed it is already the global kernel, and folding it into
 `1 + μ` double-counts that kernel. The ordered endpoints are proved:
 `lambda_GX_one` is `λ₁ = 0`, and `lambda_GX_card` is `λₙ = n` when `n ≥ 2`.
-The bound used for `λₙ` is the complete-graph comparison
-`eigenvalues_lapMatrix_le_card` (local copy; same argument is
-mathlib4#43953).
+The bound used for `λₙ` is `eigenvalues_lapMatrix_le_card`. The quadratic
+form is monotone in the graph (`lapMatrix_toLinearMap₂'_mono`), the complete
+graph is `⊤`, and one `grw` closes the comparison. That is the form of
+mathlib4#43953; the lemma is not in the pinned Mathlib yet, so the copy stays
+here.
 The middle shift is `spectrum_lapMatrix_GX`. The antitone cone list is `n`,
 then `1 + μₙ₋₁ ≥ ⋯ ≥ 1 + μ₂`, then `0`. Index `0` of that list is `λₙ`, the
 last index is `λ₁`, and the matching ranks give `λᵢ = 1 + μᵢ` for
@@ -581,53 +584,37 @@ noncomputable def mu_goldLeaves (X : ℕ) (i : ℕ)
   ((GgoldLeaves (owners X)).posSemidef_lapMatrix ℝ).isHermitian.eigenvalues₀
     ⟨k - i, by omega⟩
 
-/-- Quadratic form of a simple-graph Laplacian, bounded by the number of vertices.
+/-- The Laplacian quadratic form is monotone in the graph: if `G ≤ H`, then
+`xᵀ L(G) x ≤ xᵀ L(H) x`. -/
+theorem lapMatrix_toLinearMap₂'_mono
+    {V : Type*} [Fintype V] [DecidableEq V] {R : Type*}
+    [Field R] [LinearOrder R] [IsStrictOrderedRing R]
+    {G H : SimpleGraph V} [DecidableRel G.Adj] [DecidableRel H.Adj]
+    (hGH : G ≤ H) (x : V → R) :
+    Matrix.toLinearMap₂' R (G.lapMatrix R) x x ≤
+      Matrix.toLinearMap₂' R (H.lapMatrix R) x x := by
+  simp_rw [SimpleGraph.lapMatrix_toLinearMap₂']
+  refine div_le_div_of_nonneg_right
+    (Finset.sum_le_sum fun i _ ↦ Finset.sum_le_sum fun j _ ↦ ?_) zero_le_two
+  grind [sq_nonneg, SimpleGraph.le_iff_adj]
 
-Mathlib had no `eigenvalues_le_card` (same argument proposed as mathlib4#43953).
-The comparison proved here is the complete graph:
-adjacency of `G` is a subset of pairs `i ≠ j`, so
-`xᵀ L(G) x ≤ xᵀ L(K) x`, and `lapMatrix_top` writes `L(K)` as `n` minus the
-all-ones matrix. That quadratic form is `n ‖x‖² - (∑ x)²`, hence at most
-`n ‖x‖²`. -/
+/-- `xᵀ J x = (∑ x)²` for the all-ones matrix. Pinned Mathlib has no
+`Matrix.dotProduct_of_one_mulVec`; mathlib4#43953 adds it. -/
+private theorem dotProduct_of_one_mulVec {n : Type*} [Fintype n] {α : Type*}
+    [NonAssocSemiring α] (x : n → α) :
+    x ⬝ᵥ of 1 *ᵥ x = (∑ i, x i) * ∑ i, x i := by
+  simp [mulVec, dotProduct, Finset.sum_mul]
+
+/-- The quadratic form of a simple-graph Laplacian is at most `|V| · ‖x‖²`. -/
 theorem dotProduct_mulVec_lapMatrix_le_card
-    {V : Type*} [Fintype V] [DecidableEq V]
-    (G : SimpleGraph V) [DecidableRel G.Adj] (x : V → ℝ) :
-    x ⬝ᵥ (G.lapMatrix ℝ *ᵥ x) ≤ (Fintype.card V : ℝ) * (x ⬝ᵥ x) := by
-  classical
-  have hcmp : Matrix.toLinearMap₂' ℝ (G.lapMatrix ℝ) x x ≤
-      Matrix.toLinearMap₂' ℝ ((⊤ : SimpleGraph V).lapMatrix ℝ) x x := by
-    rw [G.lapMatrix_toLinearMap₂' ℝ x, (⊤ : SimpleGraph V).lapMatrix_toLinearMap₂' ℝ x]
-    refine div_le_div_of_nonneg_right ?_ (by norm_num)
-    refine Finset.sum_le_sum fun i _ => Finset.sum_le_sum fun j _ => ?_
-    by_cases hadj : G.Adj i j
-    · have hne : i ≠ j := hadj.ne
-      rw [ite_eq_left hadj]
-      simp only [SimpleGraph.top_adj]
-      rw [ite_eq_left hne]
-    · rw [ite_eq_right hadj]
-      simp only [SimpleGraph.top_adj]
-      split_ifs with hne
-      · exact sq_nonneg _
-      · exact le_rfl
-  have htop : Matrix.toLinearMap₂' ℝ ((⊤ : SimpleGraph V).lapMatrix ℝ) x x ≤
-      (Fintype.card V : ℝ) * (x ⬝ᵥ x) := by
-    rw [SimpleGraph.lapMatrix_top (R := ℝ), Matrix.toLinearMap₂'_apply']
-    rw [sub_mulVec, dotProduct_sub, natCast_mulVec, dotProduct_smul, smul_eq_mul]
-    have hJ : x ⬝ᵥ (Matrix.of (1 : V → V → ℝ) *ᵥ x) = (∑ i, x i) ^ 2 := by
-      have hmul : Matrix.of (1 : V → V → ℝ) *ᵥ x = fun _ => ∑ j, x j := by
-        ext i
-        rw [mulVec_apply_eq_sum]
-        simp [of_apply]
-      rw [hmul, dotProduct, ← Finset.sum_mul]
-      ring
-    rw [hJ]
-    exact sub_le_self _ (sq_nonneg _)
-  calc
-    x ⬝ᵥ (G.lapMatrix ℝ *ᵥ x)
-        = Matrix.toLinearMap₂' ℝ (G.lapMatrix ℝ) x x :=
-          (Matrix.toLinearMap₂'_apply' _ x x).symm
-    _ ≤ Matrix.toLinearMap₂' ℝ ((⊤ : SimpleGraph V).lapMatrix ℝ) x x := hcmp
-    _ ≤ (Fintype.card V : ℝ) * (x ⬝ᵥ x) := htop
+    {V : Type*} [Fintype V] [DecidableEq V] {R : Type*}
+    [Field R] [LinearOrder R] [IsStrictOrderedRing R]
+    (G : SimpleGraph V) [DecidableRel G.Adj] (x : V → R) :
+    x ⬝ᵥ G.lapMatrix R *ᵥ x ≤ Fintype.card V * x ⬝ᵥ x := by
+  grw [← Matrix.toLinearMap₂'_apply', lapMatrix_toLinearMap₂'_mono le_top,
+    SimpleGraph.lapMatrix_top (R := R), Matrix.toLinearMap₂'_apply', sub_mulVec, dotProduct_sub,
+    natCast_mulVec, dotProduct_smul, smul_eq_mul, dotProduct_of_one_mulVec, ← pow_two,
+    sub_le_self _ <| sq_nonneg _]
 
 /-- Every eigenvalue of a finite simple-graph Laplacian is at most the number
 of vertices. Mathlib does not state this; it is the Rayleigh form of

@@ -18,14 +18,16 @@ Barrel: `Hire.lean`. Layer map: [`LEMMA8_PROOF_MAP.md`](LEMMA8_PROOF_MAP.md).
 | `Hire/Lemma8.lean` | Gold-free ⇒ `G = Gstar` + eigenvalue `1`; card-3 converse; card-4 chord keeps `1` |
 | `Hire/Cone.lean` | Layer C block `[k -1ᵀ; -1 I+L']`; ordered shift `λᵢ = 1 + μᵢ`; Layer D `λ₂ = 1` iff gold-on-leaves disconnected |
 | `Hire/WitnessXstar.lean` | Connecting window `X* = 92274421`; bridge `46137211`; island `M₁₉` facts by `native_decide` |
-| `Hire/WeakQ2.lean` | Statement scaffolding for 2-power-door Mersennes in `comp(5)` (proof deferred) |
+| `Hire/WeakQ2.lean` | Definitions: `IsTwoPowerDoor`, `UndirectedGold`, `InGoldComponentOf5`. No sorry |
 | `Hire/GoldBridge.lean` | Strong Q2, 0 sorry: Dirichlet bridge ⇒ every odd prime ≠ 3 in infinite gold component of 5 |
-| `Hire/GoldDisconnects.lean` | Sequel A: first-owner isolation of 2-power doors; sink chains; infinitude package |
-| `Hire/Dirichlet.lean` | Stub: `Nat.forall_exists_prime_gt_and_eq_mod` + `eventually_hired` placeholder |
+| `Hire/GoldDisconnects.lean` | Sequel A: size bound `2q ≤ p + 1`; door closure; descent to a 2-power door; first-owner isolation; infinitude package |
+| `Hire/Dirichlet.lean` | `exists_owner_prime_in_AP` (Mathlib primes in AP). No sorry |
+| `Hire/TwoClassCoverage.lean` | `Q ∣ m0 p` iff `p` is in one of two classes mod `6Q` |
+| `Hire/InfiniteHire.lean` | Infinitely many owners of odd `Q` with `3 ∤ Q`; `eventually_hired` |
 | `Hire/FltTwoDoor.lean` | Exploratory FLT × two-door cheap-kill. **Not** imported by `Hire.lean` |
 | `Hire/HireGraph.lean` | Early arithmetic sketch; superseded by the spine above |
 
-`Cone.lean` proves `eigenvalues_lapMatrix_le_card` (complete-graph comparison) because Mathlib did not have a Laplacian bound by `|V|`. Same lemma is [mathlib4#43953](https://github.com/leanprover-community/mathlib4/pull/43953). Keep the local copy until that merges.
+`Cone.lean` proves `eigenvalues_lapMatrix_le_card` because the pinned Mathlib has no Laplacian bound by `|V|`. The local proof follows the reviewed form of [mathlib4#43953](https://github.com/leanprover-community/mathlib4/pull/43953): `lapMatrix_toLinearMap₂'_mono`, then `le_top`, then one `grw`, over a linearly ordered field. Delete the local copy when that PR is in the toolchain.
 
 ## Build
 

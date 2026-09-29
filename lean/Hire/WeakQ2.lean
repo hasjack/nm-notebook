@@ -8,14 +8,11 @@ import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Logic.Relation
 
 /-!
-# Weak Q2 (statement)
+# Infinite undirected gold
 
-Every Mersenne prime `M = 2^p - 1` that arises as a **2-power door**
-(i.e. `m0 M` is a power of 2) lies in the infinite undirected-gold component of
-`5`.
-
-Thin scaffolding only: undirected gold on `ℕ`, its reflexive-transitive
-closure, and the component of `5`. No full hire-graph rebuild. Proof deferred.
+`UndirectedGold` is a door-factor chord between primes other than `3`.
+`InGoldComponentOf5` is the path-component of `5`. The membership theorem is
+`mersenne_two_power_door_in_gold_component_of_5` in `GoldBridge.lean`.
 -/
 
 namespace Hire
@@ -36,29 +33,5 @@ def GoldConnected : ℕ → ℕ → Prop :=
 /-- Membership in the infinite undirected-gold component of `5`. -/
 def InGoldComponentOf5 (n : ℕ) : Prop :=
   GoldConnected 5 n
-
-/-- **Weak Q2.** Every 2-power-door Mersenne prime (other than `3`) lies in the
-infinite undirected-gold component of `5`. -/
-theorem weak_Q2
-    (p : ℕ) (_hp : p.Prime)
-    (hM : Nat.Prime (2 ^ p - 1))
-    (h3 : 2 ^ p - 1 ≠ 3)
-    (hdoor : IsTwoPowerDoor (2 ^ p - 1)) :
-    InGoldComponentOf5 (2 ^ p - 1) := by
-  -- Strategy sketch: absorb the Mersenne island through a connecting bridge
-  -- owner (cf. `WitnessXstar`), then path-connect to the mainland component of 5.
-  -- Global persistence / infinitude of such bridges is not yet formalized.
-  sorry
-
-/-- Convenience: Mersenne form of a 2-power door that is prime. -/
-abbrev IsMersenneTwoPowerDoor (M : ℕ) : Prop :=
-  (∃ p : ℕ, p.Prime ∧ M = 2 ^ p - 1) ∧ Nat.Prime M ∧ IsTwoPowerDoor M ∧ M ≠ 3
-
-/-- Equivalent packaging of weak Q2 on the Mersenne number itself. -/
-theorem weak_Q2_of_mersenne
-    (M : ℕ) (h : IsMersenneTwoPowerDoor M) :
-    InGoldComponentOf5 M := by
-  obtain ⟨⟨p, _hp, rfl⟩, hM, hdoor, h3⟩ := h
-  exact weak_Q2 p _hp hM h3 hdoor
 
 end Hire

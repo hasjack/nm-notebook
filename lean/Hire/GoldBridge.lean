@@ -301,7 +301,7 @@ theorem two_power_door_in_gold_component_of_5
     InGoldComponentOf5 q :=
   strong_Q2 q hq hodd h3
 
-/-- Mersenne form: strengthens the statement of `weak_Q2`. -/
+/-- A 2-power-door Mersenne prime other than `3` lies in the gold component of `5`. -/
 theorem mersenne_two_power_door_in_gold_component_of_5
     (p : ℕ) (_hp : p.Prime)
     (hM : Nat.Prime (2 ^ p - 1))

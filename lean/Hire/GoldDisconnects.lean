@@ -16,7 +16,9 @@ Toward
 > ↔ infinitely many Mersenne / Fermat 2-power-door primes.
 
 * **Lemma A1** (`goldIsolated_of_firstOwner_twoPowerDoor`)
-* **Lemma A2** (`exists_twoPowerDoor_of_finite_closed`)
+* **Lemma A2** (`exists_twoPowerDoor_of_finite_closed`), discharged for the hire set by
+  `exists_twoPowerDoor_of_hired`
+* **Descent** (`gold_descent`)
 * **Package** (`infinite_goldDisconnected_of_infinite_twoPowerDoors`)
 -/
 
@@ -234,27 +236,123 @@ theorem exists_twoPowerDoor_of_finite_closed
     have hqlt : q < p0 := by omega
     exact absurd (hp0min q hqS) (not_le_of_gt hqlt)
 
-/-- Downward `GoldArc` on odd leaves is strictly decreasing. -/
-theorem GoldArc_tgt_lt {O : Set ℕ} {p q : ℕ}
-    (h : GoldArc O p q) (hpOdd : Odd p) : q < p := by
-  have hqdvd : q ∣ m0 p := h.2.2.2.2.1
+/-- An odd gold target satisfies `2 * q ≤ p + 1`. -/
+theorem goldArc_tgt_le_div_two {O : Set ℕ} {p q : ℕ}
+    (h : GoldArc O p q) (hpOdd : Odd p) : 2 * q ≤ p + 1 := by
   have hq2 : q ≠ 2 := h.2.2.2.1
-  have hqH := h.2.1
-  have hqP : q.Prime := prime_of_hired_ne_two hqH hq2
+  have hqP : q.Prime := prime_of_hired_ne_two h.2.1 hq2
   have hqOdd : Odd q := odd_of_prime_ne_two hqP hq2
   have hp2 : p ≠ 2 := h.2.2.1
   have hpP : p.Prime := prime_of_hired_ne_two h.1 hp2
+  have hdiv := two_mul_dvd_m0 hpP hpOdd (hired_ne_three h.1) hqOdd h.2.2.2.2.1
   have hpos : 0 < m0 p := by
     have : 1 ≤ p := Nat.le_of_lt hpP.one_lt
     unfold m0; split_ifs <;> omega
-  have hqle : q ≤ m0 p := Nat.le_of_dvd hpos hqdvd
-  have hm0 : m0 p ≤ p + 1 := m0_le_succ p
-  have hne : p ≠ q := h.2.2.2.2.2
-  have hq_ne_succ : q ≠ p + 1 := fun hEq => by
-    have hOdd' : Odd (p + 1) := by simpa [hEq] using hqOdd
-    have hEven : Even (p + 1) := hpOdd.add_one
-    exact Nat.not_even_iff_odd.mpr hOdd' hEven
+  exact (Nat.le_of_dvd hpos hdiv).trans (m0_le_succ p)
+
+/-- A hired odd prime in the window `X` satisfies `2 * q ≤ X + 1`. -/
+theorem two_mul_le_succ_of_hired {X q : ℕ}
+    (h : Hired (owners X) q) (hqOdd : Odd q) : 2 * q ≤ X + 1 := by
+  cases h with
+  | seed => exact absurd hqOdd (by decide : ¬ Odd 2)
+  | @ofDoor p _ hp _ _ hd =>
+    have hdiv := two_mul_dvd_m0 hp.1 hp.2.1 hp.2.2.1 hqOdd hd
+    have hle : 2 * q ≤ p + 1 :=
+      (Nat.le_of_dvd (m0_pos_of_owners_mem hp) hdiv).trans (m0_le_succ p)
+    have hpX : p ≤ X := hp.2.2.2.1
+    omega
+
+/-- Downward `GoldArc` on odd leaves is strictly decreasing. -/
+theorem GoldArc_tgt_lt {O : Set ℕ} {p q : ℕ}
+    (h : GoldArc O p q) (hpOdd : Odd p) : q < p := by
+  have hp2 : p ≠ 2 := h.2.2.1
+  have hpP : p.Prime := prime_of_hired_ne_two h.1 hp2
+  have := goldArc_tgt_le_div_two h hpOdd
+  have := hpP.two_le
   omega
+
+/-! ## Door closure and descent -/
+
+/-- A hired odd prime lies in the owner window. -/
+theorem mem_owners_of_hired_odd {X q : ℕ}
+    (h : Hired (owners X) q) (hodd : Odd q) : q ∈ owners X := by
+  have hne : q ≠ 2 := by
+    intro hq
+    rw [hq] at hodd
+    exact (by decide : ¬ Odd 2) hodd
+  have hqP := prime_of_hired_ne_two h hne
+  have h3 := hired_ne_three h
+  have hle := two_mul_le_succ_of_hired h hodd
+  have := hqP.two_le
+  exact ⟨hqP, hodd, h3, by omega, five_le_of_odd_prime_ne_three hqP hodd h3⟩
+
+/-- An odd prime factor of an owner's door is hired, and it is an owner. -/
+theorem hired_of_dvd_m0 {X p q : ℕ} (hp : p ∈ owners X)
+    (hq : q.Prime) (hodd : Odd q) (h3 : q ≠ 3) (hd : q ∣ m0 p) :
+    Hired (owners X) q ∧ q ∈ owners X := by
+  exact ⟨Hired.ofDoor hp hq h3 hd,
+    mem_owners_of_hired_odd (Hired.ofDoor hp hq h3 hd) hodd⟩
+
+/-- The odd part of a hire window is closed under odd door factors. -/
+theorem hiredOdd_closedUnderOddDoorFactors (X : ℕ) :
+    ClosedUnderOddDoorFactors {q | Hired (owners X) q ∧ Odd q} := by
+  intro p hp q hqP hq3 hqOdd hdvd
+  obtain ⟨hH, _⟩ := hired_of_dvd_m0 (mem_owners_of_hired_odd hp.1 hp.2) hqP hqOdd hq3 hdvd
+  exact ⟨hH, hqOdd⟩
+
+/-- A window that hires an odd prime hires a 2-power door. -/
+theorem exists_twoPowerDoor_of_hired {X q : ℕ}
+    (h : Hired (owners X) q) (hodd : Odd q) :
+    ∃ p, Hired (owners X) p ∧ Odd p ∧ IsTwoPowerDoor p := by
+  let S : Set ℕ := {n | Hired (owners X) n ∧ Odd n}
+  have hfin : S.Finite :=
+    (Set.finite_le_nat X).subset fun n ⟨hn, hodd⟩ =>
+      (mem_owners_of_hired_odd hn hodd).2.2.2.1
+  have hprimes : ∀ p ∈ S, p.Prime ∧ Odd p ∧ p ≠ 3 := by
+    intro p hp
+    have hne : p ≠ 2 := by
+      intro h2
+      rw [h2] at hp
+      exact (by decide : ¬ Odd 2) hp.2
+    exact ⟨prime_of_hired_ne_two hp.1 hne, hp.2, hired_ne_three hp.1⟩
+  obtain ⟨p, hpS, hdoor⟩ := exists_twoPowerDoor_of_finite_closed hfin ⟨q, h, hodd⟩ hprimes
+    (hiredOdd_closedUnderOddDoorFactors X)
+  exact ⟨p, hpS.1, hpS.2, hdoor⟩
+
+/-- One strict gold step in the window `X`. -/
+def GoldDescentStep (X : ℕ) (a b : ℕ) : Prop :=
+  GoldArc (owners X) a b ∧ b < a
+
+/-- From a hired odd prime, a strictly decreasing gold path ends at a 2-power door. -/
+theorem gold_descent {X : ℕ} :
+    ∀ q, Hired (owners X) q → Odd q →
+      ∃ M, IsTwoPowerDoor M ∧ Relation.ReflTransGen (GoldDescentStep X) q M := by
+  intro q
+  induction q using Nat.strongRecOn with
+  | ind q ih =>
+    intro h hodd
+    have hmem := mem_owners_of_hired_odd h hodd
+    rcases (m0 q).eq_two_pow_or_exists_odd_prime_and_dvd with ⟨k, hk⟩ | ⟨r, hrP, hdvd, hrOdd⟩
+    · exact ⟨q, ⟨k, hk⟩, Relation.ReflTransGen.refl⟩
+    · have hr3 : r ≠ 3 := by
+        intro hr
+        exact three_not_dvd_m0 hmem.1 hmem.2.2.1 (hr ▸ hdvd)
+      obtain ⟨hrH, _⟩ := hired_of_dvd_m0 hmem hrP hrOdd hr3 hdvd
+      have hne : q ≠ r := by
+        intro heq
+        exact not_dvd_m0_self hmem.1.one_lt (heq.symm ▸ hdvd)
+      have hq2 : q ≠ 2 := by
+        intro hq
+        rw [hq] at hodd
+        exact (by decide : ¬ Odd 2) hodd
+      have hr2 : r ≠ 2 := by
+        intro hr
+        rw [hr] at hrOdd
+        exact (by decide : ¬ Odd 2) hrOdd
+      have harc : GoldArc (owners X) q r := ⟨h, hrH, hq2, hr2, hdvd, hne⟩
+      have hrlt : r < q := GoldArc_tgt_lt harc hodd
+      obtain ⟨M, hdoor, hpath⟩ := ih r hrlt hrH hrOdd
+      exact ⟨M, hdoor, Relation.ReflTransGen.head ⟨harc, hrlt⟩ hpath⟩
 
 /-! ## Gold-disconnected windows -/
 
@@ -298,6 +396,16 @@ theorem hired_five_of_eleven_le {r0 : ℕ} (h : 11 ≤ r0) :
     Hired (owners r0) 5 :=
   Hired.ofDoor ⟨by decide, by decide, by decide, h, by decide⟩
     (by decide) (by decide) (by native_decide : 5 ∣ m0 11)
+
+/-- The first owner of an odd `q` is at least `2 * q - 1`. -/
+theorem firstOwner_ge_two_mul_sub_one {q r0 : ℕ}
+    (hodd : Odd q) (hfo : IsFirstOwner q r0) : 2 * q - 1 ≤ r0 := by
+  have hown := hfo.1
+  have hdiv := two_mul_dvd_m0 hown.1 hown.2.1 hown.2.2.1 hodd (owns_dvd hown)
+  have hle : 2 * q ≤ r0 + 1 :=
+    (Nat.le_of_dvd (m0_pos_of_owners_mem (owns_mem_owners hown)) hdiv).trans
+      (m0_le_succ r0)
+  omega
 
 lemma firstOwner_ge_pred {M r0 : ℕ}
     (hfo : IsFirstOwner M r0) : M ≤ r0 + 1 := by

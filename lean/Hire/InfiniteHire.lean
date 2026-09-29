@@ -3,9 +3,8 @@ Copyright (c) 2026 Jack Pickett. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jack Pickett
 
-Exploratory lab note (infinite owners hiring a fixed odd ingredient).
-Not part of the Hire.lean import barrel. Public voice: no ζ; doors and hire
-classes only. Papers frozen.
+Infinitely many owners of a fixed odd ingredient, and `eventually_hired`.
+Public voice: doors and hire classes only.
 -/
 import Hire.TwoClassCoverage
 import Hire.Dirichlet
@@ -171,6 +170,23 @@ theorem exists_prime_hire_gt (Q : ℕ) (hQ : 1 < Q) (hQodd : Odd Q) (hQ3 : ¬ 3 
   have hdvd : Q ∣ m0 p :=
     (two_class_coverage hQ hQodd hQ3 hpPrime hp3).mpr (Or.inl hmod)
   exact ⟨p, hN, hpPrime, hp3, hdvd⟩
+
+/-- An odd prime `q ≠ 3` is hired in the window of one of its owners. -/
+theorem eventually_hired (q : ℕ) (hq : q.Prime) (hodd : Odd q) (h3 : q ≠ 3) :
+    ∃ X : ℕ, Hired (owners X) q := by
+  have hQ : 1 < q := hq.one_lt
+  have hQ3 : ¬ 3 ∣ q := by
+    intro hd
+    exact h3 ((Nat.prime_dvd_prime_iff_eq Nat.prime_three hq).mp hd).symm
+  obtain ⟨p, _, hp, hp3, hdvd⟩ := exists_prime_hire_gt q hQ hodd hQ3 3
+  have hodd_p : Odd p := hp.odd_of_ne_two (by omega)
+  have hp5 : 5 ≤ p := by
+    have h4 : p ≠ 4 := by
+      rintro rfl
+      exact absurd hp (by decide : ¬ Nat.Prime 4)
+    omega
+  have hpO : p ∈ owners p := ⟨hp, hodd_p, by omega, le_rfl, hp5⟩
+  exact ⟨p, Hired.ofDoor hpO hq h3 hdvd⟩
 
 /-- Infinitely many primes hire the fixed odd ingredient `Q` (`3 ∤ Q`). -/
 theorem infinite_primes_hire (Q : ℕ) (hQ : 1 < Q) (hQodd : Odd Q) (hQ3 : ¬ 3 ∣ Q) :

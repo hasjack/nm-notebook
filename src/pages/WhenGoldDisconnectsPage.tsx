@@ -29,12 +29,13 @@ export function WhenGoldDisconnectsPage() {
 
       <h2>Lean</h2>
       <p className="lede" style={{ maxWidth: "42rem" }}>
-        <code>Hire/GoldDisconnects.lean</code> checks the earlier single-window
-        isolation lemmas and one direction: infinitely many 2-power doors give
-        infinitely many disconnected windows. Door closure is a hypothesis of{" "}
-        <code>exists_twoPowerDoor_of_finite_closed</code>. The converse of the
-        equivalence is not formalised. The octave, the stretch, and the <em>M</em><sub>31</sub> theorem
-        in this revision are not formalised. The tables and <em>X</em><sub>1</sub> are
+        <code>Hire/GoldDisconnects.lean</code> checks the size bound{" "}
+        <code>2q ≤ p + 1</code>, door closure, and descent to a 2-power door,
+        together with the earlier single-window isolation lemmas and one
+        direction: infinitely many 2-power doors give infinitely many
+        disconnected windows. The converse of the equivalence is not formalised.
+        The octave, the stretch, and the <em>M</em><sub>31</sub> theorem in this
+        revision are not formalised. The tables and <em>X</em><sub>1</sub> are
         the script in the note, not Lean theorems.
       </p>
       <ul className="paper-lean">
@@ -52,6 +53,15 @@ export function WhenGoldDisconnectsPage() {
             </li>
             <li>
               <code>exists_twoPowerDoor_of_finite_closed</code>
+            </li>
+            <li>
+              <code>goldArc_tgt_le_div_two</code>
+            </li>
+            <li>
+              <code>hired_of_dvd_m0</code>
+            </li>
+            <li>
+              <code>gold_descent</code>
             </li>
             <li>
               <code>GoldArc_tgt_lt</code>
