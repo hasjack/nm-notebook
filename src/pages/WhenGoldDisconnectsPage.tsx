@@ -36,10 +36,11 @@ export function WhenGoldDisconnectsPage() {
         Monotonicity of windows and the finite bridge are checked: any two odd
         primes other than 3 lie in one gold component of every sufficiently
         large window. It also checks the earlier single-window isolation lemmas
-        and one direction: infinitely many 2-power doors give infinitely many
-        disconnected windows. The converse of the equivalence is not formalised.
-        The octave, the stretch, and the <em>M</em><sub>31</sub> theorem in this
-        revision are not formalised. The tables and <em>X</em><sub>1</sub> are
+        and both directions for 2-power doors: gold is disconnected for
+        arbitrarily large windows if and only if there are infinitely many
+        2-power doors. The octave, the stretch, the <em>M</em><sub>31</sub>{" "}
+        theorem, and the identification of those doors with Mersenne and Fermat
+        primes are not formalised. The tables and <em>X</em><sub>1</sub> are
         the script in the note, not Lean theorems.
       </p>
       <ul className="paper-lean">
@@ -87,6 +88,15 @@ export function WhenGoldDisconnectsPage() {
             </li>
             <li>
               <code>gold_bridge</code>
+            </li>
+            <li>
+              <code>gold_bridge_of_finset</code>
+            </li>
+            <li>
+              <code>goldConnected_of_finite_twoPowerDoors</code>
+            </li>
+            <li>
+              <code>goldDisconnected_arbitrarily_large_iff</code>
             </li>
             <li>
               <code>GoldArc_tgt_lt</code>

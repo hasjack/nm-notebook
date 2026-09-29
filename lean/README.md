@@ -20,7 +20,7 @@ Barrel: `Hire.lean`. Layer map: [`LEMMA8_PROOF_MAP.md`](LEMMA8_PROOF_MAP.md).
 | `Hire/WitnessXstar.lean` | Connecting window `X* = 92274421`; bridge `46137211`; island `M₁₉` facts by `native_decide` |
 | `Hire/WeakQ2.lean` | Definitions: `IsTwoPowerDoor`, `UndirectedGold` (endpoints other than `2` and `3`), `InGoldComponentOf5`. No sorry |
 | `Hire/GoldBridge.lean` | Strong Q2, 0 sorry: Dirichlet bridge ⇒ every odd prime ≠ 3 in infinite gold component of 5 |
-| `Hire/GoldDisconnects.lean` | Sequel A: size bound `2q ≤ p + 1`; door closure; descent; sinks are the 2-power doors, and gold is connected iff those sinks are joined; window monotonicity and the finite bridge; first-owner isolation; infinitude package |
+| `Hire/GoldDisconnects.lean` | Sequel A: size bound `2q ≤ p + 1`; door closure; descent; sinks are the 2-power doors, and gold is connected iff those sinks are joined; window monotonicity and the finite bridge; first-owner isolation; arbitrarily large disconnected windows iff infinitely many 2-power doors |
 | `Hire/Dirichlet.lean` | `exists_owner_prime_in_AP` (Mathlib primes in AP). No sorry |
 | `Hire/TwoClassCoverage.lean` | `Q ∣ m0 p` iff `p` is in one of two classes mod `6Q` |
 | `Hire/InfiniteHire.lean` | Infinitely many owners of odd `Q` with `3 ∤ Q`; `eventually_hired` |

@@ -24,6 +24,8 @@ Toward
   `goldConnected_iff_sinks_reachable`, `componentsEquivSinkClasses`)
 * **Bridge** (`owners_mono`, `goldReachable_mono`, `gold_bridge`)
 * **Package** (`infinite_goldDisconnected_of_infinite_twoPowerDoors`)
+* **Converse** (`gold_bridge_of_finset`, `goldConnected_of_finite_twoPowerDoors`,
+  `goldDisconnected_arbitrarily_large_iff`)
 -/
 
 namespace Hire
@@ -797,5 +799,83 @@ theorem infinite_goldDisconnected_of_infinite_mersenne_or_fermat_doors
     {X : ℕ | GoldDisconnectedWindow X}.Infinite :=
   infinite_goldDisconnected_of_infinite_twoPowerDoors <|
     hInf.mono fun _M h => ⟨h.1, h.2.1, h.2.2.1, h.2.2.2.1, h.2.2.2.2.1⟩
+
+/-! ## The converse -/
+
+/-- Each prime from a finite set of odd primes other than `3` lies on a gold path
+to `5` in every sufficiently large window. -/
+theorem gold_bridge_of_finset (T : Finset ℕ)
+    (hT : ∀ M ∈ T, M.Prime ∧ Odd M ∧ M ≠ 3) :
+    ∃ X₀, ∀ X, X₀ ≤ X → ∀ M ∈ T,
+      ∃ (hM : Hired (owners X) M) (h5 : Hired (owners X) 5),
+        Relation.ReflTransGen (GoldEdge (owners X)) ⟨M, hM⟩ ⟨5, h5⟩ := by
+  let motive : Finset ℕ → Prop := fun T =>
+    (∀ M ∈ T, M.Prime ∧ Odd M ∧ M ≠ 3) →
+      ∃ X₀, ∀ X, X₀ ≤ X → ∀ M ∈ T,
+        ∃ (hM : Hired (owners X) M) (h5 : Hired (owners X) 5),
+          Relation.ReflTransGen (GoldEdge (owners X)) ⟨M, hM⟩ ⟨5, h5⟩
+  refine Finset.induction_on (motive := motive) T ?empty ?insert hT
+  · intro _
+    exact ⟨0, fun _ _ M hM => (Finset.notMem_empty _ hM).elim⟩
+  · intro M T _ ih hT
+    obtain ⟨X₁, hX₁⟩ := ih fun N hN => hT N (Finset.mem_insert_of_mem hN)
+    have hM := hT M (Finset.mem_insert_self _ _)
+    obtain ⟨X₂, hX₂⟩ :=
+      @gold_bridge M 5 hM.1 hM.2.1 hM.2.2 (by decide) (by decide) (by decide)
+    refine ⟨max X₁ X₂, fun X hX N hN => ?_⟩
+    rw [Finset.mem_insert] at hN
+    rcases hN with rfl | hN
+    · exact hX₂ X ((le_max_right _ _).trans hX)
+    · exact hX₁ X ((le_max_left _ _).trans hX) N hN
+
+/-- Finitely many 2-power doors imply that every sufficiently large window has
+connected gold. -/
+theorem goldConnected_of_finite_twoPowerDoors
+    (hFin : {M : ℕ | M.Prime ∧ Odd M ∧ M ≠ 3 ∧ IsTwoPowerDoor M}.Finite) :
+    ∃ X₀, ∀ X, X₀ ≤ X → ¬ GoldDisconnectedWindow X := by
+  classical
+  obtain ⟨X₀, hX₀⟩ := gold_bridge_of_finset hFin.toFinset fun M hM => by
+    have hdoor := (hFin.mem_toFinset).mp hM
+    exact ⟨hdoor.1, hdoor.2.1, hdoor.2.2.1⟩
+  refine ⟨X₀, fun X hX => ?_⟩
+  rw [goldConnected_iff_sinks_reachable]
+  intro q r hq hr
+  have hqD := sinks_eq_twoPowerDoors.mp hq
+  have hrD := sinks_eq_twoPowerDoors.mp hr
+  have hqmem : q ∈ hFin.toFinset :=
+    hFin.mem_toFinset.mpr ⟨hqD.1, hqD.2.1, hqD.2.2.1, hqD.2.2.2.1⟩
+  have hrmem : r ∈ hFin.toFinset :=
+    hFin.mem_toFinset.mpr ⟨hrD.1, hrD.2.1, hrD.2.2.1, hrD.2.2.2.1⟩
+  obtain ⟨hqH, h5q, hpathq⟩ := hX₀ X hX q hqmem
+  obtain ⟨hrH, h5r, hpathr⟩ := hX₀ X hX r hrmem
+  have hback := goldReachable_symm hpathr
+  rw [show (⟨5, h5r⟩ : HireVertex (owners X)) = ⟨5, h5q⟩ from Subtype.ext rfl] at hback
+  have hreach :
+      Relation.ReflTransGen (GoldEdge (owners X)) ⟨q, hqH⟩ ⟨r, hrH⟩ :=
+    hpathq.trans hback
+  rw [show (⟨q, hqH⟩ : HireVertex (owners X)) = ⟨q, hq.1⟩ from Subtype.ext rfl,
+      show (⟨r, hrH⟩ : HireVertex (owners X)) = ⟨r, hr.1⟩ from Subtype.ext rfl]
+    at hreach
+  exact hreach
+
+/-- Gold is disconnected for arbitrarily large windows iff there are infinitely
+many 2-power doors. -/
+theorem goldDisconnected_arbitrarily_large_iff :
+    {X : ℕ | GoldDisconnectedWindow X}.Infinite ↔
+      {M : ℕ | M.Prime ∧ Odd M ∧ M ≠ 3 ∧ IsTwoPowerDoor M}.Infinite := by
+  constructor
+  · intro hX hFin
+    obtain ⟨X₀, hconn⟩ := goldConnected_of_finite_twoPowerDoors hFin
+    rw [Set.infinite_iff_exists_gt] at hX
+    obtain ⟨X, hXmem, hgt⟩ := hX X₀
+    exact hconn X (le_of_lt hgt) hXmem
+  · intro hDoors
+    apply infinite_goldDisconnected_of_infinite_twoPowerDoors
+    rw [Set.infinite_iff_exists_gt] at hDoors ⊢
+    intro N
+    obtain ⟨M, hM, hgt⟩ := hDoors (max N 11)
+    have h12 : 12 ≤ M := by omega
+    exact ⟨M, ⟨hM.1, hM.2.1, hM.2.2.1, hM.2.2.2, h12⟩,
+      lt_of_le_of_lt (le_max_left _ _) hgt⟩
 
 end Hire
