@@ -30,8 +30,10 @@ export function WhenGoldDisconnectsPage() {
       <h2>Lean</h2>
       <p className="lede" style={{ maxWidth: "42rem" }}>
         <code>Hire/GoldDisconnects.lean</code> checks the size bound{" "}
-        <code>2q ≤ p + 1</code>, door closure, and descent to a 2-power door,
-        together with the earlier single-window isolation lemmas and one
+        <code>2q ≤ p + 1</code>, door closure, descent to a 2-power door, and
+        the sink reduction: the sinks are the 2-power doors hired in the window,
+        and gold is connected exactly when those sinks lie in one component. It
+        also checks the earlier single-window isolation lemmas and one
         direction: infinitely many 2-power doors give infinitely many
         disconnected windows. The converse of the equivalence is not formalised.
         The octave, the stretch, and the <em>M</em><sub>31</sub> theorem in this
@@ -62,6 +64,18 @@ export function WhenGoldDisconnectsPage() {
             </li>
             <li>
               <code>gold_descent</code>
+            </li>
+            <li>
+              <code>sinks_eq_twoPowerDoors</code>
+            </li>
+            <li>
+              <code>gold_path_to_sink</code>
+            </li>
+            <li>
+              <code>goldConnected_iff_sinks_reachable</code>
+            </li>
+            <li>
+              <code>componentsEquivSinkClasses</code>
             </li>
             <li>
               <code>GoldArc_tgt_lt</code>

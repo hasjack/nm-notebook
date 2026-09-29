@@ -477,8 +477,9 @@ The reason is Theorem~\ref{thm:sinks}: connectivity is decided by the sinks, so 
 \section{Formalisation, reproducibility and changes}
 
 \paragraph{Lean.}
-The Lean development (\path{Hire/GoldDisconnects.lean}) checks the size bound \(2q\le p+1\), door closure, and descent to a \(2\)-power door, together with the single-window isolation lemma and the implication from infinitely many \(2\)-power doors to infinitely many disconnected windows.
-The results new in this revision (Theorem~\ref{thm:sinks}, Theorem~\ref{thm:octave} in its interval form, Theorem~\ref{thm:stretch}, Theorem~\ref{thm:m31}) are not formalised.
+The Lean development (\path{Hire/GoldDisconnects.lean}) checks the size bound \(2q\le p+1\), door closure, descent to a \(2\)-power door, and the sink reduction: the sinks are the \(2\)-power doors hired in the window, and gold is connected if and only if those sinks lie in one component.
+It also checks the single-window isolation lemma and the implication from infinitely many \(2\)-power doors to infinitely many disconnected windows.
+The octave in its interval form, the stretch, Theorem~\ref{thm:m31}, and the converse of the equivalence are not formalised.
 The computed data (Tables~\ref{tab:octaves} and~\ref{tab:owners}, the value \(X_1\)) are results of finite deterministic calculations, not Lean theorems or separately supplied primality certificates.
 
 \paragraph{Reproducibility.}

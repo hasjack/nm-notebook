@@ -19,6 +19,8 @@ Toward
 * **Lemma A2** (`exists_twoPowerDoor_of_finite_closed`), discharged for the hire set by
   `exists_twoPowerDoor_of_hired`
 * **Descent** (`gold_descent`)
+* **Sink reduction** (`sinks_eq_twoPowerDoors`, `gold_path_to_sink`,
+  `goldConnected_iff_sinks_reachable`, `componentsEquivSinkClasses`)
 * **Package** (`infinite_goldDisconnected_of_infinite_twoPowerDoors`)
 -/
 
@@ -354,12 +356,226 @@ theorem gold_descent {X : ℕ} :
       obtain ⟨M, hdoor, hpath⟩ := ih r hrlt hrH hrOdd
       exact ⟨M, hdoor, Relation.ReflTransGen.head ⟨harc, hrlt⟩ hpath⟩
 
+/-! ## Sinks -/
+
+/-- A sink of `Γ_X` is a non-seed hired vertex with no outgoing gold arc. -/
+def IsSink (X q : ℕ) : Prop :=
+  Hired (owners X) q ∧ q ≠ 2 ∧ ∀ r, ¬ GoldArc (owners X) q r
+
+lemma hired_of_goldDescent {X a b : ℕ} (ha : Hired (owners X) a)
+    (h : Relation.ReflTransGen (GoldDescentStep X) a b) : Hired (owners X) b := by
+  induction h with
+  | refl => exact ha
+  | tail _ hstep _ => exact hstep.1.2.1
+
+lemma ne_two_of_goldDescent {X a b : ℕ} (ha2 : a ≠ 2)
+    (h : Relation.ReflTransGen (GoldDescentStep X) a b) : b ≠ 2 := by
+  induction h with
+  | refl => exact ha2
+  | tail _ hstep _ => exact hstep.1.2.2.2.1
+
+lemma odd_of_goldDescent {X a b : ℕ} (ha : Odd a)
+    (h : Relation.ReflTransGen (GoldDescentStep X) a b) : Odd b := by
+  induction h with
+  | refl => exact ha
+  | tail _ hstep _ =>
+    exact odd_of_prime_ne_two (prime_of_hired_ne_two hstep.1.2.1 hstep.1.2.2.2.1)
+      hstep.1.2.2.2.1
+
+/-- The sinks of `Γ_X` are the 2-power doors whose first owner is at most `X`. -/
+theorem sinks_eq_twoPowerDoors {X q : ℕ} :
+    IsSink X q ↔
+      q.Prime ∧ Odd q ∧ q ≠ 3 ∧ IsTwoPowerDoor q ∧
+        ∃ r0, IsFirstOwner q r0 ∧ r0 ≤ X := by
+  constructor
+  · intro h
+    have hH := h.1
+    have hq2 := h.2.1
+    have hqP := prime_of_hired_ne_two hH hq2
+    have hodd := odd_of_prime_ne_two hqP hq2
+    have h3 := hired_ne_three hH
+    have hdoor : IsTwoPowerDoor q := by
+      rcases (m0 q).eq_two_pow_or_exists_odd_prime_and_dvd with ⟨k, hk⟩ | ⟨r, hrP, hdvd, hrOdd⟩
+      · exact ⟨k, hk⟩
+      · have hr3 : r ≠ 3 := fun hr =>
+          three_not_dvd_m0 hqP h3 (hr ▸ hdvd)
+        have hmem := mem_owners_of_hired_odd hH hodd
+        obtain ⟨hrH, _⟩ := hired_of_dvd_m0 hmem hrP hrOdd hr3 hdvd
+        have hr2 : r ≠ 2 := fun hr => by
+          rw [hr] at hrOdd
+          exact (by decide : ¬ Odd 2) hrOdd
+        have hne : q ≠ r := fun heq =>
+          not_dvd_m0_self hqP.one_lt (heq.symm ▸ hdvd)
+        exact (h.2.2 r ⟨hH, hrH, hq2, hr2, hdvd, hne⟩).elim
+    cases hH with
+    | seed => exact absurd hodd (by decide : ¬ Odd 2)
+    | @ofDoor p _ hp _ _ hd =>
+      obtain ⟨r0, hfo⟩ := exists_firstOwner q hqP h3
+      have hOwns : Owns q p := ⟨hp.1, hp.2.1, hp.2.2.1, hp.2.2.2.2, hd⟩
+      exact ⟨hqP, hodd, h3, hdoor, r0, hfo,
+        le_trans (firstOwner_le_of_Owns hfo hOwns) hp.2.2.2.1⟩
+  · intro ⟨hqP, hodd, h3, hdoor, r0, hfo, hle⟩
+    have hq2 : q ≠ 2 := fun hq => by
+      rw [hq] at hodd
+      exact (by decide : ¬ Odd 2) hodd
+    have hr0O : r0 ∈ owners X :=
+      ⟨hfo.1.1, hfo.1.2.1, hfo.1.2.2.1, hle, hfo.1.2.2.2.1⟩
+    have hH : Hired (owners X) q := Hired.ofDoor hr0O hqP h3 (owns_dvd hfo.1)
+    refine ⟨hH, hq2, ?_⟩
+    intro r harc
+    exact not_GoldArc_of_twoPowerDoor hdoor harc
+
+/-- The first owner of `5` is `11`. -/
+theorem firstOwner_five : IsFirstOwner 5 11 := by
+  have hown : Owns 5 11 :=
+    ⟨by decide, by decide, by decide, by decide, by native_decide⟩
+  refine ⟨hown, ?_⟩
+  intro r hr
+  have hdiv := two_mul_dvd_m0 hr.1 hr.2.1 hr.2.2.1 (by decide : Odd 5) (owns_dvd hr)
+  have hle : 2 * 5 ≤ r + 1 :=
+    (Nat.le_of_dvd (m0_pos_of_owners_mem (owns_mem_owners hr)) hdiv).trans (m0_le_succ r)
+  have h9 : 9 ≤ r := by omega
+  by_contra hlt
+  have : r < 11 := lt_of_not_ge hlt
+  interval_cases r
+  · exact absurd hr.1 (by decide : ¬ Nat.Prime 9)
+  · exact absurd hr.1 (by decide : ¬ Nat.Prime 10)
+
+/-- For `X ≥ 11`, the door `5` is a sink of `Γ_X`. -/
+theorem five_isSink {X : ℕ} (hX : 11 ≤ X) : IsSink X 5 :=
+  sinks_eq_twoPowerDoors.2
+    ⟨by decide, by decide, by decide, ⟨2, by native_decide⟩, 11, firstOwner_five, hX⟩
+
+/-- From a hired odd prime, a strictly decreasing gold path ends at a sink. -/
+theorem gold_path_to_sink {X q : ℕ} (h : Hired (owners X) q) (hodd : Odd q) :
+    ∃ M, IsSink X M ∧ Relation.ReflTransGen (GoldDescentStep X) q M := by
+  obtain ⟨M, hdoor, hpath⟩ := gold_descent q h hodd
+  have hH := hired_of_goldDescent h hpath
+  have hOdd := odd_of_goldDescent hodd hpath
+  have h2 : M ≠ 2 := ne_two_of_goldDescent (fun hM => by
+    rw [hM] at hodd
+    exact (by decide : ¬ Odd 2) hodd) hpath
+  have hP := prime_of_hired_ne_two hH h2
+  have h3 := hired_ne_three hH
+  refine ⟨M, sinks_eq_twoPowerDoors.2 ⟨hP, hOdd, h3, hdoor, ?_⟩, hpath⟩
+  cases hH with
+  | seed => exact absurd hOdd (by decide : ¬ Odd 2)
+  | @ofDoor p _ hp _ _ hd =>
+    obtain ⟨r0, hfo⟩ := exists_firstOwner M hP h3
+    exact ⟨r0, hfo, le_trans (firstOwner_le_of_Owns hfo
+      ⟨hp.1, hp.2.1, hp.2.2.1, hp.2.2.2.2, hd⟩) hp.2.2.2.1⟩
+
+lemma goldEdge_symm {O : Set ℕ} {u v : HireVertex O} (h : GoldEdge O u v) :
+    GoldEdge O v u := by
+  rcases h with h | h
+  · exact Or.inr h
+  · exact Or.inl h
+
+lemma goldReachable_symm {X : ℕ} {u v : HireVertex (owners X)}
+    (h : Relation.ReflTransGen (GoldEdge (owners X)) u v) :
+    Relation.ReflTransGen (GoldEdge (owners X)) v u := by
+  induction h with
+  | refl => exact .refl
+  | tail _ hedge ih => exact Relation.ReflTransGen.head (goldEdge_symm hedge) ih
+
+lemma goldReachable_of_descent {X a b : ℕ} (ha : Hired (owners X) a)
+    (h : Relation.ReflTransGen (GoldDescentStep X) a b) :
+    Relation.ReflTransGen (GoldEdge (owners X))
+      ⟨a, ha⟩ ⟨b, hired_of_goldDescent ha h⟩ := by
+  induction h with
+  | refl => exact .refl
+  | tail hprev hstep ih =>
+    have hsrc : (⟨_, hired_of_goldDescent ha hprev⟩ : HireVertex (owners X)) =
+        ⟨_, hstep.1.1⟩ := Subtype.ext rfl
+    have htgt : (⟨_, hstep.1.2.1⟩ : HireVertex (owners X)) =
+        ⟨_, hired_of_goldDescent ha (hprev.tail hstep)⟩ := Subtype.ext rfl
+    exact htgt ▸ (hsrc ▸ ih).tail (Or.inl hstep.1)
+
 /-! ## Gold-disconnected windows -/
 
 def GoldDisconnectedWindow (X : ℕ) : Prop :=
   ∃ u v : HireVertex (owners X),
     u.val ≠ 2 ∧ v.val ≠ 2 ∧ u ≠ v ∧
       ¬ Relation.ReflTransGen (GoldEdge (owners X)) u v
+
+/-- Gold on the non-seed vertices is connected iff every pair of sinks is joined
+by an undirected gold path. For `X ≥ 11`, `five_isSink` puts `5` among them. -/
+theorem goldConnected_iff_sinks_reachable {X : ℕ} :
+    ¬ GoldDisconnectedWindow X ↔
+      ∀ {q r : ℕ} (hq : IsSink X q) (hr : IsSink X r),
+        Relation.ReflTransGen (GoldEdge (owners X)) ⟨q, hq.1⟩ ⟨r, hr.1⟩ := by
+  constructor
+  · intro hconn q r hq hr
+    by_cases hqr : q = r
+    · subst hqr
+      exact .refl
+    · by_contra hnot
+      apply hconn
+      refine ⟨⟨q, hq.1⟩, ⟨r, hr.1⟩, hq.2.1, hr.2.1, ?_, hnot⟩
+      intro heq
+      exact hqr (congrArg Subtype.val heq)
+  · intro hsinks hdis
+    obtain ⟨u, v, hu2, hv2, hne, hnot⟩ := hdis
+    have huOdd := odd_of_prime_ne_two (prime_of_hired_ne_two u.property hu2) hu2
+    have hvOdd := odd_of_prime_ne_two (prime_of_hired_ne_two v.property hv2) hv2
+    obtain ⟨Mu, hsu, hpu⟩ := gold_path_to_sink u.property huOdd
+    obtain ⟨Mv, hsv, hpv⟩ := gold_path_to_sink v.property hvOdd
+    have hMu : (⟨Mu, hired_of_goldDescent u.property hpu⟩ : HireVertex (owners X)) =
+        ⟨Mu, hsu.1⟩ := Subtype.ext rfl
+    have hMv : (⟨Mv, hired_of_goldDescent v.property hpv⟩ : HireVertex (owners X)) =
+        ⟨Mv, hsv.1⟩ := Subtype.ext rfl
+    have hreachu := hMu ▸ goldReachable_of_descent u.property hpu
+    have hreachv := hMv ▸ goldReachable_of_descent v.property hpv
+    exact hnot (hreachu.trans ((hsinks hsu hsv).trans (goldReachable_symm hreachv)))
+
+/-- Non-seed hired vertices: the vertices of gold. -/
+abbrev GoldVertex (X : ℕ) := {v : HireVertex (owners X) // v.val ≠ 2}
+
+/-- Connectivity of gold on the non-seed vertices. -/
+def goldVertexSetoid (X : ℕ) : Setoid (GoldVertex X) where
+  r u w := Relation.ReflTransGen (GoldEdge (owners X)) u.1 w.1
+  iseqv := ⟨fun _ => .refl, fun h => goldReachable_symm h, fun h1 h2 => h1.trans h2⟩
+
+/-- Connectivity of the sinks of `Γ_X`. -/
+def sinkSetoid (X : ℕ) : Setoid {q // IsSink X q} where
+  r s t := Relation.ReflTransGen (GoldEdge (owners X)) ⟨s.1, s.2.1⟩ ⟨t.1, t.2.1⟩
+  iseqv := ⟨fun _ => .refl, fun h => goldReachable_symm h, fun h1 h2 => h1.trans h2⟩
+
+private def sinkToGoldClass (X : ℕ) :
+    Quotient (sinkSetoid X) → Quotient (goldVertexSetoid X) :=
+  Quotient.lift
+    (fun s => Quotient.mk (goldVertexSetoid X) ⟨⟨s.1, s.2.1⟩, s.2.2.1⟩)
+    (fun _ _ hab => Quotient.sound hab)
+
+private theorem sinkToGoldClass_bijective (X : ℕ) :
+    Function.Bijective (sinkToGoldClass X) := by
+  constructor
+  · intro a b hab
+    induction a using Quotient.inductionOn with | _ s =>
+    induction b using Quotient.inductionOn with | _ t =>
+    simp only [sinkToGoldClass, Quotient.lift_mk] at hab
+    have hgold : Relation.ReflTransGen (GoldEdge (owners X)) ⟨s.1, s.2.1⟩ ⟨t.1, t.2.1⟩ :=
+      Quotient.exact hab
+    exact Quotient.sound hgold
+  · intro c
+    obtain ⟨v, rfl⟩ := Quotient.exists_rep c
+    have hodd := odd_of_prime_ne_two (prime_of_hired_ne_two v.1.property v.2) v.2
+    obtain ⟨M, hM, hpath⟩ := gold_path_to_sink v.1.property hodd
+    refine ⟨Quotient.mk _ ⟨M, hM⟩, ?_⟩
+    simp only [sinkToGoldClass, Quotient.lift_mk]
+    apply Quotient.sound
+    have hstart : (⟨v.1.val, v.1.property⟩ : HireVertex (owners X)) = v.1 :=
+      Subtype.ext rfl
+    have hend : (⟨M, hired_of_goldDescent v.1.property hpath⟩ : HireVertex (owners X)) =
+        ⟨M, hM.1⟩ := Subtype.ext rfl
+    have hraw := goldReachable_of_descent v.1.property hpath
+    rw [hstart, hend] at hraw
+    exact goldReachable_symm hraw
+
+/-- The gold components are in bijection with the connectivity classes of the sinks. -/
+noncomputable def componentsEquivSinkClasses (X : ℕ) :
+    Quotient (goldVertexSetoid X) ≃ Quotient (sinkSetoid X) :=
+  (Equiv.ofBijective (sinkToGoldClass X) (sinkToGoldClass_bijective X)).symm
 
 lemma eq_of_reflTransGen_of_isolated
     {O : Set ℕ} {u v : HireVertex O}
