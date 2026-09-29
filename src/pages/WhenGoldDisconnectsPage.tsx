@@ -31,14 +31,18 @@ export function WhenGoldDisconnectsPage() {
       <p className="lede" style={{ maxWidth: "42rem" }}>
         <code>Hire/GoldDisconnects.lean</code> checks the size bound{" "}
         <code>2q ≤ p + 1</code>, door closure, descent to a 2-power door, and
-        the sink reduction: the sinks are the 2-power doors hired in the window,
-        and gold is connected exactly when those sinks lie in one component.
-        Monotonicity of windows and the finite bridge are checked: any two odd
-        primes other than 3 lie in one gold component of every sufficiently
-        large window. It also checks the earlier single-window isolation lemmas
-        and both directions for 2-power doors: gold is disconnected for
-        arbitrarily large windows if and only if there are infinitely many
-        2-power doors. The octave, the stretch, the <em>M</em><sub>31</sub>{" "}
+        the sink reduction: the sinks are the prime 2-power doors hired in the
+        window, and gold is connected exactly when those sinks lie in one
+        component. Monotonicity of windows is checked, and{" "}
+        <code>gold_bridge_of_finset</code> gives one threshold for a finite set:
+        above that threshold every listed prime is joined to 5. Then{" "}
+        <code>goldConnected_of_finite_twoPowerDoors</code> joins the sinks
+        through 5, allowing several sinks already to lie in one component. It
+        also checks the earlier single-window isolation lemmas and both
+        directions for prime 2-power doors: gold is disconnected for arbitrarily
+        large windows if and only if there are infinitely many prime 2-power
+        doors. The proof has no <code>sorry</code>, <code>admit</code>, or{" "}
+        <code>axiom</code>. The octave, the stretch, the <em>M</em><sub>31</sub>{" "}
         theorem, and the identification of those doors with Mersenne and Fermat
         primes are not formalised. The tables and <em>X</em><sub>1</sub> are
         the script in the note, not Lean theorems.

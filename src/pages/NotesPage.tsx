@@ -109,10 +109,15 @@ export function NotesPage() {
         The hire-graph notes have a Lean 4 + Mathlib companion under{" "}
         <code>lean/Hire/</code> — doors, finite hire set, 3 never hired, gold
         arcs, the Laplacian cone, and Layer D: λ<sub>2</sub> = 1 iff gold on the
-        leaves is disconnected. <code>GoldBridge</code> is strong Q2 with 0 sorry;
-        <code>GoldDisconnects</code> is the sequel scaffolding; Dirichlet
-        infinitude of S is still a stub. Built with <code>lake build</code> — not
-        part of the Vite bundle. See{" "}
+        leaves is disconnected. <code>GoldBridge</code> is strong Q2 with 0 sorry.
+        <code>TwoClassCoverage</code> and <code>InfiniteHire</code> prove the
+        two hire classes and <code>eventually_hired</code>.{" "}
+        <code>GoldDisconnects</code> now checks the descent to 2-power-door
+        sinks, the sink reduction, window monotonicity, and the equivalence:
+        arbitrarily large disconnected gold windows iff infinitely many
+        prime 2-power doors. No <code>sorry</code>, <code>admit</code>, or{" "}
+        <code>axiom</code> in that slice. Built with <code>lake build</code> —
+        not part of the Vite bundle. See{" "}
         <a href="https://github.com/hasjack/nm-notebook/tree/master/lean">
           lean/
         </a>

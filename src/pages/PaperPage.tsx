@@ -137,6 +137,9 @@ export function PaperPage() {
             <li>
               <code>exists_prime_hire_gt</code>
             </li>
+            <li>
+              <code>eventually_hired</code>
+            </li>
           </ul>
         </li>
       </ul>

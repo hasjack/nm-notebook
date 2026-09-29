@@ -260,7 +260,8 @@ export function TwoClassCoveragePage() {
       <p>
         Formalised in <code>lean/Hire/InfiniteHire.lean</code> as{" "}
         <code>infinite_primes_hire</code> and{" "}
-        <code>exists_prime_hire_gt</code>. Paper 1 Corollary{" "}
+        <code>exists_prime_hire_gt</code>, with <code>eventually_hired</code>{" "}
+        for prime ingredients. Paper 1 Corollary{" "}
         <code>cor:infinite-hire</code> after GoldBridge.
       </p>
 
