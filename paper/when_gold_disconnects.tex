@@ -28,18 +28,18 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-The hire graph of the 3-free door is built from two elementary inputs.
+The hire graph of the 3-free door is built from two inputs.
 The first is a \emph{size bound}: if an odd prime \(q\) divides the door of a prime \(p\), then \(p\ge 2q-1\), so every gold arc runs from a larger prime to a smaller one.
 The second is \emph{Dirichlet's theorem}, applied to two residue classes, which makes every owner set infinite.
 From the size bound alone, every gold component of a finite window contains a \(2\)-power door (a Mersenne or Fermat prime), so connectivity of gold is exactly the question of whether the \(2\)-power doors present are joined.
 From Dirichlet, any two of them are joined in some finite window; the size bound shows how late that can be.
-Consequently gold is disconnected for infinitely many windows if and only if there are infinitely many Mersenne or Fermat primes, and each \(2\)-power door \(M\ge 7\) forces a whole \emph{octave} \([\omega(M),2\omega(M)-2]\) of disconnected windows, not merely one.
+Consequently gold is disconnected for arbitrarily large integer windows if and only if there are infinitely many Mersenne or Fermat primes, and each \(2\)-power door \(M\ge 7\) forces a whole \emph{octave} \([\omega(M),2\omega(M)-2]\) of disconnected windows, not merely one.
 For \(M_{31}\) the picture is exact: assuming the machine-checked connectivity at \(X^*=92\,274\,421\) of the hire-graph note, gold is disconnected for \(X^*\le X\le 2M_{61}-2\) precisely when \(98\,784\,247\,763\le X\le 627\,065\,224\,920\).
 \end{abstract}
 
 \section{Two inputs}
 
-Everything in this note is a consequence of two facts about the door \(m_0(p)=p+\chit(p)\).
+The structural results in this note follow from two facts about the door \(m_0(p)=p+\chit(p)\).
 
 \medskip
 \noindent\textbf{The size bound.}
@@ -54,21 +54,23 @@ The last use is Theorem~\ref{thm:sinks}: components of gold are governed by the 
 Whether \(Q\mid m_0(p)\) depends only on \(p\) modulo \(6Q\), and it selects exactly two invertible classes (Lemma~\ref{lem:twoclass}).
 Dirichlet's theorem then gives infinitely many owners of any \(Q\) coprime to \(6\), and applying it twice (a common owner, then a hirer of that owner) joins any two primes in some finite window (Theorem~\ref{thm:bridge}).
 Dirichlet is qualitative.
-The size bound is what turns ``eventually'' into quantitative lower bounds, and Linnik's theorem is the only source of upper bounds.
+The size bound is what turns ``eventually'' into quantitative lower bounds, and Linnik's theorem supplies a general upper bound for the two-step bridge construction; the exact example later in the note uses finite computation.
 
 \medskip
 \noindent\textbf{Results.}
 \begin{itemize}
 \item \emph{Sink reduction} (Theorem~\ref{thm:sinks}): for every window \(X\ge 11\), each gold component contains a \(2\)-power door, and gold is connected iff the \(2\)-power doors present are pairwise joined.
 \item \emph{Isolation octaves} (Theorem~\ref{thm:octave}): if \(M\ge 7\) is a \(2\)-power door with first owner \(\omega(M)\), then gold is disconnected on all of \([\omega(M),2\omega(M)-2]\).
-\item \emph{Equivalence} (Theorem~\ref{thm:equiv}): gold is disconnected for infinitely many \(X\) iff there are infinitely many Mersenne or Fermat primes.
-\item \emph{\(M_{31}\), exactly} (Theorem~\ref{thm:m31}): the complete disconnected stretch, its end point \(X_1=627\,065\,224\,921\), and the reason the bridge owner \(v\) of the previous version of this note never bridges.
+\item \emph{Equivalence} (Theorem~\ref{thm:equiv}): gold is disconnected for arbitrarily large integer \(X\) iff there are infinitely many Mersenne or Fermat primes.
+\item \emph{\(M_{31}\), exactly} (Theorem~\ref{thm:m31}): the complete disconnected stretch, its end point \(X_1=627\,065\,224\,921\), and why the least common owner of \(5\) and \(M_{31}\) does not give the first reconnection.
 \end{itemize}
 The infinitude of Mersenne primes is open, so item~(1) of Theorem~\ref{thm:equiv} is not settled unconditionally.
 
 \section{Windows, owners and sinks}
 
-Notation follows the hire-graph note~\cite{Hire}.
+We use the doors and vertex sets of the hire-graph note~\cite{Hire}, but write \(\Gamma_X\) for gold to distinguish it from the hire graph.
+Throughout, window cutoffs \(X\) are integers with \(X\ge5\), and intervals of windows mean their integer points.
+Write \(M_k=2^k-1\) and \(F_n=2^{2^n}+1\).
 For a prime \(p\ge 5\) let \(\chit(p)=+1\) if \(p\equiv 1\pmod 3\) and \(-1\) if \(p\equiv 2\pmod 3\), and write \(\chit(n)\) likewise for any \(n\) coprime to \(3\).
 
 \begin{lemma}[Door basics]\label{lem:door}
@@ -85,16 +87,17 @@ If $p\equiv2\pmod 3$ then $m=p-1\equiv1$, so $\chit(m)=+1$ and $m+\chit(m)=p$.
 \end{proof}
 
 We say \(p\) \emph{owns} an odd prime \(q\ne 3\) if \(q\mid m_0(p)\); such \(q\) is automatically \(\ge 5\).
-For \(X\ge 5\) put \(P_X=\{p \text{ prime}: 5\le p\le X\}\) and
+For an integer \(X\ge 5\) put \(P_X=\{p \text{ prime}: 5\le p\le X\}\) and
 \[
 S_X=\{2\}\ \cup\ \{q\ \text{odd prime}: q\mid m_0(p)\text{ for some }p\in P_X\}.
 \]
-The \emph{gold graph} \(G_X\) has vertex set \(S_X\setminus\{2\}\) and a directed arc \(p\to q\) whenever \(q\mid m_0(p)\); the undirected gold graph forgets orientation.
+The \emph{gold graph} \(\Gamma_X\) has vertex set \(S_X\setminus\{2\}\) and a directed arc \(p\to q\) whenever \(q\mid m_0(p)\); the undirected gold graph forgets orientation.
 Connectivity always refers to the undirected gold graph.
 (The hire graph proper is the cone over this graph with apex \(2\), which is why finite windows are connected whether or not gold is; see~\cite{Hire}.)
 
-Let \(\omega(q)\) denote the least owner of \(q\), the \emph{first owner}, with \(\omega(q)=\infty\) if none exists (Corollary~\ref{cor:owners} shows this never happens).
-By definition
+More generally, for an odd integer \(Q>1\) with \(3\nmid Q\), an owner of \(Q\) is a prime \(p\ge5\) such that \(Q\mid m_0(p)\).
+Let \(\omega(Q)\) denote its least owner, with \(\omega(Q)=\infty\) if none exists (Corollary~\ref{cor:owners} shows this never happens).
+For an odd prime \(q\ne3\), by definition
 \begin{equation}\label{eq:hire}
 q\in S_X\iff \omega(q)\le X .
 \end{equation}
@@ -103,19 +106,22 @@ In this notation the ``first owner \(r_0\) of \(M\)'' of the earlier version is 
 
 Since arcs between two vertices of \(S_X\) are determined by the doors alone, we have monotonicity:
 \begin{equation}\label{eq:mono}
-X\le X'\ \Longrightarrow\ S_X\subseteq S_{X'}\ \text{and}\ G_X\ \text{is an induced subgraph of }G_{X'}.
+X\le X'\ \Longrightarrow\ S_X\subseteq S_{X'}\ \text{and}\ \Gamma_X\ \text{is an induced subgraph of }\Gamma_{X'}.
 \end{equation}
-In particular two vertices joined in \(G_X\) stay joined in every larger window.
+In particular two vertices joined in \(\Gamma_X\) stay joined in every larger window.
 Connectivity of the \emph{whole} graph is not monotone: a new vertex can enter with no arcs.
 
-A prime \(M\ne 3\) is a \emph{\(2\)-power door} if \(m_0(M)=2^k\).
+An odd prime \(M\ne 3\) is a \emph{\(2\)-power door} if \(m_0(M)=2^k\).
 Write \(\pow\) for the set of these.
 By the hire-graph note (Lemma~10 there), \(\pow\) consists of the Mersenne primes \(2^p-1\) (\(p\) odd) and the Fermat primes \(2^{2^n}+1\), \(n\ge 1\): 
 \[
 \pow=\{5,7,17,31,127,257,8191,65537,131071,524287,2^{31}-1,\dots\}.
 \]
-A \emph{sink} of \(G_X\) is a vertex with no outgoing arc.
+A \emph{sink} of \(\Gamma_X\) is a vertex with no outgoing arc.
 Note that \(5\in\pow\), and that \(\omega(5)=11\): the doors of \(5,7\) are \(4,8\), and \(m_0(11)=10\).
+For \(5\le X<11\), gold has no vertices; for \(X=11,12\), it is the connected singleton \(\{5\}\).
+At \(X=13\), the sink \(7\) enters and gold becomes disconnected.
+The value \(X^*=92\,274\,421\) used below is a later connected window reported in~\cite{Hire}; the proof needs its connectivity, not a claim that it is the first connected window.
 
 \section{The size bound}\label{sec:size}
 
@@ -133,13 +139,13 @@ Combine, and note \((p+1)/2<p\) for \(p>1\).
 \end{proof}
 
 The proof uses only that the door is even and at most \(p+1\).
-Note the inequality is \(q\le (p+1)/2\), not \(q<(p+1)/2\): equality occurs (for instance \(p=13\), \(q=7\)), and the weaker consequence \(q<p\) is all that is needed below.
+Note the inequality is \(q\le (p+1)/2\), not \(q<(p+1)/2\): equality occurs (for instance \(p=13\), \(q=7\)), The strict consequence \(q<p\) gives descent, while the full bound gives the isolation intervals below.
 
 \begin{remark}[Sharpness]\label{rem:sharp}
 Equality \(q=m_0(p)/2\) means \(m_0(p)=2q\).
 By Lemma~\ref{lem:door}(b) the only prime that can have door \(2q\) is \(p=2q+\chit(2q)=2q-\chit(q)\), that is \(2q-1\) if \(q\equiv1\pmod 3\) and \(2q+1\) if \(q\equiv 2\pmod 3\).
 So \(\omega(q)\ge 2q-\chit(q)\), with equality exactly when that number is prime.
-The next possible owners have door \(4q\) and are \(4q\pm1\).
+The next candidate has door \(4q\) and is \(4q+\chit(q)\).
 This is the Sophie Germain pattern of the hire-graph note (Lemma~4 there) seen as the extremal case.
 \end{remark}
 
@@ -159,24 +165,24 @@ The equivalent form is \eqref{eq:hire}.
 (d) \(\omega(w)\ge 2w-1\) by (b), and \(w\ge \omega(q)\) because \(w\) is an owner of \(q\).
 \end{proof}
 
-Parts (b) and (d) are the quantitative half of the note: a vertex cannot be hired before twice its own size, and a vertex hired through an owner \(w\) is hired no earlier than \(2w-1\), so delays double at every step of an ownership chain.
+Parts (b) and (d) are the quantitative half of the note: a vertex \(q\) cannot be hired before \(2q-1\), and a vertex hired through an owner \(w\) is hired no earlier than \(2w-1\), so the corresponding size lower bounds grow by the recurrence \(a\mapsto2a-1\).
 
 \begin{proposition}[Descent]\label{prop:descent}
 Let \(v\in S_X\setminus\{2\}\).
-There is a strictly decreasing gold path \(v=v_0\to v_1\to\dots\to v_n\) in \(G_X\) ending at a vertex \(v_n\) with \(m_0(v_n)\) a power of \(2\); that is, \(v_n\in\pow\).
+There is a strictly decreasing gold path \(v=v_0\to v_1\to\dots\to v_n\) in \(\Gamma_X\) ending at a vertex \(v_n\) with \(m_0(v_n)\) a power of \(2\); that is, \(v_n\in\pow\).
 \end{proposition}
 \begin{proof}
-If \(m_0(v_i)\) has an odd prime factor \(r\), then \(r\in S_X\) by Corollary~\ref{cor:consequences}(c), so \(v_i\to r\) is an arc of \(G_X\), and \(r<v_i\) by (a).
+If \(m_0(v_i)\) has an odd prime factor \(r\), then \(r\in S_X\) by Corollary~\ref{cor:consequences}(c), so \(v_i\to r\) is an arc of \(\Gamma_X\), and \(r<v_i\) by (a).
 A strictly decreasing sequence of primes terminates; at the terminal vertex no odd prime divides the door.
 \end{proof}
 
 \begin{theorem}[Sink reduction]\label{thm:sinks}
 Let \(X\ge 11\) and put \(D_X=\{M\in\pow:\ \omega(M)\le X\}\).
 \begin{enumerate}
-\item[(i)] \(D_X\) is the set of sinks of \(G_X\), and \(5\in D_X\).
-\item[(ii)] Every vertex of \(G_X\) is joined to some element of \(D_X\) by a decreasing gold path.
-\item[(iii)] Every connected component of \(G_X\) contains an element of \(D_X\).
-Consequently the number of components of \(G_X\) equals the number of classes of \(D_X\) under connectivity, and \(G_X\) is connected if and only if the elements of \(D_X\) lie in one component.
+\item[(i)] \(D_X\) is the set of sinks of \(\Gamma_X\), and \(5\in D_X\).
+\item[(ii)] Every vertex of \(\Gamma_X\) is joined to some element of \(D_X\) by a decreasing gold path.
+\item[(iii)] Every connected component of \(\Gamma_X\) contains an element of \(D_X\).
+Consequently the number of components of \(\Gamma_X\) equals the number of classes of \(D_X\) under connectivity, and \(\Gamma_X\) is connected if and only if the elements of \(D_X\) lie in one component.
 \end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -190,7 +196,7 @@ The theorem says: the only obstruction to connectivity is between sinks.
 Generic vertices are always attached, through their descent, to a sink.
 
 \begin{remark}[Check]\label{rem:check}
-I replayed every window \(X\le 10^7\) (all \(664\,577\) primes) with union-find and compared the component count of \(G_X\) with the number of classes of \(D_X\): they agree at every window (\texttt{hire\_checks.py}, part~A).
+I replayed every window \(X\le 10^7\) (all \(664\,577\) primes) with union-find and compared the component count of \(\Gamma_X\) with the number of classes of \(D_X\): they agree at every window (\texttt{hire\_checks.py}, part~A).
 This is a test of Theorem~\ref{thm:sinks}, whose proof above is complete, and it also reproduces the component counts of the hire-graph note at \(X=30,50,100,200,10^4,5\cdot10^5,10^7\), namely \(2,2,4,4,2,3,3\).
 \end{remark}
 
@@ -223,7 +229,7 @@ If \(p\equiv4Q+s\), then modulo \(3\), \(p\equiv s+s\equiv -s\), so \(\chit(p)=-
 Both classes in Lemma~\ref{lem:twoclass} are coprime to \(6Q\): the numbers \(2Q-s\) and \(4Q+s\) are odd, are \(\equiv s\) and \(\equiv -s\pmod 3\) respectively (so nonzero), and are \(\equiv -s\) and \(\equiv s\pmod Q\) respectively (so coprime to \(Q\)).
 By Dirichlet's theorem~\cite{Dirichlet}, each class contains infinitely many primes.
 Hence every odd \(Q\) coprime to \(3\) has infinitely many owners.
-In particular \(\omega(Q)<\infty\) for every such \(Q\), every odd prime \(\ne3\) is eventually a vertex, and by Corollary~\ref{cor:consequences}(b) \(\omega(Q)\ge 2Q-1\).
+In particular \(\omega(Q)<\infty\) for every such \(Q\), every odd prime \(\ne3\) is eventually a vertex, and \(\omega(Q)\ge 2Q-1\), since an even door divisible by the odd integer \(Q\) is at least \(2Q\).
 \end{corollary}
 
 The parametrisation \eqref{eq:param} is also the search procedure: \(\omega(Q)\) is the least prime among \(p_1,p_2,p_4,p_5,p_7,\dots\).
@@ -231,39 +237,48 @@ For example \(\omega(M_{31})=r_0=98\,784\,247\,763=46M_{31}+1\) is \(p_{23}(M_{3
 
 \begin{theorem}[Bridging]\label{thm:bridge}
 Let \(q_1,q_2\) be odd primes different from \(3\).
-There is a window \(X\) such that \(q_1,q_2\) lie in the same component of \(G_{X'}\) for every \(X'\ge X\).
+There is a window \(X\) such that \(q_1,q_2\) lie in the same component of \(\Gamma_{X'}\) for every \(X'\ge X\).
 \end{theorem}
 \begin{proof}
 Put \(Q=q_1q_2\) (or \(Q=q_1\) if \(q_1=q_2\)).
 Dirichlet step~1: by Corollary~\ref{cor:owners} choose a prime \(r\) with \(Q\mid m_0(r)\); then \(r\ge 5\) and \(r\) owns both \(q_i\).
 Dirichlet step~2: choose a prime \(u\) with \(r\mid m_0(u)\) and set \(X=u\).
 Then \(r\in S_X\).
-By door closure, \(q_1,q_2\in S_X\), and the arcs \(r\to q_1\) and \(r\to q_2\) are arcs of \(G_X\); so \(q_1,q_2\) are joined through \(r\).
+By door closure, \(q_1,q_2\in S_X\), and the arcs \(r\to q_1\) and \(r\to q_2\) are arcs of \(\Gamma_X\); so \(q_1,q_2\) are joined through \(r\).
 Persistence is \eqref{eq:mono}.
 \end{proof}
 
-Taking \(q_1=5\) recovers the theorem of the hire-graph note that every odd prime other than \(3\) lies in the component of \(5\) in the infinite gold graph \(G_\infty=\bigcup_XG_X\).
-(By Corollary~\ref{cor:owners}, \(G_\infty\) has every odd prime \(\ne 3\) as a vertex.)
+Taking \(q_1=5\) recovers the theorem of the hire-graph note that every odd prime other than \(3\) lies in the component of \(5\) in the infinite gold graph \(\Gamma_\infty=\bigcup_X\Gamma_X\).
+(By Corollary~\ref{cor:owners}, \(\Gamma_\infty\) has every odd prime \(\ne 3\) as a vertex.)
 
-\begin{proposition}[Where the numbers come from]\label{prop:times}
-Let \(q\) be an odd prime, \(q\ne3,5\), and let \(r\) be a common owner of \(5\) and \(q\) with hirer \(u\) as in the proof of Theorem~\ref{thm:bridge}.
+\begin{proposition}[Bounds for a two-step bridge]\label{prop:times}
+Let \(q\) be an odd prime, \(q\ne3,5\).
 \begin{enumerate}
-\item[(a)] (\emph{Lower bound, size bound.}) \(r\ge 10q-1\) and \(u\ge 2r-1\ge 20q-3\).
-Hence no window below \(20q-3\) is joined to \(5\) by a bridge of this type.
-\item[(b)] (\emph{Upper bound, Linnik.}) By Linnik's theorem with an admissible exponent \(L\) (\(L=5\) is known~\cite{Xylouris}), the least prime in a class modulo \(k\) is \(\ll k^{L}\); so \(r\ll q^L\) and \(u\ll r^L\ll q^{L^2}\).
+\item[(a)] If a prime \(r\) owns both \(5\) and \(q\), and a prime \(u\) owns \(r\), then
+\[
+r\ge10q-1,\qquad u\ge2r-1\ge20q-3.
+\]
+Thus no common-owner bridge of this type can be live below \(20q-3\).
+\item[(b)] For any fixed admissible exponent \(L\) in Linnik's theorem, one can choose such primes \(r,u\) with
+\[
+r\ll q^L,\qquad u\ll r^L\ll q^{L^2},
+\]
+where the implied constants are independent of \(q\).
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-(a) \(m_0(r)\) is an even multiple of \(5q\), so \(m_0(r)\ge 10q\) and \(r\ge 10q-1\); then \(u\ge 2r-1\) by Lemma~\ref{lem:size}.
-(b) is the two applications of Linnik's theorem, modulo \(6\cdot5q\) and then modulo \(6r\).
+(a) The door \(m_0(r)\) is an even multiple of \(5q\), so \(m_0(r)\ge10q\) and \(r\ge10q-1\). Apply Lemma~\ref{lem:size} to \(u,r\).
+(b) Choose \(r\) as the least prime in either class of Lemma~\ref{lem:twoclass} for \(Q=5q\), and then choose \(u\) as the least prime in either class for \(Q=r\).
+Linnik's theorem, applied with moduli \(30q\) and \(6r\), gives the stated bounds. For example, \(L=5.18\) is supplied by~\cite[Theorem~1.1]{Xylouris}.
 \end{proof}
 
-The window \([20q,\,q^{L^2}]\) is the whole unconditional gap between what the size bound forbids and what Linnik guarantees.
-Heuristically each of the two searches ends after a bounded multiple of \(\log\) many attempts of size proportional to the modulus, consistent with the data for \(M_{31}\) (Section~\ref{sec:m31}: \(\omega(M_{31})/M_{31}=46\) and \(\omega(r_0)/r_0=14\)), but that is a heuristic and is not used.
+These bounds concern the specified common-owner construction: its earliest live window is at least \(20q-3\) and at most \(Cq^{L^2}\) for a constant \(C\).
+They do not give a lower bound for an arbitrary path from \(q\) to \(5\).
+Section~\ref{sec:m31} gives an example where a longer path appears before the least common owner of \(5\) and \(q\) is hired.
 
 \section{Isolation octaves}\label{sec:octave}
 
-For a prime \(q\), let
+For an odd prime \(q\ne3\), let
 \[
 \alpha(q)=\min\{\omega(w):\ w\ \text{prime},\ q\mid m_0(w)\}
 \]
@@ -273,7 +288,7 @@ be the first window in which some arc \emph{into} \(q\) is live: an arc \(w\to q
 Let \(M\in\pow\) with \(M\ge7\).
 \begin{enumerate}
 \item[(a)] \(\alpha(M)\ge 2\omega(M)-1\).
-\item[(b)] For every \(X\) with \(\omega(M)\le X<\alpha(M)\), the prime \(M\) is an isolated vertex of \(G_X\), and \(G_X\) is disconnected.
+\item[(b)] For every \(X\) with \(\omega(M)\le X<\alpha(M)\), the prime \(M\) is an isolated vertex of \(\Gamma_X\), and \(\Gamma_X\) is disconnected.
 \item[(c)] In particular gold is disconnected for all \(X\) with \(\omega(M)\le X\le 2\omega(M)-2\).
 \end{enumerate}
 \end{theorem}
@@ -281,12 +296,12 @@ Let \(M\in\pow\) with \(M\ge7\).
 (a) If \(w\) owns \(M\) then \(\omega(w)\ge 2w-1\ge 2\omega(M)-1\) by Corollary~\ref{cor:consequences}(d).
 (b) \(M\in S_X\) by \eqref{eq:hire}.
 It has no outgoing arc, since \(m_0(M)\) is a power of \(2\).
-An incoming arc \(w\to M\) in \(G_X\) needs \(M\mid m_0(w)\) and \(w\in S_X\), that is \(\omega(w)\le X\), which contradicts \(X<\alpha(M)\).
+An incoming arc \(w\to M\) in \(\Gamma_X\) needs \(M\mid m_0(w)\) and \(w\in S_X\), that is \(\omega(w)\le X\), which contradicts \(X<\alpha(M)\).
 Finally \(\omega(M)\ge 2M-1\ge 13>11=\omega(5)\), so \(5\in S_X\) is a second vertex, and \(M\ne5\).
 (c) follows from (a) and (b).
 \end{proof}
 
-Compared with the first-owner window of the earlier version, this is a whole binary octave, and its length is at least \(\omega(M)-1\ge 2M-2\).
+The interval contains exactly \(\omega(M)-1\ge2M-2\) integer cutoffs. We call it an isolation octave because its upper endpoint is just below twice its lower endpoint.
 Table~\ref{tab:octaves} lists the intervals for every known \(2\)-power door up to \(M_{31}\); for all of them below \(M_{31}\), I verified by brute force that gold is disconnected on every window of the interval (\texttt{hire\_checks.py}, part~A).
 
 \begin{table}[ht]
@@ -311,24 +326,25 @@ Table~\ref{tab:octaves} lists the intervals for every known \(2\)-power door up 
 \label{tab:octaves}
 \end{table}
 
-The values \(4111\), \(16381\) and \(1\,048\,573\) are the satellites \(\{257,4111\}\), \(\{8191,16381\}\) and \(\{524\,287,1\,048\,573,\dots\}\) that appear in the window table of the hire-graph note; the theorem explains them as first owners, and shows they persist for a full octave.
+The numbers \(4111\), \(16381\) and \(1\,048\,573\) are the first owners of \(257\), \(8191\) and \(524\,287\), respectively.
+Theorem~\ref{thm:octave} keeps each sink isolated throughout its guaranteed octave. A larger satellite containing its owner can appear only later, once that owner is itself hired; the theorem does not assert persistence of any particular multi-vertex satellite.
 
 \section{The equivalence}\label{sec:equiv}
 
 \begin{theorem}[Connected stretches]\label{thm:stretch}
 Let \(11\le X_0\le X_1\).
-If \(G_{X_0}\) is connected and no \(M\in\pow\) has \(X_0<\omega(M)\le X_1\), then \(G_X\) is connected for every \(X_0\le X\le X_1\).
+If \(\Gamma_{X_0}\) is connected and no \(M\in\pow\) has \(X_0<\omega(M)\le X_1\), then \(\Gamma_X\) is connected for every \(X_0\le X\le X_1\).
 \end{theorem}
 \begin{proof}
 For such \(X\) we have \(D_X=D_{X_0}\).
-The elements of \(D_{X_0}\) lie in one component of \(G_{X_0}\), hence of \(G_X\) by \eqref{eq:mono}.
+The elements of \(D_{X_0}\) lie in one component of \(\Gamma_{X_0}\), hence of \(\Gamma_X\) by \eqref{eq:mono}.
 Apply Theorem~\ref{thm:sinks}(iii).
 \end{proof}
 
 \begin{theorem}\label{thm:equiv}
 The following are equivalent.
 \begin{enumerate}
-\item There are infinitely many windows \(X\) on which undirected gold is disconnected.
+\item There are arbitrarily large integer windows \(X\) on which undirected gold is disconnected.
 \item There are infinitely many \(2\)-power-door primes.
 \item There are infinitely many Mersenne primes, or infinitely many Fermat primes.
 \end{enumerate}
@@ -339,20 +355,24 @@ For each \(M\in\pow\) with \(M\ge 7\), Theorem~\ref{thm:octave}(c) gives disconn
 
 \((1)\Rightarrow(2)\).
 Suppose \(\pow\) is finite.
-By Theorem~\ref{thm:bridge}, applied to the finitely many pairs from \(\pow\) and using \eqref{eq:mono}, there is \(X_0\ge\max_{M\in\pow}\omega(M)\) such that all elements of \(\pow\) lie in one component of \(G_{X_0}\).
+By Theorem~\ref{thm:bridge}, applied to the finitely many pairs from \(\pow\) and using \eqref{eq:mono}, there is \(X_0\ge\max_{M\in\pow}\omega(M)\) such that all elements of \(\pow\) lie in one component of \(\Gamma_{X_0}\).
 For every \(X\ge X_0\) we have \(D_X=\pow\), and these primes remain in one component by \eqref{eq:mono}.
-By Theorem~\ref{thm:sinks}(iii), \(G_X\) is connected for every \(X\ge X_0\), so only finitely many windows are disconnected.
+By Theorem~\ref{thm:sinks}(iii), \(\Gamma_X\) is connected for every \(X\ge X_0\), so only finitely many windows are disconnected.
 
 \((2)\Leftrightarrow(3)\) is the classification of \(2\)-power doors as Mersenne primes with odd exponent and Fermat primes greater than \(3\).
 \end{proof}
 
 Fermat primes are believed finite (five are known, the largest \(65537\)), and the infinitude of Mersenne primes is open; so Theorem~\ref{thm:equiv} identifies the obstruction rather than settling item~(1).
-Two features are new relative to the earlier proof of \((1)\Rightarrow(2)\): the argument no longer speaks of a sink being ``absorbed'' informally, but uses the exact criterion of Theorem~\ref{thm:sinks}; and the direction \((2)\Rightarrow(1)\) produces intervals, so a disconnected window is never an isolated event.
+The forward construction supplies an interval of disconnected windows for every new sink. The converse uses a single finite window joining all sinks when their set is finite.
 
-\begin{remark}[Heuristic]\label{rem:lpw}
-The Lenstra--Pomerance--Wagstaff heuristic~\cite{Wagstaff} predicts about \(e^{\gamma}\log_2 x\) Mersenne prime exponents up to \(x\), hence infinitely many, and by Theorem~\ref{thm:equiv} infinitely many disconnected windows.
-Near \(X\approx 2^{p}\) an octave is disconnected only if \(p\) is a Mersenne exponent, which is expected with probability of order \(e^{\gamma}/(p\log 2)\); if the reconnection lengths \(\alpha(M)/\omega(M)\) are typically bounded, the disconnected windows would have logarithmic density zero yet be infinite in number.
-This is a labelled heuristic; the bound on \(\alpha(M)/\omega(M)\) is not proved, and nothing here depends on it.
+\begin{remark}[Isolation and reconnection]\label{rem:lpw}
+For \(M\in\pow\setminus\{5\}\), define
+\[
+\beta(M)=\min\{X\ge11: M\text{ and }5\text{ lie in the same component of }\Gamma_X\}.
+\]
+Theorem~\ref{thm:bridge} makes \(\beta(M)\) finite, and \(\alpha(M)\le\beta(M)\).
+At \(\alpha(M)\) the sink first acquires an incoming edge; it may still lie in a separate component. The two times coincide for \(M_{31}\), as shown below, but equality is not assumed in general.
+The Lenstra--Pomerance--Wagstaff heuristic~\cite{Wagstaff} predicts infinitely many Mersenne primes, hence, through Theorem~\ref{thm:equiv}, arbitrarily large disconnected windows. No density assertion is made here: that would require further control of sink arrivals and their connection times \(\beta(M)\), including any contribution from Fermat primes.
 \end{remark}
 
 \section{\texorpdfstring{\(M_{31}\)}{M31}, exactly}\label{sec:m31}
@@ -369,9 +389,9 @@ The hire time of \(r_0\) is
 \[
 \omega(r_0)=14r_0+1=1\,382\,979\,468\,683,
 \]
-the least prime among the numbers \(tr_0\mp1\) with \(t\) even and \(\equiv 2,4\pmod 6\) respectively.
-An owner \(w\) of \(M_{31}\) can be hired only at \(X\ge 2w-1\) (Corollary~\ref{cor:consequences}(b)), so the only owners that can be hired before \(\omega(r_0)\) satisfy \(2w-1\le 1\,382\,979\,468\,683\).
-There are exactly thirteen:
+the least prime among \(tr_0+1\) for \(t\equiv2\pmod6\) and \(tr_0-1\) for \(t\equiv4\pmod6\), since \(r_0\equiv2\pmod3\).
+An owner \(w\) of \(M_{31}\) can be hired only at \(X\ge 2w-1\) (Corollary~\ref{cor:consequences}(b)), so the only owners that can be hired at or before \(\omega(r_0)\) satisfy \(2w-1\le 1\,382\,979\,468\,683\).
+Exactly thirteen owners satisfy this necessary size bound:
 
 \begin{table}[ht]
 \centering\small
@@ -380,21 +400,21 @@ There are exactly thirteen:
 \(t\) & owner \(w=tM_{31}\mp1\) & door \(m_0(w)=tM_{31}\) & hire time \(\omega(w)\)\\
 \midrule
 46  & 98\,784\,247\,763  & \(2\cdot23\cdot M_{31}\)     & 1\,382\,979\,468\,683 \\
-136 & 292\,057\,775\,993 & \(2^3\cdot17\cdot M_{31}\)   & \(>1.383\cdot10^{12}\)\\
-140 & 300\,647\,710\,579 & \(2^2\cdot5\cdot7\cdot M_{31}\) & \(>1.383\cdot10^{12}\)\\
+136 & 292\,057\,775\,993 & \(2^3\cdot17\cdot M_{31}\)   & \(>\omega(r_0)\)\\
+140 & 300\,647\,710\,579 & \(2^2\cdot5\cdot7\cdot M_{31}\) & \(>\omega(r_0)\)\\
 146 & 313\,532\,612\,461 & \(2\cdot73\cdot M_{31}\)     & \textbf{627\,065\,224\,921} \\
-184 & 395\,136\,991\,049 & \(2^3\cdot23\cdot M_{31}\)   & \(>1.383\cdot10^{12}\)\\
+184 & 395\,136\,991\,049 & \(2^3\cdot23\cdot M_{31}\)   & \(>\omega(r_0)\)\\
 196 & 420\,906\,794\,813 & \(2^2\cdot7^2\cdot M_{31}\)  & 841\,813\,589\,627 \\
-220 & 472\,446\,402\,341 & \(2^2\cdot5\cdot11\cdot M_{31}\) & \(>1.383\cdot10^{12}\)\\
-226 & 485\,331\,304\,223 & \(2\cdot113\cdot M_{31}\)    & \(>1.383\cdot10^{12}\)\\
-238 & 511\,101\,107\,987 & \(2\cdot7\cdot17\cdot M_{31}\) & \(>1.383\cdot10^{12}\)\\
-242 & 519\,691\,042\,573 & \(2\cdot11^2\cdot M_{31}\)   & \(>1.383\cdot10^{12}\)\\
-272 & 584\,115\,551\,983 & \(2^4\cdot17\cdot M_{31}\)   & \(>1.383\cdot10^{12}\)\\
-280 & 601\,295\,421\,161 & \(2^3\cdot5\cdot7\cdot M_{31}\) & \(>1.383\cdot10^{12}\)\\
-296 & 635\,655\,159\,511 & \(2^3\cdot37\cdot M_{31}\)   & \(>1.383\cdot10^{12}\)\\
+220 & 472\,446\,402\,341 & \(2^2\cdot5\cdot11\cdot M_{31}\) & \(>\omega(r_0)\)\\
+226 & 485\,331\,304\,223 & \(2\cdot113\cdot M_{31}\)    & \(>\omega(r_0)\)\\
+238 & 511\,101\,107\,987 & \(2\cdot7\cdot17\cdot M_{31}\) & \(>\omega(r_0)\)\\
+242 & 519\,691\,042\,573 & \(2\cdot11^2\cdot M_{31}\)   & \(>\omega(r_0)\)\\
+272 & 584\,115\,551\,983 & \(2^4\cdot17\cdot M_{31}\)   & \(>\omega(r_0)\)\\
+280 & 601\,295\,421\,161 & \(2^3\cdot5\cdot7\cdot M_{31}\) & \(>\omega(r_0)\)\\
+296 & 635\,655\,159\,511 & \(2^3\cdot37\cdot M_{31}\)   & \(>\omega(r_0)\)\\
 \bottomrule
 \end{tabular}
-\caption{Owners \(w\) of \(M_{31}\) with \(2w-1\le\omega(r_0)\). The entry \(>1.383\cdot 10^{12}\) means no prime owner of \(w\) exists up to \(\omega(r_0)\).}
+\caption{Owners \(w\) of \(M_{31}\) with \(2w-1\le\omega(r_0)\). The entry \(>\omega(r_0)\) means no prime owner of \(w\) exists up to \(\omega(r_0)\).}
 \label{tab:owners}
 \end{table}
 
@@ -409,8 +429,8 @@ The door of \(w\) is \(2\cdot73\cdot M_{31}\), so at \(X_1\) there are arcs \(w\
 \]
 
 \begin{theorem}[The \(M_{31}\) stretch]\label{thm:m31}
-Assume that \(G_{X^*}\) is connected for \(X^*=92\,274\,421\) (hire-graph note, machine-checked, not Lean).
-Then for every \(X\) with \(X^*\le X\le 2M_{61}-2=2^{62}-4\), the gold graph \(G_X\) is disconnected if and only if
+Assume that \(\Gamma_{X^*}\) is connected for \(X^*=92\,274\,421\) (hire-graph note, machine-checked, not Lean).
+Then for every \(X\) with \(X^*\le X\le 2M_{61}-2=2^{62}-4\), the gold graph \(\Gamma_X\) is disconnected if and only if
 \[
 98\,784\,247\,763\ =\ \omega(M_{31})\ \le\ X\ \le\ \alpha(M_{31})-1\ =\ 627\,065\,224\,920 .
 \]
@@ -418,12 +438,19 @@ Then for every \(X\) with \(X^*\le X\le 2M_{61}-2=2^{62}-4\), the gold graph \(G
 \begin{proof}
 \emph{Which sinks occur.}
 If \(M\in\pow\) is in \(S_X\) then \(M\le (X+1)/2<M_{61}\) when \(X\le 2M_{61}-2\).
-The \(2\)-power doors below \(M_{61}\) are the Mersenne primes with exponent \(\le 31\) (odd exponents \(3,5,7,13,17,19,31\)) and the Fermat primes \(5,17,257,65537\) (\(F_5=641\cdot6700417\) is composite and \(F_6>M_{61}\)).
+For a Mersenne prime below \(M_{61}\), the exponent is a prime less than \(61\). The exponents \(3,5,7,13,17,19,31\) give primes; the other odd prime exponents are excluded by the following proper divisors:
+\[
+\begin{array}{c|rrrrrrrrr}
+p&11&23&29&37&41&43&47&53&59\\\hline
+d\mid 2^p-1&23&47&233&223&13367&431&2351&6361&179951
+\end{array}
+\]
+The Fermat primes below \(M_{61}\), excluding \(3\), are \(5,17,257,65537\): \(F_5=641\cdot6700417\) is composite and \(F_6>M_{61}\).
 So \(\pow\cap[1,M_{61})=\{5,7,17,31,127,257,8191,65537,131071,524287,M_{31}\}\), and all except \(M_{31}\) have \(\omega\le 1\,834\,993<X^*\) (Table~\ref{tab:octaves}).
 Hence \(D_X=D_{X^*}\) for \(X^*\le X<\omega(M_{31})\), and \(D_X=D_{X^*}\cup\{M_{31}\}\) for \(\omega(M_{31})\le X\le 2M_{61}-2\).
 
 \emph{Before \(\omega(M_{31})\).}
-\(D_{X^*}\) lies in one component of \(G_{X^*}\) (connected), hence of \(G_X\) by \eqref{eq:mono}; Theorem~\ref{thm:stretch} gives connectedness on \([X^*,\omega(M_{31})-1]\).
+\(D_{X^*}\) lies in one component of \(\Gamma_{X^*}\) (connected), hence of \(\Gamma_X\) by \eqref{eq:mono}; Theorem~\ref{thm:stretch} gives connectedness on \([X^*,\omega(M_{31})-1]\).
 
 \emph{On \([\omega(M_{31}),X_1-1]\).}
 By Theorem~\ref{thm:octave}(b), \(M_{31}\) is isolated and gold is disconnected, provided \(\alpha(M_{31})=X_1\).
@@ -436,14 +463,14 @@ Thus \(D_{X_1}\) is in one component, and by \eqref{eq:mono} it stays so on \([X
 
 \begin{remark}[The old bridge owner]\label{rem:v}
 The previous version certified \(v=300\,647\,710\,579=140M_{31}-1\), with \(m_0(v)=2^2\cdot5\cdot7\cdot M_{31}\), as the least common owner of \(5\) and \(M_{31}\) and noted that a bridge \emph{owner} is not a bridge \emph{vertex}.
-Table~\ref{tab:owners} settles this: \(v\) has no owner up to \(1.383\cdot 10^{12}\), far later than the actual reconnection \(X_1\approx6.27\cdot10^{11}\).
-The reconnection occurs through a different owner, one whose door has no factor \(5\); \(M_{31}\) reaches \(5\) only through \(73\to37\to19\to5\).
+Table~\ref{tab:owners} settles this: \(v\) has no owner up to \(\omega(r_0)=1\,382\,979\,468\,683\), far later than the actual reconnection \(X_1\approx6.27\cdot10^{11}\).
+The reconnection occurs through a different owner, one whose door has no factor \(5\); \(M_{31}\) reaches \(5\) along \(73\to37\to19\to5\).
 It also confirms that the ``first direct \(5\)--\(M_{31}\) bridge'' is not the first connecting vertex.
 \end{remark}
 
 \begin{remark}[Cost]
 The earlier version called a full component check at these scales ``past home computing''.
-The exact answer above needs only Corollary~\ref{cor:owners}'s parametrisation (about \(650\) candidates \(tM_{31}\mp1\) with \(t\le 322\)) and a few dozen primality tests of numbers below \(2\cdot10^{12}\); see \texttt{hire\_checks.py}, part~B.
+The exact answer above needs only Lemma~\ref{lem:twoclass}'s parametrisation (exactly \(108\) admissible candidates with \(t\le322\)) followed by bounded owner searches for the thirteen primes found. All these searches use primality tests of numbers below \(2\cdot10^{12}\); see \texttt{hire\_checks.py}, part~B.
 The reason is Theorem~\ref{thm:sinks}: connectivity is decided by the sinks, so no graph rebuild is required.
 \end{remark}
 
@@ -452,20 +479,69 @@ The reason is Theorem~\ref{thm:sinks}: connectivity is decided by the sinks, so 
 \paragraph{Lean.}
 The Lean development (\path{Hire/GoldDisconnects.lean}) previously checked the single-window isolation lemma, the descent lemma, and the implication from infinitely many \(2\)-power doors to infinitely many disconnected windows; door closure was not checked, so the converse half of Theorem~\ref{thm:equiv} waited on it.
 The results new in this revision (Theorem~\ref{thm:sinks}, Theorem~\ref{thm:octave} in its interval form, Theorem~\ref{thm:stretch}, Theorem~\ref{thm:m31}) are not formalised.
-The computed data (Tables~\ref{tab:octaves} and~\ref{tab:owners}, the value \(X_1\)) are certificates, not Lean theorems.
+The computed data (Tables~\ref{tab:octaves} and~\ref{tab:owners}, the value \(X_1\)) are results of finite deterministic calculations, not Lean theorems or separately supplied primality certificates.
 
 \paragraph{Reproducibility.}
 \texttt{hire\_checks.py} (Python~3, \texttt{sympy}) performs two tasks.
 Part~A replays all windows \(X\le L\) (default \(10^6\); \(10^7\) was used for the statements above) and checks Theorem~\ref{thm:sinks}(iii) at each window and disconnectedness on each interval of Table~\ref{tab:octaves} up to \(L\).
 Part~B recomputes \(r_0\), \(\omega(r_0)\), the thirteen owners, their hire times, \(X_1\), and the chain \(73\to37\to19\to5\).
 Primality of numbers below \(2^{64}\) is decided by \texttt{sympy.isprime}, which is deterministic in that range.
+The precise finite search behind Table~\ref{tab:owners} is as follows. For each admissible \(j\ge1\), in increasing order, test \(2jQ-\chit(j)\chit(Q)\); these candidates increase strictly, so the first prime is \(\omega(Q)\).
+Set \(B=\omega(r_0)\), enumerate all owners \(w\) of \(M_{31}\) with \(w\le(B+1)/2\), and for each test every admissible owner candidate at most \(B\).
+Record its first prime, or \(>B\) if there is none. Taking the minimum of the recorded finite times gives \(X_1\).
+These bounded searches verify the numerical input to Theorem~\ref{thm:m31}; they do not independently verify connectivity at \(X^*\).
+The archived script is \path{analysis/hire_rate/hire_checks.py} at commit \texttt{855964e90c4bb3eb92392b1b2ba585be9fe2f0ef} of \url{https://github.com/hasjack/nm-notebook}, git blob \texttt{6ce1ebd1977e6d7c11211b4c4f28bf70e980f6e1}.
+From the repository root, with assertions enabled, the run used for the statements above was
+\begin{center}
+\texttt{python3 analysis/hire\_rate/hire\_checks.py 10000000}
+\end{center}
+under Python~3.12.7 and SymPy~1.14.0.
+It exited with status~0 and printed the transcript below.
+In that transcript, ``Theorem 4'' is the script's name for the component-count check, Theorem~\ref{thm:sinks}(iii).
+
+{\footnotesize
+\begin{verbatim}
+Part A: windows checked = 664577, violations of Theorem 4 = 0
+  M=       7  r0=      13  [r0, 2r0-2]=[13, 24]  checked to 24: True
+  M=      17  r0=      67  [r0, 2r0-2]=[67, 132]  checked to 132: True
+  M=      31  r0=      61  [r0, 2r0-2]=[61, 120]  checked to 120: True
+  M=     127  r0=     509  [r0, 2r0-2]=[509, 1016]  checked to 1016: True
+  M=     257  r0=    4111  [r0, 2r0-2]=[4111, 8220]  checked to 8220: True
+  M=    8191  r0=   16381  [r0, 2r0-2]=[16381, 32760]  checked to 32760: True
+  M=   65537  r0=  262147  [r0, 2r0-2]=[262147, 524292]  checked to 524292: True
+  M=  131071  r0= 1834993  [r0, 2r0-2]=[1834993, 3669984]  checked to 3669984: True
+  M=  524287  r0= 1048573  [r0, 2r0-2]=[1048573, 2097144]  checked to 2097144: True
+Part B: r0 = 98784247763  m0(r0) = {2: 1, 23: 1, 2147483647: 1}  t = 46
+  hire time of r0: 1382979468683 = 14 * r0 + 1
+  owners w of M31 with 2w-1 <= 1382979468683: 13
+    w=    98784247763  door={2: 1, 23: 1, 2147483647: 1}  hire=1382979468683
+    w=   292057775993  door={2: 3, 17: 1, 2147483647: 1}  hire=None
+    w=   300647710579  door={2: 2, 5: 1, 7: 1, 2147483647: 1}  hire=None
+    w=   313532612461  door={2: 1, 73: 1, 2147483647: 1}  hire=627065224921
+    w=   395136991049  door={2: 3, 23: 1, 2147483647: 1}  hire=None
+    w=   420906794813  door={2: 2, 7: 2, 2147483647: 1}  hire=841813589627
+    w=   472446402341  door={2: 2, 5: 1, 11: 1, 2147483647: 1}  hire=None
+    w=   485331304223  door={2: 1, 113: 1, 2147483647: 1}  hire=None
+    w=   511101107987  door={2: 1, 7: 1, 17: 1, 2147483647: 1}  hire=None
+    w=   519691042573  door={2: 1, 11: 2, 2147483647: 1}  hire=None
+    w=   584115551983  door={2: 4, 17: 1, 2147483647: 1}  hire=None
+    w=   601295421161  door={2: 3, 5: 1, 7: 1, 2147483647: 1}  hire=None
+    w=   635655159511  door={2: 3, 37: 1, 2147483647: 1}  hire=None
+  first live arc into M31 at X1 = 627065224921  (w = 313532612461 , 2w-1 = 627065224921 )
+  mainland chain from 73: 73 -> 37 -> 19 -> 5
+\end{verbatim}
+}
+
 
 \paragraph{Changes from the earlier version.}
 (1) Lemma~\ref{lem:size} now records \(q\le (p+1)/2\); the previous ``\(<(p+1)/2\)'' was false for \(m_0(p)=p+1\).
 (2) The single first-owner window became an octave (Theorem~\ref{thm:octave}).
 (3) The informal ``absorbed into the infinite component'' argument became Theorem~\ref{thm:sinks} and Theorem~\ref{thm:stretch}.
 (4) The \(M_{31}\) data became an exact statement about all \(X\) up to \(2M_{61}-2\), and the bridge owner \(v\) is shown not to be the bridge.
-Everything else in the earlier note is retained; the statement of the equivalence is unchanged.
+(5) Windows are explicitly integer-valued, and the equivalence is stated using arbitrarily large cutoffs.
+(6) The Linnik bound is an existence statement for chosen bridge primes, with its reference corrected.
+(7) First attachment \(\alpha\) is distinguished from connection to \(5\), \(\beta\); the unsupported density claim is removed.
+(8) The owner-search signs, exact table cutoffs and candidate count are corrected, and the exclusions of intermediate Mersenne exponents are explicit.
 
 \begin{thebibliography}{9}
 
@@ -481,7 +557,7 @@ Beweis des Satzes, dass jede unbegrenzte arithmetische Progression, deren erstes
 
 \bibitem{Xylouris}
 T.~Xylouris,
-On Linnik's constant,
+On the least prime in an arithmetic progression and estimates for the zeros of Dirichlet \(L\)-functions,
 \emph{Acta Arith.} \textbf{150} (2011), 65--91.
 
 \bibitem{Wagstaff}
