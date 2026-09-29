@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function PaperPage() {
   return (
     <main className="page paper-page">
@@ -28,7 +30,12 @@ export function PaperPage() {
         )=1 fails for some finite <em>X</em>. Every odd prime other than 3 lies in the infinite gold
         component of 5: a Dirichlet bridge in one of two classes modulo{" "}
         15<em>q</em> yields a common owner of 5 and <em>q</em>. The same Dirichlet counting on the two hire classes modulo 6<em>Q</em> gives infinitely many primes hiring any fixed odd <em>Q</em> not divisible by 3. Whether gold
-        is disconnected for infinitely many finite windows remains open.
+        is disconnected for infinitely many finite windows is left open in this
+        note.{" "}
+        <Link to="/notes/when-gold-disconnects">When gold disconnects</Link>{" "}
+        answers it: arbitrarily large disconnected windows if and only if there
+        are infinitely many Mersenne or Fermat primes, and for <em>M</em>
+        <sub>31</sub> the window is 98,784,247,763 ≤ <em>X</em> ≤ 627,065,224,920.
       </p>
 
       <div className="paper-viewer">

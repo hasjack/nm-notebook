@@ -186,7 +186,7 @@ export function IslandsPage() {
       </p>
 
       <p className="lede" style={{ maxWidth: "42rem" }}>
-        Thin M₃₁ rail:{" "}
+        <em>M</em><sub>31</sub> window:{" "}
         <Link to="/corridor">Corridor</Link>
         {" · "}
         Notes: <Link to="/notes/hire-graph">The hire graph of the 3-free door</Link>

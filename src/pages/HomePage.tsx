@@ -30,6 +30,14 @@ export function HomePage() {
           undirected gold on the leaves is disconnected — visible on the
           computed windows through X = 200.
         </p>
+        <p>
+          <Link to="/notes/when-gold-disconnects">When gold disconnects</Link>{" "}
+          answers the infinitude question. Gold is disconnected for arbitrarily
+          large integer windows if and only if there are infinitely many
+          Mersenne or Fermat primes. For <em>M</em><sub>31</sub>, assuming
+          connectivity at <em>X</em><sup>*</sup> = 92,274,421, that holds for
+          98,784,247,763 ≤ <em>X</em> ≤ 627,065,224,920, up to 2<em>M</em><sub>61</sub> − 2.
+        </p>
         <p className="home-actions">
           <Link className="nav-link on" to="/hire">
             Introduction
@@ -37,6 +45,9 @@ export function HomePage() {
           <a className="nav-link" href="/paper/hire-graph-of-the-3-free-door.pdf">
             PDF
           </a>
+          <Link className="nav-link" to="/notes/when-gold-disconnects">
+            Sequel
+          </Link>
           <a
             className="nav-link"
             href="https://github.com/hasjack/nm-notebook/tree/master/lean"

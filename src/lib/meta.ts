@@ -17,7 +17,11 @@ const pages: Record<string, PageMeta> = {
   },
   "/basins": { title: "Basins" },
   "/islands": { title: "Islands" },
-  "/corridor": { title: "Corridor" },
+  "/corridor": {
+    title: "Corridor",
+    description:
+      "M31 is gold-disconnected from 98,784,247,763 through 627,065,224,920, then reconnects.",
+  },
   "/microscope": { title: "Microscope" },
   "/certificates": { title: "Certificates" },
   "/hire-spectrum": { title: "Spectrum" },
@@ -28,7 +32,8 @@ const pages: Record<string, PageMeta> = {
   },
   "/notes/hire-graph": {
     title: "The hire graph of the 3-free door",
-    description: "Paper 1: doors, gold, the Dirichlet bridge into comp(5).",
+    description:
+      "Paper 1: doors, gold, the Dirichlet bridge into comp(5). The sequel answers the infinitude question.",
   },
   "/notes/when-gold-disconnects": {
     title: "When gold disconnects",

@@ -174,7 +174,7 @@ export function HirePage() {
           Can a door be made from <strong>2 alone</strong>? Yes — that is a
           sink. Look at 5 → 4 and 7 → 8 in the table. Can it be 2 and 5 but not
           3? Yes — that is a longer walk or a fork.{" "}
-          <Link to="/basins">Basins</Link> draws those drains; <Link to="/islands">Islands</Link> shows the last join; <Link to="/corridor">Corridor</Link> holds the thin M₃₁ rail; <Link to="/microscope">Microscope</Link> / <Link to="/certificates">Certificates</Link> cover the record sink and owner-floor receipts; <Link to="/hire-lab">Hire rate</Link> and <Link to="/hire-spectrum">Spectrum</Link> measure growth once doors open.
+          <Link to="/basins">Basins</Link> draws those drains; <Link to="/islands">Islands</Link> shows the last join; <Link to="/corridor">Corridor</Link> holds the <em>M</em><sub>31</sub> window; <Link to="/microscope">Microscope</Link> / <Link to="/certificates">Certificates</Link> cover the record sink and owner-floor receipts; <Link to="/hire-lab">Hire rate</Link> and <Link to="/hire-spectrum">Spectrum</Link> measure growth once doors open.
         </p>
       </section>
 
@@ -233,7 +233,7 @@ export function HirePage() {
           last island at <em>X</em>
           <sup>*</sup>.{" "}
           <Link className="beat-link" to="/corridor">Corridor →</Link>{" "}
-          thin M₃₁ certificates.{" "}
+          the <em>M</em><sub>31</sub> window.{" "}
           <Link className="beat-link" to="/hire-spectrum">Spectrum →</Link>{" "}
           Hire-sun recipes and lab dials.{" "}
           <Link className="beat-link" to="/hire-lab">Hire rate →</Link>{" "}

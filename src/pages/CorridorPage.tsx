@@ -1,16 +1,13 @@
 import { Link } from "react-router-dom";
 
-/** Thin M₃₁ corridor integers — do not invent. */
-const X_STAR = 92274421; // first owner of BRIDGE; m0(X*) = 2 · BRIDGE
-const M31 = (1 << 31) - 1; // 2147483647
-const M31_FIRST_OWNER = 98784247763; // thin hunt, class B; fat not run
-const M31_FIRST_BRIDGE = 300647710579; // thin: first direct 5–M31 bridge owner, class A
-// m0(v)=2²·5·7·M31; v/r0 ≈ 3.04
-const M31_V_HIRE = 24051816846319; // thin: τ(v), first owner of v; live arcs at X≥τ(v)
-// floor was 2v-1≈6.01e11; actual ~40× larger
-const M31_MIXED = 313532612461; // thin: earliest mixed M31 connector (class A)
-const M31_MIXED_HIRE = 627065224921; // τ(p*)=2p*-1; new corridor upper marker
-// vs τ(v)/τ(p*)≈38.36; fat not run
+/** M31 window from When gold disconnects. Assumes hire-graph connectivity at X*. */
+const X_STAR = 92274421;
+const M31 = 2 ** 31 - 1; // 2147483647
+const R0 = 98784247763; // ω(M31) = 46·M31 + 1
+const X1 = 627065224921; // α(M31). Disconnected through X1 − 1.
+const W = 313532612461; // 146·M31 − 1; door 2·73·M31
+const OMEGA_R0 = 1382979468683; // ω(r0) = 14·r0 + 1
+const V = 300647710579; // earlier direct 5–M31 owner; no owner up to ω(r0)
 
 function fmt(n: number): string {
   return n.toLocaleString("en-US");
@@ -42,30 +39,32 @@ function toSup(e: number): string {
 }
 
 export function CorridorPage() {
+  const floor = 2 * M31 - 1;
   return (
     <main className="page corridor-page lab-note-page">
       <h1>Corridor</h1>
       <p className="lede">
-        Thin M₃₁ number rail — first owners, mixed connector, and seating times.
-        The swan spotlight lives on <Link to="/islands">Islands</Link>; fat not
-        run.
+        The <em>M</em><sub>31</sub> window. Islands is the join at <em>X</em>
+        <sup>*</sup>; this rail is what happens after that prime enters.{" "}
+        <Link to="/notes/when-gold-disconnects">When gold disconnects</Link>.
       </p>
 
       <p className="islands-bernard">
-        Gold joins at 92 million — M₃₁ first owner at 98.8 billion — and a mixed
-        connector seats by ≈ 6.27·10¹¹ (≈ 38× sooner than the direct bridge’s
-        τ(v)). Thin only; fat not run.
+        Gold joins at 92 million. <em>M</em><sub>31</sub> enters at {fmt(R0)}.
+        The stretch reconnects at {fmt(X1)}.
       </p>
 
       <div className="islands-panel corridor-panel">
         <div
           className="islands-corridor"
-          aria-label="M31 island corridor, thin markers"
+          aria-label="M31 window"
         >
           <div className="islands-corridor-head">
-            <span className="islands-corridor-title">M₃₁ corridor · thin</span>
+            <span className="islands-corridor-title">
+              <em>M</em><sub>31</sub> window
+            </span>
             <span className="islands-corridor-note">
-              upper marker τ(p*) · fat not run
+              reconnects at <em>X</em><sub>1</sub>
             </span>
           </div>
           <div className="islands-corridor-rail" role="list">
@@ -75,31 +74,34 @@ export function CorridorPage() {
                   id: "xstar",
                   label: "X*",
                   x: X_STAR,
-                  blurb: "last island joins mainland",
+                  blurb: "hire-graph join, assumed connected",
+                  mark: false,
                 },
                 {
                   id: "r0",
                   label: "r₀",
-                  x: M31_FIRST_OWNER,
-                  blurb: "M₃₁ first owner — island can open",
+                  x: R0,
+                  blurb: "M31 enters; disconnection starts",
+                  mark: false,
                 },
                 {
-                  id: "tp",
-                  label: "τ(p*)",
-                  x: M31_MIXED_HIRE,
-                  blurb: "mixed connector seats — current upper marker",
+                  id: "x1",
+                  label: "X₁",
+                  x: X1,
+                  blurb: "reconnection through w",
                   mark: true,
                 },
                 {
-                  id: "tv",
-                  label: "τ(v)",
-                  x: M31_V_HIRE,
-                  blurb: "direct bridge ticket finally sits",
+                  id: "omega",
+                  label: "ω(r₀)",
+                  x: OMEGA_R0,
+                  blurb: "v still has no owner",
+                  mark: false,
                 },
               ] as const
             ).map((tick) => {
               const lo = Math.log10(X_STAR);
-              const hi = Math.log10(M31_V_HIRE);
+              const hi = Math.log10(OMEGA_R0);
               const pct = ((Math.log10(tick.x) - lo) / (hi - lo)) * 100;
               return (
                 <div
@@ -111,7 +113,7 @@ export function CorridorPage() {
                       : "islands-corridor-tick"
                   }
                   style={{ left: `${pct}%` }}
-                  title={`${tick.label} = ${fmt(tick.x)} — ${tick.blurb}`}
+                  title={`${tick.label} = ${fmt(tick.x)}. ${tick.blurb}`}
                 >
                   <span className="islands-corridor-dot" />
                   <span className="islands-corridor-label">{tick.label}</span>
@@ -122,40 +124,39 @@ export function CorridorPage() {
             <div className="islands-corridor-line" aria-hidden="true" />
           </div>
           <p className="islands-corridor-caption">
-            Log scale from X* to τ(v). Mixed seat τ(p*) = {fmt(M31_MIXED_HIRE)}{" "}
-            via p* = {fmt(M31_MIXED)}; direct τ(v) is ≈38× later. Island open
-            window under thin markers: [r₀, τ(p*)].
+            Log scale from <em>X</em><sup>*</sup> to <em>ω</em>(<em>r</em><sub>0</sub>).
+            Disconnected on [{fmt(R0)}, {fmt(X1 - 1)}]. The chain through{" "}
+            <em>w</em> = {fmt(W)} goes live at <em>X</em><sub>1</sub> = {fmt(X1)}.
           </p>
         </div>
       </div>
 
       <p className="islands-lab-caption">
-        Lag stack (thin): r₀ ≈ 23× the door floor; mixed connector p* seats at
-        τ(p*) ≈ 6.27·10¹¹ (hire floor 2p* − 1); direct bridge owner v seats much
-        later at τ(v) ≈ 2.41·10¹³ (τ(v)/τ(p*) ≈ 38). Current upper marker for the
-        island corridor is τ(p*), not τ(v). Fat not run — a full component check
-        could still find an earlier join.
+        Assuming connectivity at <em>X</em><sup>*</sup> = {fmt(X_STAR)}, gold is
+        disconnected for <em>X</em><sup>*</sup> ≤ <em>X</em> ≤ 2<em>M</em><sub>61</sub> − 2
+        precisely when {fmt(R0)} ≤ <em>X</em> ≤ {fmt(X1 - 1)}.{" "}
+        <em>r</em><sub>0</sub> = <em>ω</em>(<em>M</em><sub>31</sub>) has door 2·23·<em>M</em><sub>31</sub>.
+        Reconnection is through <em>w</em> = {fmt(W)}, door 2·73·<em>M</em><sub>31</sub>,
+        and the chain 73 → 37 → 19 → 5.
       </p>
 
       <p className="figure-caption islands-caption islands-cold-body">
-        Witness at <em>X</em>
-        <sup>*</sup>; machine check through 2.2·10⁹. M₃₁ = 2³¹ − 1 cannot enter
-        S before 2M − 1 ≈ 4.29·10⁹ (proof). Thin: first owner{" "}
-        {fmt(M31_FIRST_OWNER)}; first direct 5–M₃₁ bridge owner{" "}
-        {fmt(M31_FIRST_BRIDGE)} (class A, m₀ = 2²·5·7·M₃₁, ratio ≈ 3.04). First
-        owner of v is τ(v) = {fmt(M31_V_HIRE)}. Earlier mixed connector p* ={" "}
-        {fmt(M31_MIXED)} seats at τ(p*) = {fmt(M31_MIXED_HIRE)} ≈ 6.27·10¹¹
-        (class A, m₀/M = 2·73) — that is the current corridor upper marker
-        (τ(v)/τ(p*) ≈ 38). Fat not run. M = {fmt(M31)}.
+        Machine check of the hire-graph note through 2.2·10<sup>9</sup>.{" "}
+        <em>M</em><sub>31</sub> = {fmt(M31)} cannot enter <em>S</em> before{" "}
+        2<em>M</em> − 1 = {fmt(floor)}. The earlier bridge owner <em>v</em> = {fmt(V)}{" "}
+        has door 2<sup>2</sup>·5·7·<em>M</em><sub>31</sub> and no owner up to{" "}
+        <em>ω</em>(<em>r</em><sub>0</sub>) = {fmt(OMEGA_R0)}.
       </p>
-    
-      <aside className="lab-note-caveats" aria-label="Lab freeze / caveats">
+
+      <aside className="lab-note-caveats" aria-label="Scope">
         <p>
-          <strong>Lab freeze.</strong> Thin markers only; fat not run.{" "}
-          <em>C</em> unnamed. Papers 1–2 frozen.
+          This rail is the <em>M</em><sub>31</sub> stretch from the sequel, given{" "}
+          <em>X</em><sup>*</sup>.{" "}
+          <Link to="/notes/when-gold-disconnects">Note</Link>
+          {" · "}
+          <Link to="/islands">Islands</Link>.
         </p>
       </aside>
-
     </main>
   );
 }
