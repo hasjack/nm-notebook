@@ -5,6 +5,7 @@ Authors: Jack Pickett
 -/
 import Hire.GoldBridge
 import Hire.Graph
+import Hire.InfiniteHire
 import Mathlib.Data.Nat.Factors
 
 /-!
@@ -21,6 +22,7 @@ Toward
 * **Descent** (`gold_descent`)
 * **Sink reduction** (`sinks_eq_twoPowerDoors`, `gold_path_to_sink`,
   `goldConnected_iff_sinks_reachable`, `componentsEquivSinkClasses`)
+* **Bridge** (`owners_mono`, `goldReachable_mono`, `gold_bridge`)
 * **Package** (`infinite_goldDisconnected_of_infinite_twoPowerDoors`)
 -/
 
@@ -645,6 +647,116 @@ theorem goldDisconnected_firstOwner_of_twoPowerDoor_ge_twelve
     omega
   exact goldDisconnected_of_firstOwner_twoPowerDoor hM hodd h3 hdoor hfo
     (hired_five_of_eleven_le hr0) (by decide) (by omega)
+
+/-! ## Monotonicity and the finite bridge -/
+
+/-- Larger windows contain the smaller owner sets. -/
+theorem owners_mono {X Y : ℕ} (h : X ≤ Y) : owners X ⊆ owners Y :=
+  fun _p hp => ⟨hp.1, hp.2.1, hp.2.2.1, hp.2.2.2.1.trans h, hp.2.2.2.2⟩
+
+/-- A vertex hired in a window stays hired in every larger window. -/
+theorem hired_mono {X Y q : ℕ} (h : X ≤ Y) (hq : Hired (owners X) q) :
+    Hired (owners Y) q := by
+  cases hq with
+  | seed => exact .seed
+  | @ofDoor p _ hp hqP hne hd => exact .ofDoor (owners_mono h hp) hqP hne hd
+
+/-- A gold arc in a window remains a gold arc in every larger window. -/
+theorem goldArc_mono {X Y p q : ℕ} (h : X ≤ Y) (harc : GoldArc (owners X) p q) :
+    GoldArc (owners Y) p q :=
+  ⟨hired_mono h harc.1, hired_mono h harc.2.1, harc.2.2.1, harc.2.2.2.1,
+    harc.2.2.2.2.1, harc.2.2.2.2.2⟩
+
+/-- A gold edge in a window remains a gold edge in every larger window. -/
+theorem goldEdge_mono {X Y : ℕ} (h : X ≤ Y) {u v : HireVertex (owners X)}
+    (he : GoldEdge (owners X) u v) :
+    GoldEdge (owners Y) ⟨u.val, hired_mono h u.property⟩
+      ⟨v.val, hired_mono h v.property⟩ := by
+  rcases he with harc | harc
+  · exact Or.inl (goldArc_mono h harc)
+  · exact Or.inr (goldArc_mono h harc)
+
+/-- Undirected gold reachability persists in every larger window. -/
+theorem goldReachable_mono {X Y : ℕ} (hXY : X ≤ Y) {u v : HireVertex (owners X)}
+    (h : Relation.ReflTransGen (GoldEdge (owners X)) u v) :
+    Relation.ReflTransGen (GoldEdge (owners Y))
+      ⟨u.val, hired_mono hXY u.property⟩
+      ⟨v.val, hired_mono hXY v.property⟩ := by
+  induction h with
+  | refl => exact .refl
+  | tail _ hedge ih =>
+    exact ih.trans (Relation.ReflTransGen.single (goldEdge_mono hXY hedge))
+
+/-- If `5 * q` divides the door of a prime `r ≠ 3` and `q` is odd, then `10 * q - 1 ≤ r`. -/
+theorem ten_mul_sub_one_le_of_five_mul_dvd {q r : ℕ}
+    (hq : Odd q) (hr : r.Prime) (hrOdd : Odd r) (hr3 : r ≠ 3)
+    (hd : 5 * q ∣ m0 r) : 10 * q - 1 ≤ r := by
+  have hdiv := two_mul_dvd_m0 hr hrOdd hr3 ((by decide : Odd 5).mul hq) hd
+  have hpos : 0 < m0 r := by
+    have : 1 ≤ r := Nat.le_of_lt hr.one_lt
+    unfold m0; split_ifs <;> omega
+  have hle : 2 * (5 * q) ≤ m0 r := Nat.le_of_dvd hpos hdiv
+  have : 10 * q ≤ r + 1 := by
+    have h10 : 10 * q = 2 * (5 * q) := by ring
+    rw [h10]
+    exact hle.trans (m0_le_succ r)
+  omega
+
+/-- Two odd primes other than `3` lie in one gold component of every sufficiently
+large window. -/
+theorem gold_bridge {q1 q2 : ℕ}
+    (hq1 : q1.Prime) (ho1 : Odd q1) (h31 : q1 ≠ 3)
+    (hq2 : q2.Prime) (ho2 : Odd q2) (h32 : q2 ≠ 3) :
+    ∃ X, ∀ X', X ≤ X' →
+      ∃ (h1 : Hired (owners X') q1) (h2 : Hired (owners X') q2),
+        Relation.ReflTransGen (GoldEdge (owners X')) ⟨q1, h1⟩ ⟨q2, h2⟩ := by
+  by_cases hEq : q1 = q2
+  · subst hEq
+    obtain ⟨X, hX⟩ := eventually_hired q1 hq1 ho1 h31
+    refine ⟨X, fun X' hle => ?_⟩
+    have h := hired_mono hle hX
+    exact ⟨h, h, .refl⟩
+  · have hQ : 1 < q1 * q2 := by
+      have hmul : q1 * 1 < q1 * q2 := Nat.mul_lt_mul_of_pos_left hq2.one_lt hq1.pos
+      exact hq1.one_lt.trans (by simpa using hmul)
+    have hQ3 : ¬ 3 ∣ q1 * q2 := by
+      intro hd
+      rcases Nat.Prime.dvd_mul Nat.prime_three |>.mp hd with hd | hd
+      · exact h31 ((Nat.prime_dvd_prime_iff_eq Nat.prime_three hq1).mp hd).symm
+      · exact h32 ((Nat.prime_dvd_prime_iff_eq Nat.prime_three hq2).mp hd).symm
+    obtain ⟨r, _, hrP, _, hdvd⟩ :=
+      exists_prime_hire_gt (q1 * q2) hQ (ho1.mul ho2) hQ3 3
+    have hr2 : r ≠ 2 := by omega
+    have hr3 : r ≠ 3 := by omega
+    have hrOdd : Odd r := odd_of_prime_ne_two hrP hr2
+    have hr5 : 5 ≤ r := five_le_of_odd_prime_ne_three hrP hrOdd hr3
+    have hr_not3 : ¬ 3 ∣ r := not_three_dvd_of_prime_ne_three hrP hr3
+    obtain ⟨u, hru, huP, _, hudvd⟩ :=
+      exists_prime_hire_gt r hrP.one_lt hrOdd hr_not3 r
+    have hu2 : u ≠ 2 := by omega
+    have hu3 : u ≠ 3 := by omega
+    have huOdd : Odd u := odd_of_prime_ne_two huP hu2
+    have hu5 : 5 ≤ u := five_le_of_odd_prime_ne_three huP huOdd hu3
+    have huO : u ∈ owners u := ⟨huP, huOdd, hu3, le_rfl, hu5⟩
+    have hrO : r ∈ owners u := ⟨hrP, hrOdd, hr3, le_of_lt hru, hr5⟩
+    have hrH : Hired (owners u) r := Hired.ofDoor huO hrP hr3 hudvd
+    have hd1 : q1 ∣ m0 r := dvd_trans (Nat.dvd_mul_right q1 q2) hdvd
+    have hd2 : q2 ∣ m0 r := dvd_trans (Nat.dvd_mul_left q2 q1) hdvd
+    obtain ⟨hq1H, _⟩ := hired_of_dvd_m0 hrO hq1 ho1 h31 hd1
+    obtain ⟨hq2H, _⟩ := hired_of_dvd_m0 hrO hq2 ho2 h32 hd2
+    have hq12 : q1 ≠ 2 := fun h => by rw [h] at ho1; exact (by decide : ¬ Odd 2) ho1
+    have hq22 : q2 ≠ 2 := fun h => by rw [h] at ho2; exact (by decide : ¬ Odd 2) ho2
+    have hne1 : r ≠ q1 := fun heq => not_dvd_m0_self hrP.one_lt (heq.symm ▸ hd1)
+    have hne2 : r ≠ q2 := fun heq => not_dvd_m0_self hrP.one_lt (heq.symm ▸ hd2)
+    have harc1 : GoldArc (owners u) r q1 := ⟨hrH, hq1H, hr2, hq12, hd1, hne1⟩
+    have harc2 : GoldArc (owners u) r q2 := ⟨hrH, hq2H, hr2, hq22, hd2, hne2⟩
+    have hedge1 : GoldEdge (owners u) ⟨q1, hq1H⟩ ⟨r, hrH⟩ := Or.inr harc1
+    have hedge2 : GoldEdge (owners u) ⟨r, hrH⟩ ⟨q2, hq2H⟩ := Or.inl harc2
+    have hpath : Relation.ReflTransGen (GoldEdge (owners u)) ⟨q1, hq1H⟩ ⟨q2, hq2H⟩ :=
+      (Relation.ReflTransGen.single hedge1).trans (Relation.ReflTransGen.single hedge2)
+    refine ⟨u, fun X' hle => ?_⟩
+    have hmono := goldReachable_mono hle hpath
+    exact ⟨hired_mono hle hq1H, hired_mono hle hq2H, hmono⟩
 
 /-! ## Package -/
 

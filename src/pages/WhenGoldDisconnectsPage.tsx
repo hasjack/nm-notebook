@@ -32,9 +32,11 @@ export function WhenGoldDisconnectsPage() {
         <code>Hire/GoldDisconnects.lean</code> checks the size bound{" "}
         <code>2q ≤ p + 1</code>, door closure, descent to a 2-power door, and
         the sink reduction: the sinks are the 2-power doors hired in the window,
-        and gold is connected exactly when those sinks lie in one component. It
-        also checks the earlier single-window isolation lemmas and one
-        direction: infinitely many 2-power doors give infinitely many
+        and gold is connected exactly when those sinks lie in one component.
+        Monotonicity of windows and the finite bridge are checked: any two odd
+        primes other than 3 lie in one gold component of every sufficiently
+        large window. It also checks the earlier single-window isolation lemmas
+        and one direction: infinitely many 2-power doors give infinitely many
         disconnected windows. The converse of the equivalence is not formalised.
         The octave, the stretch, and the <em>M</em><sub>31</sub> theorem in this
         revision are not formalised. The tables and <em>X</em><sub>1</sub> are
@@ -76,6 +78,15 @@ export function WhenGoldDisconnectsPage() {
             </li>
             <li>
               <code>componentsEquivSinkClasses</code>
+            </li>
+            <li>
+              <code>owners_mono</code>
+            </li>
+            <li>
+              <code>goldReachable_mono</code>
+            </li>
+            <li>
+              <code>gold_bridge</code>
             </li>
             <li>
               <code>GoldArc_tgt_lt</code>
