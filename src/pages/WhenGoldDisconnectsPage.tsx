@@ -19,7 +19,7 @@ export function WhenGoldDisconnectsPage() {
         <iframe
           className="paper-frame"
           title="when-gold-disconnects.pdf"
-          src="/paper/when-gold-disconnects.pdf?v=1790500714#view=FitH"
+          src="/paper/when-gold-disconnects.pdf?v=1759140000#view=FitH"
         />
       </div>
 
