@@ -33,7 +33,7 @@ const pages: Record<string, PageMeta> = {
   "/notes/when-gold-disconnects": {
     title: "When gold disconnects",
     description:
-      "Gold is disconnected for infinitely many windows iff infinitely many Mersenne or Fermat primes.",
+      "Gold is disconnected for arbitrarily large windows iff infinitely many Mersenne or Fermat primes. Each 2-power door forces an octave of windows.",
   },
   "/notes/mid-gap-and-torus": {
     title: "A midpoint identity for the complementary torus order",
