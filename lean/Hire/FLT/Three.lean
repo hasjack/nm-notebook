@@ -894,7 +894,7 @@ theorem coordinate_cube_roots_conditions
   exact ⟨hr0, hs0, ht0, hst⟩
 
 /-- Construct another nonzero coprime cube solution.
-A strict decrease remains to be proved separately. -/
+The later `exists_smaller_cube_roots` theorem adds the strict decrease. -/
 theorem exists_new_coprime_cube_solution
     {a b c : ℤ}
     (hab : IsCoprime a b)
