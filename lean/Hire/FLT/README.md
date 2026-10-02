@@ -24,6 +24,7 @@ Final statements:
 - `GoldenRing.lean` contains the golden-ring construction, Euclidean/norm
   machinery, and unit normal forms used for exponent 5.
 - `Five.lean` contains the exponent-5 descent.
+- `FiveAudit.md` traces the two exponent-5 auxiliary descents by theorem name.
 
 ## Exponent 3
 
@@ -65,7 +66,8 @@ exceptional and parity-sensitive branches through two auxiliary descents:
   another solution of the same kind with smaller `Q.natAbs`.
 
 Those two well-founded descents rule out the auxiliary norm solutions needed by
-the remaining exponent-5 branches.
+the remaining exponent-5 branches. See `FiveAudit.md` for the entry,
+preservation, decrease, and closure lemmas.
 
 ## Audit notes
 
