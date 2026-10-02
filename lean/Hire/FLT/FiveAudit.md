@@ -84,11 +84,20 @@ Each field of the new structure is justified by a named lemma:
 - odd first coordinate: `descent_new_first_odd`
 - even second coordinate: `descent_new_second_even`
 - coefficient shape: `descent_coefficient_shape`
+- positivity: `B' = 2*d^2 > 0`, discharged in the constructor by
+  `positivity` from `0 < d`
 - norm equation: `descentNormFactor_identity`
 - fifth-power allocation: `descent_fifth_power_allocation`
 - allocation prerequisites: `descentNormFactor_coprime_coordinate`,
   `descentNormFactor_odd`, `five_not_dvd_descentNormFactor`, and
   `descentNormFactor_coprime_eighty`
+
+Five-freeness is not stored as a field of `FifthNormSolution`. It is derived
+from the structure fields when needed: `fifthNormSolution_descent` obtains it
+for the current solution via `fifthNormSolution_five_not_dvd_first`, then
+transfers it to the root coordinate with `sqrtFive_root_first_five_free`.
+Because the descent output is again a `FifthNormSolution`, the same derived
+five-free fact is available at the next step.
 
 ### Decrease
 
@@ -177,12 +186,20 @@ Each field of the new `HalfFifthNormSolution` is justified by:
 - odd first coordinate: `half_descent_new_norm_coordinates`
 - odd second coordinate: the square of the odd root coordinate `s`
 - coefficient shape: `half_descent_fifth_power_allocation`
+- positivity: `Q' = s^2 > 0`, discharged in the constructor by `positivity`
+  from `0 < s`
 - norm equation: `half_descent_new_norm_coordinates`, after rewriting with the
   allocated fifth power
 - 5-free and coprimality prerequisites:
   `halfFifthNormSolution_five_not_dvd_first`,
   `descentNormFactor_coprime_coordinate`, and
   `five_not_dvd_descentNormFactor`
+
+Five-freeness is likewise derived rather than stored for
+`HalfFifthNormSolution`. `halfFifthNormSolution_root_properties` derives
+`not (5 : Z) | S.P` using `halfFifthNormSolution_five_not_dvd_first`; after
+the descent constructs another `HalfFifthNormSolution`, that same derived lemma
+is available again for the next iteration.
 
 ### Decrease
 
