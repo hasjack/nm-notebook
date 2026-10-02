@@ -29,6 +29,7 @@ Checked under `lean/Hire/` (build with `elan` / `lake`; Mathlib is not vendored)
 - `GoldDisconnects` — size bound, door closure, descent, sink reduction, window monotonicity, finite-set bridge, and arbitrarily large disconnected windows iff infinitely many prime 2-power doors
 - `Dirichlet.lean` — Mathlib primes in AP wrapper; no sorry
 - `TwoClassCoverage`, `InfiniteHire` — two hire classes modulo `6Q`, infinitely many prime owners of odd `Q` with `3 ∤ Q`, and `eventually_hired`
+- `FLT` — checkpoint descents for exponents 3, 4, and 5; see `lean/Hire/FLT/README.md` for the proof map
 - `FltTwoDoor.lean` — exploratory, not in the barrel
 
 The cone bound `λ ≤ |V|` is the comparison with the complete graph. Same argument is proposed for Mathlib as [mathlib4#43953](https://github.com/leanprover-community/mathlib4/pull/43953); `Cone.lean` still carries a local copy until that lands. The gold-disconnects slice has no `sorry`, `admit`, or `axiom`.
