@@ -16,3 +16,4 @@ import Hire.GoldBridge
 import Hire.GoldDisconnects
 import Hire.TwoClassCoverage
 import Hire.InfiniteHire
+import Hire.FLT
