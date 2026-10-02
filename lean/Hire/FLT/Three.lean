@@ -1,4 +1,7 @@
+import Hire.Doors
 import Hire.FLT.Cubic
+import Mathlib.NumberTheory.NumberField.Cyclotomic.PID
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Three
 
 namespace Hire
 

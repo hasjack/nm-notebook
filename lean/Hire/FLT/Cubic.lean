@@ -1,14 +1,5 @@
-import Hire.Doors
 import Mathlib.Tactic
-import Mathlib.RingTheory.Int.Basic
-import Mathlib.NumberTheory.NumberField.Cyclotomic.PID
-import Mathlib.NumberTheory.NumberField.Cyclotomic.Three
 import Mathlib.NumberTheory.FLT.Basic
-import Mathlib.NumberTheory.PythagoreanTriples
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.NumberTheory.Real.Irrational
-import Mathlib.Algebra.Order.Round
-import Mathlib.Data.ZMod.Basic
 
 namespace Hire
 
