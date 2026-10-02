@@ -10,13 +10,10 @@ import Mathlib.Tactic
 /-!
 # The 3-free door of an odd prime
 
-Elementary formalization of the χ₃ door package (hire graph).
-
 * `chi3` — non-principal character mod 3 as `ℕ → ℤ`
 * `m0 p` — unique **3-free** even neighbour for odd primes `p ≠ 3`
 * `m1 p` — other face (divisible by 6)
 
-Public voice: no ζ; doors and hire set only.
 -/
 
 namespace Hire
@@ -65,7 +62,7 @@ lemma not_three_dvd_of_prime_ne_three {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) : 
   · exact absurd h (by decide)
   · exact h3 h.symm
 
-lemma prime_ne_three_mod_eq_one_or_two {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) :
+lemma prime_ne_three_mod_three_eq_one_or_two {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) :
     p % 3 = 1 ∨ p % 3 = 2 := by
   have hne : ¬ 3 ∣ p := not_three_dvd_of_prime_ne_three hp h3
   have hmod0 : p % 3 ≠ 0 := fun h0 => hne (Nat.dvd_iff_mod_eq_zero.mpr h0)
@@ -78,7 +75,7 @@ lemma prime_ne_three_mod_eq_one_or_two {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) :
 
 /-- **3-free:** if `p` is prime and `p ≠ 3`, then `3 ∤ m0 p`. -/
 theorem three_not_dvd_m0 {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) : ¬ 3 ∣ m0 p := by
-  rcases prime_ne_three_mod_eq_one_or_two hp h3 with h | h
+  rcases prime_ne_three_mod_three_eq_one_or_two hp h3 with h | h
   · rw [m0_of_mod_one h, Nat.dvd_iff_mod_eq_zero, Nat.add_mod, h]
     decide
   · have : 2 ≤ p := hp.two_le
@@ -89,7 +86,7 @@ theorem three_not_dvd_m0 {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) : ¬ 3 ∣ m0 p
 /-- Odd prime `p ≠ 3` ⇒ `m0 p` is even. -/
 theorem even_m0 {p : ℕ} (hp : p.Prime) (hodd : Odd p) (h3 : p ≠ 3) : Even (m0 p) := by
   rw [even_iff_two_dvd]
-  rcases prime_ne_three_mod_eq_one_or_two hp h3 with h | h
+  rcases prime_ne_three_mod_three_eq_one_or_two hp h3 with h | h
   · rw [m0_of_mod_one h]
     exact Nat.dvd_of_mod_eq_zero (by
       have := Nat.odd_iff.mp hodd
@@ -108,7 +105,7 @@ theorem two_mul_dvd_m0 {p q : ℕ} (hp : p.Prime) (hodd : Odd p) (hp3 : p ≠ 3)
 
 /-- Other face divisible by 3. -/
 theorem three_dvd_m1 {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) : 3 ∣ m1 p := by
-  rcases prime_ne_three_mod_eq_one_or_two hp h3 with h | h
+  rcases prime_ne_three_mod_three_eq_one_or_two hp h3 with h | h
   · have hp2 : 2 ≤ p := hp.two_le
     simp [m1, h, Nat.dvd_iff_mod_eq_zero]
     omega
@@ -116,7 +113,7 @@ theorem three_dvd_m1 {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) : 3 ∣ m1 p := by
 
 theorem even_m1 {p : ℕ} (hp : p.Prime) (hodd : Odd p) (h3 : p ≠ 3) : Even (m1 p) := by
   rw [even_iff_two_dvd]
-  rcases prime_ne_three_mod_eq_one_or_two hp h3 with h | h
+  rcases prime_ne_three_mod_three_eq_one_or_two hp h3 with h | h
   · have : 1 ≤ p := Nat.le_of_lt hp.one_lt
     rw [m1_of_mod_one h]
     exact Nat.dvd_of_mod_eq_zero (by
@@ -169,7 +166,7 @@ theorem mid_gap_m0 {p : ℕ} (hp : p.Prime) (_hodd : Odd p) (h3 : p ≠ 3) :
   have hden : ((p : ℚ) ^ 2 - 1) ≠ 0 := by
     rw [show (p : ℚ) ^ 2 - 1 = ((p : ℚ) - 1) * ((p : ℚ) + 1) by ring]
     exact mul_ne_zero hpm1 hpp1
-  rcases prime_ne_three_mod_eq_one_or_two hp h3 with hmod | hmod
+  rcases prime_ne_three_mod_three_eq_one_or_two hp h3 with hmod | hmod
   · -- p ≡ 1 [MOD 3]: m0 = p+1, χ₃ = 1
     rw [m0_of_mod_one hmod, chi3_of_mod_one hmod]
     push_cast
@@ -189,7 +186,7 @@ theorem mid_gap_m0 {p : ℕ} (hp : p.Prime) (_hodd : Odd p) (h3 : p ≠ 3) :
 /-- Helping identity: `(p / 3) = χ₃(p)` for primes `p ≠ 3`. -/
 theorem chi3_eq_legendreSym_three {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) :
     chi3 p = legendreSym 3 p := by
-  rcases prime_ne_three_mod_eq_one_or_two hp h3 with hmod | hmod
+  rcases prime_ne_three_mod_three_eq_one_or_two hp h3 with hmod | hmod
   · -- p ≡ 1 → (p/3) = (1/3) = 1
     rw [chi3_of_mod_one hmod]
     have hmodZ : (p : ℤ) % 3 = 1 := by exact_mod_cast hmod

@@ -26,7 +26,7 @@ auxiliaries with `r ≤ 2e6` for `ℓ ∈ {5,7,11,13,17,19,23,29,31}` (0 mismatc
 theorem doorOfResidue {ℓ r : ℕ} (hℓ : 2 < ℓ) (hr : r.Prime) (h3 : r ≠ 3)
     (hdvd : ℓ ∣ r - 1) :
     (ℓ ∣ m0 r ↔ r % 3 = 2) ∧ (ℓ ∣ m1 r ↔ r % 3 = 1) := by
-  have hmod : r % 3 = 1 ∨ r % 3 = 2 := prime_ne_three_mod_eq_one_or_two hr h3
+  have hmod : r % 3 = 1 ∨ r % 3 = 2 := prime_ne_three_mod_three_eq_one_or_two hr h3
   have hr1 : 1 ≤ r := Nat.le_of_lt hr.one_lt
   -- ℓ odd (since ℓ > 2); used to separate m0/m1 = (r±1)
   have ℓ_ne_two : ℓ ≠ 2 := ne_of_gt hℓ

@@ -767,7 +767,7 @@ theorem twoPowerDoor_mersenne_or_fermat_shape
     {M : ℕ} (hM : M.Prime) (h3 : M ≠ 3) (hdoor : IsTwoPowerDoor M) :
     (∃ k : ℕ, M = 2 ^ k - 1) ∨ (∃ k : ℕ, M = 2 ^ k + 1) := by
   obtain ⟨k, hk⟩ := hdoor
-  rcases prime_ne_three_mod_eq_one_or_two hM h3 with hmod | hmod
+  rcases prime_ne_three_mod_three_eq_one_or_two hM h3 with hmod | hmod
   · rw [m0_of_mod_one hmod] at hk
     exact Or.inl ⟨k, by omega⟩
   · rw [m0_of_mod_two hmod] at hk

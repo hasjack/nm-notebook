@@ -141,7 +141,7 @@ lemma mod_three_reduce (a Q : ℕ) (_ : 0 < Q) :
 
 lemma m0_mod_three_of_prime {p : ℕ} (hp : p.Prime) (hp3 : p ≠ 3) :
     (p % 3 = 1 ∧ m0 p % 3 = 2) ∨ (p % 3 = 2 ∧ m0 p % 3 = 1) := by
-  rcases prime_ne_three_mod_eq_one_or_two hp hp3 with h | h
+  rcases prime_ne_three_mod_three_eq_one_or_two hp hp3 with h | h
   · left; exact ⟨h, by rw [m0_of_mod_one h]; omega⟩
   · right
     have : 1 ≤ p := Nat.le_of_lt hp.one_lt
