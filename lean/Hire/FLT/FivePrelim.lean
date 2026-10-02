@@ -1,4 +1,7 @@
-import Hire.FLT.Four
+import Mathlib.Tactic
+import Mathlib.RingTheory.Int.Basic
+import Mathlib.NumberTheory.FLT.Basic
+import Mathlib.Data.ZMod.Basic
 
 namespace Hire
 

@@ -1,4 +1,6 @@
-import Hire.FLT.Cubic
+import Mathlib.Tactic
+import Mathlib.NumberTheory.FLT.Basic
+import Mathlib.NumberTheory.PythagoreanTriples
 
 namespace Hire
 

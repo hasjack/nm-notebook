@@ -1,3 +1,5 @@
+import Hire.FLT.Three
+import Hire.FLT.Four
 import Hire.FLT.Five
 
 #print axioms Hire.EisensteinBridge.fermatLastTheoremThree_via_descent
