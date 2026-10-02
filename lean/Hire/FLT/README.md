@@ -15,8 +15,9 @@ Final statements:
 
 ## Module layout
 
-- `Cubic.lean` contains shared cubic arithmetic and exploratory mismatch
-  identities.
+- `Cubic.lean` contains shared cubic arithmetic used by the exponent-3 proof.
+- `Experiments.lean` contains exploratory Pythagorean shortfall and mismatch
+  identities that are not on the current proof path.
 - `Three.lean` contains the Eisenstein-integer descent for exponent 3.
 - `Four.lean` contains the classical infinite descent for exponent 4.
 - `FivePrelim.lean` contains integer fifth-power factorization lemmas.
@@ -33,8 +34,8 @@ In the branch `3 | a + b`, coprimality forces the extracted factors to be
 
 The Eisenstein argument interprets the factors in the ring of integers of the
 third cyclotomic field. After controlling common divisors and units, it
-constructs a new primitive cube solution with a strictly smaller size measure,
-contradicting well-founded descent.
+constructs a new primitive cube solution whose output has strictly smaller
+`natAbs`. The descent is well-founded on `C.natAbs`.
 
 ## Exponent 4
 
@@ -43,9 +44,9 @@ The proof starts from a primitive solution to `a^4 + b^4 = c^4`, rewritten as
 parameters. Their difference and sum are forced to be squares, producing a
 second Pythagorean triangle.
 
-The descent constructs a new fourth-power square solution with a smaller
-hypotenuse. Repeating this is impossible by well-foundedness, so the original
-primitive solution cannot exist.
+The descent constructs a new fourth-power square solution whose hypotenuse has
+strictly smaller `natAbs`. Repeating this is impossible by well-foundedness on
+`Z.natAbs`, so the original primitive solution cannot exist.
 
 ## Exponent 5
 
@@ -56,14 +57,20 @@ coprimality lemmas control when powers of 5 divide these factors.
 The golden-ring argument factors the fifth factor using `phi`, controls common
 divisors through `delta = 2*phi - 1`, classifies units up to signed powers of
 `phi`, and normalizes associated fifth powers. The proof then treats the
-exceptional and parity-sensitive branches. In the final branch it builds a new
-normalized fifth-norm solution with a strictly smaller coordinate, contradicting
-descent.
+exceptional and parity-sensitive branches through two auxiliary descents:
+
+- `FifthNormSolution` descends on `B.natAbs`; each solution produces another
+  solution of the same kind with smaller `B.natAbs`.
+- `HalfFifthNormSolution` descends on `Q.natAbs`; each solution produces
+  another solution of the same kind with smaller `Q.natAbs`.
+
+Those two well-founded descents rule out the auxiliary norm solutions needed by
+the remaining exponent-5 branches.
 
 ## Audit notes
 
 - `Hire.FLT` retains `#print axioms` checks for all three final theorems.
 - The current trusted axiom footprint is the expected Mathlib baseline:
   `propext`, `Classical.choice`, and `Quot.sound`.
-- Exploratory mismatch identities remain in `Cubic.lean`; they are useful
-  context but are candidates for a later `Experiments` module.
+- Exploratory mismatch identities live in `Experiments.lean`; they are useful
+  context but not imported by the proof barrel.
