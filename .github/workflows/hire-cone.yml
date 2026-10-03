@@ -3,7 +3,7 @@ name: Hire
 on:
   pull_request:
   push:
-    branches: [note/lemma8-proof-map, lean/gold-size-descent]
+    branches: [master, note/lemma8-proof-map, lean/gold-size-descent]
   workflow_dispatch:
 
 jobs:

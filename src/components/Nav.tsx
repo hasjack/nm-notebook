@@ -55,6 +55,14 @@ const tree: NavGroup[] = [
     ],
   },
   {
+    id: "flt",
+    label: "FLT",
+    blurb: "Readable Lean descents for exponents 3, 4, and 5.",
+    links: [
+      { to: "/flt", label: "Fermat descents" },
+    ],
+  },
+  {
     id: "alphabet",
     label: "Alphabet",
     blurb: "Number line in e, i, and π.",

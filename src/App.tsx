@@ -41,6 +41,7 @@ import { IngredientTransitionsPage } from "./pages/IngredientTransitionsPage";
 import { GaussianDoorsPage } from "./pages/GaussianDoorsPage";
 import { HireSpectrumPage } from "./pages/HireSpectrumPage";
 import { HireLabPage } from "./pages/HireLabPage";
+import { FltPage } from "./pages/FltPage";
 import { TorusPage } from "./pages/TorusPage";
 import { PaperPage } from "./pages/PaperPage";
 import { WhenGoldDisconnectsPage } from "./pages/WhenGoldDisconnectsPage";
@@ -104,6 +105,7 @@ export default function App() {
         <Route path="/certs" element={<Navigate to="/certificates" replace />} />
         <Route path="/hire-spectrum" element={<HireSpectrumPage />} />
         <Route path="/hire-lab" element={<HireLabPage />} />
+        <Route path="/flt" element={<FltPage />} />
         <Route path="/notes/hire-graph" element={<PaperPage />} />
         <Route path="/notes/when-gold-disconnects" element={<WhenGoldDisconnectsPage />} />
         <Route path="/notes/zeta-doors" element={<ZetaDoorsNotePage />} />

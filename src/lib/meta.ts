@@ -26,6 +26,11 @@ const pages: Record<string, PageMeta> = {
   "/certificates": { title: "Certificates" },
   "/hire-spectrum": { title: "Spectrum" },
   "/hire-lab": { title: "Hire rate" },
+  "/flt": {
+    title: "Fermat descents in Lean",
+    description:
+      "Readable Lean checkpoint for Fermat descents at exponents 3, 4, and 5.",
+  },
   "/notes": {
     title: "Notes",
     description: "PDFs of the hire papers and the zeta-doors note.",

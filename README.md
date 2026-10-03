@@ -50,6 +50,7 @@ npm run build
 | Shelf | What |
 |-------|------|
 | **Hire** | Introduction, Basins, Islands, Corridor, Microscope, Certificates, Spectrum, Hire rate, notes |
+| **FLT** | Fermat descents in Lean: exponents 3, 4, 5; proof map, n=5 audit, experiments |
 | **Alphabet** | e, i, π — Walk, Lock i / π, Basel, Catalogue, Notes |
 | **Toys** | Physics, Bell `(σ, p)`, switching atlas |
 | **Lab** | More probes |
