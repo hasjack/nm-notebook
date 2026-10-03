@@ -55,6 +55,17 @@ const tree: NavGroup[] = [
     ],
   },
   {
+    id: "flt",
+    label: "FLT",
+    blurb: "Checked descents and small labs around Fermat.",
+    links: [
+      { to: "/flt", label: "Checkpoint" },
+      { to: "/flt/from-squares-to-cubes", label: "Squares to cubes" },
+      { to: "/flt/descent-lab", label: "Descent lab" },
+      { to: "/flt/hire-ascent", label: "Hire ascent" },
+    ],
+  },
+  {
     id: "alphabet",
     label: "Alphabet",
     blurb: "Number line in e, i, and π.",

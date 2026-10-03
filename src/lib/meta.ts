@@ -26,6 +26,26 @@ const pages: Record<string, PageMeta> = {
   "/certificates": { title: "Certificates" },
   "/hire-spectrum": { title: "Spectrum" },
   "/hire-lab": { title: "Hire rate" },
+  "/flt": {
+    title: "Fermat descents in Lean",
+    description:
+      "Readable Lean checkpoint for Fermat descents at exponents 3, 4, and 5.",
+  },
+  "/flt/from-squares-to-cubes": {
+    title: "From squares to cubes",
+    description:
+      "FLT lab note on Pythagorean spillovers, cube mismatches, and why descent is stronger.",
+  },
+  "/flt/descent-lab": {
+    title: "What makes descent work?",
+    description:
+      "FLT lab checklist for entry, preservation, decrease, and strong-induction closure.",
+  },
+  "/flt/hire-ascent": {
+    title: "Climbing the hire graph",
+    description:
+      "Exploratory FLT lab page on reversing prime ownership and the missing transport theorem.",
+  },
   "/notes": {
     title: "Notes",
     description: "PDFs of the hire papers and the zeta-doors note.",
