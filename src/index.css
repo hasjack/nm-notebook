@@ -1760,6 +1760,34 @@ code.pow sup {
   max-width: none;
 }
 
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.7rem 0 0.9rem;
+  max-width: var(--prose-width);
+}
+
+.segmented button {
+  min-width: 2.35rem;
+  min-height: 2rem;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid #c8bfb0;
+  border-radius: 6px;
+  background: #fffdf9;
+  color: #2a261f;
+  font: inherit;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.segmented button:hover,
+.segmented button.on {
+  border-color: #6f5f49;
+  background: #2a261f;
+  color: #fffdf9;
+}
+
 .lab-note-caveats {
   margin: 1.75rem 0 0.5rem;
   padding: 0.75rem 0.9rem;

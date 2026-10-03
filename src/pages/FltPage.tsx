@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { REPO_URL } from "../lib/meta";
 
 const FLT_BASE = `${REPO_URL}/tree/master/lean/Hire/FLT`;
@@ -103,6 +104,18 @@ export function FltPage() {
             <code>lean/Hire/FLT/Experiments.lean</code>
           </a>
           .
+        </p>
+      </section>
+
+      <section>
+        <h2>Lab pages</h2>
+        <p>
+          The shelf also keeps a few working notes near the proof checkpoint:
+          <Link to="/flt/from-squares-to-cubes"> squares to cubes</Link>,{" "}
+          <Link to="/flt/descent-lab">what makes descent work</Link>, and{" "}
+          <Link to="/flt/hire-ascent">climbing the hire graph</Link>. The first
+          two are guides to the existing proof material; the hire ascent page is
+          explicitly exploratory.
         </p>
       </section>
 
