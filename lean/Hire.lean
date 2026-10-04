@@ -14,6 +14,7 @@ import Hire.WitnessXstar
 import Hire.WeakQ2
 import Hire.GoldBridge
 import Hire.GoldDisconnects
+import Hire.MobiusDoor
 import Hire.TwoClassCoverage
 import Hire.InfiniteHire
 import Hire.FLT

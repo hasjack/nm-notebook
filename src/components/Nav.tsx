@@ -29,6 +29,7 @@ const tree: NavGroup[] = [
       { to: "/certificates", label: "Certificates" },
       { to: "/hire-spectrum", label: "Spectrum" },
       { to: "/hire-lab", label: "Hire rate" },
+      { to: "/hire/mobius", label: "Möbius sinks" },
     ],
     subs: [
       {
