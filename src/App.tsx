@@ -45,6 +45,7 @@ import { FltPage } from "./pages/FltPage";
 import { FltSquaresToCubesPage } from "./pages/FltSquaresToCubesPage";
 import { FltDescentLabPage } from "./pages/FltDescentLabPage";
 import { FltHireAscentPage } from "./pages/FltHireAscentPage";
+import { FltCyclotomicRatiosPage } from "./pages/FltCyclotomicRatiosPage";
 import { TorusPage } from "./pages/TorusPage";
 import { PaperPage } from "./pages/PaperPage";
 import { WhenGoldDisconnectsPage } from "./pages/WhenGoldDisconnectsPage";
@@ -112,6 +113,7 @@ export default function App() {
         <Route path="/flt/from-squares-to-cubes" element={<FltSquaresToCubesPage />} />
         <Route path="/flt/descent-lab" element={<FltDescentLabPage />} />
         <Route path="/flt/hire-ascent" element={<FltHireAscentPage />} />
+        <Route path="/flt/cyclotomic-ratios" element={<FltCyclotomicRatiosPage />} />
         <Route path="/notes/hire-graph" element={<PaperPage />} />
         <Route path="/notes/when-gold-disconnects" element={<WhenGoldDisconnectsPage />} />
         <Route path="/notes/zeta-doors" element={<ZetaDoorsNotePage />} />

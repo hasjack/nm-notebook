@@ -63,6 +63,7 @@ const tree: NavGroup[] = [
       { to: "/flt/from-squares-to-cubes", label: "Squares to cubes" },
       { to: "/flt/descent-lab", label: "Descent lab" },
       { to: "/flt/hire-ascent", label: "Hire ascent" },
+      { to: "/flt/cyclotomic-ratios", label: "Cyclotomic ratios" },
     ],
   },
   {

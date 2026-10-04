@@ -113,9 +113,11 @@ export function FltPage() {
           The shelf also keeps a few working notes near the proof checkpoint:
           <Link to="/flt/from-squares-to-cubes"> squares to cubes</Link>,{" "}
           <Link to="/flt/descent-lab">what makes descent work</Link>, and{" "}
-          <Link to="/flt/hire-ascent">climbing the hire graph</Link>. The first
-          two are guides to the existing proof material; the hire ascent page is
-          explicitly exploratory.
+          <Link to="/flt/hire-ascent">climbing the hire graph</Link>. There is
+          also an exploratory note on{" "}
+          <Link to="/flt/cyclotomic-ratios">cyclotomic ratios</Link>. The first
+          two are guides to the existing proof material; the latter pages are
+          lab benches rather than completed-proof narrative.
         </p>
       </section>
 
