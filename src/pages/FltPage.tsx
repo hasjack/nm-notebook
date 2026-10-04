@@ -3,6 +3,7 @@ import { REPO_URL } from "../lib/meta";
 
 const FLT_BASE = `${REPO_URL}/tree/master/lean/Hire/FLT`;
 const FLT_FILE = `${REPO_URL}/blob/master/lean/Hire/FLT.lean`;
+const SEVEN_FILE = `${REPO_URL}/blob/master/lean/Hire/FLT/Seven.lean`;
 
 export function FltPage() {
   return (
@@ -104,6 +105,18 @@ export function FltPage() {
             <code>lean/Hire/FLT/Experiments.lean</code>
           </a>
           .
+        </p>
+        <p>
+          There is also exploratory exponent-seven arithmetic in{" "}
+          <a href={SEVEN_FILE}>
+            <code>lean/Hire/FLT/Seven.lean</code>
+          </a>
+          . It establishes the seventh-power factorisation, common-divisor
+          control, the forced extraction{" "}
+          <code>a+b = 7^6 u^7</code>, <code>F_7(a,b) = 7 v^7</code>, and{" "}
+          <code>c = 7uv</code>, plus related prime-divisor restrictions and a
+          three-factor cancellation identity. It does not construct a smaller
+          solution or prove FLT for exponent 7.
         </p>
       </section>
 
