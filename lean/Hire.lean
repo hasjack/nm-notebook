@@ -16,6 +16,8 @@ import Hire.GoldBridge
 import Hire.GoldDisconnects
 import Hire.MobiusDoor
 import Hire.Torus
+import Hire.SquareCurve
+import Hire.TorusCurveBridge
 import Hire.EllipticToy
 import Hire.TwoClassCoverage
 import Hire.InfiniteHire

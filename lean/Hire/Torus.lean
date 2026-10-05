@@ -212,4 +212,65 @@ theorem continuous_quotientDials :
   exact continuous_squareDials.quotient_lift
     (fun _ _ h => squareDials_of_samePoint h)
 
+/-- A quarter-turn preserves square-lattice equivalence. -/
+theorem samePoint_quarter_turn
+    {z w : ℂ} (h : SamePoint 1 Complex.I z w) :
+    SamePoint 1 Complex.I (Complex.I * z) (Complex.I * w) := by
+  obtain ⟨m, n, hmn⟩ := h
+  refine ⟨-n, m, ?_⟩
+  calc
+    Complex.I * z - Complex.I * w
+        = Complex.I * (z - w) := by ring
+    _ = Complex.I *
+        ((m : ℂ) * 1 + (n : ℂ) * Complex.I) := by
+          rw [hmn]
+    _ = (m : ℂ) * Complex.I +
+        (n : ℂ) * (Complex.I * Complex.I) := by ring
+    _ = ((-n : ℤ) : ℂ) * 1 + (m : ℂ) * Complex.I := by
+      simp
+      ring
+
+/-- Quarter-turn rotation on the square-lattice quotient. -/
+def quarterTurn :
+    PeriodQuotient 1 Complex.I → PeriodQuotient 1 Complex.I :=
+  Quotient.lift
+    (fun z : ℂ => point 1 Complex.I (Complex.I * z))
+    (by
+      intro z w h
+      apply Quotient.sound
+      exact samePoint_quarter_turn h)
+
+/-- The quotient rotation acts as expected on representatives. -/
+theorem quarterTurn_point (z : ℂ) :
+    quarterTurn (point 1 Complex.I z) =
+      point 1 Complex.I (Complex.I * z) := by
+  rfl
+
+/-- Quarter-turn rotation is continuous. -/
+theorem continuous_quarterTurn :
+    Continuous quarterTurn := by
+  unfold quarterTurn
+  exact
+    ((continuous_point 1 Complex.I).comp
+      (continuous_const.mul continuous_id)).quotient_lift _
+
+/-- Four quarter-turns return every quotient point to itself. -/
+theorem quarterTurn_four
+    (q : PeriodQuotient 1 Complex.I) :
+    quarterTurn (quarterTurn (quarterTurn (quarterTurn q))) = q := by
+  refine Quotient.inductionOn q ?_
+  intro z
+  change
+    quarterTurn (quarterTurn (quarterTurn
+      (quarterTurn (point 1 Complex.I z)))) =
+      point 1 Complex.I z
+  simp only [quarterTurn_point]
+  have hfour :
+      Complex.I * (Complex.I * (Complex.I * (Complex.I * z))) = z := by
+    calc
+      _ = (Complex.I * Complex.I) *
+          ((Complex.I * Complex.I) * z) := by ring
+      _ = z := by simp
+  rw [hfour]
+
 end AlphabetTorus

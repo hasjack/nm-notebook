@@ -269,9 +269,71 @@ export function GluedSquareDialsPage() {
       <section className="glued-dials-note">
         <h2>What is not formalised yet</h2>
         <p>
-          The doughnut drawing is the intended geometric identification. The Lean
-          checkpoint has not yet proved surjectivity onto the product of unit
-          circles, nor a homeomorphism between the quotient and that product.
+          The doughnut illustrates the expected topology. Lean currently proves
+          that the two-dial map is continuous and identifies exactly the integer
+          lattice shifts. It has not yet proved that every pair of unit-circle
+          readings occurs, or established a homeomorphism between the lattice
+          quotient and the product of two unit circles.
+        </p>
+      </section>
+
+      <section className="elliptic-lab" aria-labelledby="square-bridge-title">
+        <p className="eyebrow">Square lattice bridge</p>
+        <h2 id="square-bridge-title">Quarter-turn symmetry and Weierstrass coordinates</h2>
+        <p>
+          The square torus has a visible quarter-turn: multiply the plane by{" "}
+          <code>i</code>. <code>Torus.lean</code> proves that multiplication by{" "}
+          <code>i</code> respects the square lattice, induces a continuous
+          quotient rotation, and that four quarter-turns are the identity.
+        </p>
+        <div className="catalogue-list bridge-list">
+          <article className="catalogue-card grade-clean">
+            <header className="catalogue-card-head">
+              <h2>Square cubic symmetry</h2>
+              <span className="grade-pill grade-clean">model</span>
+            </header>
+            <p>
+              <code>SquareCurve.lean</code> checks the model cubic{" "}
+              <code>y^2 = x^3 - x</code>: the map{" "}
+              <code>(x, y) ↦ (-x, i*y)</code> preserves the equation, and applying
+              it twice gives <code>(x, -y)</code>.
+            </p>
+          </article>
+          <article className="catalogue-card grade-calligraphy">
+            <header className="catalogue-card-head">
+              <h2>Mathlib lattice</h2>
+              <span className="grade-pill grade-calligraphy">periods</span>
+            </header>
+            <p>
+              <code>TorusCurveBridge.lean</code> defines Mathlib{"'"}s period pair{" "}
+              <code>1, i</code> and proves its lattice is exactly the integer
+              shifts used by <code>SamePoint</code>.
+            </p>
+          </article>
+        </div>
+        <p>
+          Mathlib{"'"}s Weierstrass identity supplies the analytic coordinate
+          equation away from lattice points:
+        </p>
+        <p className="display-equation">
+          y^2 = x^3 - <span>g₂</span>/4 · x - <span>g₃</span>/4, where{" "}
+          <code>x = ℘(z)</code> and <code>y = ℘'(z)/2</code>.
+        </p>
+        <p>
+          The bridge proves these coordinate readings are invariant under our
+          equivalence relation and therefore descend to a pair-valued quotient
+          function. The quotient coordinate function still uses Mathlib{"'"}s
+          assigned values at poles. It is not yet a continuous map into the
+          complete elliptic curve; sending the lattice class to the point at
+          infinity, proving nonsingularity, and establishing an isomorphism remain
+          unfinished.
+        </p>
+        <p>
+          We also have not yet formally proved <code>g₃ = 0</code> for the square
+          lattice or normalised the associated cubic to <code>y^2 = x^3 - x</code>.
+          The square-curve file verifies that symmetry of the target model
+          separately. This is standard mathematics being connected to Mathlib,
+          not a new FLT or BSD claim.
         </p>
       </section>
 
