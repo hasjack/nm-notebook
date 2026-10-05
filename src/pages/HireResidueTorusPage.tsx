@@ -83,16 +83,43 @@ export function HireResidueTorusPage() {
           <a href={LEAN_FILE}>
             <code>lean/Hire/ResidueTorus.lean</code>
           </a>{" "}
-          proves the two forbidden product cells. For prime owners{" "}
-          <code>p ≠ 5</code>, the plus door <code>a*q = p + 1</code> forbids{" "}
-          <code>a*q ≡ 1 mod 5</code>, and the minus door{" "}
-          <code>a*q + 1 = p</code> forbids <code>a*q ≡ 4 mod 5</code>.
+          proves the residue exclusions for any prime modulus <code>ℓ</code>.
+          For prime owners <code>p ≠ ℓ</code>, the plus door{" "}
+          <code>a*q = p + 1</code> forbids <code>a*q ≡ 1 mod ℓ</code>, and the
+          minus door <code>a*q + 1 = p</code> forbids{" "}
+          <code>a*q ≡ ℓ - 1 mod ℓ</code>. The owner exception{" "}
+          <code>p = ℓ</code> is explicit.
         </p>
         <p>
           The integration lemmas use the repo definition <code>m₀ p</code>: from{" "}
           <code>a*q = m₀ p</code>, together with the branch{" "}
           <code>p % 3 = 1</code> or <code>p % 3 = 2</code>, they derive the
-          matching residue exclusion.
+          matching residue exclusion. The finite forbidden-cell theorems then
+          restrict to nonzero residues, where modular inverses exist.
+        </p>
+      </section>
+
+      <section>
+        <h2>Holes by inverse</h2>
+        <p>
+          On the nonzero residue torus, fixing a forbidden product target{" "}
+          <code>t</code> leaves exactly one cofactor for each invertible{" "}
+          <code>q</code>: <code>a = q⁻¹ * t</code>. Lean packages those cells as{" "}
+          <code>forbiddenResidueCells</code> and proves membership is equivalent
+          to <code>q*a = t</code>.
+        </p>
+        <p>
+          For modulus <code>5</code>, the plus target is <code>1</code> and the
+          minus target is <code>-1 = 4</code>. Each graph has{" "}
+          <code>5 - 1 = 4</code> nonzero cells, and because <code>5 ≠ 2</code>
+          the two graphs are disjoint. Modulo <code>2</code>, Lean proves the
+          plus and minus graphs coincide.
+        </p>
+        <p>
+          The finite set count is about cells with both coordinates nonzero. The
+          door exclusions above apply to the whole residue grid; cells with{" "}
+          <code>a = 0</code> or <code>q = 0</code> are still shown in the
+          experiment grids because the torus displays residue coordinates.
         </p>
       </section>
 
