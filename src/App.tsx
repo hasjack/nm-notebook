@@ -65,6 +65,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/alphabet" element={<AlphabetPage />} />
+        <Route path="/alphabet/glued-square-dials" element={<Navigate to="/alphabet?tab=dials" replace />} />
         <Route path="/walk" element={<Navigate to="/alphabet?tab=walk" replace />} />
         <Route path="/lock-i" element={<Navigate to="/alphabet?tab=lock-i" replace />} />
         <Route path="/lock-pi" element={<Navigate to="/alphabet?tab=lock-pi" replace />} />
@@ -127,6 +128,7 @@ export default function App() {
         />
         <Route path="/signed-doors" element={<SignedDoorsPage />} />
         <Route path="/alphabet-spiral" element={<AlphabetSpiralPage />} />
+        <Route path="/glued-square-dials" element={<Navigate to="/alphabet/glued-square-dials" replace />} />
         <Route path="/count" element={<CountPage />} />
         <Route path="/notes" element={<NotesIndexPage />} />
         <Route path="/alphabet/notes" element={<NotesPage />} />

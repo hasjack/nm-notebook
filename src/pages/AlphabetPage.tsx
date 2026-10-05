@@ -5,8 +5,9 @@ import { LockIPage } from "./LockIPage";
 import { LockPiPage } from "./LockPiPage";
 import { BaselPage } from "./BaselPage";
 import { FreePage } from "./FreePage";
+import { GluedSquareDialsPage } from "./GluedSquareDialsPage";
 
-export type AlphabetTab = "walk" | "lock-i" | "lock-pi" | "basel" | "free";
+export type AlphabetTab = "walk" | "lock-i" | "lock-pi" | "basel" | "free" | "dials";
 
 const TABS: { id: AlphabetTab; label: string }[] = [
   { id: "walk", label: "Walk" },
@@ -14,6 +15,7 @@ const TABS: { id: AlphabetTab; label: string }[] = [
   { id: "lock-pi", label: "Lock π" },
   { id: "basel", label: "Basel" },
   { id: "free", label: "Free" },
+  { id: "dials", label: "Dials" },
 ];
 
 const TAB_IDS = new Set<string>(TABS.map((t) => t.id));
@@ -65,6 +67,7 @@ export function AlphabetPage() {
         {tab === "lock-pi" && <LockPiPage />}
         {tab === "basel" && <BaselPage />}
         {tab === "free" && <FreePage />}
+        {tab === "dials" && <GluedSquareDialsPage />}
       </div>
     </div>
   );
