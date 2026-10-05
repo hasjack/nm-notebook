@@ -100,4 +100,87 @@ theorem quotientCoordinates_point (z : ℂ) :
       squareCoordinates z := by
   rfl
 
+/-- Lattice membership is independent of the representative. -/
+theorem square_lattice_mem_iff_of_samePoint
+    {z w : ℂ}
+    (h : AlphabetTorus.SamePoint 1 Complex.I z w) :
+    z ∈ squarePeriods.lattice ↔ w ∈ squarePeriods.lattice := by
+  have hl : z - w ∈ squarePeriods.lattice :=
+    (samePoint_iff_sub_mem_square_lattice z w).mp h
+  constructor
+  · intro hz
+    have hw : w = z - (z - w) := by ring
+    rw [hw]
+    exact squarePeriods.lattice.sub_mem hz hl
+  · intro hw
+    have hz : z = w + (z - w) := by ring
+    rw [hz]
+    exact squarePeriods.lattice.add_mem hw hl
+
+/-- Lattice points mark infinity; other points carry analytic coordinates. -/
+noncomputable def squareReadout (z : ℂ) : Option (ℂ × ℂ) := by
+  classical
+  exact
+    if z ∈ squarePeriods.lattice then
+      none
+    else
+      some (squareCoordinates z)
+
+/-- The infinity marker and ordinary coordinates respect the gluing. -/
+theorem squareReadout_of_samePoint
+    {z w : ℂ}
+    (h : AlphabetTorus.SamePoint 1 Complex.I z w) :
+    squareReadout z = squareReadout w := by
+  classical
+  have hm := square_lattice_mem_iff_of_samePoint h
+  by_cases hz : z ∈ squarePeriods.lattice
+  · have hw := hm.mp hz
+    simp [squareReadout, hz, hw]
+  · have hw : w ∉ squarePeriods.lattice := by
+      intro hw
+      exact hz (hm.mpr hw)
+    simp [squareReadout, hz, hw,
+      squareCoordinates_of_samePoint h]
+
+/-- The readout with an infinity marker descends to the quotient. -/
+noncomputable def quotientReadout :
+    AlphabetTorus.PeriodQuotient 1 Complex.I →
+      Option (ℂ × ℂ) :=
+  Quotient.lift squareReadout
+    (fun _ _ h => squareReadout_of_samePoint h)
+
+/-- The lattice class is marked as infinity. -/
+theorem quotientReadout_zero :
+    quotientReadout (AlphabetTorus.point 1 Complex.I 0) = none := by
+  change squareReadout 0 = none
+  simp [squareReadout]
+
+/-- Every ordinary readout satisfies the associated cubic equation. -/
+theorem squareReadout_some_on_curve
+    {z x y : ℂ}
+    (h : squareReadout z = some (x, y)) :
+    (latticeCurve squarePeriods).Equation x y := by
+  classical
+  by_cases hz : z ∈ squarePeriods.lattice
+  · simp [squareReadout, hz] at h
+  · have hc : squareCoordinates z = (x, y) := by
+      simpa [squareReadout, hz] using h
+    have hx : squarePeriods.weierstrassP z = x := by
+      simpa [squareCoordinates] using congrArg Prod.fst hc
+    have hy : squarePeriods.derivWeierstrassP z / 2 = y := by
+      simpa [squareCoordinates] using congrArg Prod.snd hc
+    simpa only [hx, hy] using square_coordinates_on_curve z hz
+
+/-- The same curve-membership guarantee holds on the quotient. -/
+theorem quotientReadout_some_on_curve
+    (q : AlphabetTorus.PeriodQuotient 1 Complex.I)
+    {x y : ℂ}
+    (h : quotientReadout q = some (x, y)) :
+    (latticeCurve squarePeriods).Equation x y := by
+  revert h
+  refine Quotient.inductionOn q ?_
+  intro z h
+  change squareReadout z = some (x, y) at h
+  exact squareReadout_some_on_curve h
+
 end TorusCurveBridge

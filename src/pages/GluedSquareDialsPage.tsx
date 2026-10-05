@@ -321,18 +321,20 @@ export function GluedSquareDialsPage() {
         </p>
         <p>
           The bridge proves these coordinate readings are invariant under our
-          equivalence relation and therefore descend to a pair-valued quotient
-          function. The quotient coordinate function still uses Mathlib{"'"}s
-          assigned values at poles. It is not yet a continuous map into the
-          complete elliptic curve; sending the lattice class to the point at
-          infinity, proving nonsingularity, and establishing an isomorphism remain
-          unfinished.
+          equivalence relation. The latest checkpoint wraps them in{" "}
+          <code>Option (ℂ × ℂ)</code>: lattice points read as <code>none</code>,
+          non-lattice points read as <code>some (x, y)</code>, and every{" "}
+          <code>some</code> readout satisfies the associated cubic equation.
         </p>
         <p>
           We also have not yet formally proved <code>g₃ = 0</code> for the square
           lattice or normalised the associated cubic to <code>y^2 = x^3 - x</code>.
           The square-curve file verifies that symmetry of the target model
-          separately. This is standard mathematics being connected to Mathlib,
+          separately. This is still an <code>Option</code> representation using
+          Mathlib{"'"}s assigned values at poles, not yet a continuous map into
+          the complete elliptic curve. Nonsingularity, an actual curve-point map,
+          continuity at infinity, and the full torus-curve isomorphism remain
+          unfinished. This is standard mathematics being connected to Mathlib,
           not a new FLT or BSD claim.
         </p>
       </section>
