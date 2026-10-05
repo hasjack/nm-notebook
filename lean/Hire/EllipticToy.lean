@@ -70,4 +70,66 @@ theorem doubled_x_not_integer :
     exact_mod_cast hhi
   omega
 
+/-- Our cubic expressed as a Mathlib Weierstrass curve. -/
+def curve : WeierstrassCurve.Affine ℚ where
+  a₁ := 0
+  a₂ := 0
+  a₃ := 0
+  a₄ := 0
+  a₆ := -2
+
+/-- Mathlib's tangent slope agrees with our calculation. -/
+theorem mathlib_doubling_slope :
+    curve.slope 3 3 5 5 = (27 / 10 : ℚ) := by
+  norm_num [curve, WeierstrassCurve.Affine.slope,
+    WeierstrassCurve.Affine.negY]
+
+/-- Mathlib's addition formula gives our x-coordinate. -/
+theorem mathlib_doubling_x :
+    curve.addX 3 3 (curve.slope 3 3 5 5) =
+      (129 / 100 : ℚ) := by
+  rw [mathlib_doubling_slope]
+  norm_num [curve, WeierstrassCurve.Affine.addX]
+
+/-- Mathlib's addition formula gives our reflected y-coordinate. -/
+theorem mathlib_doubling_y :
+    curve.addY 3 3 5 (curve.slope 3 3 5 5) =
+      -(383 / 1000 : ℚ) := by
+  rw [mathlib_doubling_slope]
+  norm_num [curve, WeierstrassCurve.Affine.addY,
+    WeierstrassCurve.Affine.negAddY,
+    WeierstrassCurve.Affine.addX,
+    WeierstrassCurve.Affine.negY]
+
+/-- The starting point is a nonsingular curve point. -/
+theorem starting_point_nonsingular :
+    curve.Nonsingular 3 5 := by
+  rw [WeierstrassCurve.Affine.nonsingular_iff']
+  norm_num [curve, WeierstrassCurve.Affine.equation_iff']
+
+/-- The computed doubled point is also nonsingular. -/
+theorem doubled_point_nonsingular :
+    curve.Nonsingular (129 / 100) (-(383 / 1000)) := by
+  rw [WeierstrassCurve.Affine.nonsingular_iff']
+  norm_num [curve, WeierstrassCurve.Affine.equation_iff']
+
+/-- Our starting point, packaged in Mathlib's point group. -/
+def P : curve.Point :=
+  WeierstrassCurve.Affine.Point.some
+    3 5 starting_point_nonsingular
+
+/-- Our computed point, packaged in the same group. -/
+def doubledP : curve.Point :=
+  WeierstrassCurve.Affine.Point.some
+    (129 / 100) (-(383 / 1000)) doubled_point_nonsingular
+
+/-- The geometric calculation really is group doubling. -/
+theorem P_add_P :
+    P + P = doubledP := by
+  have hy : (5 : ℚ) ≠ curve.negY 3 5 := by
+    norm_num [curve, WeierstrassCurve.Affine.negY]
+  unfold P doubledP
+  rw [WeierstrassCurve.Affine.Point.add_self_of_Y_ne hy]
+  simp only [mathlib_doubling_x, mathlib_doubling_y]
+
 end EllipticToy

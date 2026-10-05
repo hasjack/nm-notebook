@@ -282,7 +282,7 @@ export function GluedSquareDialsPage() {
           The rational-point toy takes <code>P = (3, 5)</code>, draws the tangent
           line, finds the second intersection{" "}
           <code>Q = (129/100, 383/1000)</code>, then reflects it to{" "}
-          <code>2P = (129/100, -383/1000)</code>.
+          <code>P + P = (129/100, -383/1000)</code>.
         </p>
         <div className="elliptic-lab-layout">
           <article className="elliptic-figure">
@@ -298,16 +298,19 @@ export function GluedSquareDialsPage() {
             <p>
               <code>EllipticToy.lean</code> verifies the two curve points, the
               factorisation, the reflection, and that <code>129/100</code> is not
-              an integer.
+              an integer. It now packages the points as Mathlib{"'"}s{" "}
+              <code>curve.Point</code> values and proves <code>P_add_P</code>:
+              the actual group-law addition satisfies <code>P + P = doubledP</code>.
             </p>
           </article>
         </div>
         <p>
           The standard mathematical next sentence is Nagell-Lutz: because the
           doubled point has nonintegral rational x-coordinate, <code>P</code> is
-          not torsion, so the curve has rank at least one. This Lean example does
-          not yet connect to Mathlib's elliptic-curve group or formalise that
-          infinite-order argument. No BSD result is claimed here.
+          not torsion, so the curve has rank at least one. This checkpoint now
+          connects the tangent calculation to Mathlib{"'"}s elliptic-curve group
+          law, but it does not formalise Nagell-Lutz or the resulting
+          infinite-order/rank argument. No BSD result is claimed here.
         </p>
         <p>
           The point of the lab is concrete and visual: topology gives the
