@@ -42,6 +42,7 @@ import { GaussianDoorsPage } from "./pages/GaussianDoorsPage";
 import { HireSpectrumPage } from "./pages/HireSpectrumPage";
 import { HireLabPage } from "./pages/HireLabPage";
 import { HireMobiusPage } from "./pages/HireMobiusPage";
+import { HireResidueTorusPage } from "./pages/HireResidueTorusPage";
 import { FltPage } from "./pages/FltPage";
 import { FltSquaresToCubesPage } from "./pages/FltSquaresToCubesPage";
 import { FltDescentLabPage } from "./pages/FltDescentLabPage";
@@ -112,6 +113,7 @@ export default function App() {
         <Route path="/hire-spectrum" element={<HireSpectrumPage />} />
         <Route path="/hire-lab" element={<HireLabPage />} />
         <Route path="/hire/mobius" element={<HireMobiusPage />} />
+        <Route path="/hire/residue-torus" element={<HireResidueTorusPage />} />
         <Route path="/flt" element={<FltPage />} />
         <Route path="/flt/from-squares-to-cubes" element={<FltSquaresToCubesPage />} />
         <Route path="/flt/descent-lab" element={<FltDescentLabPage />} />

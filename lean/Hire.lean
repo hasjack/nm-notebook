@@ -19,6 +19,7 @@ import Hire.Torus
 import Hire.SquareCurve
 import Hire.TorusCurveBridge
 import Hire.EllipticToy
+import Hire.ResidueTorus
 import Hire.TwoClassCoverage
 import Hire.InfiniteHire
 import Hire.FLT

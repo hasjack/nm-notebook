@@ -1631,11 +1631,78 @@ code.pow sup {
   text-align: center;
 }
 
+.residue-grid-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.residue-grid-card {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid #e2d8c8;
+  border-radius: 8px;
+  background: #fffaf3;
+}
+
+.residue-grid-card h2 {
+  margin-top: 0;
+}
+
+.residue-grid {
+  display: grid;
+  grid-template-columns: 3.1rem repeat(5, minmax(3.2rem, 1fr));
+  gap: 0.25rem;
+  align-items: stretch;
+  margin-top: 0.8rem;
+}
+
+.residue-head,
+.residue-cell,
+.residue-corner {
+  min-height: 2.45rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 0.86rem;
+  line-height: 1.15;
+}
+
+.residue-head {
+  color: #1f4e79;
+  background: #f4efe6;
+  border: 1px solid #e2d8c8;
+}
+
+.residue-row-head {
+  color: #9a2f38;
+}
+
+.residue-cell {
+  color: #1a1a1a;
+  background: #fff;
+  border: 1px solid #e2d8c8;
+  font-variant-numeric: tabular-nums;
+}
+
+.residue-cell.forbidden {
+  color: #f4efe6;
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+}
+
 @media (max-width: 760px) {
   .glued-dials-controls,
   .glued-dials-grid,
-  .elliptic-lab-layout {
+  .elliptic-lab-layout,
+  .residue-grid-pair {
     grid-template-columns: 1fr;
+  }
+
+  .residue-grid {
+    overflow-x: auto;
   }
 }
 

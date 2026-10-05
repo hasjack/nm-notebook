@@ -237,7 +237,9 @@ export function HirePage() {
           <Link className="beat-link" to="/hire-spectrum">Spectrum →</Link>{" "}
           Hire-sun recipes and lab dials.{" "}
           <Link className="beat-link" to="/hire-lab">Hire rate →</Link>{" "}
-          H(X) table through 2·10<sup>10</sup>.
+          H(X) table through 2·10<sup>10</sup>.{" "}
+          <Link className="beat-link" to="/hire/residue-torus">Residue torus →</Link>{" "}
+          mod-5 cells for gold arcs.
         </p>
       </section>
     </main>
