@@ -1,5 +1,14 @@
 import { Link } from "react-router-dom";
 
+const SNAPSHOT = {
+  throughK: 934,
+  runningK: 938,
+  explicitFactors: 248,
+  fermatComposites: 11,
+  missingStoredFactors: 21,
+  untestedSurvivors: 0,
+};
+
 const FLOORS: {
   k: number;
   eps: string;
@@ -303,6 +312,46 @@ export function Rank100Page() {
         cores, 16 GB. n = 12,918,431. Admissible k are even and not divisible
         by 3. Skip multiples of 3. Snapshot 4 Oct 2026.
       </p>
+      <section>
+        <h2>Evidence snapshot</h2>
+        <p>
+          Recorded prefix: every admissible multiplier through{" "}
+          <code>k = {SNAPSHOT.throughK}</code> is excluded in the stored run.
+          The next unresolved multiplier in this snapshot is{" "}
+          <code>k = {SNAPSHOT.runningK}</code>, which was running in PFGW when
+          the table was frozen. This is an owner search, not a sink test:
+          candidates have door <code>kq</code>, so the Möbius sink weight is
+          zero and does not supply a primality shortcut.
+        </p>
+        <div className="door-table-wrap">
+          <table className="door-table">
+            <thead>
+              <tr>
+                <th>Evidence class</th>
+                <th>count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>explicit factor witnesses verified by modular arithmetic</td>
+                <td>{SNAPSHOT.explicitFactors}</td>
+              </tr>
+              <tr>
+                <td>full Fermat/PFGW composite results without stored factor</td>
+                <td>{SNAPSHOT.fermatComposites}</td>
+              </tr>
+              <tr>
+                <td>fast composites with no stored factor in the walker JSON</td>
+                <td>{SNAPSHOT.missingStoredFactors}</td>
+              </tr>
+              <tr>
+                <td>untested survivors inside the recorded prefix</td>
+                <td>{SNAPSHOT.untestedSurvivors}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
       <div className="door-table-wrap">
         <table className="door-table">
           <thead>
@@ -360,8 +409,9 @@ export function Rank100Page() {
         No owner yet. Walker: <code>analysis/rank100_pfgw_floors.py</code>
         (Xeon, k = 938 in PFGW — do not mix). Discount sieve:{" "}
         <code>analysis/rank100_discount.py</code> — special-form trial factor
-        of every admissible k without building N, so 0.28 s jokes die before
-        FFT. Survivors at B are the Fermat queue. Timing:{" "}
+        of admissible k by residue classes, so 0.28 s jokes die before FFT.
+        The verifier checks stored factor witnesses without building N.
+        Survivors at B are the Fermat queue. Timing:{" "}
         <code>analysis/lab-metrics.json</code>.
       </p>
       <p className="home-actions">

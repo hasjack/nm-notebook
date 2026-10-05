@@ -5,15 +5,23 @@ Never builds the 3.89-million-digit N. Never calls PFGW.
 
     N = k*q + ε = (2293*k)*2^12918431 + (ε - k)
 
-For each odd prime p ≤ B:
+For each odd prime r ≤ B:
 
-    r = 2^EXP mod p
-    k*(2293*r - 1) + ε ≡ 0 (mod p)  ⇒  p divides N.
+    t = q mod r = 2293*2^EXP - 1 mod r
+
+When t ≠ 0, divisibility selects two multiplier classes:
+
+    k ≡  t⁻¹ (mod r)   for ε=-1
+    k ≡ -t⁻¹ (mod r)   for ε=+1
+
+The sieve intersects those classes with k ≡ 2 or 4 (mod 6) and marks whole
+arithmetic progressions. It never builds the 3.89-million-digit candidates.
 
 Leave the Xeon walker alone (k=206 Fermat). This is the cheap filter
 that should have run before PFGW ever saw a 0.28 s joke.
 
     python3 rank100_discount.py --selftest
+    python3 rank100_discount.py --verify-floors rank100-floors/floors.jsonl
     python3 rank100_discount.py --B 100000000 --max-k 400 --out rank100-discount
 
 Resumes from discount.jsonl. Ctrl-C is safe.
@@ -21,6 +29,7 @@ Resumes from discount.jsonl. Ctrl-C is safe.
 from __future__ import annotations
 
 import argparse, json, sys, time
+from collections import Counter
 from pathlib import Path
 
 EXP = 12_918_431
@@ -118,6 +127,71 @@ def factor_k(k: int, primes: list[int], B: int) -> int | None:
     return None
 
 
+def first_in_progression(start: int, residue: int, modulus: int) -> int:
+    """Smallest n >= start with n ≡ residue (mod modulus)."""
+    return start + ((residue - start) % modulus)
+
+
+def crt_coprime(a: int, m: int, b: int, n: int) -> int:
+    """Residue modulo m*n for x ≡ a (mod m), x ≡ b (mod n), gcd(m,n)=1."""
+    inv_m = pow(m, -1, n)
+    return (a + m * (((b - a) * inv_m) % n)) % (m * n)
+
+
+def killed_by_factor(k: int, factor: int) -> bool:
+    """Check factor | k*q+eps(k) without constructing q or N."""
+    if factor <= 1:
+        return False
+    q_mod = (A0 * pow(2, EXP, factor) - 1) % factor
+    return (k * q_mod + eps(k)) % factor == 0
+
+
+def verify_floors(path: Path) -> int:
+    """Audit a PFGW floors.jsonl file using only modular arithmetic."""
+    rows = []
+    for lineno, line in enumerate(path.read_text().splitlines(), 1):
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        row["_lineno"] = lineno
+        rows.append(row)
+
+    counts: Counter[str] = Counter()
+    bad = 0
+    for row in rows:
+        k = int(row["k"])
+        status = row.get("status", "unknown")
+        factors = [int(x) for x in row.get("factors", []) if str(x).isdigit()]
+        if factors:
+            ok = all(killed_by_factor(k, f) for f in factors)
+            if ok:
+                counts["explicit_factor_verified"] += 1
+            else:
+                bad += 1
+                counts["explicit_factor_failed"] += 1
+                print(
+                    f"BAD factor witness line={row['_lineno']} k={k} "
+                    f"factors={factors}",
+                    file=sys.stderr,
+                )
+        elif status == "composite":
+            if float(row.get("seconds", 0)) >= 3600:
+                counts["fermat_composite_no_factor"] += 1
+            else:
+                counts["composite_no_factor"] += 1
+        elif status == "unknown" and float(row.get("seconds", 0)) >= 3600:
+            counts["fermat_composite_no_factor"] += 1
+        elif status in ("prp", "prime"):
+            counts[status] += 1
+        else:
+            counts[status] += 1
+
+    print(f"rows={len(rows)} file={path}")
+    for key in sorted(counts):
+        print(f"{key}={counts[key]}")
+    return 1 if bad else 0
+
+
 def selftest() -> int:
     need = max(KNOWN.values())
     B = min(need, 500_000)
@@ -158,9 +232,12 @@ def main() -> int:
     ap.add_argument("--max-k", type=int, default=400)
     ap.add_argument("--out", type=Path, default=Path("rank100-discount"))
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--verify-floors", type=Path, help="verify stored PFGW factor witnesses")
     args = ap.parse_args()
     if args.selftest:
         return selftest()
+    if args.verify_floors:
+        return verify_floors(args.verify_floors)
     if args.B < 5 or args.max_k < args.start_k:
         ap.error("need B ≥ 5 and max-k ≥ start-k")
 
@@ -183,24 +260,37 @@ def main() -> int:
     primes = primes_upto(args.B)
     print("primes", len(primes), "in", round(time.monotonic() - t0, 2), "s", flush=True)
 
-    # alive[i] = k still unkilled; factor map
-    alive = {k: True for k in ks}
+    # alive = k still unkilled; fac records the first trial prime found.
+    alive = set(ks)
     fac = {}
     t1 = time.monotonic()
     n = len(primes)
     for i, p in enumerate(primes, 1):
         r = pow(2, EXP, p)
         t = (A0 * r - 1) % p
-        for k in ks:
-            if not alive[k]:
-                continue
-            if (k * t + eps(k)) % p == 0:
-                alive[k] = False
-                fac[k] = p
+        if t != 0:
+            if p == 3:
+                # Tiny non-coprime CRT case; not worth special machinery.
+                for k in tuple(alive):
+                    if (k * t + eps(k)) % p == 0:
+                        alive.remove(k)
+                        fac[k] = p
+            else:
+                inv_t = pow(t, -1, p)
+                # ε=-1 branch: k ≡ t⁻¹ (mod p), k ≡ 2 (mod 6).
+                # ε=+1 branch: k ≡ -t⁻¹ (mod p), k ≡ 4 (mod 6).
+                for residue_p, residue_6 in ((inv_t, 2), ((-inv_t) % p, 4)):
+                    residue = crt_coprime(residue_p, p, residue_6, 6)
+                    step = 6 * p
+                    k = first_in_progression(args.start_k, residue, step)
+                    while k <= args.max_k:
+                        if k in alive:
+                            alive.remove(k)
+                            fac[k] = p
+                        k += step
         if i == n or i % 50_000 == 0:
-            left = sum(1 for k in ks if alive[k])
             print(
-                f"  p={p}  {i}/{n}  unkilled {left}/{len(ks)}  "
+                f"  p={p}  {i}/{n}  unkilled {len(alive)}/{len(ks)}  "
                 f"{time.monotonic() - t1:.1f}s",
                 flush=True,
             )
@@ -209,7 +299,7 @@ def main() -> int:
     with dst.open("a") as out, survivors.open("a") as surv:
         for k in ks:
             e = eps(k)
-            if not alive[k]:
+            if k not in alive:
                 row = {
                     "k": k,
                     "eps": e,
@@ -237,7 +327,7 @@ def main() -> int:
                 flush=True,
             )
 
-    n_kill = sum(1 for k in ks if not alive[k])
+    n_kill = sum(1 for k in ks if k not in alive)
     n_surv = len(ks) - n_kill
     print(
         f"done killed={n_kill} survivors={n_surv}  {time.monotonic() - t0:.1f}s  "
