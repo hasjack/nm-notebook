@@ -199,6 +199,25 @@ export function HireLabPage() {
           boundary coefficient.
         </p>
         <p>
+          The ordinary counting interface is now formalized too. For prime
+          owners other than 3, <code>five_dvd_m0_iff_selected_mod_fifteen</code>{" "}
+          says <code>5 ∣ Hire.m0 p</code> exactly when{" "}
+          <code>p % 15 = 4</code> or <code>p % 15 = 11</code>. Dirichlet&apos;s
+          theorem supplies arbitrarily large owners in each selected class, and{" "}
+          <code>hubFiveOwnerCount_eq_two_classes</code> proves the finite count
+          identity <code>hubFiveOwnerCount X = primeClassCount15 X 4 +
+          primeClassCount15 X 11</code>.
+        </p>
+        <p>
+          The ordinary-density result is conditional:{" "}
+          <code>tendsto_hubFiveOwner_proportion_of_class_densities</code> keeps
+          the two remaining prime-counting inputs explicit as <code>h4</code>{" "}
+          and <code>h11</code>. If both selected classes have prime proportion
+          1/8, then hub-5 owners have ordinary prime proportion 1/4. This is
+          distinct from the proved Mangoldt quarter limit and from the proved
+          existence of arbitrarily large owners.
+        </p>
+        <p>
           Character orthogonality decomposes this observable into the principal
           character contribution, a quadratic character induced from conductor
           5, and a complex-conjugate pair of conductor-15 characters. The scripts
@@ -245,8 +264,9 @@ export function HireLabPage() {
           the smoothed prime-power observable to ordinary owner counts, test
           another hub with coefficients fixed before plotting, and resume the
           fixed-hub average proof using explicit analytic inputs. The next
-          exploration is to identify the analytic input needed to transfer this
-          weighted boundary result to ordinary prime-owner counts.
+          analytic target is to supply the two prime-class density limits using
+          a prime number theorem in arithmetic progressions or an appropriate
+          Tauberian development.
         </p>
         <div className="door-table-wrap">
           <table className="door-table">

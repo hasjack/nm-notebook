@@ -667,4 +667,162 @@ theorem tendsto_scaled_ownerMangoldtLimit15_at_one :
   unfold ownerMangoldtLimit15
   ring
 
+/-- Either selected class modulo 15 gives a prime owner whose door contains 5. -/
+theorem five_dvd_m0_of_selected_mod_fifteen
+    {p : ℕ} (hp : p.Prime)
+    (hmod : p % 15 = 4 ∨ p % 15 = 11) :
+    p ≠ 3 ∧ 5 ∣ Hire.m0 p := by
+  have h3 : p ≠ 3 := by
+    rcases hmod with h | h <;> omega
+  refine ⟨h3, ?_⟩
+  apply (HireEulerDoor.dvd_m0_iff_owner_residues
+    (Q := 5) hp h3 (by norm_num)).mpr
+  rcases hmod with h | h
+  · left
+    constructor <;> omega
+  · right
+    constructor <;> omega
+
+/-- Each selected class contains hub-5 owners above every bound. -/
+theorem forall_exists_hub_five_owner_in_class
+    (r : ℕ) (hr : r = 4 ∨ r = 11) (N : ℕ) :
+    ∃ p : ℕ,
+      N < p ∧ p.Prime ∧ p ≠ 3 ∧
+        p % 15 = r ∧ 5 ∣ Hire.m0 p := by
+  have hc : Nat.Coprime r 15 := by
+    rcases hr with h | h <;> rw [h] <;> norm_num
+  obtain ⟨p, hN, hp, heq⟩ :=
+    Nat.forall_exists_prime_gt_and_modEq
+      N (q := 15) (a := r) (by norm_num) hc
+  have hmod : p % 15 = r := by
+    have he : p % 15 = r % 15 := heq
+    rcases hr with h | h <;> simpa [h] using he
+  have hselected : p % 15 = 4 ∨ p % 15 = 11 := by
+    rcases hr with h | h
+    · left
+      simpa [h] using hmod
+    · right
+      simpa [h] using hmod
+  obtain ⟨h3, hd⟩ :=
+    five_dvd_m0_of_selected_mod_fifteen hp hselected
+  exact ⟨p, hN, hp, h3, hmod, hd⟩
+
+/-- The class 4 modulo 15 contains arbitrarily large hub-5 owners. -/
+theorem forall_exists_hub_five_owner_mod_four (N : ℕ) :
+    ∃ p : ℕ,
+      N < p ∧ p.Prime ∧ p ≠ 3 ∧
+        p % 15 = 4 ∧ 5 ∣ Hire.m0 p := by
+  exact forall_exists_hub_five_owner_in_class
+    4 (Or.inl rfl) N
+
+/-- The class 11 modulo 15 contains arbitrarily large hub-5 owners. -/
+theorem forall_exists_hub_five_owner_mod_eleven (N : ℕ) :
+    ∃ p : ℕ,
+      N < p ∧ p.Prime ∧ p ≠ 3 ∧
+        p % 15 = 11 ∧ 5 ∣ Hire.m0 p := by
+  exact forall_exists_hub_five_owner_in_class
+    11 (Or.inr rfl) N
+
+/-- Hub 5 has prime owners above every bound. -/
+theorem forall_exists_hub_five_owner (N : ℕ) :
+    ∃ p : ℕ,
+      N < p ∧ p.Prime ∧ p ≠ 3 ∧ 5 ∣ Hire.m0 p := by
+  obtain ⟨p, hN, hp, h3, hmod, hd⟩ :=
+    forall_exists_hub_five_owner_mod_four N
+  exact ⟨p, hN, hp, h3, hd⟩
+
+/-- For prime owners other than 3, the selected classes are exactly the 5-door condition. -/
+theorem five_dvd_m0_iff_selected_mod_fifteen
+    {p : ℕ} (hp : p.Prime) (h3 : p ≠ 3) :
+    5 ∣ Hire.m0 p ↔ p % 15 = 4 ∨ p % 15 = 11 := by
+  constructor
+  · intro hd
+    have hr :=
+      (HireEulerDoor.dvd_m0_iff_owner_residues
+        (Q := 5) hp h3 (by norm_num)).mp hd
+    rcases hr with hr | hr
+    · left
+      omega
+    · right
+      omega
+  · intro hmod
+    exact (five_dvd_m0_of_selected_mod_fifteen hp hmod).2
+
+/-- Prime owners up to X whose kept door contains 5. -/
+def hubFiveOwnerCount (X : ℕ) : ℕ :=
+  ((Nat.primesLE X).filter
+    (fun p => p ≠ 3 ∧ 5 ∣ Hire.m0 p)).card
+
+/-- Primes up to X in a specified residue class modulo 15. -/
+def primeClassCount15 (X r : ℕ) : ℕ :=
+  ((Nat.primesLE X).filter (fun p => p % 15 = r)).card
+
+/-- The ordinary owner count is exactly the sum of the two class counts. -/
+theorem hubFiveOwnerCount_eq_two_classes (X : ℕ) :
+    hubFiveOwnerCount X =
+      primeClassCount15 X 4 + primeClassCount15 X 11 := by
+  classical
+  have hset :
+      (Nat.primesLE X).filter
+          (fun p => p ≠ 3 ∧ 5 ∣ Hire.m0 p) =
+        ((Nat.primesLE X).filter (fun p => p % 15 = 4)) ∪
+        ((Nat.primesLE X).filter (fun p => p % 15 = 11)) := by
+    ext p
+    by_cases hpT : p ∈ Nat.primesLE X
+    · have hp : p.Prime := Nat.prime_of_mem_primesLE hpT
+      simp only [Finset.mem_filter, Finset.mem_union,
+        hpT, true_and]
+      constructor
+      · rintro ⟨h3, hd⟩
+        exact (five_dvd_m0_iff_selected_mod_fifteen hp h3).mp hd
+      · intro hmod
+        exact five_dvd_m0_of_selected_mod_fifteen hp hmod
+    · simp [hpT]
+  have hdisjoint :
+      Disjoint
+        ((Nat.primesLE X).filter (fun p => p % 15 = 4))
+        ((Nat.primesLE X).filter (fun p => p % 15 = 11)) := by
+    apply Finset.disjoint_left.mpr
+    intro p hp4 hp11
+    have h4 := (Finset.mem_filter.mp hp4).2
+    have h11 := (Finset.mem_filter.mp hp11).2
+    omega
+  unfold hubFiveOwnerCount primeClassCount15
+  rw [hset, Finset.card_union_of_disjoint hdisjoint]
+
+/-- Class densities of 1/8 combine into the owner density of 1/4. -/
+theorem tendsto_hubFiveOwner_proportion_of_class_densities
+    (h4 :
+      Filter.Tendsto
+        (fun X : ℕ =>
+          (primeClassCount15 X 4 : ℝ) /
+            (Nat.primeCounting X : ℝ))
+        Filter.atTop (nhds (1 / 8 : ℝ)))
+    (h11 :
+      Filter.Tendsto
+        (fun X : ℕ =>
+          (primeClassCount15 X 11 : ℝ) /
+            (Nat.primeCounting X : ℝ))
+        Filter.atTop (nhds (1 / 8 : ℝ))) :
+    Filter.Tendsto
+      (fun X : ℕ =>
+        (hubFiveOwnerCount X : ℝ) /
+          (Nat.primeCounting X : ℝ))
+      Filter.atTop (nhds (1 / 4 : ℝ)) := by
+  have heq :
+      (fun X : ℕ =>
+        (hubFiveOwnerCount X : ℝ) /
+          (Nat.primeCounting X : ℝ)) =
+      (fun X : ℕ =>
+        (primeClassCount15 X 4 : ℝ) /
+            (Nat.primeCounting X : ℝ) +
+          (primeClassCount15 X 11 : ℝ) /
+            (Nat.primeCounting X : ℝ)) := by
+    funext X
+    rw [hubFiveOwnerCount_eq_two_classes, Nat.cast_add, add_div]
+  rw [heq]
+  have h := h4.add h11
+  norm_num at h
+  exact h
+
 end HireCharacterReadout
