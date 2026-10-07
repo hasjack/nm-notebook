@@ -168,6 +168,22 @@ export function HireLabPage() {
           are identified with the unrestricted 5-power correction because
           Mangoldt weights vanish on numbers with two distinct prime divisors.
         </p>
+        <aside className="lab-theorem" aria-label="Full character readout">
+          <p className="lab-theorem-implies">
+            For σ &gt; 1, 4·owner tends to zeta principal − 3-power correction −
+            5-power correction + quadratic character − 2·complex character.
+          </p>
+        </aside>
+        <p>
+          The bundled character step is now formalized in{" "}
+          <code>Hire.CharacterObjects</code>. It constructs{" "}
+          <code>quadraticCharacter15</code> and <code>complexCharacter15</code>
+          as Mathlib <code>DirichletCharacter ℂ 15</code> objects, proves they
+          agree with the residue tables, and applies Mathlib&apos;s twisted
+          Mangoldt convergence and logarithmic-derivative theorem. The complete
+          first-level hub-5 observable is{" "}
+          <code>tendsto_four_ownerMangoldtSum15</code>.
+        </p>
         <p>
           Character orthogonality decomposes this observable into the principal
           character contribution, a quadratic character induced from conductor
@@ -215,10 +231,9 @@ export function HireLabPage() {
           the smoothed prime-power observable to ordinary owner counts, test
           another hub with coefficients fixed before plotting, and resume the
           fixed-hub average proof using explicit analytic inputs. The next Lean
-          step for this character bridge is to construct Mathlib{" "}
-          <code>DirichletCharacter</code> objects for the quadratic and complex
-          tables, then connect their weighted sums to the corresponding{" "}
-          −<em>L</em>′/<em>L</em> identities.
+          target is the behaviour as σ → 1<sup>+</sup>: start with
+          nontriviality of the two characters, nonvanishing of their
+          L-functions at 1, and control of their logarithmic derivatives near 1.
         </p>
         <div className="door-table-wrap">
           <table className="door-table">
