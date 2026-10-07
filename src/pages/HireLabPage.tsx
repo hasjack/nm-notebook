@@ -111,6 +111,26 @@ export function HireLabPage() {
           integer-slot estimates; the lower-level term is conditional on the
           explicit hypothesis <code>hLow</code>.
         </p>
+        <p>
+          The latest bridge replaces that abstract lower-level hypothesis by a
+          prime-class input. The checked chain is: owner divisibility → two
+          reduced CRT classes → <code>primeResidueCount</code> bounds → geometric
+          level bounds → <code>truncation_error_le_of_prime_class_bounds</code>.
+          For <em>q</em> = 5 and <em>k</em> = 1, the owner conditions pick the
+          two reduced residues 4 and 11 modulo 15.
+        </p>
+        <p>
+          The analytic input is now named <code>hAP</code>: it supplies bounds
+          for prime counts in reduced classes at the lower omitted levels. Lean
+          verifies that those bounds imply the stated Hire truncation-error
+          estimate; it does not yet prove the prime-counting estimate itself.
+        </p>
+        <aside className="lab-theorem" aria-label="Fixed hub coefficient">
+          <p className="lab-theorem-implies">
+            Σ<sub>k≥1</sub> 1/(q<sup>k−1</sup>(q−1)) = q/(q−1)<sup>2</sup>.
+            For q = 13, the target limiting average is 13/144.
+          </p>
+        </aside>
         <div className="door-table-wrap">
           <table className="door-table">
             <caption>
@@ -150,8 +170,9 @@ export function HireLabPage() {
           also remains open: the generic Euler-factor statements have not yet
           been specialised to <code>Hire.chi3</code>, <code>Hire.m0</code>, and{" "}
           <code>Hire.m1</code>. The next milestone is to supply the lower-level
-          prime-counting estimate and assemble the limiting average-multiplicity
-          argument; experiments through <em>X</em> = 100,000,000 support the
+          Brun–Titchmarsh input, choose the cutoffs, and assemble the limiting
+          average-multiplicity argument using prime densities in fixed arithmetic
+          progressions. Experiments through <em>X</em> = 100,000,000 support the
           predicted average q/(q−1)<sup>2</sup> for each fixed prime q ≠ 3, but
           this Lean file does not prove that limit.
         </p>

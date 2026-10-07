@@ -901,4 +901,414 @@ theorem incomingMultiplicity_truncation_error_le
   exact incomingMultiplicityTail_le_combined
     T X q K J B hP h3 hq hX hKJ C hC hLow
 
+/-- Two reduced residue conditions combine into one
+    reduced class modulo the product of coprime moduli. -/
+theorem exists_reduced_crt_class
+    (m n a b : ℕ)
+    (hm : m ≠ 0) (hn : n ≠ 0)
+    (hcop : Nat.Coprime m n)
+    (ha : a < m) (hb : b < n)
+    (haCop : Nat.Coprime a m)
+    (hbCop : Nat.Coprime b n) :
+    ∃ r : ℕ,
+      r < m * n ∧
+      Nat.Coprime r (m * n) ∧
+      ∀ p : ℕ,
+        (p % m = a ∧ p % n = b) ↔
+          p % (m * n) = r := by
+  let c := Nat.chineseRemainder hcop a b
+  have hr : (c : ℕ) < m * n :=
+    Nat.chineseRemainder_lt_mul hcop a b hm hn
+  have hrm : (c : ℕ) % m = a := by
+    simpa only [Nat.ModEq, Nat.mod_eq_of_lt ha]
+      using c.property.1
+  have hrn : (c : ℕ) % n = b := by
+    simpa only [Nat.ModEq, Nat.mod_eq_of_lt hb]
+      using c.property.2
+  have hcm : Nat.Coprime (c : ℕ) m := by
+    change Nat.gcd (c : ℕ) m = 1
+    rw [c.property.1.gcd_eq]
+    exact haCop
+  have hcn : Nat.Coprime (c : ℕ) n := by
+    change Nat.gcd (c : ℕ) n = 1
+    rw [c.property.2.gcd_eq]
+    exact hbCop
+  refine ⟨(c : ℕ), hr, hcm.mul_right hcn, ?_⟩
+  intro p
+  simpa only [Nat.ModEq, hrm, hrn,
+    Nat.mod_eq_of_lt hr] using
+    (Nat.modEq_and_modEq_iff_modEq_mul
+      (a := p) (b := (c : ℕ)) hcop)
+
+/-- The owner conditions select two distinct reduced
+    residue classes modulo 3Q. -/
+theorem exists_owner_reduced_classes
+    (Q : ℕ)
+    (hQ : 1 < Q)
+    (hcop : Nat.Coprime 3 Q) :
+    ∃ rPlus rMinus : ℕ,
+      rPlus < 3 * Q ∧
+      rMinus < 3 * Q ∧
+      Nat.Coprime rPlus (3 * Q) ∧
+      Nat.Coprime rMinus (3 * Q) ∧
+      rPlus ≠ rMinus ∧
+      ∀ p : ℕ,
+        ((p % 3 = 1 ∧ p % Q = Q - 1) ∨
+          (p % 3 = 2 ∧ p % Q = 1)) ↔
+        (p % (3 * Q) = rPlus ∨
+          p % (3 * Q) = rMinus) := by
+  have hQ0 : Q ≠ 0 := by omega
+  have hpred : Nat.Coprime (Q - 1) Q := by
+    apply (Nat.coprime_self_sub_left
+      (m := 1) (n := Q) (by omega)).mpr
+    simp
+  obtain ⟨rPlus, hrPlus, hcPlus, hsPlus⟩ :=
+    exists_reduced_crt_class
+      3 Q 1 (Q - 1)
+      (by norm_num) hQ0 hcop
+      (by norm_num) (by omega)
+      (by norm_num) hpred
+  obtain ⟨rMinus, hrMinus, hcMinus, hsMinus⟩ :=
+    exists_reduced_crt_class
+      3 Q 2 1
+      (by norm_num) hQ0 hcop
+      (by norm_num) hQ
+      (by norm_num) (by simp)
+  have hPlusRead : rPlus % 3 = 1 :=
+    ((hsPlus rPlus).mpr
+      (Nat.mod_eq_of_lt hrPlus)).1
+  have hMinusRead : rMinus % 3 = 2 :=
+    ((hsMinus rMinus).mpr
+      (Nat.mod_eq_of_lt hrMinus)).1
+  have hne : rPlus ≠ rMinus := by
+    intro h
+    rw [h] at hPlusRead
+    omega
+  refine ⟨rPlus, rMinus, hrPlus, hrMinus,
+    hcPlus, hcMinus, hne, ?_⟩
+  intro p
+  rw [hsPlus p, hsMinus p]
+
+/-- A prime different from 3 has every power coprime to 3. -/
+theorem three_coprime_prime_pow
+    {q : ℕ} (hq : q.Prime) (h3 : q ≠ 3)
+    (k : ℕ) :
+    Nat.Coprime 3 (q ^ k) := by
+  have hcop : Nat.Coprime 3 q :=
+    (Nat.coprime_primes Nat.prime_three hq).mpr
+      (Ne.symm h3)
+  exact hcop.pow_right k
+
+/-- Every positive power of a prime is greater than one. -/
+theorem one_lt_prime_pow_level
+    {q k : ℕ} (hq : q.Prime) (hk : 0 < k) :
+    1 < q ^ k := by
+  cases k with
+  | zero => omega
+  | succ k =>
+      rw [pow_succ]
+      have hpow : 0 < q ^ k := pow_pos hq.pos k
+      have hq2 := hq.two_le
+      nlinarith
+
+/-- Every positive prime-power level, away from 3,
+    selects two distinct reduced owner classes. -/
+theorem exists_owner_reduced_classes_prime_pow
+    {q : ℕ}
+    (hq : q.Prime) (h3 : q ≠ 3)
+    (k : ℕ) (hk : 0 < k) :
+    ∃ rPlus rMinus : ℕ,
+      rPlus < 3 * q ^ k ∧
+      rMinus < 3 * q ^ k ∧
+      Nat.Coprime rPlus (3 * q ^ k) ∧
+      Nat.Coprime rMinus (3 * q ^ k) ∧
+      rPlus ≠ rMinus ∧
+      ∀ p : ℕ,
+        ((p % 3 = 1 ∧ p % (q ^ k) = q ^ k - 1) ∨
+          (p % 3 = 2 ∧ p % (q ^ k) = 1)) ↔
+        (p % (3 * q ^ k) = rPlus ∨
+          p % (3 * q ^ k) = rMinus) := by
+  exact exists_owner_reduced_classes
+    (q ^ k)
+    (one_lt_prime_pow_level hq hk)
+    (three_coprime_prime_pow hq h3 k)
+
+/-- Selected integers in one residue class. -/
+def residueClassOwners
+    (T : Finset ℕ) (M r : ℕ) : Finset ℕ :=
+  T.filter (fun p => p % M = r)
+
+/-- Number of primes at most X in one residue class.
+    For a canonical residue r < M, this is π(X; M, r). -/
+def primeResidueCount (X M r : ℕ) : ℕ :=
+  (residueClassOwners (Nat.primesLE X) M r).card
+
+/-- Selected prime owners are bounded by the full
+    prime count in their residue class. -/
+theorem card_residueClassOwners_le_primeResidueCount
+    (T : Finset ℕ) (X M r : ℕ)
+    (hP : ∀ p ∈ T, p.Prime)
+    (hX : ∀ p ∈ T, p ≤ X) :
+    (residueClassOwners T M r).card ≤
+      primeResidueCount X M r := by
+  unfold primeResidueCount
+  apply Finset.card_le_card
+  intro p hp
+  rcases Finset.mem_filter.mp hp with ⟨hpT, hmod⟩
+  apply Finset.mem_filter.mpr
+  exact ⟨Nat.mem_primesLE.mpr
+    ⟨hX p hpT, hP p hpT⟩, hmod⟩
+
+/-- Two distinct CRT classes partition the owner
+    residue selection, so their counts add exactly. -/
+theorem card_residueLevelOwners_eq_two_classes
+    (T : Finset ℕ) (Q rPlus rMinus : ℕ)
+    (hne : rPlus ≠ rMinus)
+    (hspec : ∀ p : ℕ,
+      ((p % 3 = 1 ∧ p % Q = Q - 1) ∨
+        (p % 3 = 2 ∧ p % Q = 1)) ↔
+      (p % (3 * Q) = rPlus ∨
+        p % (3 * Q) = rMinus)) :
+    (residueLevelOwners T Q).card =
+      (residueClassOwners T (3 * Q) rPlus).card +
+        (residueClassOwners T (3 * Q) rMinus).card := by
+  have hsets :
+      residueLevelOwners T Q =
+        residueClassOwners T (3 * Q) rPlus ∪
+          residueClassOwners T (3 * Q) rMinus := by
+    ext p
+    simp only [residueLevelOwners, residueClassOwners,
+      Finset.mem_filter, Finset.mem_union]
+    rw [hspec p]
+    tauto
+  have hdis :
+      Disjoint (residueClassOwners T (3 * Q) rPlus)
+        (residueClassOwners T (3 * Q) rMinus) := by
+    apply Finset.disjoint_left.mpr
+    intro p hpPlus hpMinus
+    have hPlus : p % (3 * Q) = rPlus :=
+      (Finset.mem_filter.mp hpPlus).2
+    have hMinus : p % (3 * Q) = rMinus :=
+      (Finset.mem_filter.mp hpMinus).2
+    exact hne (hPlus.symm.trans hMinus)
+  rw [hsets]
+  exact Finset.card_union_of_disjoint hdis
+
+/-- A Hire prime-power level is bounded by prime counts
+    in two distinct reduced classes modulo 3q^k. -/
+theorem doorLevel_count_le_two_primeResidueCounts
+    (T : Finset ℕ) (X q k : ℕ)
+    (hP : ∀ p ∈ T, p.Prime)
+    (hOwner3 : ∀ p ∈ T, p ≠ 3)
+    (hX : ∀ p ∈ T, p ≤ X)
+    (hq : q.Prime) (hq3 : q ≠ 3)
+    (hk : 0 < k) :
+    ∃ rPlus rMinus : ℕ,
+      rPlus < 3 * q ^ k ∧
+      rMinus < 3 * q ^ k ∧
+      Nat.Coprime rPlus (3 * q ^ k) ∧
+      Nat.Coprime rMinus (3 * q ^ k) ∧
+      rPlus ≠ rMinus ∧
+      (doorLevelOwners T (q ^ k)).card ≤
+        primeResidueCount X (3 * q ^ k) rPlus +
+          primeResidueCount X (3 * q ^ k) rMinus := by
+  obtain ⟨rPlus, rMinus, hrPlus, hrMinus,
+      hcPlus, hcMinus, hne, hspec⟩ :=
+    exists_owner_reduced_classes_prime_pow hq hq3 k hk
+  refine ⟨rPlus, rMinus, hrPlus, hrMinus,
+    hcPlus, hcMinus, hne, ?_⟩
+  calc
+    _ = (residueLevelOwners T (q ^ k)).card :=
+      card_doorLevelOwners_eq_residueLevelOwners
+        T (q ^ k) hP hOwner3
+        (one_lt_prime_pow_level hq hk)
+    _ = (residueClassOwners T (3 * q ^ k) rPlus).card +
+        (residueClassOwners T (3 * q ^ k) rMinus).card :=
+      card_residueLevelOwners_eq_two_classes
+        T (q ^ k) rPlus rMinus hne hspec
+    _ ≤ primeResidueCount X (3 * q ^ k) rPlus +
+        primeResidueCount X (3 * q ^ k) rMinus :=
+      Nat.add_le_add
+        (card_residueClassOwners_le_primeResidueCount
+          T X (3 * q ^ k) rPlus hP hX)
+        (card_residueClassOwners_le_primeResidueCount
+          T X (3 * q ^ k) rMinus hP hX)
+
+/-- The CRT modulus has twice the prime-power totient. -/
+theorem totient_owner_modulus
+    {q : ℕ} (hq : q.Prime) (h3 : q ≠ 3)
+    (k : ℕ) (hk : 0 < k) :
+    Nat.totient (3 * q ^ k) =
+      2 * (q ^ (k - 1) * (q - 1)) := by
+  rw [Nat.totient_mul
+    (three_coprime_prime_pow hq h3 k)]
+  rw [Nat.totient_prime Nat.prime_three,
+    Nat.totient_prime_pow hq hk]
+
+/-- The coefficient for two reduced owner classes is
+    exactly the reciprocal prime-power totient. -/
+theorem owner_level_density_coefficient
+    {q : ℕ} (hq : q.Prime) (h3 : q ≠ 3)
+    (k : ℕ) (hk : 0 < k) :
+    (2 : ℝ) / (Nat.totient (3 * q ^ k) : ℝ) =
+      1 / ((q ^ (k - 1) * (q - 1) : ℕ) : ℝ) := by
+  have hpred : 0 < q - 1 := by
+    have := hq.two_le
+    omega
+  have hdenNat :
+      0 < q ^ (k - 1) * (q - 1) :=
+    Nat.mul_pos (pow_pos hq.pos _) hpred
+  have hden :
+      ((q ^ (k - 1) * (q - 1) : ℕ) : ℝ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hdenNat)
+  rw [totient_owner_modulus hq h3 k hk]
+  simp only [Nat.cast_mul, Nat.cast_ofNat]
+  have hden' :
+      (q ^ (k - 1) : ℝ) * ((q - 1 : ℕ) : ℝ) ≠ 0 := by
+    simpa only [Nat.cast_mul, Nat.cast_pow] using hden
+  field_simp
+
+/-- A prime-counting estimate for reduced classes transfers
+    to the corresponding Hire prime-power level.
+
+    hAP is the explicit analytic input. -/
+theorem doorLevel_count_le_of_prime_class_bound
+    (T : Finset ℕ) (X q k : ℕ)
+    (hP : ∀ p ∈ T, p.Prime)
+    (hOwner3 : ∀ p ∈ T, p ≠ 3)
+    (hX : ∀ p ∈ T, p ≤ X)
+    (hq : q.Prime) (hq3 : q ≠ 3)
+    (hk : 0 < k)
+    (A : ℝ)
+    (hAP : ∀ r : ℕ,
+      r < 3 * q ^ k →
+      Nat.Coprime r (3 * q ^ k) →
+        (primeResidueCount X (3 * q ^ k) r : ℝ) ≤
+          A / (Nat.totient (3 * q ^ k) : ℝ)) :
+    ((doorLevelOwners T (q ^ k)).card : ℝ) ≤
+      A / ((q ^ (k - 1) * (q - 1) : ℕ) : ℝ) := by
+  obtain ⟨rPlus, rMinus, hrPlus, hrMinus,
+      hcPlus, hcMinus, hne, hcount⟩ :=
+    doorLevel_count_le_two_primeResidueCounts
+      T X q k hP hOwner3 hX hq hq3 hk
+  have hcountR :
+      ((doorLevelOwners T (q ^ k)).card : ℝ) ≤
+        (primeResidueCount X (3 * q ^ k) rPlus : ℝ) +
+          (primeResidueCount X (3 * q ^ k) rMinus : ℝ) := by
+    exact_mod_cast hcount
+  have hPlus := hAP rPlus hrPlus hcPlus
+  have hMinus := hAP rMinus hrMinus hcMinus
+  calc
+    _ ≤ (primeResidueCount X (3 * q ^ k) rPlus : ℝ) +
+        (primeResidueCount X (3 * q ^ k) rMinus : ℝ) :=
+      hcountR
+    _ ≤ A / (Nat.totient (3 * q ^ k) : ℝ) +
+        A / (Nat.totient (3 * q ^ k) : ℝ) :=
+      add_le_add hPlus hMinus
+    _ = A *
+        (2 / (Nat.totient (3 * q ^ k) : ℝ)) := by
+      ring
+    _ = A /
+        ((q ^ (k - 1) * (q - 1) : ℕ) : ℝ) := by
+      rw [owner_level_density_coefficient hq hq3 k hk]
+      ring
+
+/-- The prime-power denominator has the geometric form
+    required by the lower-tail estimate. -/
+theorem prime_power_bound_eq_geometric
+    (A : ℝ) {q k : ℕ}
+    (hq : q.Prime) (hk : 0 < k) :
+    A / ((q ^ (k - 1) * (q - 1) : ℕ) : ℝ) =
+      (A * (q : ℝ) / ((q : ℝ) - 1)) *
+        (1 / (q : ℝ)) ^ k := by
+  have hq1 : 1 ≤ q := by
+    have := hq.two_le
+    omega
+  have hqR : (1 : ℝ) < q := by
+    exact_mod_cast hq.one_lt
+  have hq0 : (q : ℝ) ≠ 0 := by linarith
+  have hm0 : (q : ℝ) - 1 ≠ 0 := by linarith
+  cases k with
+  | zero => omega
+  | succ n =>
+      simp only [Nat.succ_sub_one, Nat.cast_mul, Nat.cast_pow]
+      rw [Nat.cast_sub hq1]
+      simp only [Nat.cast_one, one_div, pow_succ]
+      have hinv :
+          (q : ℝ) ^ n * ((q : ℝ)⁻¹) ^ n = 1 := by
+        rw [← mul_pow, mul_inv_cancel₀ hq0, one_pow]
+      field_simp [hq0, hm0]
+      simp only [one_div, mul_assoc, hinv, mul_one]
+
+/-- A reduced-class prime-counting estimate supplies
+    a geometric bound for the owner residue count. -/
+theorem residueLevel_count_le_geometric_of_prime_class_bound
+    (T : Finset ℕ) (X q k : ℕ)
+    (hP : ∀ p ∈ T, p.Prime)
+    (hOwner3 : ∀ p ∈ T, p ≠ 3)
+    (hX : ∀ p ∈ T, p ≤ X)
+    (hq : q.Prime) (hq3 : q ≠ 3)
+    (hk : 0 < k)
+    (A : ℝ)
+    (hAP : ∀ r : ℕ,
+      r < 3 * q ^ k →
+      Nat.Coprime r (3 * q ^ k) →
+        (primeResidueCount X (3 * q ^ k) r : ℝ) ≤
+          A / (Nat.totient (3 * q ^ k) : ℝ)) :
+    ((residueLevelOwners T (q ^ k)).card : ℝ) ≤
+      (A * (q : ℝ) / ((q : ℝ) - 1)) *
+        (1 / (q : ℝ)) ^ k := by
+  have hlevel :=
+    doorLevel_count_le_of_prime_class_bound
+      T X q k hP hOwner3 hX hq hq3 hk A hAP
+  rw [card_doorLevelOwners_eq_residueLevelOwners
+    T (q ^ k) hP hOwner3
+    (one_lt_prime_pow_level hq hk)] at hlevel
+  rw [prime_power_bound_eq_geometric A hq hk] at hlevel
+  exact hlevel
+
+/-- Reduced-class prime-counting bounds at the lower
+    omitted levels control the full truncation error. -/
+theorem truncation_error_le_of_prime_class_bounds
+    (T : Finset ℕ) (X q K J B : ℕ)
+    (hP : ∀ p ∈ T, p.Prime)
+    (hOwner3 : ∀ p ∈ T, p ≠ 3)
+    (hX : ∀ p ∈ T, p ≤ X)
+    (hq : q.Prime) (hq3 : q ≠ 3)
+    (hKJ : K ≤ J)
+    (hB : ∀ p ∈ T, Hire.m0 p < q ^ B)
+    (A : ℝ) (hA : 0 ≤ A)
+    (hAP : ∀ k ∈ Finset.Ico 1 B,
+      K < k → k ≤ J →
+      ∀ r : ℕ,
+        r < 3 * q ^ k →
+        Nat.Coprime r (3 * q ^ k) →
+          (primeResidueCount X (3 * q ^ k) r : ℝ) ≤
+            A / (Nat.totient (3 * q ^ k) : ℝ)) :
+    ((incomingMultiplicity T q -
+        truncatedIncomingMultiplicity T q K B : ℕ) : ℝ) ≤
+      (A * (q : ℝ) / ((q : ℝ) - 1)) *
+        (1 / (q : ℝ)) ^ (K + 1) /
+          (1 - 1 / (q : ℝ)) +
+      (2 * (X : ℝ) * (1 / (q : ℝ)) ^ (J + 1) /
+        (1 - 1 / (q : ℝ)) +
+          2 * ((B - (J + 1) : ℕ) : ℝ)) := by
+  have hqR : (1 : ℝ) < q := by
+    exact_mod_cast hq.one_lt
+  have hC :
+      0 ≤ A * (q : ℝ) / ((q : ℝ) - 1) :=
+    div_nonneg
+      (mul_nonneg hA (Nat.cast_nonneg q))
+      (by linarith)
+  apply incomingMultiplicity_truncation_error_le
+    T X q K J B hP hOwner3 hq hX hKJ hB
+    (A * (q : ℝ) / ((q : ℝ) - 1)) hC
+  intro k hk hkK hkJ
+  have hkpos : 0 < k := by
+    have := (Finset.mem_Ico.mp hk).1
+    omega
+  exact residueLevel_count_le_geometric_of_prime_class_bound
+    T X q k hP hOwner3 hX hq hq3 hkpos A
+    (hAP k hk hkK hkJ)
+
 end HireEulerDoor
