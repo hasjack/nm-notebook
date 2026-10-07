@@ -1311,4 +1311,139 @@ theorem truncation_error_le_of_prime_class_bounds
     T X q k hP hOwner3 hX hq hq3 hkpos A
     (hAP k hk hkK hkJ)
 
+/-- Below the square-root cutoff, the logarithmic
+    denominator is at least half of log X. -/
+theorem log_ratio_ge_half_log
+    (x m : ℝ)
+    (hx : 1 < x)
+    (hm : 0 < m)
+    (hcut : m ^ 2 ≤ x) :
+    Real.log x / 2 ≤ Real.log (x / m) := by
+  have hx0 : x ≠ 0 := by linarith
+  have hm0 : m ≠ 0 := ne_of_gt hm
+  have hlogs :=
+    Real.log_le_log (pow_pos hm 2) hcut
+  rw [Real.log_pow] at hlogs
+  norm_num only [Nat.cast_ofNat] at hlogs
+  rw [Real.log_div hx0 hm0]
+  linarith
+
+/-- A supplied Brun–Titchmarsh inequality yields the
+    reduced-class estimate used by the Hire interface
+    whenever M is below the square-root cutoff. -/
+theorem primeResidueCount_le_square_root_bound
+    (X M r : ℕ)
+    (hX : 1 < X)
+    (hM : 0 < M)
+    (hcut : M ^ 2 ≤ X)
+    (hphi : 0 < Nat.totient M)
+    (hBT :
+      (primeResidueCount X M r : ℝ) ≤
+        2 * (X : ℝ) /
+          ((Nat.totient M : ℝ) *
+            Real.log ((X : ℝ) / (M : ℝ)))) :
+    (primeResidueCount X M r : ℝ) ≤
+      (4 * (X : ℝ) / Real.log (X : ℝ)) /
+        (Nat.totient M : ℝ) := by
+  have hXR : (1 : ℝ) < X := by exact_mod_cast hX
+  have hMR : (0 : ℝ) < M := by exact_mod_cast hM
+  have hcutR : (M : ℝ) ^ 2 ≤ X := by
+    exact_mod_cast hcut
+  have hphiR : (0 : ℝ) < Nat.totient M := by
+    exact_mod_cast hphi
+  have hlogX : 0 < Real.log (X : ℝ) :=
+    Real.log_pos hXR
+  have hlog :=
+    log_ratio_ge_half_log
+      (X : ℝ) (M : ℝ) hXR hMR hcutR
+  have hlogRatio :
+      0 < Real.log ((X : ℝ) / (M : ℝ)) := by
+    linarith
+  have hdenRatio :
+      0 < (Nat.totient M : ℝ) *
+        Real.log ((X : ℝ) / (M : ℝ)) :=
+    mul_pos hphiR hlogRatio
+  have hdenX :
+      0 < (Nat.totient M : ℝ) * Real.log (X : ℝ) :=
+    mul_pos hphiR hlogX
+  have hscaled :=
+    mul_le_mul_of_nonneg_left hlog
+      (mul_nonneg (Nat.cast_nonneg X) hphiR.le)
+  calc
+    _ ≤ 2 * (X : ℝ) /
+        ((Nat.totient M : ℝ) *
+          Real.log ((X : ℝ) / (M : ℝ))) := hBT
+    _ ≤ 4 * (X : ℝ) /
+        ((Nat.totient M : ℝ) * Real.log (X : ℝ)) := by
+      apply (div_le_div_iff₀ hdenRatio hdenX).mpr
+      nlinarith [hscaled]
+    _ = (4 * (X : ℝ) / Real.log (X : ℝ)) /
+        (Nat.totient M : ℝ) := by
+      rw [div_div,
+        mul_comm (Real.log (X : ℝ)) (Nat.totient M : ℝ)]
+
+/-- A supplied Brun–Titchmarsh theorem controls the Hire
+    truncation error when the lower omitted levels lie
+    below the square-root cutoff. -/
+theorem truncation_error_le_of_brun_titchmarsh
+    (T : Finset ℕ) (X q K J B : ℕ)
+    (hP : ∀ p ∈ T, p.Prime)
+    (hOwner3 : ∀ p ∈ T, p ≠ 3)
+    (hOwnersX : ∀ p ∈ T, p ≤ X)
+    (hq : q.Prime) (hq3 : q ≠ 3)
+    (hX : 1 < X)
+    (hKJ : K ≤ J)
+    (hB : ∀ p ∈ T, Hire.m0 p < q ^ B)
+    (hcut : ∀ k ∈ Finset.Ico 1 B,
+      K < k → k ≤ J →
+        (3 * q ^ k) ^ 2 ≤ X)
+    (hBT : ∀ M r : ℕ,
+      1 < M → M < X →
+      r < M → Nat.Coprime r M →
+        (primeResidueCount X M r : ℝ) ≤
+          2 * (X : ℝ) /
+            ((Nat.totient M : ℝ) *
+              Real.log ((X : ℝ) / (M : ℝ)))) :
+    ((incomingMultiplicity T q -
+        truncatedIncomingMultiplicity T q K B : ℕ) : ℝ) ≤
+      ((4 * (X : ℝ) / Real.log (X : ℝ)) *
+          (q : ℝ) / ((q : ℝ) - 1)) *
+        (1 / (q : ℝ)) ^ (K + 1) /
+          (1 - 1 / (q : ℝ)) +
+      (2 * (X : ℝ) * (1 / (q : ℝ)) ^ (J + 1) /
+        (1 - 1 / (q : ℝ)) +
+          2 * ((B - (J + 1) : ℕ) : ℝ)) := by
+  have hXR : (1 : ℝ) < X := by exact_mod_cast hX
+  have hlogX : 0 < Real.log (X : ℝ) :=
+    Real.log_pos hXR
+  have hA : 0 ≤ 4 * (X : ℝ) / Real.log (X : ℝ) :=
+    div_nonneg
+      (mul_nonneg (by norm_num) (Nat.cast_nonneg X))
+      hlogX.le
+  apply truncation_error_le_of_prime_class_bounds
+    T X q K J B hP hOwner3 hOwnersX hq hq3
+    hKJ hB
+    (4 * (X : ℝ) / Real.log (X : ℝ)) hA
+  intro k hk hkK hkJ r hr hcop
+  have hkpos : 0 < k := by
+    have := (Finset.mem_Ico.mp hk).1
+    omega
+  have hpow : 0 < q ^ k := pow_pos hq.pos k
+  have hM : 1 < 3 * q ^ k := by omega
+  have hMpos : 0 < 3 * q ^ k := by omega
+  have hcutk : (3 * q ^ k) ^ 2 ≤ X :=
+    hcut k hk hkK hkJ
+  have hMX : 3 * q ^ k < X := by
+    nlinarith
+  have hpred : 0 < q - 1 := by
+    have := hq.two_le
+    omega
+  have hphi : 0 < Nat.totient (3 * q ^ k) := by
+    rw [totient_owner_modulus hq hq3 k hkpos]
+    exact Nat.mul_pos (by norm_num)
+      (Nat.mul_pos (pow_pos hq.pos _) hpred)
+  exact primeResidueCount_le_square_root_bound
+    X (3 * q ^ k) r hX hMpos hcutk hphi
+    (hBT (3 * q ^ k) r hM hMX hr hcop)
+
 end HireEulerDoor

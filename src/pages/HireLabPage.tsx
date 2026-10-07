@@ -124,6 +124,12 @@ export function HireLabPage() {
           for prime counts in reduced classes at the lower omitted levels. Lean
           verifies that those bounds imply the stated Hire truncation-error
           estimate; it does not yet prove the prime-counting estimate itself.
+          The next Lean bridge,{" "}
+          <code>truncation_error_le_of_brun_titchmarsh</code>, makes the same
+          transfer from an explicitly supplied Brun–Titchmarsh inequality under
+          a square-root cutoff. The analytic inequality is still a hypothesis;
+          the limiting average q/(q−1)<sup>2</sup> is the next mathematical
+          target.
         </p>
         <aside className="lab-theorem" aria-label="Fixed hub coefficient">
           <p className="lab-theorem-implies">
@@ -131,6 +137,62 @@ export function HireLabPage() {
             For q = 13, the target limiting average is 13/144.
           </p>
         </aside>
+        <p>
+          The numerical mod-15 experiment takes the <em>q</em> = 5,{" "}
+          <em>k</em> = 1 classes seriously as an explicit-formula observable:
+          <em>S</em>(<em>x</em>) = Σ<sub>n≤x</sub> Λ(<em>n</em>)(<em>x</em> −{" "}
+          <em>n</em>), restricted to residues 4 and 11 modulo 15. It includes
+          logarithmic weights, prime powers, and smoothing, so translating it to
+          ordinary prime-owner counts is a further step.
+        </p>
+        <p>
+          Character orthogonality decomposes this observable into the principal
+          character contribution, a quadratic character induced from conductor
+          5, and a complex-conjugate pair of conductor-15 characters. The scripts
+          account for the induced character&apos;s removed Euler factor and the
+          explicit formula&apos;s correction terms; the coefficients are fixed by
+          arithmetic, with no fitted frequencies.
+        </p>
+        <div className="door-table-wrap">
+          <table className="door-table">
+            <caption>
+              Full corrected, normalised reconstruction over 10
+              <sup>3</sup> ≤ <em>x</em> ≤ 10<sup>6</sup>
+            </caption>
+            <thead>
+              <tr>
+                <th>zero-height cutoff</th>
+                <th>20</th>
+                <th>40</th>
+                <th>80</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>relative RMS error</td>
+                <td>7.22%</td>
+                <td>2.35%</td>
+                <td>1.10%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The final nested critical-line scans, with steps 0.25 and 0.125,
+          agreed on 40 positive-height roots for conductor 5 and 108 roots
+          between heights −80 and 80 for the chosen complex conductor-15
+          character. Refined root residuals were below 10<sup>−21</sup>. These
+          are numerical checks, not certified complete zero lists.
+        </p>
+        <p>
+          The RH connection is through the principal character: zeta zeros
+          contribute there. The reconstruction uses computed critical-line
+          zeros; RH asks whether every nontrivial zeta zero lies on that line.
+          The next milestones are to reproduce the experiment locally, translate
+          the smoothed prime-power observable to ordinary owner counts, test
+          another hub with coefficients fixed before plotting, and resume the
+          fixed-hub average proof using explicit analytic inputs.
+        </p>
         <div className="door-table-wrap">
           <table className="door-table">
             <caption>
