@@ -54,6 +54,73 @@ export function HireLabPage() {
       </section>
 
       <section className="hire-beat">
+        <h2>Euler door checkpoint</h2>
+        <aside className="lab-theorem" aria-label="Euler door checkpoint">
+          <p className="lab-theorem-implies">
+            The checked finite identity is exact: door divisibility, owner
+            residue classes, prime-power multiplicity, and the weighted log
+            reconstruction are the same bookkeeping seen from four angles.
+          </p>
+        </aside>
+        <p>
+          The new Lean file records the local algebra for a single Euler factor,
+          then counts owners using the repository&apos;s actual <em>m</em>
+          <sub>0</sub>. For every modulus <em>Q</em> &gt; 1, a kept door is
+          divisible by <em>Q</em> exactly in the two residue cases{" "}
+          <em>p</em> ≡ 1 mod 3 with <em>p</em> ≡ −1 mod <em>Q</em>, or{" "}
+          <em>p</em> ≡ 2 mod 3 with <em>p</em> ≡ 1 mod <em>Q</em>.
+        </p>
+        <p>
+          Multiplicity is counted by prime-power levels. For example,{" "}
+          <em>m</em>
+          <sub>0</sub>(31) = 32 = 2<sup>5</sup>, so the arc to 2 contributes{" "}
+          5 log 2 to the total door logarithm. Grouping every selected door by
+          destination prime reconstructs the same total as{" "}
+          Σ multiplicity(<em>q</em>) log <em>q</em>.
+        </p>
+        <div className="door-table-wrap">
+          <table className="door-table">
+            <caption>
+              Incoming multiplicities from the experiment at <em>X</em> = 10
+              <sup>6</sup>
+            </caption>
+            <thead>
+              <tr>
+                <th>q</th>
+                <th>2</th>
+                <th>5</th>
+                <th>7</th>
+                <th>11</th>
+                <th>13</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>multiplicity</td>
+                <td>157,097</td>
+                <td>24,489</td>
+                <td>15,238</td>
+                <td>8,645</td>
+                <td>7,086</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="figure-caption">
+          This checkpoint is finite algebra and exact counting. The proposed
+          fixed-<em>q</em> estimate <em>A</em>
+          <sub>q</sub>(<em>X</em>) ~ <em>N</em>(<em>X</em>) q/(q−1)
+          <sup>2</sup> for q ≠ 3 is not proved here. The Dedekind-zeta reading
+          remains mathematical context, not a Lean identification; evaluating
+          individual local factors at 1 does not justify an infinite Euler
+          product at 1, and this proves no constraint on zeta zeros. One bridge
+          also remains open: the generic Euler-factor statements have not yet
+          been specialised to <code>Hire.chi3</code>, <code>Hire.m0</code>, and{" "}
+          <code>Hire.m1</code>.
+        </p>
+      </section>
+
+      <section className="hire-beat">
         <h2>Leading counts</h2>
         <aside className="lab-theorem" aria-label="H frozen">
           <p className="lab-theorem-implies">

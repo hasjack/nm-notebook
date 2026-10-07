@@ -15,6 +15,7 @@ import Hire.WeakQ2
 import Hire.GoldBridge
 import Hire.GoldDisconnects
 import Hire.MobiusDoor
+import Hire.EulerDoor
 import Hire.Torus
 import Hire.SquareCurve
 import Hire.TorusCurveBridge
