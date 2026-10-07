@@ -146,6 +146,15 @@ export function HireLabPage() {
           ordinary prime-owner counts is a further step.
         </p>
         <p>
+          The finite Lean checkpoint now packages the same readout directly:
+          <code>ownerIndicator15_decomposition</code> proves the pointwise
+          identity 4·indicator = principal + quadratic − 2 Re(complex), and the
+          weighted lemmas transfer it to arbitrary finite real weights and to
+          the selected Hire owners. The next formal step is to prove periodicity
+          and multiplicativity of these tables, then construct the corresponding
+          Mathlib <code>DirichletCharacter</code> objects.
+        </p>
+        <p>
           Character orthogonality decomposes this observable into the principal
           character contribution, a quadratic character induced from conductor
           5, and a complex-conjugate pair of conductor-15 characters. The scripts
@@ -191,7 +200,11 @@ export function HireLabPage() {
           The next milestones are to reproduce the experiment locally, translate
           the smoothed prime-power observable to ordinary owner counts, test
           another hub with coefficients fixed before plotting, and resume the
-          fixed-hub average proof using explicit analytic inputs.
+          fixed-hub average proof using explicit analytic inputs. A future
+          analytic bridge can also use the LeanMillenniumPrizeProblems theorem
+          <code>von_mangoldt_lseries_eq_negative_log_derivative_zeta</code>,
+          which identifies the von Mangoldt L-series with the negative
+          logarithmic derivative of zeta in the half-plane Re(<em>s</em>) &gt; 1.
         </p>
         <div className="door-table-wrap">
           <table className="door-table">
