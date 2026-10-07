@@ -421,4 +421,255 @@ theorem tendsto_prime_power_correction
     hasSum_mangoldt_prime_power_correction hp hσ
   simpa only [F, Function.comp_def] using hsum.comp hcut
 
+/-- Positive exponents and shifted natural indices give the same cutoff sum. -/
+theorem primePowerExponents_sum_eq_shifted
+    (p N : ℕ) (f : ℕ → ℝ) :
+    (∑ k ∈ primePowerExponents p N, f k) =
+      ∑ k ∈ (Finset.range N).filter
+        (fun k => p ^ (k + 1) ≤ N), f (k + 1) := by
+  classical
+  symm
+  apply Finset.sum_bij (fun k _ => k + 1)
+  · intro k hk
+    obtain ⟨hkN, hpow⟩ := Finset.mem_filter.mp hk
+    apply Finset.mem_filter.mpr
+    exact ⟨Finset.mem_Icc.mpr
+      ⟨Nat.succ_pos k, Nat.succ_le_of_lt (Finset.mem_range.mp hkN)⟩,
+      hpow⟩
+  · intro a ha b hb hab
+    omega
+  · intro e he
+    obtain ⟨heIcc, hpow⟩ := Finset.mem_filter.mp he
+    obtain ⟨hepos, heN⟩ := Finset.mem_Icc.mp heIcc
+    have hshift : e - 1 + 1 = e := by omega
+    refine ⟨e - 1, ?_, hshift⟩
+    apply Finset.mem_filter.mpr
+    constructor
+    · apply Finset.mem_range.mpr
+      omega
+    · simpa only [hshift] using hpow
+  · intro k hk
+    rfl
+
+/-- The correction over multiples of a prime approaches its Euler expression. -/
+theorem tendsto_mangoldtDirichletWeight_multiples
+    {p : ℕ} (hp : p.Prime)
+    {σ : ℝ} (hσ : 1 < σ) :
+    Filter.Tendsto
+      (fun N : ℕ =>
+        ∑ n ∈ (Finset.Icc 1 N).filter (fun n => p ∣ n),
+          mangoldtDirichletWeight σ n)
+      Filter.atTop
+      (nhds (Real.log (p : ℝ) /
+        (Real.rpow (p : ℝ) σ - 1))) := by
+  have heq :
+      (fun N : ℕ =>
+        ∑ n ∈ (Finset.Icc 1 N).filter (fun n => p ∣ n),
+          mangoldtDirichletWeight σ n) =
+      (fun N : ℕ =>
+        ∑ k ∈ (Finset.range N).filter
+            (fun k => p ^ (k + 1) ≤ N),
+          Real.log (p : ℝ) /
+            Real.rpow ((p ^ (k + 1) : ℕ) : ℝ) σ) := by
+    funext N
+    rw [sum_mangoldtDirichletWeight_multiples_eq_prime_powers hp,
+      primePowerExponents_sum_eq_shifted]
+  rw [heq]
+  exact tendsto_prime_power_correction hp hσ
+
+/-- Excluding multiples of 3 does not change the multiples-of-5 correction. -/
+theorem sum_mangoldt_five_correction_eq
+    (N : ℕ) (σ : ℝ) :
+    (∑ n ∈ (Finset.Icc 1 N).filter
+        (fun n => n % 3 ≠ 0 ∧ n % 5 = 0),
+      mangoldtDirichletWeight σ n) =
+    ∑ n ∈ (Finset.Icc 1 N).filter
+        (fun n => n % 5 = 0),
+      mangoldtDirichletWeight σ n := by
+  classical
+  apply Finset.sum_subset
+  · intro n hn
+    obtain ⟨hnIcc, h3, h5⟩ := Finset.mem_filter.mp hn
+    exact Finset.mem_filter.mpr ⟨hnIcc, h5⟩
+  · intro n hn hnot
+    obtain ⟨hnIcc, h5⟩ := Finset.mem_filter.mp hn
+    by_cases h3 : n % 3 = 0
+    · exact mangoldtDirichletWeight_eq_zero_of_three_and_five_dvd
+        (Nat.dvd_of_mod_eq_zero h3)
+        (Nat.dvd_of_mod_eq_zero h5) σ
+    · exact False.elim
+        (hnot (Finset.mem_filter.mpr ⟨hnIcc, h3, h5⟩))
+
+/-- Transfer a full Mangoldt-sum limit to the principal contribution. -/
+theorem tendsto_principalMangoldtSum15_of_full_limit
+    {σ A : ℝ} (hσ : 1 < σ)
+    (hFull :
+      Filter.Tendsto
+        (fun N : ℕ =>
+          ∑ n ∈ Finset.Icc 1 N,
+            mangoldtDirichletWeight σ n)
+        Filter.atTop (nhds A)) :
+    Filter.Tendsto
+      (fun N : ℕ =>
+        ∑ n ∈ Finset.Icc 1 N,
+          mangoldtDirichletWeight σ n *
+            (principal15 n : ℝ))
+      Filter.atTop
+      (nhds
+        (A -
+          Real.log 3 / (Real.rpow 3 σ - 1) -
+          Real.log 5 / (Real.rpow 5 σ - 1))) := by
+  have hthree :=
+    tendsto_mangoldtDirichletWeight_multiples
+      (p := 3) (by norm_num) hσ
+  have hfive :=
+    tendsto_mangoldtDirichletWeight_multiples
+      (p := 5) (by norm_num) hσ
+
+  have heq :
+      (fun N : ℕ =>
+        ∑ n ∈ Finset.Icc 1 N,
+          mangoldtDirichletWeight σ n *
+            (principal15 n : ℝ)) =
+      (fun N : ℕ =>
+        (∑ n ∈ Finset.Icc 1 N,
+          mangoldtDirichletWeight σ n) -
+        (∑ n ∈ (Finset.Icc 1 N).filter
+            (fun n => 3 ∣ n),
+          mangoldtDirichletWeight σ n) -
+        (∑ n ∈ (Finset.Icc 1 N).filter
+            (fun n => 5 ∣ n),
+          mangoldtDirichletWeight σ n)) := by
+    funext N
+    rw [principalMangoldtSum15_eq_sub_corrections,
+      sum_mangoldt_five_correction_eq]
+    simp only [Nat.dvd_iff_mod_eq_zero]
+
+  rw [heq]
+  exact (hFull.sub hthree).sub hfive
+
+/-- The real-valued zeta logarithmic derivative used by our sums. -/
+noncomputable def zetaMangoldtValue (σ : ℝ) : ℝ :=
+  (-deriv riemannZeta (σ : ℂ) /
+    riemannZeta (σ : ℂ)).re
+
+/-- Our real weight is the real part of the complex L-series term. -/
+theorem mangoldtDirichletWeight_eq_term_re
+    (σ : ℝ) (n : ℕ) :
+    mangoldtDirichletWeight σ n =
+      (LSeries.term
+        (fun m => (ArithmeticFunction.vonMangoldt m : ℂ))
+        (σ : ℂ) n).re := by
+  by_cases hn : n = 0
+  · subst n
+    simp [mangoldtDirichletWeight]
+  · rw [LSeries.term_of_ne_zero hn]
+    have hpow :
+        (n : ℂ) ^ (σ : ℂ) =
+          (Real.rpow (n : ℝ) σ : ℂ) := by
+      simpa only [Complex.ofReal_natCast,
+        ← Real.rpow_eq_pow] using
+        (Complex.ofReal_cpow (Nat.cast_nonneg n) σ).symm
+    rw [hpow, ← Complex.ofReal_div, Complex.ofReal_re]
+    rfl
+
+/-- Mathlib supplies convergence and the zeta value of the full series. -/
+theorem hasSum_mangoldtDirichletWeight
+    {σ : ℝ} (hσ : 1 < σ) :
+    HasSum (mangoldtDirichletWeight σ)
+      (zetaMangoldtValue σ) := by
+  have hσC : 1 < (σ : ℂ).re := by
+    simpa using hσ
+  have hs :=
+    ArithmeticFunction.LSeriesSummable_vonMangoldt hσC
+  have hc :
+      HasSum
+        (LSeries.term
+          (fun n => (ArithmeticFunction.vonMangoldt n : ℂ))
+          (σ : ℂ))
+        (-deriv riemannZeta (σ : ℂ) /
+          riemannZeta (σ : ℂ)) := by
+    have h := hs.LSeriesHasSum
+    change HasSum
+      (LSeries.term
+        (fun n => (ArithmeticFunction.vonMangoldt n : ℂ))
+        (σ : ℂ))
+      (LSeries
+        (fun n => (ArithmeticFunction.vonMangoldt n : ℂ))
+        (σ : ℂ)) at h
+    rw [ArithmeticFunction.LSeries_vonMangoldt_eq_deriv_riemannZeta_div
+      hσC] at h
+    exact h
+  have hr := Complex.reCLM.hasSum hc
+  simpa only [Complex.reCLM_apply,
+    ← mangoldtDirichletWeight_eq_term_re,
+    zetaMangoldtValue] using hr
+
+/-- A convergent series with zero initial term has these partial-sum limits. -/
+theorem tendsto_sum_Icc_one_of_hasSum
+    {f : ℕ → ℝ} {A : ℝ}
+    (hs : HasSum f A) (hzero : f 0 = 0) :
+    Filter.Tendsto
+      (fun N : ℕ => ∑ n ∈ Finset.Icc 1 N, f n)
+      Filter.atTop (nhds A) := by
+  classical
+  have hcut :
+      Filter.Tendsto
+        (fun N : ℕ => Finset.Icc 0 N)
+        Filter.atTop Filter.atTop := by
+    apply Filter.tendsto_atTop.2
+    intro S
+    apply Filter.eventually_atTop.2
+    refine ⟨S.sup (fun n : ℕ => n), ?_⟩
+    intro N hN n hn
+    exact Finset.mem_Icc.mpr
+      ⟨Nat.zero_le n,
+        (Finset.le_sup (f := fun n : ℕ => n) hn).trans hN⟩
+
+  have heq :
+      (fun N : ℕ => ∑ n ∈ Finset.Icc 1 N, f n) =
+      (fun N : ℕ => ∑ n ∈ Finset.Icc 0 N, f n) := by
+    funext N
+    apply Finset.sum_subset
+    · intro n hn
+      exact Finset.mem_Icc.mpr
+        ⟨Nat.zero_le n, (Finset.mem_Icc.mp hn).2⟩
+    · intro n hn hnot
+      by_cases hn0 : n = 0
+      · simpa only [hn0] using hzero
+      · exact False.elim
+          (hnot (Finset.mem_Icc.mpr
+            ⟨Nat.one_le_iff_ne_zero.mpr hn0,
+              (Finset.mem_Icc.mp hn).2⟩))
+  rw [heq]
+  simpa only [Function.comp_def] using hs.comp hcut
+
+/-- The full finite Mangoldt sums approach the zeta logarithmic derivative. -/
+theorem tendsto_fullMangoldtSum
+    {σ : ℝ} (hσ : 1 < σ) :
+    Filter.Tendsto
+      (fun N : ℕ =>
+        ∑ n ∈ Finset.Icc 1 N,
+          mangoldtDirichletWeight σ n)
+      Filter.atTop (nhds (zetaMangoldtValue σ)) := by
+  apply tendsto_sum_Icc_one_of_hasSum
+    (hasSum_mangoldtDirichletWeight hσ)
+  simp [mangoldtDirichletWeight]
+
+/-- The principal contribution has its explicit zeta limit. -/
+theorem tendsto_principalMangoldtSum15
+    {σ : ℝ} (hσ : 1 < σ) :
+    Filter.Tendsto
+      (fun N : ℕ =>
+        ∑ n ∈ Finset.Icc 1 N,
+          mangoldtDirichletWeight σ n *
+            (principal15 n : ℝ))
+      Filter.atTop
+      (nhds
+        (zetaMangoldtValue σ -
+          Real.log 3 / (Real.rpow 3 σ - 1) -
+          Real.log 5 / (Real.rpow 5 σ - 1))) := by
+  exact tendsto_principalMangoldtSum15_of_full_limit
+    hσ (tendsto_fullMangoldtSum hσ)
+
 end HireCharacterReadout

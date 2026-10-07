@@ -154,6 +154,20 @@ export function HireLabPage() {
           and multiplicativity of these tables, then construct the corresponding
           Mathlib <code>DirichletCharacter</code> objects.
         </p>
+        <aside className="lab-theorem" aria-label="Principal Mangoldt limit">
+          <p className="lab-theorem-implies">
+            For σ &gt; 1, the principal contribution tends to Re(−ζ′(σ)/ζ(σ))
+            − log 3/(3<sup>σ</sup> − 1) − log 5/(5<sup>σ</sup> − 1).
+          </p>
+        </aside>
+        <p>
+          The zeta bridge is now formalized as{" "}
+          <code>tendsto_principalMangoldtSum15</code>. The correction terms
+          remove the prime powers of 3 and 5 from the full Mangoldt series:
+          multiples of 3 are subtracted first, and the remaining multiples of 5
+          are identified with the unrestricted 5-power correction because
+          Mangoldt weights vanish on numbers with two distinct prime divisors.
+        </p>
         <p>
           Character orthogonality decomposes this observable into the principal
           character contribution, a quadratic character induced from conductor
@@ -200,11 +214,11 @@ export function HireLabPage() {
           The next milestones are to reproduce the experiment locally, translate
           the smoothed prime-power observable to ordinary owner counts, test
           another hub with coefficients fixed before plotting, and resume the
-          fixed-hub average proof using explicit analytic inputs. A future
-          analytic bridge can also use the LeanMillenniumPrizeProblems theorem
-          <code>von_mangoldt_lseries_eq_negative_log_derivative_zeta</code>,
-          which identifies the von Mangoldt L-series with the negative
-          logarithmic derivative of zeta in the half-plane Re(<em>s</em>) &gt; 1.
+          fixed-hub average proof using explicit analytic inputs. The next Lean
+          step for this character bridge is to construct Mathlib{" "}
+          <code>DirichletCharacter</code> objects for the quadratic and complex
+          tables, then connect their weighted sums to the corresponding{" "}
+          −<em>L</em>′/<em>L</em> identities.
         </p>
         <div className="door-table-wrap">
           <table className="door-table">
