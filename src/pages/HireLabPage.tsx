@@ -184,6 +184,20 @@ export function HireLabPage() {
           first-level hub-5 observable is{" "}
           <code>tendsto_four_ownerMangoldtSum15</code>.
         </p>
+        <aside className="lab-theorem" aria-label="Hub 5 quarter limit">
+          <p className="lab-theorem-implies">
+            lim<sub>σ→1+</sub> (σ − 1)·ownerMangoldtLimit15(σ) = 1/4.
+          </p>
+        </aside>
+        <p>
+          The boundary-limit checkpoint is{" "}
+          <code>tendsto_scaled_ownerMangoldtLimit15_at_one</code>. The order of
+          limits matters: first take the finite cutoff <em>N</em> → ∞ at fixed
+          σ &gt; 1, then take σ → 1<sup>+</sup>. The coefficient 1/4 is the
+          leading Mangoldt-weighted coefficient for the first-level hub-5
+          readout. The valuation average 5/16 is a separate statistic, not this
+          boundary coefficient.
+        </p>
         <p>
           Character orthogonality decomposes this observable into the principal
           character contribution, a quadratic character induced from conductor
@@ -230,10 +244,9 @@ export function HireLabPage() {
           The next milestones are to reproduce the experiment locally, translate
           the smoothed prime-power observable to ordinary owner counts, test
           another hub with coefficients fixed before plotting, and resume the
-          fixed-hub average proof using explicit analytic inputs. The next Lean
-          target is the behaviour as σ → 1<sup>+</sup>: start with
-          nontriviality of the two characters, nonvanishing of their
-          L-functions at 1, and control of their logarithmic derivatives near 1.
+          fixed-hub average proof using explicit analytic inputs. The next
+          exploration is to identify the analytic input needed to transfer this
+          weighted boundary result to ordinary prime-owner counts.
         </p>
         <div className="door-table-wrap">
           <table className="door-table">
