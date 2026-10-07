@@ -78,6 +78,39 @@ export function HireLabPage() {
           destination prime reconstructs the same total as{" "}
           Σ multiplicity(<em>q</em>) log <em>q</em>.
         </p>
+        <p>
+          The truncation checkpoint makes that bookkeeping quantitative. A door
+          containing 2<sup>5</sup> contributes five copies of 2; if the first two
+          levels are retained, three copies remain in the tail. In Lean,{" "}
+          <code>incomingMultiplicity_truncation_error_le</code> connects that
+          exact error to a combined low/high tail bound.
+        </p>
+        <aside className="lab-theorem" aria-label="Euler door tail bound">
+          <p className="lab-theorem-implies">
+            truncation error ≤ C r<sup>K+1</sup> / (1 − r) + 2X r
+            <sup>J+1</sup> / (1 − r) + 2 max(B − J − 1, 0), with r = 1/q.
+          </p>
+        </aside>
+        <p>
+          Here <em>K</em> is the last retained level, <em>J</em> splits lower
+          omitted levels from the high tail, and <em>B</em> is the exclusive
+          level bound chosen so every selected door is below q<sup>B</sup>. The
+          coefficient <em>C</em> belongs to the assumed lower-level estimate{" "}
+          <em>N</em>
+          <sub>
+            q<sup>k</sup>
+          </sub>
+          (<em>X</em>) ≤ <em>C</em>q<sup>−k</sup>.
+        </p>
+        <p>
+          Proved in this file: <code>slot_sum_Ico_le_geometric</code>,{" "}
+          <code>incomingMultiplicityHighTail_le_geometric</code>,{" "}
+          <code>incomingMultiplicityLowTail_le_geometric</code>,{" "}
+          <code>incomingMultiplicityTail_le_combined</code>, and the exact
+          truncation-error bridge above. The high-level term follows from
+          integer-slot estimates; the lower-level term is conditional on the
+          explicit hypothesis <code>hLow</code>.
+        </p>
         <div className="door-table-wrap">
           <table className="door-table">
             <caption>
@@ -116,7 +149,11 @@ export function HireLabPage() {
           product at 1, and this proves no constraint on zeta zeros. One bridge
           also remains open: the generic Euler-factor statements have not yet
           been specialised to <code>Hire.chi3</code>, <code>Hire.m0</code>, and{" "}
-          <code>Hire.m1</code>.
+          <code>Hire.m1</code>. The next milestone is to supply the lower-level
+          prime-counting estimate and assemble the limiting average-multiplicity
+          argument; experiments through <em>X</em> = 100,000,000 support the
+          predicted average q/(q−1)<sup>2</sup> for each fixed prime q ≠ 3, but
+          this Lean file does not prove that limit.
         </p>
       </section>
 

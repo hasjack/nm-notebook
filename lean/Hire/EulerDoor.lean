@@ -658,4 +658,247 @@ theorem geometric_slot_sum_le
     _ = 2 * X * r ^ a / (1 - r) +
         2 * (n : ℝ) := by ring
 
+/-- Integer-slot counts over an interval of levels satisfy
+    the geometric bound. -/
+theorem slot_sum_Ico_le_geometric
+    (X q a B : ℕ)
+    (hq : 1 < q) :
+    (∑ k ∈ Finset.Ico a B,
+      ((2 * (X / q ^ k + 1) : ℕ) : ℝ)) ≤
+        2 * (X : ℝ) * (1 / (q : ℝ)) ^ a /
+          (1 - 1 / (q : ℝ)) +
+            2 * ((B - a : ℕ) : ℝ) := by
+  have hqR : (1 : ℝ) < q := by exact_mod_cast hq
+  have hqpos : (0 : ℝ) < q := by linarith
+  have hr : (0 : ℝ) ≤ 1 / (q : ℝ) := by positivity
+  have hr1 : (1 : ℝ) / q < 1 := by
+    apply (div_lt_iff₀ hqpos).mpr
+    simpa using hqR
+  calc
+    _ ≤ ∑ k ∈ Finset.Ico a B,
+        2 * ((X : ℝ) * (1 / (q : ℝ)) ^ k + 1) := by
+      apply Finset.sum_le_sum
+      intro k hk
+      have hdiv :
+          ((X / q ^ k : ℕ) : ℝ) ≤
+            (X : ℝ) * (1 / (q : ℝ)) ^ k := by
+        simpa only [Nat.cast_pow, div_eq_mul_inv,
+          one_div, one_mul, inv_pow] using
+          (Nat.cast_div_le (m := X) (n := q ^ k) :
+            ((X / q ^ k : ℕ) : ℝ) ≤
+              (X : ℝ) / ((q ^ k : ℕ) : ℝ))
+      push_cast
+      linarith
+    _ = ∑ i ∈ Finset.range (B - a),
+        2 * ((X : ℝ) *
+          (1 / (q : ℝ)) ^ (a + i) + 1) :=
+      Finset.sum_Ico_eq_sum_range _ a B
+    _ ≤ _ :=
+      geometric_slot_sum_le
+        (X : ℝ) (1 / (q : ℝ)) a (B - a)
+        (by positivity) hr hr1
+
+/-- The actual high tail is bounded by a geometric term
+    plus the rounding allowance for its remaining levels. -/
+theorem incomingMultiplicityHighTail_le_geometric
+    (T : Finset ℕ) (X q K J B : ℕ)
+    (hP : ∀ p ∈ T, p.Prime)
+    (h3 : ∀ p ∈ T, p ≠ 3)
+    (hq : q.Prime)
+    (hX : ∀ p ∈ T, p ≤ X)
+    (hKJ : K ≤ J) :
+    (incomingMultiplicityHighTail T q K J B : ℝ) ≤
+      2 * (X : ℝ) * (1 / (q : ℝ)) ^ (J + 1) /
+        (1 - 1 / (q : ℝ)) +
+          2 * ((B - (J + 1) : ℕ) : ℝ) := by
+  have heq :
+      incomingMultiplicityHighTail T q K J B =
+        incomingMultiplicityTail T q J B := by
+    unfold incomingMultiplicityHighTail incomingMultiplicityTail
+    have hsets :
+        ((Finset.Ico 1 B).filter (fun k => K < k)).filter
+            (fun k => J < k) =
+          (Finset.Ico 1 B).filter (fun k => J < k) := by
+      ext k
+      simp only [Finset.mem_filter, Finset.mem_Ico]
+      omega
+    rw [hsets]
+  have hlevels :
+      (Finset.Ico 1 B).filter (fun k => J < k) =
+        Finset.Ico (J + 1) B := by
+    ext k
+    simp only [Finset.mem_filter, Finset.mem_Ico]
+    omega
+  calc
+    _ = (incomingMultiplicityTail T q J B : ℝ) := by
+      rw [heq]
+    _ ≤ ∑ k ∈ (Finset.Ico 1 B).filter
+          (fun k => J < k),
+        ((2 * (X / q ^ k + 1) : ℕ) : ℝ) := by
+      simpa only [Nat.cast_sum] using
+        (incomingMultiplicityTail_le_slot_sum
+          T X q J B hP h3 hq hX)
+    _ = ∑ k ∈ Finset.Ico (J + 1) B,
+        ((2 * (X / q ^ k + 1) : ℕ) : ℝ) := by
+      rw [hlevels]
+    _ ≤ _ :=
+      slot_sum_Ico_le_geometric
+        X q (J + 1) B
+        (by have := hq.two_le; omega)
+
+/-- A weighted geometric sum over an interval is bounded
+    by the full geometric tail beginning at its first level. -/
+theorem weighted_geometric_Ico_le
+    (C r : ℝ) (a b : ℕ)
+    (hC : 0 ≤ C)
+    (hr : 0 ≤ r) (hr1 : r < 1) :
+    (∑ k ∈ Finset.Ico a b, C * r ^ k) ≤
+      C * r ^ a / (1 - r) := by
+  have hcoef : 0 ≤ C * r ^ a :=
+    mul_nonneg hC (pow_nonneg hr a)
+  have hgeom := finite_geometric_sum_le r (b - a) hr hr1
+  calc
+    _ = ∑ i ∈ Finset.range (b - a),
+        C * r ^ (a + i) :=
+      Finset.sum_Ico_eq_sum_range _ a b
+    _ = ∑ i ∈ Finset.range (b - a),
+        (C * r ^ a) * r ^ i := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      rw [pow_add]
+      ring
+    _ = (C * r ^ a) *
+        (∑ i ∈ Finset.range (b - a), r ^ i) := by
+      rw [Finset.mul_sum]
+    _ ≤ (C * r ^ a) * (1 / (1 - r)) :=
+      mul_le_mul_of_nonneg_left hgeom hcoef
+    _ = C * r ^ a / (1 - r) := by ring
+
+/-- A geometric per-level residue-count estimate bounds
+    the lower omitted multiplicity.
+
+    hLow is the explicit analytic input. -/
+theorem incomingMultiplicityLowTail_le_geometric
+    (T : Finset ℕ) (q K J B : ℕ)
+    (hP : ∀ p ∈ T, p.Prime)
+    (h3 : ∀ p ∈ T, p ≠ 3)
+    (hq : q.Prime)
+    (C r : ℝ)
+    (hC : 0 ≤ C)
+    (hr : 0 ≤ r) (hr1 : r < 1)
+    (hLow : ∀ k ∈ Finset.Ico 1 B,
+      K < k → k ≤ J →
+        ((residueLevelOwners T (q ^ k)).card : ℝ) ≤
+          C * r ^ k) :
+    (incomingMultiplicityLowTail T q K J B : ℝ) ≤
+      C * r ^ (K + 1) / (1 - r) := by
+  have hsub :
+      ((Finset.Ico 1 B).filter (fun k => K < k)).filter
+          (fun k => k ≤ J) ⊆
+        Finset.Ico (K + 1) (J + 1) := by
+    intro k hk
+    simp only [Finset.mem_filter, Finset.mem_Ico] at hk ⊢
+    omega
+  unfold incomingMultiplicityLowTail
+  rw [Nat.cast_sum]
+  calc
+    _ ≤ ∑ k ∈
+        ((Finset.Ico 1 B).filter (fun k => K < k)).filter
+          (fun k => k ≤ J),
+        C * r ^ k := by
+      apply Finset.sum_le_sum
+      intro k hk
+      rcases Finset.mem_filter.mp hk with ⟨hkTail, hkJ⟩
+      rcases Finset.mem_filter.mp hkTail with ⟨hkIco, hkK⟩
+      have hkpos : 1 ≤ k :=
+        (Finset.mem_Ico.mp hkIco).1
+      have hQ : 1 < q ^ k := by
+        cases k with
+        | zero => omega
+        | succ k =>
+            rw [pow_succ]
+            have hpow : 0 < q ^ k := pow_pos hq.pos k
+            have hq2 := hq.two_le
+            nlinarith
+      rw [card_doorLevelOwners_eq_residueLevelOwners
+        T (q ^ k) hP h3 hQ]
+      exact hLow k hkIco hkK hkJ
+    _ ≤ ∑ k ∈ Finset.Ico (K + 1) (J + 1),
+        C * r ^ k := by
+      apply Finset.sum_le_sum_of_subset_of_nonneg hsub
+      intro k hk hkNot
+      exact mul_nonneg hC (pow_nonneg hr k)
+    _ ≤ C * r ^ (K + 1) / (1 - r) :=
+      weighted_geometric_Ico_le
+        C r (K + 1) (J + 1) hC hr hr1
+
+/-- The full tail is bounded by a supplied lower-level
+    estimate plus the proved high-level slot estimate. -/
+theorem incomingMultiplicityTail_le_combined
+    (T : Finset ℕ) (X q K J B : ℕ)
+    (hP : ∀ p ∈ T, p.Prime)
+    (h3 : ∀ p ∈ T, p ≠ 3)
+    (hq : q.Prime)
+    (hX : ∀ p ∈ T, p ≤ X)
+    (hKJ : K ≤ J)
+    (C : ℝ) (hC : 0 ≤ C)
+    (hLow : ∀ k ∈ Finset.Ico 1 B,
+      K < k → k ≤ J →
+        ((residueLevelOwners T (q ^ k)).card : ℝ) ≤
+          C * (1 / (q : ℝ)) ^ k) :
+    (incomingMultiplicityTail T q K B : ℝ) ≤
+      C * (1 / (q : ℝ)) ^ (K + 1) /
+        (1 - 1 / (q : ℝ)) +
+      (2 * (X : ℝ) * (1 / (q : ℝ)) ^ (J + 1) /
+        (1 - 1 / (q : ℝ)) +
+          2 * ((B - (J + 1) : ℕ) : ℝ)) := by
+  have hqR : (1 : ℝ) < q := by
+    exact_mod_cast hq.one_lt
+  have hqpos : (0 : ℝ) < q := by linarith
+  have hr : (0 : ℝ) ≤ 1 / (q : ℝ) := by positivity
+  have hr1 : (1 : ℝ) / q < 1 := by
+    apply (div_lt_iff₀ hqpos).mpr
+    simpa using hqR
+  have hlow :=
+    incomingMultiplicityLowTail_le_geometric
+      T q K J B hP h3 hq
+      C (1 / (q : ℝ)) hC hr hr1 hLow
+  have hhigh :=
+    incomingMultiplicityHighTail_le_geometric
+      T X q K J B hP h3 hq hX hKJ
+  have hsplit :
+      (incomingMultiplicityTail T q K B : ℝ) =
+        (incomingMultiplicityLowTail T q K J B : ℝ) +
+          (incomingMultiplicityHighTail T q K J B : ℝ) := by
+    exact_mod_cast
+      (incomingMultiplicityTail_eq_low_add_high T q K J B)
+  rw [hsplit]
+  exact add_le_add hlow hhigh
+
+/-- When B covers every possible level, the combined
+    tail bound controls the exact truncation error. -/
+theorem incomingMultiplicity_truncation_error_le
+    (T : Finset ℕ) (X q K J B : ℕ)
+    (hP : ∀ p ∈ T, p.Prime)
+    (h3 : ∀ p ∈ T, p ≠ 3)
+    (hq : q.Prime)
+    (hX : ∀ p ∈ T, p ≤ X)
+    (hKJ : K ≤ J)
+    (hB : ∀ p ∈ T, Hire.m0 p < q ^ B)
+    (C : ℝ) (hC : 0 ≤ C)
+    (hLow : ∀ k ∈ Finset.Ico 1 B,
+      K < k → k ≤ J →
+        ((residueLevelOwners T (q ^ k)).card : ℝ) ≤
+          C * (1 / (q : ℝ)) ^ k) :
+    ((incomingMultiplicity T q -
+        truncatedIncomingMultiplicity T q K B : ℕ) : ℝ) ≤
+      C * (1 / (q : ℝ)) ^ (K + 1) /
+        (1 - 1 / (q : ℝ)) +
+      (2 * (X : ℝ) * (1 / (q : ℝ)) ^ (J + 1) /
+        (1 - 1 / (q : ℝ)) +
+          2 * ((B - (J + 1) : ℕ) : ℝ)) := by
+  rw [← incomingMultiplicityTail_eq_sub T q K B hP hq hB]
+  exact incomingMultiplicityTail_le_combined
+    T X q K J B hP h3 hq hX hKJ C hC hLow
+
 end HireEulerDoor
