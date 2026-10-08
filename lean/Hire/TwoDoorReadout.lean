@@ -511,4 +511,31 @@ theorem twoDoorDifference_bound_of_prime_bound
   exact abs_twoDoorDifference_le_of_prime_bound
     N hN (E N) (hPrime N hN)
 
+/-- The prime-only imbalance is bounded by the total prime weight. -/
+theorem abs_primeDoorDifference15_le_theta (N : ℕ) :
+    |primeDoorDifference15 N| ≤ Chebyshev.theta (N : ℝ) := by
+  rw [primeDoorDifference15_eq_mangoldt_sum]
+  calc
+    _ ≤ ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+        (ArithmeticFunction.vonMangoldt p : ℝ) :=
+      abs_sum_mangoldt_twoDoor_le
+        ((Finset.Icc 1 N).filter Nat.Prime)
+    _ = _ := sum_prime_vonMangoldt_eq_theta N
+
+/-- A sharper linear baseline for the prime-only imbalance. -/
+theorem abs_primeDoorDifference15_le_log4_mul (N : ℕ) :
+    |primeDoorDifference15 N| ≤ Real.log 4 * (N : ℝ) := by
+  exact (abs_primeDoorDifference15_le_theta N).trans
+    (Chebyshev.theta_le_log4_mul_x (Nat.cast_nonneg N))
+
+/-- Transfer the sharper prime baseline to the full signal. -/
+theorem abs_twoDoorDifference_le_prime_baseline
+    (N : ℕ) (hN : 1 ≤ N) :
+    |twoDoorMangoldtDifference15 N| ≤
+      Real.log 4 * (N : ℝ) +
+        2 * Real.sqrt (N : ℝ) * Real.log (N : ℝ) := by
+  exact abs_twoDoorDifference_le_of_prime_bound
+    N hN (Real.log 4 * (N : ℝ))
+    (abs_primeDoorDifference15_le_log4_mul N)
+
 end HireCharacterReadout
