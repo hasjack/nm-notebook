@@ -307,4 +307,96 @@ theorem companion15_LSeries_eq_LFunction
         quarticCharacter5 hs).symm
   rw [h]
 
+/-- In the right half-plane, the removed Euler term has modulus below 1. -/
+theorem norm_quarticEulerTerm_three_lt_one
+    {s : ℂ} (hs : 0 < s.re) :
+    ‖Complex.I * (3 : ℂ) ^ (-s)‖ < 1 := by
+  rw [norm_mul, Complex.norm_I, one_mul]
+  have hnorm :
+      ‖(3 : ℂ) ^ (-s)‖ =
+        Real.rpow 3 (-s.re) := by
+    simpa using
+      (Complex.norm_natCast_cpow_of_pos
+        (n := 3) (by norm_num) (-s))
+  rw [hnorm]
+  exact Real.rpow_lt_one_of_one_lt_of_neg
+    (by norm_num) (by linarith)
+
+/-- Removing the Euler factor at 3 adds no zeros in the right half-plane. -/
+theorem quarticEulerCorrection_three_ne_zero
+    {s : ℂ} (hs : 0 < s.re) :
+    1 + Complex.I * (3 : ℂ) ^ (-s) ≠ 0 := by
+  intro h
+  have he :
+      Complex.I * (3 : ℂ) ^ (-s) = -1 := by
+    linear_combination h
+  have hn := norm_quarticEulerTerm_three_lt_one hs
+  rw [he] at hn
+  norm_num at hn
+
+/-- The companion and quartic L-functions have the same zeros for Re(s) > 0. -/
+theorem companionCharacter15_LFunction_eq_zero_iff
+    {s : ℂ} (hs : 0 < s.re) :
+    companionCharacter15.LFunction s = 0 ↔
+      quarticCharacter5.LFunction s = 0 := by
+  rw [companionCharacter15_LFunction_eq,
+    mul_eq_zero]
+  simp only [quarticEulerCorrection_three_ne_zero hs,
+    false_or]
+
+/-- Equivalently, their nonvanishing statements agree there. -/
+theorem companionCharacter15_LFunction_ne_zero_iff
+    {s : ℂ} (hs : 0 < s.re) :
+    companionCharacter15.LFunction s ≠ 0 ↔
+      quarticCharacter5.LFunction s ≠ 0 := by
+  exact not_congr
+    (companionCharacter15_LFunction_eq_zero_iff hs)
+
+/-- The analytic product pairing the door character with its companion. -/
+noncomputable def pairedDoorLFunction15 (s : ℂ) : ℂ :=
+  complexCharacter15.LFunction s *
+    companionCharacter15.LFunction s
+
+/-- The paired function has an explicit quartic Euler correction. -/
+theorem pairedDoorLFunction15_eq (s : ℂ) :
+    pairedDoorLFunction15 s =
+      (1 + Complex.I * (3 : ℂ) ^ (-s)) *
+        (complexCharacter15.LFunction s *
+          quarticCharacter5.LFunction s) := by
+  unfold pairedDoorLFunction15
+  rw [companionCharacter15_LFunction_eq]
+  ring
+
+/-- In the right half-plane, either constituent can supply a zero. -/
+theorem pairedDoorLFunction15_eq_zero_iff
+    {s : ℂ} (hs : 0 < s.re) :
+    pairedDoorLFunction15 s = 0 ↔
+      complexCharacter15.LFunction s = 0 ∨
+        quarticCharacter5.LFunction s = 0 := by
+  unfold pairedDoorLFunction15
+  rw [mul_eq_zero,
+    companionCharacter15_LFunction_eq_zero_iff hs]
+
+/-- Nonvanishing of the pair is equivalent to nonvanishing of both constituents. -/
+theorem pairedDoorLFunction15_ne_zero_iff
+    {s : ℂ} (hs : 0 < s.re) :
+    pairedDoorLFunction15 s ≠ 0 ↔
+      complexCharacter15.LFunction s ≠ 0 ∧
+        quarticCharacter5.LFunction s ≠ 0 := by
+  simp only [ne_eq,
+    pairedDoorLFunction15_eq_zero_iff hs, not_or]
+
+/-- A zero-free bound for the pair transfers to both constituents. -/
+theorem pairedDoorLFunction15_zero_free_transfer
+    {θ : ℝ} (hθ : 0 ≤ θ)
+    (hpair : ∀ s : ℂ, θ < s.re →
+      pairedDoorLFunction15 s ≠ 0) :
+    ∀ s : ℂ, θ < s.re →
+      complexCharacter15.LFunction s ≠ 0 ∧
+        quarticCharacter5.LFunction s ≠ 0 := by
+  intro s hs
+  have hs0 : 0 < s.re := lt_of_le_of_lt hθ hs
+  exact (pairedDoorLFunction15_ne_zero_iff hs0).mp
+    (hpair s hs)
+
 end HireCharacterReadout
