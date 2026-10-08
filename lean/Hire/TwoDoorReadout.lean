@@ -355,4 +355,160 @@ theorem abs_twoDoorMangoldtDifference15_le_chebyshev
   exact (abs_twoDoorMangoldtDifference15_le_psi N).trans
     (Chebyshev.psi_le hNR)
 
+/-- The door difference restricted to primes. -/
+noncomputable def primeDoorDifference15 (N : ℕ) : ℝ :=
+  ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+    Real.log (p : ℝ) *
+      ((ownerIndicator15 p : ℝ) -
+        (discardedIndicator15 p : ℝ))
+
+/-- On primes, the Mangoldt weight is exactly log p. -/
+theorem primeDoorDifference15_eq_mangoldt_sum (N : ℕ) :
+    primeDoorDifference15 N =
+      ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+        (ArithmeticFunction.vonMangoldt p : ℝ) *
+          ((ownerIndicator15 p : ℝ) -
+            (discardedIndicator15 p : ℝ)) := by
+  unfold primeDoorDifference15
+  apply Finset.sum_congr rfl
+  intro p hp
+  rw [ArithmeticFunction.vonMangoldt_apply_prime
+    (Finset.mem_filter.mp hp).2]
+
+/-- The prime part of the total Mangoldt weight is θ(N). -/
+theorem sum_prime_vonMangoldt_eq_theta (N : ℕ) :
+    (∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+      (ArithmeticFunction.vonMangoldt p : ℝ)) =
+      Chebyshev.theta (N : ℝ) := by
+  have hset : Finset.Icc 1 N = Finset.Ioc 0 N := by
+    ext n
+    simp only [Finset.mem_Icc, Finset.mem_Ioc]
+    omega
+  have hlog :
+      (∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+        (ArithmeticFunction.vonMangoldt p : ℝ)) =
+      ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+        Real.log (p : ℝ) := by
+    apply Finset.sum_congr rfl
+    intro p hp
+    exact ArithmeticFunction.vonMangoldt_apply_prime
+      (Finset.mem_filter.mp hp).2
+  simpa [Chebyshev.theta, hset] using hlog
+
+/-- The total nonprime Mangoldt weight is ψ(N) - θ(N). -/
+theorem sum_nonprime_vonMangoldt_eq_psi_sub_theta (N : ℕ) :
+    (∑ n ∈ Finset.Icc 1 N,
+      if n.Prime then 0
+      else (ArithmeticFunction.vonMangoldt n : ℝ)) =
+      Chebyshev.psi (N : ℝ) -
+        Chebyshev.theta (N : ℝ) := by
+  classical
+  rw [← sum_vonMangoldt_Icc_eq_psi,
+    ← sum_prime_vonMangoldt_eq_theta]
+  rw [Finset.sum_filter, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro n hn
+  by_cases hp : n.Prime <;> simp [hp]
+
+/-- Removing the prime-only signal leaves only nonprime terms. -/
+theorem twoDoorDifference_sub_prime_eq_nonprime_sum (N : ℕ) :
+    twoDoorMangoldtDifference15 N - primeDoorDifference15 N =
+      ∑ n ∈ Finset.Icc 1 N,
+        if n.Prime then 0
+        else
+          (ArithmeticFunction.vonMangoldt n : ℝ) *
+            ((ownerIndicator15 n : ℝ) -
+              (discardedIndicator15 n : ℝ)) := by
+  classical
+  rw [primeDoorDifference15_eq_mangoldt_sum]
+  unfold twoDoorMangoldtDifference15
+  rw [Finset.sum_filter, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro n hn
+  by_cases hp : n.Prime <;> simp [hp]
+
+/-- The signed higher-power correction is bounded by
+    the total higher-power weight. -/
+theorem abs_twoDoorDifference_sub_prime_le_psi_sub_theta
+    (N : ℕ) :
+    |twoDoorMangoldtDifference15 N - primeDoorDifference15 N| ≤
+      Chebyshev.psi (N : ℝ) -
+        Chebyshev.theta (N : ℝ) := by
+  classical
+  rw [twoDoorDifference_sub_prime_eq_nonprime_sum]
+  calc
+    _ ≤ ∑ n ∈ Finset.Icc 1 N,
+        |if n.Prime then 0
+          else
+            (ArithmeticFunction.vonMangoldt n : ℝ) *
+              ((ownerIndicator15 n : ℝ) -
+                (discardedIndicator15 n : ℝ))| :=
+      Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ n ∈ Finset.Icc 1 N,
+        if n.Prime then 0
+        else (ArithmeticFunction.vonMangoldt n : ℝ) := by
+      apply Finset.sum_le_sum
+      intro n hn
+      by_cases hp : n.Prime
+      · simp [hp]
+      · simp only [hp, ite_false]
+        have hΛ : 0 ≤ (ArithmeticFunction.vonMangoldt n : ℝ) :=
+          ArithmeticFunction.vonMangoldt_nonneg
+        rw [abs_mul, abs_of_nonneg hΛ]
+        calc
+          _ ≤ (ArithmeticFunction.vonMangoldt n : ℝ) * 1 :=
+            mul_le_mul_of_nonneg_left
+              (abs_twoDoorIndicator15_sub_le_one n) hΛ
+          _ = _ := mul_one _
+    _ = _ := sum_nonprime_vonMangoldt_eq_psi_sub_theta N
+
+/-- An explicit square-root-times-log bound for the
+    higher-prime-power correction. -/
+theorem abs_twoDoorDifference_sub_prime_le_sqrt_log
+    (N : ℕ) (hN : 1 ≤ N) :
+    |twoDoorMangoldtDifference15 N - primeDoorDifference15 N| ≤
+      2 * Real.sqrt (N : ℝ) * Real.log (N : ℝ) := by
+  have hNR : (1 : ℝ) ≤ (N : ℝ) := by
+    exact_mod_cast hN
+  calc
+    _ ≤ Chebyshev.psi (N : ℝ) -
+        Chebyshev.theta (N : ℝ) :=
+      abs_twoDoorDifference_sub_prime_le_psi_sub_theta N
+    _ ≤ |Chebyshev.psi (N : ℝ) -
+        Chebyshev.theta (N : ℝ)| := le_abs_self _
+    _ ≤ _ :=
+      Chebyshev.abs_psi_sub_theta_le_sqrt_mul_log hNR
+
+/-- A prime-only estimate transfers to the full Mangoldt signal. -/
+theorem abs_twoDoorDifference_le_of_prime_bound
+    (N : ℕ) (hN : 1 ≤ N)
+    (E : ℝ)
+    (hPrime : |primeDoorDifference15 N| ≤ E) :
+    |twoDoorMangoldtDifference15 N| ≤
+      E + 2 * Real.sqrt (N : ℝ) * Real.log (N : ℝ) := by
+  calc
+    _ = |primeDoorDifference15 N +
+        (twoDoorMangoldtDifference15 N -
+          primeDoorDifference15 N)| := by
+      congr 1
+      ring
+    _ ≤ |primeDoorDifference15 N| +
+        |twoDoorMangoldtDifference15 N -
+          primeDoorDifference15 N| := abs_add_le _ _
+    _ ≤ E + 2 * Real.sqrt (N : ℝ) * Real.log (N : ℝ) :=
+      add_le_add hPrime
+        (abs_twoDoorDifference_sub_prime_le_sqrt_log N hN)
+
+/-- A uniform prime-only estimate transfers at every positive cutoff. -/
+theorem twoDoorDifference_bound_of_prime_bound
+    (E : ℕ → ℝ)
+    (hPrime : ∀ N : ℕ, 1 ≤ N →
+      |primeDoorDifference15 N| ≤ E N) :
+    ∀ N : ℕ, 1 ≤ N →
+      |twoDoorMangoldtDifference15 N| ≤
+        E N + 2 * Real.sqrt (N : ℝ) * Real.log (N : ℝ) := by
+  intro N hN
+  exact abs_twoDoorDifference_le_of_prime_bound
+    N hN (E N) (hPrime N hN)
+
 end HireCharacterReadout
