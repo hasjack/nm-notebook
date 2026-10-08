@@ -151,4 +151,208 @@ theorem tendsto_twoDoorDifferenceValue15_at_one :
         (-continuedCharacterMangoldtValue15 complexCharacter15 1)) := by
   exact tendsto_complexMangoldtValue15_at_one.neg
 
+/-- The door difference written as four residue indicators. -/
+theorem twoDoorIndicator15_sub_eq_residue_indicators (n : ℕ) :
+    (ownerIndicator15 n : ℝ) -
+        (discardedIndicator15 n : ℝ) =
+      ((if n % 15 = 4 then 1 else 0 : ℝ) +
+        (if n % 15 = 11 then 1 else 0 : ℝ)) -
+      (if n % 15 = 1 then 1 else 0 : ℝ) -
+      (if n % 15 = 14 then 1 else 0 : ℝ) := by
+  set r := n % 15 with hr
+  have hlt : r < 15 := Nat.mod_lt n (by norm_num)
+  have h3 : n % 3 = r % 3 := by omega
+  have h5 : n % 5 = r % 5 := by omega
+  interval_cases r <;>
+    norm_num [ownerIndicator15, discardedIndicator15,
+      h3, h5, ← hr]
+
+/-- A finite weighted sum in one residue class modulo 15. -/
+noncomputable def residueWeightSum15
+    (S : Finset ℕ) (w : ℕ → ℝ) (r : ℕ) : ℝ :=
+  ∑ n ∈ S.filter (fun n => n % 15 = r), w n
+
+/-- The weighted door difference is the signed sum of four classes. -/
+theorem sum_weighted_twoDoor_eq_four_classes
+    (S : Finset ℕ) (w : ℕ → ℝ) :
+    (∑ n ∈ S,
+      w n * ((ownerIndicator15 n : ℝ) -
+        (discardedIndicator15 n : ℝ))) =
+      residueWeightSum15 S w 4 +
+        residueWeightSum15 S w 11 -
+        residueWeightSum15 S w 1 -
+        residueWeightSum15 S w 14 := by
+  classical
+  unfold residueWeightSum15
+  simp only [Finset.sum_filter]
+  rw [← Finset.sum_add_distrib,
+    ← Finset.sum_sub_distrib,
+    ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro n hn
+  rw [twoDoorIndicator15_sub_eq_residue_indicators]
+  by_cases h4 : n % 15 = 4 <;>
+    by_cases h11 : n % 15 = 11 <;>
+    by_cases h1 : n % 15 = 1 <;>
+    by_cases h14 : n % 15 = 14 <;>
+    simp [h4, h11, h1, h14]
+
+/-- The unsmoothed Mangoldt sum in one class modulo 15. -/
+noncomputable def residueMangoldtSum15
+    (N r : ℕ) : ℝ :=
+  residueWeightSum15 (Finset.Icc 1 N)
+    (fun n => (ArithmeticFunction.vonMangoldt n : ℝ)) r
+
+/-- The unsmoothed kept-minus-discarded Mangoldt readout. -/
+noncomputable def twoDoorMangoldtDifference15 (N : ℕ) : ℝ :=
+  ∑ n ∈ Finset.Icc 1 N,
+    (ArithmeticFunction.vonMangoldt n : ℝ) *
+      ((ownerIndicator15 n : ℝ) -
+        (discardedIndicator15 n : ℝ))
+
+/-- The exact arithmetic-progression expression for the difference. -/
+theorem twoDoorMangoldtDifference15_eq_four_classes (N : ℕ) :
+    twoDoorMangoldtDifference15 N =
+      residueMangoldtSum15 N 4 +
+        residueMangoldtSum15 N 11 -
+        residueMangoldtSum15 N 1 -
+        residueMangoldtSum15 N 14 := by
+  exact sum_weighted_twoDoor_eq_four_classes
+    (Finset.Icc 1 N)
+    (fun n => (ArithmeticFunction.vonMangoldt n : ℝ))
+
+/-- The same difference isolates the complex character. -/
+theorem twoDoorMangoldtDifference15_eq_character_sum (N : ℕ) :
+    twoDoorMangoldtDifference15 N =
+      -(∑ n ∈ Finset.Icc 1 N,
+        (ArithmeticFunction.vonMangoldt n : ℝ) *
+          (complex15 n).re) := by
+  exact sum_weighted_twoDoorIndicator15_sub
+    (Finset.Icc 1 N)
+    (fun n => (ArithmeticFunction.vonMangoldt n : ℝ))
+
+/-- The door difference on a half-open interval [a, b). -/
+noncomputable def twoDoorMangoldtInterval15
+    (a b : ℕ) : ℝ :=
+  ∑ n ∈ Finset.Ico a b,
+    (ArithmeticFunction.vonMangoldt n : ℝ) *
+      ((ownerIndicator15 n : ℝ) -
+        (discardedIndicator15 n : ℝ))
+
+/-- The interval difference is the signed sum of four residue classes. -/
+theorem twoDoorMangoldtInterval15_eq_four_classes
+    (a b : ℕ) :
+    twoDoorMangoldtInterval15 a b =
+      residueWeightSum15 (Finset.Ico a b)
+          (fun n => (ArithmeticFunction.vonMangoldt n : ℝ)) 4 +
+        residueWeightSum15 (Finset.Ico a b)
+          (fun n => (ArithmeticFunction.vonMangoldt n : ℝ)) 11 -
+        residueWeightSum15 (Finset.Ico a b)
+          (fun n => (ArithmeticFunction.vonMangoldt n : ℝ)) 1 -
+        residueWeightSum15 (Finset.Ico a b)
+          (fun n => (ArithmeticFunction.vonMangoldt n : ℝ)) 14 := by
+  exact sum_weighted_twoDoor_eq_four_classes
+    (Finset.Ico a b)
+    (fun n => (ArithmeticFunction.vonMangoldt n : ℝ))
+
+/-- The interval difference also isolates the complex character. -/
+theorem twoDoorMangoldtInterval15_eq_character_sum
+    (a b : ℕ) :
+    twoDoorMangoldtInterval15 a b =
+      -(∑ n ∈ Finset.Ico a b,
+        (ArithmeticFunction.vonMangoldt n : ℝ) *
+          (complex15 n).re) := by
+  exact sum_weighted_twoDoorIndicator15_sub
+    (Finset.Ico a b)
+    (fun n => (ArithmeticFunction.vonMangoldt n : ℝ))
+
+/-- H consecutive blocks of length 15, starting at block J. -/
+noncomputable def groupedDoorMangoldtDifference15
+    (J H : ℕ) : ℝ :=
+  twoDoorMangoldtInterval15 (15 * J) (15 * (J + H))
+
+/-- The grouped experimental readout has an exact character expression. -/
+theorem groupedDoorMangoldtDifference15_eq_character_sum
+    (J H : ℕ) :
+    groupedDoorMangoldtDifference15 J H =
+      -(∑ n ∈ Finset.Ico (15 * J) (15 * (J + H)),
+        (ArithmeticFunction.vonMangoldt n : ℝ) *
+          (complex15 n).re) := by
+  exact twoDoorMangoldtInterval15_eq_character_sum
+    (15 * J) (15 * (J + H))
+
+/-- Each door-difference coefficient has absolute value at most 1. -/
+theorem abs_twoDoorIndicator15_sub_le_one (n : ℕ) :
+    |(ownerIndicator15 n : ℝ) -
+      (discardedIndicator15 n : ℝ)| ≤ 1 := by
+  unfold ownerIndicator15 discardedIndicator15
+  split_ifs <;> norm_num
+
+/-- The absolute weighted difference is bounded by the total
+    Mangoldt weight on the same finite set. -/
+theorem abs_sum_mangoldt_twoDoor_le
+    (S : Finset ℕ) :
+    |∑ n ∈ S,
+      (ArithmeticFunction.vonMangoldt n : ℝ) *
+        ((ownerIndicator15 n : ℝ) -
+          (discardedIndicator15 n : ℝ))| ≤
+      ∑ n ∈ S, (ArithmeticFunction.vonMangoldt n : ℝ) := by
+  calc
+    _ ≤ ∑ n ∈ S,
+        |(ArithmeticFunction.vonMangoldt n : ℝ) *
+          ((ownerIndicator15 n : ℝ) -
+            (discardedIndicator15 n : ℝ))| :=
+      Finset.abs_sum_le_sum_abs _ _
+    _ ≤ _ := by
+      apply Finset.sum_le_sum
+      intro n hn
+      have hΛ : 0 ≤ (ArithmeticFunction.vonMangoldt n : ℝ) :=
+        ArithmeticFunction.vonMangoldt_nonneg
+      rw [abs_mul, abs_of_nonneg hΛ]
+      calc
+        _ ≤ (ArithmeticFunction.vonMangoldt n : ℝ) * 1 :=
+          mul_le_mul_of_nonneg_left
+            (abs_twoDoorIndicator15_sub_le_one n) hΛ
+        _ = _ := mul_one _
+
+/-- Our natural-number cutoff agrees with Mathlib's ψ function. -/
+theorem sum_vonMangoldt_Icc_eq_psi (N : ℕ) :
+    (∑ n ∈ Finset.Icc 1 N,
+      (ArithmeticFunction.vonMangoldt n : ℝ)) =
+      Chebyshev.psi (N : ℝ) := by
+  have hset : Finset.Icc 1 N = Finset.Ioc 0 N := by
+    ext n
+    simp only [Finset.mem_Icc, Finset.mem_Ioc]
+    omega
+  rw [hset]
+  simp [Chebyshev.psi]
+
+/-- The unsmoothed door difference is bounded by ψ(N). -/
+theorem abs_twoDoorMangoldtDifference15_le_psi (N : ℕ) :
+    |twoDoorMangoldtDifference15 N| ≤
+      Chebyshev.psi (N : ℝ) := by
+  calc
+    _ ≤ ∑ n ∈ Finset.Icc 1 N,
+        (ArithmeticFunction.vonMangoldt n : ℝ) := by
+      exact abs_sum_mangoldt_twoDoor_le (Finset.Icc 1 N)
+    _ = _ := sum_vonMangoldt_Icc_eq_psi N
+
+/-- An explicit linear baseline, valid for every natural cutoff. -/
+theorem abs_twoDoorMangoldtDifference15_le_linear (N : ℕ) :
+    |twoDoorMangoldtDifference15 N| ≤
+      (Real.log 4 + 4) * (N : ℝ) := by
+  exact (abs_twoDoorMangoldtDifference15_le_psi N).trans
+    (Chebyshev.psi_le_const_mul_self (Nat.cast_nonneg N))
+
+/-- A sharper Chebyshev baseline for positive cutoffs. -/
+theorem abs_twoDoorMangoldtDifference15_le_chebyshev
+    (N : ℕ) (hN : 1 ≤ N) :
+    |twoDoorMangoldtDifference15 N| ≤
+      Real.log 4 * (N : ℝ) +
+        2 * Real.sqrt (N : ℝ) * Real.log (N : ℝ) := by
+  have hNR : (1 : ℝ) ≤ (N : ℝ) := by
+    exact_mod_cast hN
+  exact (abs_twoDoorMangoldtDifference15_le_psi N).trans
+    (Chebyshev.psi_le hNR)
+
 end HireCharacterReadout
