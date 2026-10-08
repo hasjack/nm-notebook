@@ -22,6 +22,7 @@ import Hire.TwoDoorReadout
 import Hire.NormLift15
 import Hire.IdealNormLift15
 import Hire.EisensteinNormLift15
+import Hire.FractionalNormLift15
 import Hire.Torus
 import Hire.SquareCurve
 import Hire.TorusCurveBridge

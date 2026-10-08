@@ -233,4 +233,91 @@ theorem eisensteinIdealCharacter15_pow_four
   exact complexCharacter15_pow_four _
     (eisenstein_absNorm_coprime_fifteen I hI)
 
+/-- Adding a multiple of 15 preserves the algebraic norm modulo 15. -/
+theorem algebraicNorm_add_fifteen
+    {S : Type*} [CommRing S] [Algebra ℤ S]
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (B : @Module.Basis ι ℤ S _ _
+      (Algebra.toModule : Module ℤ S))
+    (a x : S) :
+    (Algebra.norm ℤ (a + (15 : S) * x) : ZMod 15) =
+      (Algebra.norm ℤ a : ZMod 15) := by
+  let f : ℤ →+* ZMod 15 := Int.castRingHom (ZMod 15)
+  change f (Algebra.norm ℤ (a + (15 : S) * x)) =
+    f (Algebra.norm ℤ a)
+  rw [Algebra.norm_eq_matrix_det B,
+    Algebra.norm_eq_matrix_det B,
+    RingHom.map_det, RingHom.map_det]
+  have h15 :
+      f.mapMatrix (Algebra.leftMulMatrix B (15 : S)) = 0 := by
+    simp only [map_ofNat]
+    ext i j
+    change (if i = j then (15 : ZMod 15) else 0) = 0
+    have hzero : (15 : ZMod 15) = 0 := by
+      exact_mod_cast (ZMod.natCast_self 15)
+    simp only [hzero, ite_self]
+  have hm :
+      f.mapMatrix
+        (Algebra.leftMulMatrix B (a + (15 : S) * x)) =
+      f.mapMatrix (Algebra.leftMulMatrix B a) := by
+    rw [map_add, map_mul, map_add, map_mul, h15]
+    simp
+  rw [hm]
+
+/-- Absolute value does not change this even character's value. -/
+theorem complexCharacter15_natAbs_eq (z : ℤ) :
+    complexCharacter15 (z.natAbs : ZMod 15) =
+      complexCharacter15 (z : ZMod 15) := by
+  cases z with
+  | ofNat n =>
+      simp
+  | negSucc n =>
+      have he :
+          (Int.negSucc n : ZMod 15) =
+            (-1 : ZMod 15) * ((n + 1 : ℕ) : ZMod 15) := by
+        simp
+      have h := congrArg complexCharacter15 he
+      rw [map_mul, complexCharacter15_apply_neg_one, one_mul] at h
+      simpa using h.symm
+
+/-- Congruent Eisenstein integers have congruent algebraic norms. -/
+theorem eisensteinNorm_eq_of_congruent
+    (a b : DoorEisensteinIntegers)
+    (hab : (15 : DoorEisensteinIntegers) ∣ a - b) :
+    (Algebra.norm ℤ a : ZMod 15) =
+      (Algebra.norm ℤ b : ZMod 15) := by
+  classical
+  let : Module ℤ DoorEisensteinIntegers := Algebra.toModule
+  let : Fintype
+      (Module.Free.ChooseBasisIndex ℤ DoorEisensteinIntegers) :=
+    Fintype.ofFinite _
+  obtain ⟨x, hx⟩ := hab
+  have he : a = b + (15 : DoorEisensteinIntegers) * x := by
+    linear_combination hx
+  rw [he]
+  exact algebraicNorm_add_fifteen
+    (Module.Free.chooseBasis ℤ DoorEisensteinIntegers) b x
+
+/-- Congruent generators give equal principal-ideal character values. -/
+theorem eisensteinIdealCharacter15_span_eq_of_congruent
+    (a b : DoorEisensteinIntegers)
+    (hab : (15 : DoorEisensteinIntegers) ∣ a - b) :
+    eisensteinIdealCharacter15
+        (Ideal.span ({a} : Set DoorEisensteinIntegers)) =
+      eisensteinIdealCharacter15
+        (Ideal.span ({b} : Set DoorEisensteinIntegers)) := by
+  change
+    complexCharacter15
+        (Ideal.absNorm
+          (Ideal.span ({a} : Set DoorEisensteinIntegers)) : ZMod 15) =
+      complexCharacter15
+        (Ideal.absNorm
+          (Ideal.span ({b} : Set DoorEisensteinIntegers)) : ZMod 15)
+  rw [Ideal.absNorm_span_singleton,
+    Ideal.absNorm_span_singleton,
+    complexCharacter15_natAbs_eq,
+    complexCharacter15_natAbs_eq]
+  exact congrArg complexCharacter15
+    (eisensteinNorm_eq_of_congruent a b hab)
+
 end HireCharacterReadout
