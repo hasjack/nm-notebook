@@ -414,4 +414,22 @@ theorem descendedDoorRayCharacter15_apply
         fractionalDoorCharacterHom15 F := by
   rfl
 
+/-- The descended ray character has order dividing 4. -/
+theorem descendedDoorRayCharacter15_pow_four
+    (x : DoorRayQuotient15) :
+    descendedDoorRayCharacter15 x ^ 4 = 1 := by
+  refine QuotientGroup.induction_on x ?_
+  intro F
+  change fractionalDoorCharacterHom15 F ^ 4 = 1
+  exact fractionalDoorCharacterHom15_pow_four F
+
+/-- Consequently, every descended character value is nonzero. -/
+theorem descendedDoorRayCharacter15_ne_zero
+    (x : DoorRayQuotient15) :
+    descendedDoorRayCharacter15 x ≠ 0 := by
+  intro hz
+  have h := descendedDoorRayCharacter15_pow_four x
+  rw [hz] at h
+  norm_num at h
+
 end HireCharacterReadout
