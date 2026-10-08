@@ -20,6 +20,8 @@ import Hire.CharacterReadout
 import Hire.CharacterObjects
 import Hire.TwoDoorReadout
 import Hire.NormLift15
+import Hire.IdealNormLift15
+import Hire.EisensteinNormLift15
 import Hire.Torus
 import Hire.SquareCurve
 import Hire.TorusCurveBridge
