@@ -24,6 +24,7 @@ import Hire.IdealNormLift15
 import Hire.EisensteinNormLift15
 import Hire.FractionalNormLift15
 import Hire.HeckeSeries15
+import Hire.HeckeFactorization15
 import Hire.Torus
 import Hire.SquareCurve
 import Hire.TorusCurveBridge
