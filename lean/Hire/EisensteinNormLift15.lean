@@ -138,4 +138,99 @@ theorem eisensteinIdealCharacter15_span_of_congruent_one
   rw [he]
   exact eisensteinIdealCharacter15_span_one_add_fifteen b x
 
+/-- The principal congruence condition, with the basis chosen automatically. -/
+theorem eisensteinIdealCharacter15_span_of_congruent_one_auto
+    (a : DoorEisensteinIntegers)
+    (ha : (15 : DoorEisensteinIntegers) ∣ a - 1) :
+    eisensteinIdealCharacter15
+      (Ideal.span ({a} : Set DoorEisensteinIntegers)) = 1 := by
+  classical
+  let : Module ℤ DoorEisensteinIntegers := Algebra.toModule
+  let : Fintype
+      (Module.Free.ChooseBasisIndex ℤ DoorEisensteinIntegers) :=
+    Fintype.ofFinite _
+  exact eisensteinIdealCharacter15_span_of_congruent_one
+    (Module.Free.chooseBasis ℤ DoorEisensteinIntegers) a ha
+
+/-- Algebraic norm congruence, with the basis chosen automatically. -/
+theorem eisensteinNorm_one_add_fifteen
+    (x : DoorEisensteinIntegers) :
+    (Algebra.norm ℤ
+      (1 + (15 : DoorEisensteinIntegers) * x) : ZMod 15) = 1 := by
+  classical
+  let : Module ℤ DoorEisensteinIntegers := Algebra.toModule
+  let : Fintype
+      (Module.Free.ChooseBasisIndex ℤ DoorEisensteinIntegers) :=
+    Fintype.ofFinite _
+  exact algebraicNorm_one_add_fifteen
+    (Module.Free.chooseBasis ℤ DoorEisensteinIntegers) x
+
+/-- An ideal coprime to 15 has norm coprime to 15. -/
+theorem eisenstein_absNorm_coprime_fifteen
+    (I : Ideal DoorEisensteinIntegers)
+    (hI : IsCoprime I
+      (Ideal.span ({(15 : DoorEisensteinIntegers)} :
+        Set DoorEisensteinIntegers))) :
+    Nat.Coprime (Ideal.absNorm I) 15 := by
+  have htop :
+      Ideal.span ({(15 : DoorEisensteinIntegers)} :
+        Set DoorEisensteinIntegers) ⊔ I = ⊤ :=
+    Ideal.isCoprime_iff_sup_eq.mp hI.symm
+  have hmem :
+      (1 : DoorEisensteinIntegers) ∈
+        Ideal.span ({(15 : DoorEisensteinIntegers)} :
+          Set DoorEisensteinIntegers) ⊔ I := by
+    rw [htop]
+    simp
+  obtain ⟨x, y, hy, hxy⟩ :=
+    Ideal.mem_span_singleton_sup.mp hmem
+  have he :
+      y = 1 + (15 : DoorEisensteinIntegers) * (-x) := by
+    linear_combination hxy
+  have hn :
+      (Algebra.norm ℤ y : ZMod 15) = 1 := by
+    rw [he]
+    exact eisensteinNorm_one_add_fifteen (-x)
+  obtain ⟨k, hk⟩ := Ideal.absNorm_dvd_norm_of_mem hy
+  have hcast := congrArg (fun z : ℤ => (z : ZMod 15)) hk
+  rw [hn] at hcast
+  have hm :
+      (Ideal.absNorm I : ZMod 15) * (k : ZMod 15) = 1 := by
+    simpa only [Int.cast_mul, Int.cast_natCast] using hcast.symm
+  have hu :
+      IsUnit ((Ideal.absNorm I : ZMod 15) * (k : ZMod 15)) := by
+    rw [hm]
+    exact isUnit_one
+  exact (ZMod.isUnit_iff_coprime (Ideal.absNorm I) 15).mp
+    (isUnit_of_mul_isUnit_left hu)
+
+/-- At inputs coprime to 15, the door character has fourth power 1. -/
+theorem complexCharacter15_pow_four
+    (n : ℕ) (hn : Nat.Coprime n 15) :
+    complexCharacter15 (n : ZMod 15) ^ 4 = 1 := by
+  have hg : Nat.gcd 15 (n % 15) = 1 := by
+    calc
+      Nat.gcd 15 (n % 15) =
+          Nat.gcd (n % 15) 15 := Nat.gcd_comm _ _
+      _ = Nat.gcd 15 n := (Nat.gcd_rec 15 n).symm
+      _ = Nat.gcd n 15 := Nat.gcd_comm _ _
+      _ = 1 := hn.gcd_eq_one
+  have hlt : n % 15 < 15 := Nat.mod_lt n (by norm_num)
+  rw [complexCharacter15_apply_nat, ← complex15_mod_fifteen]
+  interval_cases h : n % 15 <;>
+    norm_num [h, complex15, quarticFive,
+      Hire.chi3, Complex.I_mul_I] at *
+
+/-- On ideals coprime to the modulus, the lift has fourth power 1. -/
+theorem eisensteinIdealCharacter15_pow_four
+    (I : Ideal DoorEisensteinIntegers)
+    (hI : IsCoprime I
+      (Ideal.span ({(15 : DoorEisensteinIntegers)} :
+        Set DoorEisensteinIntegers))) :
+    eisensteinIdealCharacter15 I ^ 4 = 1 := by
+  change complexCharacter15
+    (Ideal.absNorm I : ZMod 15) ^ 4 = 1
+  exact complexCharacter15_pow_four _
+    (eisenstein_absNorm_coprime_fifteen I hI)
+
 end HireCharacterReadout
