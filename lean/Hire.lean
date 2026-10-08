@@ -18,6 +18,7 @@ import Hire.MobiusDoor
 import Hire.EulerDoor
 import Hire.CharacterReadout
 import Hire.CharacterObjects
+import Hire.TwoDoorReadout
 import Hire.Torus
 import Hire.SquareCurve
 import Hire.TorusCurveBridge
