@@ -16,6 +16,7 @@ import Hire.GoldBridge
 import Hire.GoldDisconnects
 import Hire.MobiusDoor
 import Hire.EulerDoor
+import Hire.DoorSieveLocal
 import Hire.CharacterReadout
 import Hire.CharacterObjects
 import Hire.TwoDoorReadout
