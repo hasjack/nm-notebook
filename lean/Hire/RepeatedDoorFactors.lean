@@ -1597,4 +1597,403 @@ theorem abs_repeatedDoorPrimeSum_le
       sum_repeatedMultiplierOwnerMass_box_le
         hX (X + 1) (X + 1) (X + 1)
 
+/-- Each reciprocal square root is bounded by a telescoping increment. -/
+theorem reciprocal_sqrt_succ_le (n : ℕ) :
+    1 / Real.sqrt ((n : ℝ) + 1) ≤
+      2 * (Real.sqrt ((n : ℝ) + 1) -
+        Real.sqrt (n : ℝ)) := by
+  have hpos : 0 < Real.sqrt ((n : ℝ) + 1) := by
+    apply Real.sqrt_pos.mpr
+    positivity
+  have hs₁ :
+      Real.sqrt ((n : ℝ) + 1) ^ 2 = (n : ℝ) + 1 :=
+    Real.sq_sqrt (by positivity)
+  have hs₀ :
+      Real.sqrt (n : ℝ) ^ 2 = (n : ℝ) :=
+    Real.sq_sqrt (by positivity)
+  apply (div_le_iff₀ hpos).mpr
+  nlinarith [sq_nonneg
+    (Real.sqrt ((n : ℝ) + 1) - Real.sqrt (n : ℝ))]
+
+/-- The shrinking-row sum grows at most as twice the square root. -/
+theorem sum_reciprocal_sqrt_le (M : ℕ) :
+    (∑ i ∈ Finset.range M,
+      1 / Real.sqrt ((i : ℝ) + 1)) ≤
+        2 * Real.sqrt (M : ℝ) := by
+  induction M with
+  | zero => simp
+  | succ M ih =>
+      rw [Finset.sum_range_succ]
+      calc
+        _ ≤ 2 * Real.sqrt (M : ℝ) +
+            2 * (Real.sqrt ((M : ℝ) + 1) -
+              Real.sqrt (M : ℝ)) :=
+          add_le_add ih (reciprocal_sqrt_succ_le M)
+        _ = 2 * Real.sqrt (M + 1 : ℕ) := by
+          push_cast
+          ring
+
+/-- The admissible larger factors in the row indexed by u. -/
+def repeatedFactorRow (Y V u : ℕ) : Finset ℕ :=
+  (Finset.Icc 1 V).filter
+    (fun v => u ≤ v ∧ u * v ^ 2 ≤ Y)
+
+/-- Every row fits inside the square-root cutoff of Y/u. -/
+theorem repeatedFactorRow_card_le
+    (Y V : ℕ) {u : ℕ} (hu : 1 ≤ u) :
+    (repeatedFactorRow Y V u).card ≤
+      squareRootCutoff (Y / u) := by
+  have hsubset :
+      repeatedFactorRow Y V u ⊆
+        Finset.Icc 1 (squareRootCutoff (Y / u)) := by
+    intro v hv
+    obtain ⟨hvIcc, huv, hsize⟩ := Finset.mem_filter.mp hv
+    have hvpos : 1 ≤ v := (Finset.mem_Icc.mp hvIcc).1
+    have hvpow : v ^ 2 ≤ Y / u := by
+      apply (Nat.le_div_iff_mul_le (by omega : 0 < u)).2
+      simpa only [mul_comm] using hsize
+    exact Finset.mem_Icc.mpr
+      ⟨hvpos, le_squareRootCutoff hvpow⟩
+  simpa using Finset.card_le_card hsubset
+
+/-- The real-valued row bound has the shrinking height sqrt(Y)/sqrt(u). -/
+theorem repeatedFactorRow_card_le_sqrt
+    (Y V : ℕ) {u : ℕ} (hu : 1 ≤ u) :
+    ((repeatedFactorRow Y V u).card : ℝ) ≤
+      Real.sqrt (Y : ℝ) / Real.sqrt (u : ℝ) := by
+  let C := squareRootCutoff (Y / u)
+  have hcard :
+      ((repeatedFactorRow Y V u).card : ℝ) ≤ (C : ℝ) := by
+    exact_mod_cast repeatedFactorRow_card_le Y V hu
+  have huR : 0 < (u : ℝ) := by
+    exact_mod_cast (show 0 < u by omega)
+  have hnat : (C : ℝ) ^ 2 ≤ ((Y / u : ℕ) : ℝ) := by
+    exact_mod_cast squareRootCutoff_square_le (Y / u)
+  have hdiv :
+      ((Y / u : ℕ) : ℝ) ≤ (Y : ℝ) / (u : ℝ) :=
+    Nat.cast_div_le
+  have hscaled : (C : ℝ) ^ 2 * (u : ℝ) ≤ (Y : ℝ) :=
+    (le_div_iff₀ huR).mp (hnat.trans hdiv)
+  have hsquare :
+      ((C : ℝ) * Real.sqrt (u : ℝ)) ^ 2 ≤ (Y : ℝ) := by
+    rw [mul_pow, Real.sq_sqrt (Nat.cast_nonneg u)]
+    exact hscaled
+  have hproduct :
+      (C : ℝ) * Real.sqrt (u : ℝ) ≤ Real.sqrt (Y : ℝ) := by
+    have hYsquare := Real.sq_sqrt (Nat.cast_nonneg Y)
+    have hleft :
+        0 ≤ (C : ℝ) * Real.sqrt (u : ℝ) := by positivity
+    have hright := Real.sqrt_nonneg (Y : ℝ)
+    nlinarith
+  have hrootpos : 0 < Real.sqrt (u : ℝ) :=
+    Real.sqrt_pos.mpr huR
+  exact hcard.trans ((le_div_iff₀ hrootpos).mpr hproduct)
+
+/-- Count the rectangle-filtered pairs by adding its rows. -/
+theorem repeatedFactorPairs_card_eq_sum_rows
+    (Y M V : ℕ) :
+    (repeatedFactorPairs Y M V).card =
+      ∑ u ∈ Finset.Icc 1 M,
+        (repeatedFactorRow Y V u).card := by
+  simp only [Finset.card_eq_sum_ones,
+    repeatedFactorPairs, repeatedFactorRow,
+    Finset.sum_filter, Finset.sum_product]
+
+/-- The telescoping estimate, written on the positive integer interval. -/
+theorem sum_Icc_reciprocal_sqrt_le (M : ℕ) :
+    (∑ u ∈ Finset.Icc 1 M,
+      1 / Real.sqrt (u : ℝ)) ≤
+        2 * Real.sqrt (M : ℝ) := by
+  induction M with
+  | zero => simp
+  | succ M ih =>
+      rw [Finset.sum_Icc_succ_top (by omega : 1 ≤ M + 1)]
+      have hstep := reciprocal_sqrt_succ_le M
+      calc
+        _ ≤ 2 * Real.sqrt (M : ℝ) +
+            2 * (Real.sqrt ((M : ℝ) + 1) -
+              Real.sqrt (M : ℝ)) := by
+          apply add_le_add ih
+          simpa only [Nat.cast_add, Nat.cast_one] using hstep
+        _ = 2 * Real.sqrt (M + 1 : ℕ) := by
+          push_cast
+          ring
+
+/-- Adding shrinking rows improves the rectangle's pair-count bound. -/
+theorem repeatedFactorPairs_card_le_shrinking_rows
+    (Y M V : ℕ) :
+    ((repeatedFactorPairs Y M V).card : ℝ) ≤
+      2 * Real.sqrt (Y : ℝ) * Real.sqrt (M : ℝ) := by
+  rw [repeatedFactorPairs_card_eq_sum_rows, Nat.cast_sum]
+  calc
+    _ ≤ ∑ u ∈ Finset.Icc 1 M,
+        Real.sqrt (Y : ℝ) / Real.sqrt (u : ℝ) := by
+      apply Finset.sum_le_sum
+      intro u hu
+      exact repeatedFactorRow_card_le_sqrt Y V
+        (Finset.mem_Icc.mp hu).1
+    _ = Real.sqrt (Y : ℝ) *
+        (∑ u ∈ Finset.Icc 1 M,
+          1 / Real.sqrt (u : ℝ)) := by
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro u hu
+      ring
+    _ ≤ Real.sqrt (Y : ℝ) *
+        (2 * Real.sqrt (M : ℝ)) :=
+      mul_le_mul_of_nonneg_left
+        (sum_Icc_reciprocal_sqrt_le M)
+        (Real.sqrt_nonneg _)
+    _ = _ := by ring
+
+/-- A sixth-power comparison with Y⁴ gives the exponent 2/3. -/
+theorem le_rpow_two_thirds_of_pow_six_le
+    {C Y : ℝ}
+    (hC : 0 ≤ C)
+    (hY : 0 ≤ Y)
+    (hpow : C ^ 6 ≤ Y ^ 4) :
+    C ≤ Real.rpow Y (2 / 3 : ℝ) := by
+  have hroot :=
+    Real.rpow_le_rpow
+      (pow_nonneg hC 6) hpow
+      (by norm_num : (0 : ℝ) ≤ 1 / 6)
+  simp only [Real.rpow_eq_pow] at hroot ⊢
+  rw [← Real.rpow_natCast, ← Real.rpow_natCast] at hroot
+  rw [← Real.rpow_mul hC, ← Real.rpow_mul hY] at hroot
+  convert hroot using 1 <;> norm_num
+
+/-- The cube cutoff turns the shrinking-row expression into Y^(2/3). -/
+theorem sqrt_mul_sqrt_cubeRootCutoff_le (Y : ℕ) :
+    Real.sqrt (Y : ℝ) *
+      Real.sqrt (cubeRootCutoff Y : ℝ) ≤
+        Real.rpow (Y : ℝ) (2 / 3 : ℝ) := by
+  have hcube :
+      (cubeRootCutoff Y : ℝ) ^ 3 ≤ (Y : ℝ) := by
+    exact_mod_cast cubeRootCutoff_cube_le Y
+  have hYsqrt := Real.sq_sqrt (Nat.cast_nonneg Y)
+  have hMsqrt :=
+    Real.sq_sqrt (Nat.cast_nonneg (cubeRootCutoff Y))
+  apply le_rpow_two_thirds_of_pow_six_le
+    (by positivity) (by positivity)
+  calc
+    _ = (Real.sqrt (Y : ℝ) ^ 2) ^ 3 *
+        (Real.sqrt (cubeRootCutoff Y : ℝ) ^ 2) ^ 3 := by
+      ring
+    _ = (Y : ℝ) ^ 3 * (cubeRootCutoff Y : ℝ) ^ 3 := by
+      rw [hYsqrt, hMsqrt]
+    _ ≤ (Y : ℝ) ^ 3 * (Y : ℝ) :=
+      mul_le_mul_of_nonneg_left hcube (by positivity)
+    _ = (Y : ℝ) ^ 4 := by ring
+
+/-- The sharpened repeated-factor pair count. -/
+theorem repeatedFactorPairs_card_le_two_thirds (Y : ℕ) :
+    ((repeatedFactorPairs Y
+      (cubeRootCutoff Y) (squareRootCutoff Y)).card : ℝ) ≤
+        2 * Real.rpow (Y : ℝ) (2 / 3 : ℝ) := by
+  calc
+    _ ≤ 2 * Real.sqrt (Y : ℝ) *
+        Real.sqrt (cubeRootCutoff Y : ℝ) :=
+      repeatedFactorPairs_card_le_shrinking_rows
+        Y (cubeRootCutoff Y) (squareRootCutoff Y)
+    _ = 2 * (Real.sqrt (Y : ℝ) *
+        Real.sqrt (cubeRootCutoff Y : ℝ)) := by ring
+    _ ≤ 2 * Real.rpow (Y : ℝ) (2 / 3 : ℝ) :=
+      mul_le_mul_of_nonneg_left
+        (sqrt_mul_sqrt_cubeRootCutoff_le Y) (by norm_num)
+
+/-- Transfer the sharper count to arbitrary bounded signed weights. -/
+theorem abs_sum_repeatedFactorPairs_le_two_thirds
+    (Y : ℕ)
+    (w : ℕ × ℕ → ℝ)
+    (L : ℝ)
+    (hL : 0 ≤ L)
+    (hw : ∀ t ∈ repeatedFactorPairs Y
+      (cubeRootCutoff Y) (squareRootCutoff Y), |w t| ≤ L) :
+    |∑ t ∈ repeatedFactorPairs Y
+        (cubeRootCutoff Y) (squareRootCutoff Y), w t| ≤
+      2 * Real.rpow (Y : ℝ) (2 / 3 : ℝ) * L := by
+  calc
+    _ ≤ ∑ t ∈ repeatedFactorPairs Y
+        (cubeRootCutoff Y) (squareRootCutoff Y), |w t| :=
+      Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ _t ∈ repeatedFactorPairs Y
+        (cubeRootCutoff Y) (squareRootCutoff Y), L := by
+      apply Finset.sum_le_sum
+      intro t ht
+      exact hw t ht
+    _ = ((repeatedFactorPairs Y
+        (cubeRootCutoff Y) (squareRootCutoff Y)).card : ℝ) *
+          L := by simp
+    _ ≤ 2 * Real.rpow (Y : ℝ) (2 / 3 : ℝ) * L :=
+      mul_le_mul_of_nonneg_right
+        (repeatedFactorPairs_card_le_two_thirds Y) hL
+
+/-- Remove the floor for any nonnegative real exponent. -/
+theorem div_cutoff_rpow_le_of_nonneg
+    (X A : ℕ) {t : ℝ} (ht : 0 ≤ t) :
+    Real.rpow (((X + 1) / A : ℕ) : ℝ) t ≤
+      Real.rpow ((X : ℝ) + 1) t /
+        Real.rpow (A : ℝ) t := by
+  have hdiv :
+      (((X + 1) / A : ℕ) : ℝ) ≤
+        ((X : ℝ) + 1) / (A : ℝ) := by
+    simpa only [Nat.cast_add, Nat.cast_one] using
+      (Nat.cast_div_le :
+        (((X + 1) / A : ℕ) : ℝ) ≤
+          ((X + 1 : ℕ) : ℝ) / (A : ℝ))
+  calc
+    _ ≤ Real.rpow (((X : ℝ) + 1) / (A : ℝ)) t :=
+      Real.rpow_le_rpow (by positivity) hdiv ht
+    _ = _ := by
+      have hx : 0 ≤ (X : ℝ) + 1 := by positivity
+      have ha : 0 ≤ (A : ℝ) := Nat.cast_nonneg A
+      simpa only [Real.rpow_eq_pow] using
+        (Real.div_rpow hx ha t)
+
+/-- The sharpened fixed-multiplier owner-mass estimate. -/
+theorem repeatedMultiplierOwnerMass_le_two_thirds
+    {X : ℕ} (hX : 1 ≤ X) (A : ℕ) :
+    repeatedMultiplierOwnerMass X A ≤
+      (4 * Real.rpow ((X : ℝ) + 1) (2 / 3 : ℝ) *
+        Real.log (X : ℝ)) *
+          (Real.rpow (A : ℝ) (2 / 3 : ℝ))⁻¹ := by
+  let Y := (X + 1) / A
+  have hlog : 0 ≤ Real.log (X : ℝ) := by
+    apply Real.log_nonneg
+    exact_mod_cast hX
+  have hsum :
+      0 ≤ repeatedMultiplierOwnerMass X A := by
+    unfold repeatedMultiplierOwnerMass
+    apply Finset.sum_nonneg
+    intro t ht
+    exact repeatedPairOwnerMass_nonneg X A t
+  have hlocal :=
+    abs_sum_repeatedFactorPairs_le_two_thirds
+      Y (repeatedPairOwnerMass X A)
+      (2 * Real.log (X : ℝ))
+      (by positivity)
+      (by
+        intro t ht
+        rw [abs_of_nonneg
+          (repeatedPairOwnerMass_nonneg X A t)]
+        exact repeatedPairOwnerMass_le hX A t)
+  change |repeatedMultiplierOwnerMass X A| ≤
+    2 * Real.rpow (Y : ℝ) (2 / 3 : ℝ) *
+      (2 * Real.log (X : ℝ)) at hlocal
+  rw [abs_of_nonneg hsum] at hlocal
+  have hfloor :=
+    div_cutoff_rpow_le_of_nonneg X A
+      (by norm_num : (0 : ℝ) ≤ 2 / 3)
+  have hscaled :=
+    mul_le_mul_of_nonneg_right hfloor
+      (show 0 ≤ 4 * Real.log (X : ℝ) from by positivity)
+  calc
+    _ ≤ 4 * Real.rpow (Y : ℝ) (2 / 3 : ℝ) *
+        Real.log (X : ℝ) := by
+      nlinarith [hlocal]
+    _ ≤ _ := by
+      simpa only [Y, div_eq_mul_inv, mul_assoc,
+        mul_comm, mul_left_comm] using hscaled
+
+/-- Smooth inverse-power weights have a uniform finite-box bound. -/
+theorem sum_inverse_rpow_multiplier_box_le
+    {t : ℝ} (ht : 0 < t)
+    (na nb nc : ℕ) :
+    (∑ a ∈ Finset.range na,
+      ∑ b ∈ Finset.range nb,
+        ∑ c ∈ Finset.range nc,
+          (Real.rpow
+            (repeatedDoorMultiplier a b c : ℝ) t)⁻¹) ≤
+      repeatedDoorGeometricConstant t := by
+  have h₂ :=
+    inverse_rpow_between_zero_one
+      (by norm_num : (1 : ℝ) < 2) ht
+  have h₃ :=
+    inverse_rpow_between_zero_one
+      (by norm_num : (1 : ℝ) < 3) ht
+  have h₅ :=
+    inverse_rpow_between_zero_one
+      (by norm_num : (1 : ℝ) < 5) ht
+  simp_rw [repeatedDoorMultiplier_inverse_rpow]
+  simpa only [repeatedDoorGeometricConstant] using
+    (smooth_geometric_box_le
+      ((Real.rpow 2 t)⁻¹)
+      ((Real.rpow 3 t)⁻¹)
+      ((Real.rpow 5 t)⁻¹)
+      na nb nc
+      h₂.1 h₂.2 h₃.1 h₃.2 h₅.1 h₅.2)
+
+/-- The sharper estimate summed over any finite multiplier box. -/
+theorem sum_repeatedMultiplierOwnerMass_box_le_two_thirds
+    {X : ℕ} (hX : 1 ≤ X)
+    (na nb nc : ℕ) :
+    (∑ a ∈ Finset.range na,
+      ∑ b ∈ Finset.range nb,
+        ∑ c ∈ Finset.range nc,
+          repeatedMultiplierOwnerMass X
+            (repeatedDoorMultiplier a b c)) ≤
+      (4 * Real.rpow ((X : ℝ) + 1) (2 / 3 : ℝ) *
+        Real.log (X : ℝ)) *
+          repeatedDoorGeometricConstant (2 / 3 : ℝ) := by
+  let Q : ℝ :=
+    4 * Real.rpow ((X : ℝ) + 1) (2 / 3 : ℝ) *
+      Real.log (X : ℝ)
+  have hlog : 0 ≤ Real.log (X : ℝ) := by
+    apply Real.log_nonneg
+    exact_mod_cast hX
+  have hQ : 0 ≤ Q := by
+    dsimp [Q]
+    positivity
+  calc
+    _ ≤ ∑ a ∈ Finset.range na,
+        ∑ b ∈ Finset.range nb,
+          ∑ c ∈ Finset.range nc,
+            Q * (Real.rpow
+              (repeatedDoorMultiplier a b c : ℝ)
+              (2 / 3 : ℝ))⁻¹ := by
+      apply Finset.sum_le_sum
+      intro a ha
+      apply Finset.sum_le_sum
+      intro b hb
+      apply Finset.sum_le_sum
+      intro c hc
+      exact repeatedMultiplierOwnerMass_le_two_thirds
+        hX (repeatedDoorMultiplier a b c)
+    _ = Q *
+        (∑ a ∈ Finset.range na,
+          ∑ b ∈ Finset.range nb,
+            ∑ c ∈ Finset.range nc,
+              (Real.rpow
+                (repeatedDoorMultiplier a b c : ℝ)
+                (2 / 3 : ℝ))⁻¹) := by
+      simp_rw [← Finset.mul_sum]
+    _ ≤ Q * repeatedDoorGeometricConstant (2 / 3 : ℝ) :=
+      mul_le_mul_of_nonneg_left
+        (sum_inverse_rpow_multiplier_box_le
+          (by norm_num : (0 : ℝ) < 2 / 3) na nb nc) hQ
+
+/-- The actual prime-indexed repeated-factor contribution
+satisfies the sharper two-thirds bound. -/
+theorem abs_repeatedDoorPrimeSum_le_two_thirds
+    {X : ℕ} (hX : 1 ≤ X) :
+    |repeatedDoorPrimeSum X true +
+      repeatedDoorPrimeSum X false| ≤
+      (4 * Real.rpow ((X : ℝ) + 1) (2 / 3 : ℝ) *
+        Real.log (X : ℝ)) *
+          repeatedDoorGeometricConstant (2 / 3 : ℝ) := by
+  calc
+    _ ≤ ∑ t ∈ repeatedDoorWindowTuples X,
+        repeatedPairOwnerMass X
+          (repeatedDoorMultiplier t.a t.b t.c) (t.u, t.v) :=
+      abs_repeatedDoorPrimeSum_le_tuple_mass X
+    _ ≤ ∑ a ∈ Finset.range (X + 1),
+        ∑ b ∈ Finset.range (X + 1),
+          ∑ c ∈ Finset.range (X + 1),
+            repeatedMultiplierOwnerMass X
+              (repeatedDoorMultiplier a b c) :=
+      repeatedDoorWindow_tuple_mass_le_box X
+    _ ≤ _ :=
+      sum_repeatedMultiplierOwnerMass_box_le_two_thirds
+        hX (X + 1) (X + 1) (X + 1)
+
 end HireDoorSieve
