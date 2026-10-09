@@ -1,5 +1,10 @@
 import Hire.TwoDoorReadout
 import Mathlib.NumberTheory.LSeries.SumCoeff
+import Mathlib.Analysis.MellinTransform
+import Mathlib.NumberTheory.LSeries.Nonvanishing
+import Mathlib.Analysis.Analytic.IsolatedZeros
+import Mathlib.Analysis.Complex.CauchyIntegral
+import Mathlib.Analysis.Analytic.Order
 
 namespace HireCharacterReadout
 
@@ -241,5 +246,527 @@ theorem doorMangoldt_logDerivative_eq_integral
     LSeries_eq_mul_integral
       doorMangoldtCoefficient15 hθ hθs hS hO
   simpa only [sum_doorMangoldtCoefficient15_eq htable] using hint
+
+/-- The partial-sum step function used in the Abel integral. -/
+noncomputable def doorMangoldtStep15 (t : ℝ) : ℂ :=
+  complexMangoldtPartialSum15 ⌊t⌋₊
+
+/-- The candidate analytic extension of the logarithmic derivative. -/
+noncomputable def doorMangoldtMellin15 (s : ℂ) : ℂ :=
+  s * mellin doorMangoldtStep15 (-s)
+
+/-- The arithmetic partial sum vanishes at cutoff zero. -/
+theorem complexMangoldtPartialSum15_zero :
+    complexMangoldtPartialSum15 0 = 0 := by
+  simp [complexMangoldtPartialSum15, complexWeightedReadout15]
+
+/-- The step function vanishes below the first positive integer. -/
+theorem doorMangoldtStep15_eq_zero
+    {t : ℝ} (ht : t < 1) :
+    doorMangoldtStep15 t = 0 := by
+  unfold doorMangoldtStep15
+  rw [Nat.floor_eq_zero.mpr ht]
+  exact complexMangoldtPartialSum15_zero
+
+/-- Local integrability follows from the finite partial-sum structure. -/
+theorem doorMangoldtStep15_locallyIntegrableOn
+    (htable : ∀ n : ℕ,
+      complexCharacter15 (n : ZMod 15) = complex15 n) :
+    LocallyIntegrableOn doorMangoldtStep15
+      (Set.Ioi (0 : ℝ)) := by
+  have hlocal :
+      LocallyIntegrableOn
+        (fun t : ℝ =>
+          (1 : ℂ) *
+            ∑ n ∈ Finset.Icc 1 ⌊t⌋₊,
+              doorMangoldtCoefficient15 n)
+        (Set.Ici (0 : ℝ)) :=
+    locallyIntegrableOn_mul_sum_Icc
+      doorMangoldtCoefficient15
+      (le_refl (0 : ℝ))
+      (locallyIntegrableOn_const (1 : ℂ))
+  have hstep :
+      (fun t : ℝ =>
+        (1 : ℂ) *
+          ∑ n ∈ Finset.Icc 1 ⌊t⌋₊,
+            doorMangoldtCoefficient15 n) =
+        doorMangoldtStep15 := by
+    funext t
+    simp only [
+      one_mul,
+      sum_doorMangoldtCoefficient15_eq htable,
+      doorMangoldtStep15
+    ]
+  rw [hstep] at hlocal
+  exact hlocal.mono_set Set.Ioi_subset_Ici_self
+
+/-- Cancellation transfers from natural cutoffs to the real step function. -/
+theorem doorMangoldtStep15_isBigO_atTop
+    {θ : ℝ}
+    (hθ : 0 ≤ θ)
+    (hcancel : DoorCharacterCancellation15 θ) :
+    doorMangoldtStep15 =O[Filter.atTop]
+      (fun t : ℝ => Real.rpow t θ) := by
+  have hfloorlim :
+      Tendsto (fun t : ℝ => ⌊t⌋₊)
+        Filter.atTop Filter.atTop :=
+    tendsto_nat_floor_atTop
+
+  have hfloor :=
+    (complexMangoldtPartialSum15_isBigO hcancel).comp_tendsto
+      hfloorlim
+
+  have hnat :
+      (fun t : ℝ => (⌊t⌋₊ : ℝ)) =O[Filter.atTop]
+        (fun t : ℝ => t) :=
+    isEquivalent_nat_floor.isBigO
+
+  have hrpow :=
+    hnat.rpow hθ (eventually_ge_atTop (0 : ℝ))
+
+  have hstep :
+      (complexMangoldtPartialSum15 ∘
+        (fun t : ℝ => ⌊t⌋₊)) =
+      doorMangoldtStep15 := by
+    funext t
+    rfl
+
+  have h := hfloor.trans hrpow
+  rw [hstep] at h
+  exact h
+
+/-- Vanishing near zero gives every power bound there. -/
+theorem doorMangoldtStep15_isBigO_near_zero (b : ℝ) :
+    doorMangoldtStep15 =O[nhdsWithin (0 : ℝ) (Set.Ioi 0)]
+      (fun t : ℝ => Real.rpow t (-b)) := by
+  refine isBigO_iff.mpr ⟨1, ?_⟩
+  have hlt :
+      ∀ᶠ t : ℝ in nhdsWithin 0 (Set.Ioi 0), t < 1 :=
+    (eventually_lt_nhds (show (0 : ℝ) < 1 by norm_num)).filter_mono
+      nhdsWithin_le_nhds
+  filter_upwards [hlt] with t ht
+  rw [doorMangoldtStep15_eq_zero ht, norm_zero, one_mul]
+  exact norm_nonneg _
+
+/-- The Mellin expression is holomorphic to the right
+of the cancellation exponent. -/
+theorem doorMangoldtMellin15_differentiableAt
+    (htable : ∀ n : ℕ,
+      complexCharacter15 (n : ZMod 15) = complex15 n)
+    {θ : ℝ}
+    (hθ : 0 ≤ θ)
+    (hcancel : DoorCharacterCancellation15 θ)
+    {s : ℂ}
+    (hs : θ < s.re) :
+    DifferentiableAt ℂ doorMangoldtMellin15 s := by
+  have htop :
+      doorMangoldtStep15 =O[Filter.atTop]
+        (fun t : ℝ => Real.rpow t (-(-θ))) := by
+    simpa only [neg_neg] using
+      doorMangoldtStep15_isBigO_atTop hθ hcancel
+
+  have hupper : (-s).re < -θ := by
+    simpa only [Complex.neg_re] using neg_lt_neg hs
+
+  have hlower : -s.re - 1 < (-s).re := by
+    simp only [Complex.neg_re]
+    linarith
+
+  have hm :
+      DifferentiableAt ℂ (mellin doorMangoldtStep15) (-s) :=
+    mellin_differentiableAt_of_isBigO_rpow
+      (doorMangoldtStep15_locallyIntegrableOn htable)
+      htop
+      hupper
+      (doorMangoldtStep15_isBigO_near_zero (-s.re - 1))
+      hlower
+
+  have hcomp :
+      DifferentiableAt ℂ
+        (fun z : ℂ => mellin doorMangoldtStep15 (-z)) s :=
+    hm.comp s (differentiableAt_id.neg)
+
+  have hmul := differentiableAt_id.mul hcomp
+  have hfun :
+      (id * (fun z : ℂ => mellin doorMangoldtStep15 (-z))) =
+        doorMangoldtMellin15 := by
+    funext z
+    rfl
+  rw [hfun] at hmul
+  exact hmul
+
+/-- Holomorphicity throughout the open half-plane. -/
+theorem doorMangoldtMellin15_differentiableOn
+    (htable : ∀ n : ℕ,
+      complexCharacter15 (n : ZMod 15) = complex15 n)
+    {θ : ℝ}
+    (hθ : 0 ≤ θ)
+    (hcancel : DoorCharacterCancellation15 θ) :
+    DifferentiableOn ℂ doorMangoldtMellin15
+      {s : ℂ | θ < s.re} := by
+  intro s hs
+  exact
+    (doorMangoldtMellin15_differentiableAt
+      htable hθ hcancel hs).differentiableWithinAt
+
+/-- The step function vanishes up to and including one. -/
+theorem doorMangoldtStep15_eq_zero_of_le_one
+    {t : ℝ} (ht : t ≤ 1) :
+    doorMangoldtStep15 t = 0 := by
+  have hf : ⌊t⌋₊ ≤ 1 := by
+    simpa using Nat.floor_mono ht
+  have hcases : ⌊t⌋₊ = 0 ∨ ⌊t⌋₊ = 1 := by
+    omega
+  rcases hcases with hn | hn
+  · simp [doorMangoldtStep15, hn,
+      complexMangoldtPartialSum15_zero]
+  · simp [doorMangoldtStep15, hn,
+      complexMangoldtPartialSum15, complexWeightedReadout15]
+
+/-- Restricting the step function to t > 1 changes nothing. -/
+theorem doorMangoldtStep15_eq_indicator :
+    doorMangoldtStep15 =
+      (Set.Ioi (1 : ℝ)).indicator doorMangoldtStep15 := by
+  funext t
+  by_cases ht : 1 < t
+  · simp [Set.indicator_of_mem, ht]
+  · have hz :=
+      doorMangoldtStep15_eq_zero_of_le_one (le_of_not_gt ht)
+    simp [Set.indicator_of_notMem, ht, hz]
+
+/-- The Mellin expression is exactly the Abel integral. -/
+theorem doorMangoldtMellin15_eq_integral (s : ℂ) :
+    doorMangoldtMellin15 s =
+      s * ∫ t in Set.Ioi (1 : ℝ),
+        complexMangoldtPartialSum15 ⌊t⌋₊ *
+          (t : ℂ) ^ (-(s + 1)) := by
+  unfold doorMangoldtMellin15
+  congr 1
+  unfold mellin
+  rw [doorMangoldtStep15_eq_indicator]
+  simp_rw [← Set.indicator_smul]
+  rw [integral_indicator measurableSet_Ioi]
+  have hsubset :
+      Set.Ioi (1 : ℝ) ⊆ Set.Ioi (0 : ℝ) :=
+    Set.Ioi_subset_Ioi (by norm_num)
+  rw [Measure.restrict_restrict measurableSet_Ioi,
+    Set.inter_eq_left.mpr hsubset]
+  apply setIntegral_congr_fun measurableSet_Ioi
+  intro t ht
+  simp only [smul_eq_mul, doorMangoldtStep15]
+  rw [show -s - 1 = -(s + 1) by ring]
+  exact mul_comm _ _
+
+/-- On the original convergence half-plane, the holomorphic
+Mellin expression equals the logarithmic derivative. -/
+theorem doorMangoldtMellin15_eq_logDerivative
+    (htable : ∀ n : ℕ,
+      complexCharacter15 (n : ZMod 15) = complex15 n)
+    {θ : ℝ}
+    (hθ : 0 ≤ θ)
+    (hcancel : DoorCharacterCancellation15 θ)
+    {s : ℂ}
+    (hs : 1 < s.re)
+    (hθs : θ < s.re) :
+    doorMangoldtMellin15 s =
+      -deriv
+          (LSeries (fun n =>
+            complexCharacter15 (n : ZMod 15))) s /
+        LSeries (fun n =>
+          complexCharacter15 (n : ZMod 15)) s := by
+  rw [doorMangoldtMellin15_eq_integral]
+  exact
+    (doorMangoldt_logDerivative_eq_integral
+      htable hθ hcancel hs hθs).symm
+
+/-- The Mellin expression agrees with the logarithmic derivative
+of the continued L-function in the original convergence region. -/
+theorem doorMangoldtMellin15_eq_continued_logDerivative
+    (htable : ∀ n : ℕ,
+      complexCharacter15 (n : ZMod 15) = complex15 n)
+    {θ : ℝ}
+    (hθ : 0 ≤ θ)
+    (hcancel : DoorCharacterCancellation15 θ)
+    {s : ℂ}
+    (hs : 1 < s.re)
+    (hθs : θ < s.re) :
+    doorMangoldtMellin15 s =
+      -deriv
+          (DirichletCharacter.LFunction complexCharacter15) s /
+        DirichletCharacter.LFunction complexCharacter15 s := by
+  rw [
+    DirichletCharacter.deriv_LFunction_eq_deriv_LSeries
+      complexCharacter15 hs,
+    DirichletCharacter.LFunction_eq_LSeries
+      complexCharacter15 hs
+  ]
+  exact
+    doorMangoldtMellin15_eq_logDerivative
+      htable hθ hcancel hs hθs
+
+/-- The division-free differential identity on Re(s) > 1. -/
+theorem doorMangoldtMellin15_differential_identity
+    (htable : ∀ n : ℕ,
+      complexCharacter15 (n : ZMod 15) = complex15 n)
+    {θ : ℝ}
+    (hθ : 0 ≤ θ)
+    (hcancel : DoorCharacterCancellation15 θ)
+    {s : ℂ}
+    (hs : 1 < s.re)
+    (hθs : θ < s.re) :
+    deriv (DirichletCharacter.LFunction complexCharacter15) s +
+      doorMangoldtMellin15 s *
+        DirichletCharacter.LFunction complexCharacter15 s = 0 := by
+  have hsone : s ≠ 1 := by
+    intro h
+    subst s
+    norm_num at hs
+
+  have hne :
+      DirichletCharacter.LFunction complexCharacter15 s ≠ 0 :=
+    DirichletCharacter.LFunction_ne_zero_of_one_le_re
+      complexCharacter15 (Or.inr hsone) hs.le
+
+  have hquot :=
+    doorMangoldtMellin15_eq_continued_logDerivative
+      htable hθ hcancel hs hθs
+
+  have hmul :
+      doorMangoldtMellin15 s *
+          DirichletCharacter.LFunction complexCharacter15 s =
+        -deriv
+          (DirichletCharacter.LFunction complexCharacter15) s :=
+    (eq_div_iff hne).mp hquot
+
+  rw [hmul]
+  exact add_neg_cancel _
+
+/-- For a cancellation exponent below one, the differential
+identity holds throughout the original convergence half-plane. -/
+theorem doorMangoldtMellin15_differential_identity_of_theta_lt_one
+    (htable : ∀ n : ℕ,
+      complexCharacter15 (n : ZMod 15) = complex15 n)
+    {θ : ℝ}
+    (hθ : 0 ≤ θ)
+    (hθ1 : θ < 1)
+    (hcancel : DoorCharacterCancellation15 θ)
+    {s : ℂ}
+    (hs : 1 < s.re) :
+    deriv (DirichletCharacter.LFunction complexCharacter15) s +
+      doorMangoldtMellin15 s *
+        DirichletCharacter.LFunction complexCharacter15 s = 0 := by
+  exact
+    doorMangoldtMellin15_differential_identity
+      htable hθ hcancel hs (hθ1.trans hs)
+
+/-- The cancellation half-plane is connected. -/
+theorem doorCancellationHalfPlane_preconnected (θ : ℝ) :
+    IsPreconnected {s : ℂ | θ < s.re} := by
+  have hconvex : Convex ℝ {s : ℂ | θ < s.re} := by
+    exact
+      (convex_Ioi θ).linear_preimage Complex.reCLM.toLinearMap
+  exact hconvex.isPreconnected
+
+/-- The differential identity extends throughout the
+half-plane supplied by the cancellation estimate. -/
+theorem doorMangoldtMellin15_differential_identity_halfPlane
+    (htable : ∀ n : ℕ,
+      complexCharacter15 (n : ZMod 15) = complex15 n)
+    {θ : ℝ}
+    (hθ : 0 ≤ θ)
+    (hθ1 : θ < 1)
+    (hcancel : DoorCharacterCancellation15 θ)
+    {s : ℂ}
+    (hs : θ < s.re) :
+    deriv (DirichletCharacter.LFunction complexCharacter15) s +
+      doorMangoldtMellin15 s *
+        DirichletCharacter.LFunction complexCharacter15 s = 0 := by
+  let U : Set ℂ := {z : ℂ | θ < z.re}
+  let L : ℂ → ℂ :=
+    DirichletCharacter.LFunction complexCharacter15
+  let F : ℂ → ℂ :=
+    fun z => deriv L z + doorMangoldtMellin15 z * L z
+
+  have hopen : IsOpen U := by
+    exact isOpen_lt continuous_const Complex.continuous_re
+
+  have hL : AnalyticOnNhd ℂ L U := by
+    intro z hz
+    exact
+      (DirichletCharacter.differentiable_LFunction
+        complexCharacter15_ne_one).analyticAt z
+
+  have hH : AnalyticOnNhd ℂ doorMangoldtMellin15 U :=
+    (doorMangoldtMellin15_differentiableOn
+      htable hθ hcancel).analyticOnNhd hopen
+
+  have hF : AnalyticOnNhd ℂ F U := by
+    have h := hL.deriv.add (hH.mul hL)
+    have hfun :
+        (deriv L +
+          (fun z : ℂ => doorMangoldtMellin15 z * L z)) = F := by
+      funext z
+      rfl
+    rw [hfun] at h
+    exact h
+
+  have htwo : (2 : ℂ) ∈ U := by
+    change θ < (2 : ℂ).re
+    norm_num
+    linarith
+
+  have horiginal :
+      {z : ℂ | 1 < z.re} ∈ nhds (2 : ℂ) := by
+    exact
+      (isOpen_lt continuous_const Complex.continuous_re).mem_nhds
+        (by norm_num)
+
+  have hevent :
+      ∀ᶠ z : ℂ in nhds (2 : ℂ), F z = 0 := by
+    filter_upwards [horiginal] with z hz
+    exact
+      doorMangoldtMellin15_differential_identity_of_theta_lt_one
+        htable hθ hθ1 hcancel hz
+
+  have hfreq :
+      ∃ᶠ z : ℂ in nhdsWithin (2 : ℂ) {2}ᶜ, F z = 0 :=
+    (hevent.filter_mono nhdsWithin_le_nhds).frequently
+
+  have hall : Set.EqOn F 0 U :=
+    hF.eqOn_zero_of_preconnected_of_frequently_eq_zero
+      (doorCancellationHalfPlane_preconnected θ)
+      htwo hfreq
+
+  exact hall hs
+
+/-- A holomorphic solution of L' + H L = 0 on a connected
+open set is nowhere zero if it is nonzero at one point. -/
+theorem analytic_solution_ne_zero_of_differential_identity
+    {U : Set ℂ}
+    (hopen : IsOpen U)
+    (hconnected : IsPreconnected U)
+    {L H : ℂ → ℂ}
+    (hL : AnalyticOnNhd ℂ L U)
+    (hH : AnalyticOnNhd ℂ H U)
+    (hode : ∀ z ∈ U, deriv L z + H z * L z = 0)
+    {x : ℂ}
+    (hx : x ∈ U)
+    (hxne : L x ≠ 0)
+    {s : ℂ}
+    (hs : s ∈ U) :
+    L s ≠ 0 := by
+  have hxorder : analyticOrderAt L x = 0 :=
+    (hL x hx).analyticOrderAt_eq_zero.mpr hxne
+
+  have hxfinite : analyticOrderAt L x ≠ ⊤ := by
+    rw [hxorder]
+    simp
+
+  have hsfinite : analyticOrderAt L s ≠ ⊤ :=
+    hL.analyticOrderAt_ne_top_of_isPreconnected
+      hconnected hx hs hxfinite
+
+  intro hzero
+
+  have hspositive : analyticOrderAt L s ≠ 0 :=
+    (hL s hs).analyticOrderAt_ne_zero.mpr hzero
+
+  have hevent :
+      deriv L =ᶠ[nhds s] -(H * L) := by
+    filter_upwards [hopen.mem_nhds hs] with z hz
+    have hzode := hode z hz
+    change deriv L z = -(H z * L z)
+    linear_combination hzode
+
+  have horders := analyticOrderAt_congr hevent
+
+  cases horder : analyticOrderAt L s with
+  | top =>
+      exact hsfinite horder
+  | coe n =>
+      cases n with
+      | zero =>
+          exact hspositive (by simpa using horder)
+      | succ m =>
+          have hd :
+              analyticOrderAt (deriv L) s = (m : ℕ∞) := by
+            apply analyticOrderAt_deriv_of_pos (hL s hs)
+            simpa only [Nat.cast_succ] using horder
+
+          rw [
+            analyticOrderAt_neg,
+            analyticOrderAt_mul (hH s hs) (hL s hs),
+            horder,
+            hd
+          ] at horders
+
+          have hle :
+              ((m + 1 : ℕ) : ℕ∞) ≤
+                analyticOrderAt H s + ((m + 1 : ℕ) : ℕ∞) :=
+            le_add_left le_rfl
+
+          rw [← horders] at hle
+          have hnat : m + 1 ≤ m := by
+            exact_mod_cast hle
+          omega
+
+/-- Full-complex Mangoldt cancellation gives a zero-free
+half-plane for the continued door-character L-function. -/
+theorem complexCharacter15_LFunction_ne_zero_of_cancellation
+    (htable : ∀ n : ℕ,
+      complexCharacter15 (n : ZMod 15) = complex15 n)
+    {θ : ℝ}
+    (hθ : 0 ≤ θ)
+    (hθ1 : θ < 1)
+    (hcancel : DoorCharacterCancellation15 θ)
+    {s : ℂ}
+    (hs : θ < s.re) :
+    DirichletCharacter.LFunction complexCharacter15 s ≠ 0 := by
+  let U : Set ℂ := {z : ℂ | θ < z.re}
+
+  have hopen : IsOpen U :=
+    isOpen_lt continuous_const Complex.continuous_re
+
+  have hL :
+      AnalyticOnNhd ℂ
+        (DirichletCharacter.LFunction complexCharacter15) U := by
+    intro z hz
+    exact
+      (DirichletCharacter.differentiable_LFunction
+        complexCharacter15_ne_one).analyticAt z
+
+  have hH :
+      AnalyticOnNhd ℂ doorMangoldtMellin15 U :=
+    (doorMangoldtMellin15_differentiableOn
+      htable hθ hcancel).analyticOnNhd hopen
+
+  have hode :
+      ∀ z ∈ U,
+        deriv (DirichletCharacter.LFunction complexCharacter15) z +
+          doorMangoldtMellin15 z *
+            DirichletCharacter.LFunction complexCharacter15 z = 0 := by
+    intro z hz
+    exact
+      doorMangoldtMellin15_differential_identity_halfPlane
+        htable hθ hθ1 hcancel hz
+
+  have htwo : (2 : ℂ) ∈ U := by
+    change θ < (2 : ℂ).re
+    norm_num
+    linarith
+
+  have htwo_ne :
+      DirichletCharacter.LFunction complexCharacter15 (2 : ℂ) ≠ 0 := by
+    exact
+      DirichletCharacter.LFunction_ne_zero_of_one_le_re
+        complexCharacter15
+        (Or.inl complexCharacter15_ne_one)
+        (by norm_num)
+
+  exact
+    analytic_solution_ne_zero_of_differential_identity
+      hopen
+      (doorCancellationHalfPlane_preconnected θ)
+      hL hH hode htwo htwo_ne hs
 
 end HireCharacterReadout
