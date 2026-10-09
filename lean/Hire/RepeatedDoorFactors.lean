@@ -1,4 +1,5 @@
 import Mathlib
+import Hire.Doors
 
 namespace HireDoorSieve
 
@@ -833,5 +834,767 @@ theorem repeated_owner_multiplier_mem_box
   have hindices := repeatedDoorMultiplier_indices_lt a b c
   simp only [Finset.mem_range]
   omega
+
+/-- A prime owner's signed contribution for a specified door value. -/
+noncomputable def selectedDoorOwnerWeight
+    (X d p : ℕ) : ℝ :=
+  if p.Prime ∧ p ≤ X then
+    (if Hire.m0 p = d then Real.log (p : ℝ) else 0) -
+      (if Hire.m1 p = d then Real.log (p : ℝ) else 0)
+  else 0
+
+/-- Selecting either door never increases the owner's absolute weight. -/
+theorem abs_selectedDoorOwnerWeight_le
+    (X d p : ℕ) :
+    |selectedDoorOwnerWeight X d p| ≤
+      primeOwnerLogWeight X p := by
+  by_cases hp : p.Prime ∧ p ≤ X
+  · have hlog : 0 ≤ Real.log (p : ℝ) := by
+      apply Real.log_nonneg
+      exact_mod_cast hp.1.one_lt.le
+    simp only [selectedDoorOwnerWeight,
+      primeOwnerLogWeight, ite_eq_left hp]
+    split_ifs <;> simp_all [abs_of_nonneg hlog]
+  · simp [selectedDoorOwnerWeight, primeOwnerLogWeight, hp]
+
+/-- Signed contribution of the two possible owners of A*u*v².
+Only prime remaining factors greater than five are selected. -/
+noncomputable def selectedRepeatedPairWeight
+    (X A : ℕ) (t : ℕ × ℕ) : ℝ :=
+  if t.1.Prime ∧ t.2.Prime ∧ 5 < t.1 ∧ 5 < t.2 then
+    let d := A * t.1 * t.2 ^ 2
+    selectedDoorOwnerWeight X d (d - 1) +
+      selectedDoorOwnerWeight X d (d + 1)
+  else 0
+
+/-- The unsigned candidate mass controls the selected signed pair. -/
+theorem abs_selectedRepeatedPairWeight_le
+    (X A : ℕ) (t : ℕ × ℕ) :
+    |selectedRepeatedPairWeight X A t| ≤
+      repeatedPairOwnerMass X A t := by
+  unfold selectedRepeatedPairWeight
+  split_ifs with ht
+  · dsimp
+    have hm := abs_selectedDoorOwnerWeight_le
+      X (A * t.1 * t.2 ^ 2) (A * t.1 * t.2 ^ 2 - 1)
+    have hp := abs_selectedDoorOwnerWeight_le
+      X (A * t.1 * t.2 ^ 2) (A * t.1 * t.2 ^ 2 + 1)
+    obtain ⟨hmlo, hmhi⟩ := abs_le.mp hm
+    obtain ⟨hplo, hphi⟩ := abs_le.mp hp
+    unfold repeatedPairOwnerMass
+    apply abs_le.mpr
+    constructor <;> linarith
+  · simpa using repeatedPairOwnerMass_nonneg X A t
+
+/-- The selected signed sum for a fixed multiplier is controlled
+by its unsigned rectangle mass. -/
+theorem abs_sum_selectedRepeatedPairWeight_le
+    (X A : ℕ) :
+    |∑ t ∈ repeatedFactorPairs ((X + 1) / A)
+        (cubeRootCutoff ((X + 1) / A))
+        (squareRootCutoff ((X + 1) / A)),
+      selectedRepeatedPairWeight X A t| ≤
+        repeatedMultiplierOwnerMass X A := by
+  calc
+    _ ≤ ∑ t ∈ repeatedFactorPairs ((X + 1) / A)
+        (cubeRootCutoff ((X + 1) / A))
+        (squareRootCutoff ((X + 1) / A)),
+        |selectedRepeatedPairWeight X A t| :=
+      Finset.abs_sum_le_sum_abs _ _
+    _ ≤ repeatedMultiplierOwnerMass X A := by
+      unfold repeatedMultiplierOwnerMass
+      apply Finset.sum_le_sum
+      intro t ht
+      exact abs_selectedRepeatedPairWeight_le X A t
+
+/-- Selected repeated-factor contributions across the whole window box. -/
+noncomputable def selectedRepeatedWindowSum (X : ℕ) : ℝ :=
+  ∑ a ∈ Finset.range (X + 1),
+    ∑ b ∈ Finset.range (X + 1),
+      ∑ c ∈ Finset.range (X + 1),
+        ∑ t ∈ repeatedFactorPairs
+            ((X + 1) / repeatedDoorMultiplier a b c)
+            (cubeRootCutoff
+              ((X + 1) / repeatedDoorMultiplier a b c))
+            (squareRootCutoff
+              ((X + 1) / repeatedDoorMultiplier a b c)),
+          selectedRepeatedPairWeight X
+            (repeatedDoorMultiplier a b c) t
+
+/-- The complete window box satisfies the uniform sublinear bound. -/
+theorem abs_selectedRepeatedWindowSum_le
+    {X : ℕ} (hX : 1 ≤ X) :
+    |selectedRepeatedWindowSum X| ≤
+      (2 * Real.rpow ((X : ℝ) + 1) (5 / 6 : ℝ) *
+        Real.log (X : ℝ)) *
+          repeatedDoorGeometricConstant (5 / 6 : ℝ) := by
+  unfold selectedRepeatedWindowSum
+  calc
+    _ ≤ ∑ a ∈ Finset.range (X + 1),
+        |∑ b ∈ Finset.range (X + 1),
+          ∑ c ∈ Finset.range (X + 1),
+            ∑ t ∈ repeatedFactorPairs
+                ((X + 1) / repeatedDoorMultiplier a b c)
+                (cubeRootCutoff
+                  ((X + 1) / repeatedDoorMultiplier a b c))
+                (squareRootCutoff
+                  ((X + 1) / repeatedDoorMultiplier a b c)),
+              selectedRepeatedPairWeight X
+                (repeatedDoorMultiplier a b c) t| :=
+      Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ a ∈ Finset.range (X + 1),
+        ∑ b ∈ Finset.range (X + 1),
+          ∑ c ∈ Finset.range (X + 1),
+            repeatedMultiplierOwnerMass X
+              (repeatedDoorMultiplier a b c) := by
+      apply Finset.sum_le_sum
+      intro a ha
+      calc
+        _ ≤ ∑ b ∈ Finset.range (X + 1),
+            |∑ c ∈ Finset.range (X + 1),
+              ∑ t ∈ repeatedFactorPairs
+                  ((X + 1) / repeatedDoorMultiplier a b c)
+                  (cubeRootCutoff
+                    ((X + 1) / repeatedDoorMultiplier a b c))
+                  (squareRootCutoff
+                    ((X + 1) / repeatedDoorMultiplier a b c)),
+                selectedRepeatedPairWeight X
+                  (repeatedDoorMultiplier a b c) t| :=
+          Finset.abs_sum_le_sum_abs _ _
+        _ ≤ _ := by
+          apply Finset.sum_le_sum
+          intro b hb
+          calc
+            _ ≤ ∑ c ∈ Finset.range (X + 1),
+                |∑ t ∈ repeatedFactorPairs
+                    ((X + 1) / repeatedDoorMultiplier a b c)
+                    (cubeRootCutoff
+                      ((X + 1) / repeatedDoorMultiplier a b c))
+                    (squareRootCutoff
+                      ((X + 1) / repeatedDoorMultiplier a b c)),
+                  selectedRepeatedPairWeight X
+                    (repeatedDoorMultiplier a b c) t| :=
+              Finset.abs_sum_le_sum_abs _ _
+            _ ≤ _ := by
+              apply Finset.sum_le_sum
+              intro c hc
+              exact abs_sum_selectedRepeatedPairWeight_le
+                X (repeatedDoorMultiplier a b c)
+    _ ≤ _ :=
+      sum_repeatedMultiplierOwnerMass_box_le
+        hX (X + 1) (X + 1) (X + 1)
+
+/-- Prime multiplicities in the repeated-factor cofactor. -/
+theorem prime_pair_factorization_at
+    {u v : ℕ}
+    (hu : u.Prime) (hv : v.Prime)
+    (q : ℕ) :
+    (u * v ^ 2).factorization q =
+      (if u = q then 1 else 0) +
+        (if v = q then 2 else 0) := by
+  rw [Nat.factorization_mul hu.ne_zero
+    (pow_ne_zero 2 hv.ne_zero)]
+  rw [hu.factorization, hv.factorization_pow]
+  simp [Finsupp.add_apply, Finsupp.single_apply]
+
+/-- Equal ordered repeated-prime products have equal largest factors. -/
+theorem ordered_prime_pair_largest_eq
+    {u v u' v' : ℕ}
+    (hu : u.Prime) (hv : v.Prime)
+    (hu' : u'.Prime) (hv' : v'.Prime)
+    (huv : u ≤ v) (huv' : u' ≤ v')
+    (h : u * v ^ 2 = u' * v' ^ 2) :
+    v = v' := by
+  have hle : v ≤ v' := by
+    by_contra hn
+    have hbig : v' < v := by omega
+    have hune : u' ≠ v := by omega
+    have hvne : v' ≠ v := by omega
+    have hf := congrArg (fun n : ℕ => n.factorization v) h
+    rw [prime_pair_factorization_at hu hv,
+      prime_pair_factorization_at hu' hv'] at hf
+    simp only [ite_eq_right hune, ite_eq_right hvne] at hf
+    split_ifs at hf <;> omega
+  have hle' : v' ≤ v := by
+    by_contra hn
+    have hbig : v < v' := by omega
+    have hune : u ≠ v' := by omega
+    have hvne : v ≠ v' := by omega
+    have hf := congrArg (fun n : ℕ => n.factorization v') h
+    rw [prime_pair_factorization_at hu hv,
+      prime_pair_factorization_at hu' hv'] at hf
+    simp only [ite_eq_right hune, ite_eq_right hvne] at hf
+    split_ifs at hf <;> omega
+  omega
+
+/-- The ordered prime pair is uniquely determined by its product. -/
+theorem ordered_prime_pair_unique
+    {u v u' v' : ℕ}
+    (hu : u.Prime) (hv : v.Prime)
+    (hu' : u'.Prime) (hv' : v'.Prime)
+    (huv : u ≤ v) (huv' : u' ≤ v')
+    (h : u * v ^ 2 = u' * v' ^ 2) :
+    u = u' ∧ v = v' := by
+  have hvv :=
+    ordered_prime_pair_largest_eq hu hv hu' hv' huv huv' h
+  subst v'
+  have huu : u = u' :=
+    mul_right_cancel₀ (pow_ne_zero 2 hv.ne_zero) h
+  exact ⟨huu, rfl⟩
+
+/-- The two adjacent offsets cannot produce the same owner
+when the door is positive. -/
+theorem adjacent_owner_offsets_ne
+    {d : ℕ} (hd : 0 < d) :
+    d - 1 ≠ d + 1 := by
+  omega
+
+/-- Prime multiplicities of the complete factored door. -/
+theorem repeated_door_factorization_at
+    (a b c : ℕ)
+    {u v : ℕ}
+    (hu : u.Prime) (hv : v.Prime)
+    (q : ℕ) :
+    (repeatedDoorMultiplier a b c * u * v ^ 2).factorization q =
+      (if 2 = q then a + 1 else 0) +
+      (if 3 = q then b else 0) +
+      (if 5 = q then c + 1 else 0) +
+      (if u = q then 1 else 0) +
+      (if v = q then 2 else 0) := by
+  have h₂ : Nat.Prime 2 := by norm_num
+  have h₃ : Nat.Prime 3 := by norm_num
+  have h₅ : Nat.Prime 5 := by norm_num
+  simp [repeatedDoorMultiplier, Nat.factorization_mul,
+    h₂.factorization_pow, h₃.factorization_pow,
+    h₅.factorization_pow, hu.factorization,
+    hv.factorization_pow, hu.ne_zero, hv.ne_zero,
+    Finsupp.add_apply, Finsupp.single_apply, eq_comm]
+  split_ifs <;> omega
+
+/-- The door uniquely records the three smooth exponents. -/
+theorem repeated_door_smooth_exponents
+    (a b c : ℕ)
+    {u v : ℕ}
+    (hu : u.Prime) (hv : v.Prime)
+    (hu5 : 5 < u) (hv5 : 5 < v) :
+    (repeatedDoorMultiplier a b c * u * v ^ 2).factorization 2 =
+        a + 1 ∧
+    (repeatedDoorMultiplier a b c * u * v ^ 2).factorization 3 =
+        b ∧
+    (repeatedDoorMultiplier a b c * u * v ^ 2).factorization 5 =
+        c + 1 := by
+  have hu2 : u ≠ 2 := by omega
+  have hv2 : v ≠ 2 := by omega
+  have hu3 : u ≠ 3 := by omega
+  have hv3 : v ≠ 3 := by omega
+  have hu5ne : u ≠ 5 := by omega
+  have hv5ne : v ≠ 5 := by omega
+  constructor
+  · rw [repeated_door_factorization_at a b c hu hv 2]
+    simp [hu2, hv2]
+  constructor
+  · rw [repeated_door_factorization_at a b c hu hv 3]
+    simp [hu3, hv3]
+  · rw [repeated_door_factorization_at a b c hu hv 5]
+    simp [hu5ne, hv5ne]
+
+/-- Equal factored doors have equal smooth exponent indices. -/
+theorem repeated_door_smooth_indices_unique
+    {a b c a' b' c' u v u' v' : ℕ}
+    (hu : u.Prime) (hv : v.Prime)
+    (hu' : u'.Prime) (hv' : v'.Prime)
+    (hu5 : 5 < u) (hv5 : 5 < v)
+    (hu'5 : 5 < u') (hv'5 : 5 < v')
+    (h :
+      repeatedDoorMultiplier a b c * u * v ^ 2 =
+        repeatedDoorMultiplier a' b' c' * u' * v' ^ 2) :
+    a = a' ∧ b = b' ∧ c = c' := by
+  obtain ⟨h₂, h₃, h₅⟩ :=
+    repeated_door_smooth_exponents a b c hu hv hu5 hv5
+  obtain ⟨h₂', h₃', h₅'⟩ :=
+    repeated_door_smooth_exponents a' b' c'
+      hu' hv' hu'5 hv'5
+  have he₂ := congrArg (fun n : ℕ => n.factorization 2) h
+  have he₃ := congrArg (fun n : ℕ => n.factorization 3) h
+  have he₅ := congrArg (fun n : ℕ => n.factorization 5) h
+  rw [h₂, h₂'] at he₂
+  rw [h₃, h₃'] at he₃
+  rw [h₅, h₅'] at he₅
+  omega
+
+/-- A factored door uniquely determines the complete ordered tuple. -/
+theorem repeated_door_tuple_unique
+    {a b c a' b' c' u v u' v' : ℕ}
+    (hu : u.Prime) (hv : v.Prime)
+    (hu' : u'.Prime) (hv' : v'.Prime)
+    (hu5 : 5 < u) (hv5 : 5 < v)
+    (hu'5 : 5 < u') (hv'5 : 5 < v')
+    (huv : u ≤ v) (huv' : u' ≤ v')
+    (h :
+      repeatedDoorMultiplier a b c * u * v ^ 2 =
+        repeatedDoorMultiplier a' b' c' * u' * v' ^ 2) :
+    a = a' ∧ b = b' ∧ c = c' ∧ u = u' ∧ v = v' := by
+  obtain ⟨ha, hb, hc⟩ :=
+    repeated_door_smooth_indices_unique
+      hu hv hu' hv' hu5 hv5 hu'5 hv'5 h
+  subst a'
+  subst b'
+  subst c'
+  have hA : repeatedDoorMultiplier a b c ≠ 0 := by
+    unfold repeatedDoorMultiplier
+    positivity
+  have hcofactor : u * v ^ 2 = u' * v' ^ 2 := by
+    apply mul_left_cancel₀ hA
+    simpa only [mul_assoc] using h
+  obtain ⟨huu, hvv⟩ :=
+    ordered_prime_pair_unique hu hv hu' hv' huv huv' hcofactor
+  exact ⟨rfl, rfl, rfl, huu, hvv⟩
+
+/-- Valid data for a repeated-largest-factor door. -/
+structure RepeatedDoorData where
+  a : ℕ
+  b : ℕ
+  c : ℕ
+  u : ℕ
+  v : ℕ
+  hu : u.Prime
+  hv : v.Prime
+  hu5 : 5 < u
+  hv5 : 5 < v
+  huv : u ≤ v
+
+def RepeatedDoorData.value (t : RepeatedDoorData) : ℕ :=
+  repeatedDoorMultiplier t.a t.b t.c * t.u * t.v ^ 2
+
+/-- A door value determines its valid tuple uniquely. -/
+theorem repeatedDoorData_value_injective :
+    Function.Injective RepeatedDoorData.value := by
+  intro s t h
+  obtain ⟨ha, hb, hc, hu, hv⟩ :=
+    repeated_door_tuple_unique
+      s.hu s.hv t.hu t.hv
+      s.hu5 s.hv5 t.hu5 t.hv5 s.huv t.huv h
+  cases s
+  cases t
+  simp_all
+
+/-- true selects the kept door; false selects the discarded door. -/
+def selectedDoorValue (p : ℕ) (kept : Bool) : ℕ :=
+  if kept then Hire.m0 p else Hire.m1 p
+
+/-- The repeated-factor condition stated directly on a prime and door. -/
+def HasRepeatedDoor (p : ℕ) (kept : Bool) : Prop :=
+  ∃ t : RepeatedDoorData, t.value = selectedDoorValue p kept
+
+/-- Whenever a repeated-door representation exists, it is unique. -/
+theorem hasRepeatedDoor_iff_existsUnique
+    (p : ℕ) (kept : Bool) :
+    HasRepeatedDoor p kept ↔
+      ∃! t : RepeatedDoorData,
+        t.value = selectedDoorValue p kept := by
+  constructor
+  · rintro ⟨t, ht⟩
+    refine ⟨t, ht, ?_⟩
+    intro s hs
+    exact repeatedDoorData_value_injective (hs.trans ht.symm)
+  · rintro ⟨t, ht, _⟩
+    exact ⟨t, ht⟩
+
+/-- Weight for one prime and one door. -/
+noncomputable def signedDoorLog (p : ℕ) (kept : Bool) : ℝ :=
+  if kept then Real.log (p : ℝ) else -Real.log (p : ℝ)
+
+/-- Uniqueness turns a finite representation sum into an indicator. -/
+theorem sum_repeatedDoorData_indicator
+    (S : Finset RepeatedDoorData)
+    (d : ℕ) (w : ℝ) :
+    (∑ t ∈ S, if t.value = d then w else 0) =
+      if (∃ t ∈ S, t.value = d) then w else 0 := by
+  classical
+  by_cases hex : ∃ t ∈ S, t.value = d
+  · obtain ⟨t, htS, htd⟩ := hex
+    rw [ite_eq_left ⟨t, htS, htd⟩]
+    calc
+      _ = (if t.value = d then w else 0) := by
+        apply Finset.sum_eq_single t
+        · intro s hsS hst
+          have hsd : s.value ≠ d := by
+            intro hsd
+            apply hst
+            exact repeatedDoorData_value_injective
+              (hsd.trans htd.symm)
+          simp [hsd]
+        · intro ht
+          exact (ht htS).elim
+      _ = w := by simp [htd]
+  · rw [ite_eq_right hex]
+    apply Finset.sum_eq_zero
+    intro t htS
+    have htd : t.value ≠ d := by
+      intro htd
+      exact hex ⟨t, htS, htd⟩
+    simp [htd]
+
+/-- The repeated-factor contribution indexed directly by prime owners. -/
+noncomputable def repeatedDoorPrimeSum
+    (X : ℕ) (kept : Bool) : ℝ := by
+  classical
+  exact ∑ p ∈ Finset.range (X + 1),
+    if p.Prime ∧ HasRepeatedDoor p kept then
+      signedDoorLog p kept
+    else 0
+
+/-- The same contribution, indexed by a finite set of valid tuples. -/
+noncomputable def repeatedDoorTupleSum
+    (X : ℕ) (kept : Bool)
+    (S : Finset RepeatedDoorData) : ℝ := by
+  classical
+  exact ∑ t ∈ S,
+    ∑ p ∈ Finset.range (X + 1),
+      if p.Prime ∧ t.value = selectedDoorValue p kept then
+        signedDoorLog p kept
+      else 0
+
+/-- A complete finite tuple set gives exact reindexing by prime owners. -/
+theorem repeatedDoorTupleSum_eq_primeSum
+    (X : ℕ) (kept : Bool)
+    (S : Finset RepeatedDoorData)
+    (hcomplete :
+      ∀ p ∈ Finset.range (X + 1), p.Prime →
+        (HasRepeatedDoor p kept ↔
+          ∃ t ∈ S, t.value = selectedDoorValue p kept)) :
+    repeatedDoorTupleSum X kept S =
+      repeatedDoorPrimeSum X kept := by
+  classical
+  unfold repeatedDoorTupleSum repeatedDoorPrimeSum
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro p hp
+  by_cases hprime : p.Prime
+  · simp only [hprime, true_and]
+    rw [sum_repeatedDoorData_indicator]
+    simp only [← hcomplete p hp hprime]
+  · simp [hprime]
+
+/-- Only finitely many valid tuples have a door value in the window. -/
+theorem repeatedDoorData_window_finite (X : ℕ) :
+    (RepeatedDoorData.value ⁻¹'
+      (↑(Finset.range (X + 2)) : Set ℕ)).Finite := by
+  exact Set.Finite.preimage
+    repeatedDoorData_value_injective.injOn
+    (Finset.finite_toSet _)
+
+/-- The complete finite set of repeated-factor tuples for the window. -/
+noncomputable def repeatedDoorWindowTuples
+    (X : ℕ) : Finset RepeatedDoorData :=
+  (repeatedDoorData_window_finite X).toFinset
+
+theorem mem_repeatedDoorWindowTuples
+    (X : ℕ) (t : RepeatedDoorData) :
+    t ∈ repeatedDoorWindowTuples X ↔ t.value ≤ X + 1 := by
+  simp only [repeatedDoorWindowTuples,
+    Set.Finite.mem_toFinset, Set.mem_preimage,
+    Finset.mem_coe, Finset.mem_range]
+  omega
+
+/-- Both selected neighbours of an owner in the window
+are bounded by X + 1. -/
+theorem selectedDoorValue_le_window
+    {p X : ℕ}
+    (hpX : p ≤ X) (kept : Bool) :
+    selectedDoorValue p kept ≤ X + 1 := by
+  have hm0 : Hire.m0 p ≤ X + 1 := by
+    unfold Hire.m0
+    split_ifs <;> omega
+  have hm1 : Hire.m1 p ≤ X + 1 := by
+    unfold Hire.m1
+    split_ifs <;> omega
+  cases kept
+  · simpa [selectedDoorValue] using hm1
+  · simpa [selectedDoorValue] using hm0
+
+/-- The canonical tuple set supplies the completeness hypothesis. -/
+theorem repeatedDoorWindowTuples_complete
+    (X : ℕ) (kept : Bool) :
+    ∀ p ∈ Finset.range (X + 1), p.Prime →
+      (HasRepeatedDoor p kept ↔
+        ∃ t ∈ repeatedDoorWindowTuples X,
+          t.value = selectedDoorValue p kept) := by
+  intro p hp hprime
+  have hpX : p ≤ X := by
+    have hp' := Finset.mem_range.mp hp
+    omega
+  constructor
+  · rintro ⟨t, ht⟩
+    refine ⟨t, ?_, ht⟩
+    apply (mem_repeatedDoorWindowTuples X t).2
+    rw [ht]
+    exact selectedDoorValue_le_window hpX kept
+  · rintro ⟨t, htS, ht⟩
+    exact ⟨t, ht⟩
+
+/-- Exact reindexing with the canonical window tuple set. -/
+theorem repeatedDoorWindowTupleSum_eq_primeSum
+    (X : ℕ) (kept : Bool) :
+    repeatedDoorTupleSum X kept (repeatedDoorWindowTuples X) =
+      repeatedDoorPrimeSum X kept := by
+  exact repeatedDoorTupleSum_eq_primeSum
+    X kept (repeatedDoorWindowTuples X)
+    (repeatedDoorWindowTuples_complete X kept)
+
+/-- Combining kept and discarded contributions preserves the identity. -/
+theorem repeatedDoorWindow_signed_reindex
+    (X : ℕ) :
+    repeatedDoorTupleSum X true (repeatedDoorWindowTuples X) +
+      repeatedDoorTupleSum X false (repeatedDoorWindowTuples X) =
+    repeatedDoorPrimeSum X true +
+      repeatedDoorPrimeSum X false := by
+  rw [repeatedDoorWindowTupleSum_eq_primeSum,
+    repeatedDoorWindowTupleSum_eq_primeSum]
+
+/-- A specified door contributes only at its adjacent owners. -/
+theorem selectedDoorOwnerWeight_eq_zero_of_not_adjacent
+    (X d p : ℕ)
+    (hm : p ≠ d - 1)
+    (hp : p ≠ d + 1) :
+    selectedDoorOwnerWeight X d p = 0 := by
+  by_cases hprime : p.Prime ∧ p ≤ X
+  · have hp2 := hprime.1.two_le
+    have hm0 : Hire.m0 p ≠ d := by
+      intro h
+      unfold Hire.m0 at h
+      split_ifs at h <;> omega
+    have hm1 : Hire.m1 p ≠ d := by
+      intro h
+      unfold Hire.m1 at h
+      split_ifs at h <;> omega
+    simp [selectedDoorOwnerWeight, hprime, hm0, hm1]
+  · simp [selectedDoorOwnerWeight, hprime]
+
+/-- Summing over prime owners recovers precisely the two offsets. -/
+theorem sum_selectedDoorOwnerWeight_eq_adjacent
+    (X d : ℕ) (hd : 0 < d) :
+    (∑ p ∈ Finset.range (X + 1),
+      selectedDoorOwnerWeight X d p) =
+    selectedDoorOwnerWeight X d (d - 1) +
+      selectedDoorOwnerWeight X d (d + 1) := by
+  classical
+  apply Finset.sum_eq_add (d - 1) (d + 1)
+    (adjacent_owner_offsets_ne hd)
+  · intro p hp hne
+    exact selectedDoorOwnerWeight_eq_zero_of_not_adjacent
+      X d p hne.1 hne.2
+  · intro hm
+    have houtside : ¬d - 1 ≤ X := by
+      simp only [Finset.mem_range] at hm
+      omega
+    simp [selectedDoorOwnerWeight, houtside]
+  · intro hp
+    have houtside : ¬d + 1 ≤ X := by
+      simp only [Finset.mem_range] at hp
+      omega
+    simp [selectedDoorOwnerWeight, houtside]
+
+/-- The complete tuple sum equals the selected adjacent-pair sum. -/
+theorem repeatedDoorTupleSum_signed_eq_pairs
+    (X : ℕ) (S : Finset RepeatedDoorData) :
+    repeatedDoorTupleSum X true S +
+      repeatedDoorTupleSum X false S =
+    ∑ t ∈ S,
+      selectedRepeatedPairWeight X
+        (repeatedDoorMultiplier t.a t.b t.c) (t.u, t.v) := by
+  classical
+  unfold repeatedDoorTupleSum
+  rw [← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro t ht
+  rw [← Finset.sum_add_distrib]
+  have hd : 0 < t.value := by
+    have hu := t.hu.pos
+    have hv := t.hv.pos
+    dsimp [RepeatedDoorData.value, repeatedDoorMultiplier]
+    positivity
+  calc
+    _ = ∑ p ∈ Finset.range (X + 1),
+        selectedDoorOwnerWeight X t.value p := by
+      apply Finset.sum_congr rfl
+      intro p hp
+      have hpX : p ≤ X := by
+        have h := Finset.mem_range.mp hp
+        omega
+      by_cases hprime : p.Prime
+      · simp [selectedDoorValue, signedDoorLog,
+          selectedDoorOwnerWeight, hprime, hpX, eq_comm];
+          split_ifs <;> ring
+      · simp [selectedDoorValue,
+          selectedDoorOwnerWeight, hprime]
+    _ = selectedDoorOwnerWeight X t.value (t.value - 1) +
+        selectedDoorOwnerWeight X t.value (t.value + 1) :=
+      sum_selectedDoorOwnerWeight_eq_adjacent X t.value hd
+    _ = _ := by
+      simp [selectedRepeatedPairWeight, t.hu, t.hv,
+        t.hu5, t.hv5, RepeatedDoorData.value]
+
+/-- The actual prime-indexed contribution is bounded by tuple mass. -/
+theorem abs_repeatedDoorPrimeSum_le_tuple_mass
+    (X : ℕ) :
+    |repeatedDoorPrimeSum X true +
+      repeatedDoorPrimeSum X false| ≤
+    ∑ t ∈ repeatedDoorWindowTuples X,
+      repeatedPairOwnerMass X
+        (repeatedDoorMultiplier t.a t.b t.c) (t.u, t.v) := by
+  rw [← repeatedDoorWindow_signed_reindex,
+    repeatedDoorTupleSum_signed_eq_pairs]
+  calc
+    _ ≤ ∑ t ∈ repeatedDoorWindowTuples X,
+        |selectedRepeatedPairWeight X
+          (repeatedDoorMultiplier t.a t.b t.c) (t.u, t.v)| :=
+      Finset.abs_sum_le_sum_abs _ _
+    _ ≤ _ := by
+      apply Finset.sum_le_sum
+      intro t ht
+      exact abs_selectedRepeatedPairWeight_le X
+        (repeatedDoorMultiplier t.a t.b t.c) (t.u, t.v)
+
+/-- A slot records the three exponent indices and the remaining pair. -/
+def repeatedDoorSlot (t : RepeatedDoorData) :
+    Σ _ : ℕ × ℕ × ℕ, ℕ × ℕ :=
+  ⟨(t.a, t.b, t.c), (t.u, t.v)⟩
+
+theorem repeatedDoorSlot_injective :
+    Function.Injective repeatedDoorSlot := by
+  intro s t h
+  have hv : s.value = t.value := by
+    have hk := congrArg
+      (fun z : Σ _ : ℕ × ℕ × ℕ, ℕ × ℕ =>
+        repeatedDoorMultiplier z.1.1 z.1.2.1 z.1.2.2 *
+          z.2.1 * z.2.2 ^ 2) h
+    exact hk
+  exact repeatedDoorData_value_injective hv
+
+/-- All exponent-and-pair slots in the window box. -/
+def repeatedDoorSlotBox (X : ℕ) :
+    Finset (Σ _ : ℕ × ℕ × ℕ, ℕ × ℕ) :=
+  ((Finset.range (X + 1)) ×ˢ
+    ((Finset.range (X + 1)) ×ˢ
+      (Finset.range (X + 1)))).sigma
+    (fun abc =>
+      repeatedFactorPairs
+        ((X + 1) / repeatedDoorMultiplier abc.1 abc.2.1 abc.2.2)
+        (cubeRootCutoff
+          ((X + 1) / repeatedDoorMultiplier abc.1 abc.2.1 abc.2.2))
+        (squareRootCutoff
+          ((X + 1) / repeatedDoorMultiplier abc.1 abc.2.1 abc.2.2)))
+
+theorem repeatedDoorSlot_mem_box
+    (X : ℕ) (t : RepeatedDoorData)
+    (ht : t ∈ repeatedDoorWindowTuples X) :
+    repeatedDoorSlot t ∈ repeatedDoorSlotBox X := by
+  have hd := (mem_repeatedDoorWindowTuples X t).1 ht
+  have hu : 1 ≤ t.u := t.hu.one_lt.le
+  have hv : 1 ≤ t.v := t.hv.one_lt.le
+  have hA : 0 < repeatedDoorMultiplier t.a t.b t.c := by
+    unfold repeatedDoorMultiplier
+    positivity
+  have hAle :=
+    multiplier_le_repeated_product
+      (A := repeatedDoorMultiplier t.a t.b t.c) hu hv
+  have hindices :=
+    repeatedDoorMultiplier_indices_lt t.a t.b t.c
+  have ha : t.a < X + 1 := by
+    dsimp [RepeatedDoorData.value] at hd
+    omega
+  have hb : t.b < X + 1 := by
+    dsimp [RepeatedDoorData.value] at hd
+    omega
+  have hc : t.c < X + 1 := by
+    dsimp [RepeatedDoorData.value] at hd
+    omega
+  have hcofactor :
+      t.u * t.v ^ 2 ≤
+        (X + 1) / repeatedDoorMultiplier t.a t.b t.c := by
+    apply (Nat.le_div_iff_mul_le hA).2
+    calc
+      _ = t.value := by
+        dsimp [RepeatedDoorData.value]
+        ring
+      _ ≤ X + 1 := hd
+  have hpair :=
+    mem_repeatedFactorPairs_root_cutoffs hu hv t.huv hcofactor
+  simpa only [repeatedDoorSlotBox, repeatedDoorSlot,
+    Finset.mem_sigma, Finset.mem_product, Finset.mem_range] using
+    (show (t.a < X + 1 ∧
+      t.b < X + 1 ∧ t.c < X + 1) ∧
+      (t.u, t.v) ∈ repeatedFactorPairs
+        ((X + 1) / repeatedDoorMultiplier t.a t.b t.c)
+        (cubeRootCutoff
+          ((X + 1) / repeatedDoorMultiplier t.a t.b t.c))
+        (squareRootCutoff
+          ((X + 1) / repeatedDoorMultiplier t.a t.b t.c))
+      from ⟨⟨ha, hb, hc⟩, hpair⟩)
+
+/-- Tuple mass is bounded by the mass of the complete slot box. -/
+theorem repeatedDoorWindow_tuple_mass_le_box
+    (X : ℕ) :
+    (∑ t ∈ repeatedDoorWindowTuples X,
+      repeatedPairOwnerMass X
+        (repeatedDoorMultiplier t.a t.b t.c) (t.u, t.v)) ≤
+    ∑ a ∈ Finset.range (X + 1),
+      ∑ b ∈ Finset.range (X + 1),
+        ∑ c ∈ Finset.range (X + 1),
+          repeatedMultiplierOwnerMass X
+            (repeatedDoorMultiplier a b c) := by
+  classical
+  let g : (Σ _ : ℕ × ℕ × ℕ, ℕ × ℕ) → ℝ :=
+    fun z => repeatedPairOwnerMass X
+      (repeatedDoorMultiplier z.1.1 z.1.2.1 z.1.2.2) z.2
+  have hmap :
+      (repeatedDoorWindowTuples X).image repeatedDoorSlot ⊆
+        repeatedDoorSlotBox X := by
+    intro z hz
+    obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp hz
+    exact repeatedDoorSlot_mem_box X t ht
+  have hsum :
+      (∑ t ∈ repeatedDoorWindowTuples X,
+        repeatedPairOwnerMass X
+          (repeatedDoorMultiplier t.a t.b t.c) (t.u, t.v)) ≤
+      ∑ z ∈ repeatedDoorSlotBox X, g z := by
+    apply Finset.sum_le_sum_of_injOn
+      repeatedDoorSlot repeatedDoorSlot_injective.injOn hmap
+    · intro t ht
+      exact le_rfl
+    · intro z hz hnot
+      exact repeatedPairOwnerMass_nonneg X _ _
+  calc
+    _ ≤ ∑ z ∈ repeatedDoorSlotBox X, g z := hsum
+    _ = _ := by
+      unfold repeatedDoorSlotBox
+      rw [Finset.sum_sigma]
+      simp only [Finset.sum_product]
+      rfl
+
+/-- The prime-indexed repeated-factor contribution has
+the uniform sublinear window bound. -/
+theorem abs_repeatedDoorPrimeSum_le
+    {X : ℕ} (hX : 1 ≤ X) :
+    |repeatedDoorPrimeSum X true +
+      repeatedDoorPrimeSum X false| ≤
+      (2 * Real.rpow ((X : ℝ) + 1) (5 / 6 : ℝ) *
+        Real.log (X : ℝ)) *
+          repeatedDoorGeometricConstant (5 / 6 : ℝ) := by
+  calc
+    _ ≤ ∑ t ∈ repeatedDoorWindowTuples X,
+        repeatedPairOwnerMass X
+          (repeatedDoorMultiplier t.a t.b t.c) (t.u, t.v) :=
+      abs_repeatedDoorPrimeSum_le_tuple_mass X
+    _ ≤ ∑ a ∈ Finset.range (X + 1),
+        ∑ b ∈ Finset.range (X + 1),
+          ∑ c ∈ Finset.range (X + 1),
+            repeatedMultiplierOwnerMass X
+              (repeatedDoorMultiplier a b c) :=
+      repeatedDoorWindow_tuple_mass_le_box X
+    _ ≤ _ :=
+      sum_repeatedMultiplierOwnerMass_box_le
+        hX (X + 1) (X + 1) (X + 1)
 
 end HireDoorSieve
