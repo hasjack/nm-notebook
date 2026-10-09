@@ -17,6 +17,7 @@ import Hire.GoldDisconnects
 import Hire.MobiusDoor
 import Hire.EulerDoor
 import Hire.DoorSieveLocal
+import Hire.RepeatedDoorFactors
 import Hire.CharacterReadout
 import Hire.CharacterObjects
 import Hire.TwoDoorReadout
