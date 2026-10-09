@@ -27,6 +27,7 @@ import Hire.HeckeSeries15
 import Hire.HeckeFactorization15
 import Hire.IdealCountMultiplicative15
 import Hire.HeckeDirichletProduct15
+import Hire.HeckeContinuation15
 import Hire.Torus
 import Hire.SquareCurve
 import Hire.TorusCurveBridge
