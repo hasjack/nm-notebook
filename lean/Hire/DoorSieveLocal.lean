@@ -185,4 +185,49 @@ theorem sum_scaled_discarded_three_weights
         c * (1 - 1 / (3 : ℝ) ^ B) := by
   rw [← Finset.mul_sum, sum_discarded_three_weights]
 
+/-- Exact owner cases for a factored kept door. -/
+theorem kept_door_eq_mul_iff
+    {p A r : ℕ}
+    (hp : p.Prime) (hp3 : p ≠ 3) :
+    Hire.m0 p = A * r ↔
+      (p % 3 = 1 ∧ p + 1 = A * r) ∨
+      (p % 3 = 2 ∧ p = A * r + 1) := by
+  have hp2 : 2 ≤ p := hp.two_le
+  rcases Hire.prime_ne_three_mod_three_eq_one_or_two
+      hp hp3 with hm | hm
+  · simp [Hire.m0, hm]
+  · simp [Hire.m0, hm]
+    omega
+
+/-- Exact owner cases for a factored discarded door. -/
+theorem discarded_door_eq_mul_iff
+    {p A r : ℕ}
+    (hp : p.Prime) (hp3 : p ≠ 3) :
+    Hire.m1 p = A * r ↔
+      (p % 3 = 1 ∧ p = A * r + 1) ∨
+      (p % 3 = 2 ∧ p + 1 = A * r) := by
+  have hp2 : 2 ≤ p := hp.two_le
+  rcases Hire.prime_ne_three_mod_three_eq_one_or_two
+      hp hp3 with hm | hm
+  · simp [Hire.m1, hm]
+    omega
+  · simp [Hire.m1, hm]
+
+/-- A prime owner of either factored door is adjacent to A*r. -/
+theorem owner_of_factored_door_is_adjacent
+    {p A r : ℕ}
+    (hp : p.Prime) (hp3 : p ≠ 3)
+    (hdoor :
+      Hire.m0 p = A * r ∨ Hire.m1 p = A * r) :
+    p + 1 = A * r ∨ p = A * r + 1 := by
+  rcases hdoor with hkeep | hdiscard
+  · rcases (kept_door_eq_mul_iff hp hp3).mp hkeep
+      with hminus | hplus
+    · exact Or.inl hminus.2
+    · exact Or.inr hplus.2
+  · rcases (discarded_door_eq_mul_iff hp hp3).mp hdiscard
+      with hplus | hminus
+    · exact Or.inr hplus.2
+    · exact Or.inl hminus.2
+
 end HireDoorSieve
