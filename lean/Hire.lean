@@ -21,6 +21,7 @@ import Hire.RepeatedDoorFactors
 import Hire.CharacterReadout
 import Hire.CharacterObjects
 import Hire.TwoDoorReadout
+import Hire.ComplexComponents
 import Hire.NormLift15
 import Hire.IdealNormLift15
 import Hire.EisensteinNormLift15

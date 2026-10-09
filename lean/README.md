@@ -22,6 +22,7 @@ Barrel: `Hire.lean`. Layer map: [`LEMMA8_PROOF_MAP.md`](LEMMA8_PROOF_MAP.md).
 | `Hire/GoldBridge.lean` | Strong Q2, 0 sorry: Dirichlet bridge ⇒ every odd prime ≠ 3 in infinite gold component of 5 |
 | `Hire/GoldDisconnects.lean` | Sequel A: size bound `2q ≤ p + 1`; door closure; descent; sinks are the 2-power doors, and gold is connected iff those sinks are joined; window monotonicity and the finite bridge; first-owner isolation; arbitrarily large disconnected windows iff infinitely many 2-power doors |
 | `Hire/Mobius.lean`, `Hire/MobiusDoor.lean` | Möbius-weighted door sums: nonzero exactly at 2-power doors/sinks, finite sink counts, and divisor-count/congruence-branch reformulations |
+| `Hire/ComplexComponents.lean` | Full complex Mangoldt cancellation target for the modulus-15 door character, real/imaginary component bounds, partial-sum Big-O, and Abel-integral expression for the logarithmic derivative. Next: prove the integral is holomorphic on `Re(s) > θ`, extend the division-free differential identity, and deduce conditional nonvanishing throughout that half-plane |
 | `Hire/Dirichlet.lean` | `exists_owner_prime_in_AP` (Mathlib primes in AP). No sorry |
 | `Hire/TwoClassCoverage.lean` | `Q ∣ m0 p` iff `p` is in one of two classes mod `6Q` |
 | `Hire/InfiniteHire.lean` | Infinitely many owners of odd `Q` with `3 ∤ Q`; `eventually_hired` |
