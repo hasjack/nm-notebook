@@ -769,4 +769,207 @@ theorem complexCharacter15_LFunction_ne_zero_of_cancellation
       (doorCancellationHalfPlane_preconnected θ)
       hL hH hode htwo htwo_ne hs
 
+/-- Every value of the door character has modulus at most one. -/
+theorem norm_complex15_le_one (n : ℕ) :
+    ‖complex15 n‖ ≤ 1 := by
+  set r3 := n % 3 with h3
+  set r5 := n % 5 with h5
+  have hr3 : r3 < 3 := Nat.mod_lt n (by norm_num)
+  have hr5 : r5 < 5 := Nat.mod_lt n (by norm_num)
+  interval_cases r3 <;> interval_cases r5 <;>
+    norm_num [
+      complex15, quarticFive, Hire.chi3,
+      ← h3, ← h5, norm_mul
+    ]
+
+/-- The full complex prime-only readout. -/
+noncomputable def complexPrimeLogSum15 (N : ℕ) : ℂ :=
+  ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+    (Real.log (p : ℝ) : ℂ) * complex15 p
+
+/-- On primes, the Mangoldt and logarithmic weights agree. -/
+theorem complexPrimeLogSum15_eq_mangoldt_sum (N : ℕ) :
+    complexPrimeLogSum15 N =
+      ∑ p ∈ (Finset.Icc 1 N).filter Nat.Prime,
+        (ArithmeticFunction.vonMangoldt p : ℂ) * complex15 p := by
+  unfold complexPrimeLogSum15
+  apply Finset.sum_congr rfl
+  intro p hp
+  rw [ArithmeticFunction.vonMangoldt_apply_prime
+    (Finset.mem_filter.mp hp).2]
+
+/-- Removing the prime-only readout leaves the higher-power terms. -/
+theorem complexMangoldt_sub_prime_eq_nonprime_sum (N : ℕ) :
+    complexMangoldtPartialSum15 N - complexPrimeLogSum15 N =
+      ∑ n ∈ Finset.Icc 1 N,
+        if n.Prime then 0
+        else
+          (ArithmeticFunction.vonMangoldt n : ℂ) * complex15 n := by
+  classical
+  rw [complexPrimeLogSum15_eq_mangoldt_sum]
+  unfold complexMangoldtPartialSum15 complexWeightedReadout15
+  rw [Finset.sum_filter, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro n hn
+  by_cases hp : n.Prime <;> simp [hp]
+
+/-- The complex higher-power correction is bounded by
+the total nonprime Mangoldt weight. -/
+theorem norm_complexMangoldt_sub_prime_le_psi_sub_theta
+    (N : ℕ) :
+    ‖complexMangoldtPartialSum15 N - complexPrimeLogSum15 N‖ ≤
+      Chebyshev.psi (N : ℝ) - Chebyshev.theta (N : ℝ) := by
+  classical
+  rw [complexMangoldt_sub_prime_eq_nonprime_sum]
+  calc
+    _ ≤ ∑ n ∈ Finset.Icc 1 N,
+        ‖if n.Prime then (0 : ℂ)
+          else
+            (ArithmeticFunction.vonMangoldt n : ℂ) * complex15 n‖ :=
+      norm_sum_le _ _
+    _ ≤ ∑ n ∈ Finset.Icc 1 N,
+        if n.Prime then 0
+        else (ArithmeticFunction.vonMangoldt n : ℝ) := by
+      apply Finset.sum_le_sum
+      intro n hn
+      by_cases hp : n.Prime
+      · simp [hp]
+      · simp only [hp, ite_false]
+        have hΛ : 0 ≤ (ArithmeticFunction.vonMangoldt n : ℝ) :=
+          ArithmeticFunction.vonMangoldt_nonneg
+        have hnorm :
+            ‖(ArithmeticFunction.vonMangoldt n : ℂ)‖ =
+              (ArithmeticFunction.vonMangoldt n : ℝ) := by
+          simp [Real.norm_eq_abs, abs_of_nonneg hΛ]
+        rw [norm_mul, hnorm]
+        calc
+          _ ≤ (ArithmeticFunction.vonMangoldt n : ℝ) * 1 :=
+            mul_le_mul_of_nonneg_left
+              (norm_complex15_le_one n) hΛ
+          _ = _ := mul_one _
+    _ = _ := sum_nonprime_vonMangoldt_eq_psi_sub_theta N
+
+/-- An explicit square-root-times-log correction for
+the full complex readout. -/
+theorem norm_complexMangoldt_sub_prime_le_sqrt_log
+    (N : ℕ) (hN : 1 ≤ N) :
+    ‖complexMangoldtPartialSum15 N - complexPrimeLogSum15 N‖ ≤
+      2 * Real.sqrt (N : ℝ) * Real.log (N : ℝ) := by
+  have hNR : (1 : ℝ) ≤ (N : ℝ) := by
+    exact_mod_cast hN
+  calc
+    _ ≤ Chebyshev.psi (N : ℝ) - Chebyshev.theta (N : ℝ) :=
+      norm_complexMangoldt_sub_prime_le_psi_sub_theta N
+    _ ≤ |Chebyshev.psi (N : ℝ) - Chebyshev.theta (N : ℝ)| :=
+      le_abs_self _
+    _ ≤ _ :=
+      Chebyshev.abs_psi_sub_theta_le_sqrt_mul_log hNR
+
+/-- A complex prime-only bound transfers to the analytic
+Mangoldt readout. -/
+theorem norm_complexMangoldt_le_of_prime_bound
+    (N : ℕ) (hN : 1 ≤ N)
+    (E : ℝ)
+    (hPrime : ‖complexPrimeLogSum15 N‖ ≤ E) :
+    ‖complexMangoldtPartialSum15 N‖ ≤
+      E + 2 * Real.sqrt (N : ℝ) * Real.log (N : ℝ) := by
+  calc
+    _ = ‖complexPrimeLogSum15 N +
+        (complexMangoldtPartialSum15 N -
+          complexPrimeLogSum15 N)‖ := by
+      congr 1
+      ring
+    _ ≤ ‖complexPrimeLogSum15 N‖ +
+        ‖complexMangoldtPartialSum15 N -
+          complexPrimeLogSum15 N‖ :=
+      norm_add_le _ _
+    _ ≤ _ :=
+      add_le_add hPrime
+        (norm_complexMangoldt_sub_prime_le_sqrt_log N hN)
+
+/-- Above exponent one half, the higher-power correction
+can be absorbed into the same power bound. -/
+theorem sqrt_log_correction_le_rpow
+    (N : ℕ)
+    {θ : ℝ}
+    (hθ : (1 / 2 : ℝ) < θ)
+    (hN : 1 ≤ N) :
+    2 * Real.sqrt (N : ℝ) * Real.log (N : ℝ) ≤
+      (2 / (θ - 1 / 2)) * Real.rpow (N : ℝ) θ := by
+  have hε : 0 < θ - 1 / 2 := by
+    linarith
+  have hx : 0 < (N : ℝ) := by
+    exact_mod_cast (show 0 < N by omega)
+  have hlog :
+      Real.log (N : ℝ) ≤
+        Real.rpow (N : ℝ) (θ - 1 / 2) / (θ - 1 / 2) :=
+    Real.log_le_rpow_div hx.le hε
+  calc
+    _ ≤ 2 * Real.sqrt (N : ℝ) *
+        (Real.rpow (N : ℝ) (θ - 1 / 2) / (θ - 1 / 2)) :=
+      mul_le_mul_of_nonneg_left hlog
+        (mul_nonneg (by norm_num) (Real.sqrt_nonneg _))
+    _ = (2 / (θ - 1 / 2)) *
+        (Real.rpow (N : ℝ) (1 / 2) *
+          Real.rpow (N : ℝ) (θ - 1 / 2)) := by
+      rw [Real.sqrt_eq_rpow]
+      simp only [Real.rpow_eq_pow]
+      ring
+    _ = (2 / (θ - 1 / 2)) * Real.rpow (N : ℝ) θ := by
+      simp only [Real.rpow_eq_pow]
+      rw [← Real.rpow_add hx]
+      rw [show (1 / 2 : ℝ) + (θ - 1 / 2) = θ by ring]
+
+/-- A full-complex prime-only power bound supplies the
+Mangoldt cancellation hypothesis. -/
+theorem doorCharacterCancellation15_of_prime_bound
+    {θ K : ℝ}
+    (hθ : (1 / 2 : ℝ) < θ)
+    (hK : 0 < K)
+    (hPrime : ∀ N : ℕ, 1 ≤ N →
+      ‖complexPrimeLogSum15 N‖ ≤
+        K * Real.rpow (N : ℝ) θ) :
+    DoorCharacterCancellation15 θ := by
+  have hε : 0 < θ - 1 / 2 := by
+    linarith
+  refine ⟨K + 2 / (θ - 1 / 2),
+    add_pos hK (div_pos (by norm_num) hε), ?_⟩
+  intro N hN
+  calc
+    _ ≤ K * Real.rpow (N : ℝ) θ +
+        2 * Real.sqrt (N : ℝ) * Real.log (N : ℝ) :=
+      norm_complexMangoldt_le_of_prime_bound
+        N hN (K * Real.rpow (N : ℝ) θ) (hPrime N hN)
+    _ ≤ K * Real.rpow (N : ℝ) θ +
+        (2 / (θ - 1 / 2)) * Real.rpow (N : ℝ) θ :=
+      add_le_add
+        (le_refl (K * Real.rpow (N : ℝ) θ))
+        (sqrt_log_correction_le_rpow N hθ hN)
+    _ = (K + 2 / (θ - 1 / 2)) *
+        Real.rpow (N : ℝ) θ := by
+      ring
+
+/-- Complex prime cancellation at an exponent between
+one half and one gives the corresponding zero-free half-plane. -/
+theorem complexCharacter15_LFunction_ne_zero_of_prime_bound
+    (htable : ∀ n : ℕ,
+      complexCharacter15 (n : ZMod 15) = complex15 n)
+    {θ K : ℝ}
+    (hθ : (1 / 2 : ℝ) < θ)
+    (hθ1 : θ < 1)
+    (hK : 0 < K)
+    (hPrime : ∀ N : ℕ, 1 ≤ N →
+      ‖complexPrimeLogSum15 N‖ ≤
+        K * Real.rpow (N : ℝ) θ)
+    {s : ℂ}
+    (hs : θ < s.re) :
+    DirichletCharacter.LFunction complexCharacter15 s ≠ 0 := by
+  have hθ0 : 0 ≤ θ := by
+    linarith
+  exact
+    complexCharacter15_LFunction_ne_zero_of_cancellation
+      htable hθ0 hθ1
+      (doorCharacterCancellation15_of_prime_bound hθ hK hPrime)
+      hs
+
 end HireCharacterReadout
