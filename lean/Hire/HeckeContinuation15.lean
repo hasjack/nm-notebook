@@ -1,6 +1,7 @@
 import Hire.HeckeDirichletProduct15
 import Mathlib.Analysis.Analytic.Uniqueness
 import Mathlib.Analysis.Complex.CauchyIntegral
+import Mathlib.NumberTheory.LSeries.Nonvanishing
 
 open scoped Topology
 namespace HireCharacterReadout
@@ -92,5 +93,64 @@ theorem doorHeckeLFunction15_unique
 
   exact hFa.eq_of_eventuallyEq
     doorHeckeLFunction15_analyticOnNhd hevent
+
+/-- The continued ideal L-function has no zeros
+in the closed half-plane Re(s) ≥ 1. -/
+theorem doorHeckeLFunction15_ne_zero_of_one_le_re
+    {s : ℂ} (hs : 1 ≤ s.re) :
+    doorHeckeLFunction15 s ≠ 0 := by
+  have hC : complexCharacter15.LFunction s ≠ 0 :=
+    DirichletCharacter.LFunction_ne_zero_of_one_le_re
+      complexCharacter15
+      (Or.inl complexCharacter15_ne_one) hs
+  have hComp : companionCharacter15.LFunction s ≠ 0 :=
+    DirichletCharacter.LFunction_ne_zero_of_one_le_re
+      companionCharacter15
+      (Or.inl companionCharacter15_ne_one) hs
+  change
+    complexCharacter15.LFunction s *
+      companionCharacter15.LFunction s ≠ 0
+  exact mul_ne_zero hC hComp
+
+/-- In particular, the continuation is nonzero at 1. -/
+theorem doorHeckeLFunction15_one_ne_zero :
+    doorHeckeLFunction15 1 ≠ 0 := by
+  apply doorHeckeLFunction15_ne_zero_of_one_le_re
+  norm_num
+
+/-- The original ideal series is nonzero
+throughout its half-plane of absolute convergence. -/
+theorem doorHeckeSeries15_ne_zero
+    {s : ℂ} (hs : 1 < s.re) :
+    doorHeckeSeries15 s ≠ 0 := by
+  rw [← doorHeckeLFunction15_eq_series hs]
+  exact doorHeckeLFunction15_ne_zero_of_one_le_re hs.le
+
+/-- Every nonzero value of the continued ideal L-function
+has a zero-free disk around it. -/
+theorem doorHeckeLFunction15_exists_zero_free_ball
+    {s : ℂ} (hs : doorHeckeLFunction15 s ≠ 0) :
+    ∃ ε : ℝ, 0 < ε ∧
+      ∀ z : ℂ, dist z s < ε →
+        doorHeckeLFunction15 z ≠ 0 := by
+  have hc : ContinuousAt doorHeckeLFunction15 s :=
+    doorHeckeLFunction15_differentiable.continuous.continuousAt
+  have hnear :
+      ∀ᶠ z in 𝓝 s, doorHeckeLFunction15 z ≠ 0 :=
+    hc.eventually_ne hs
+  obtain ⟨ε, hε, hball⟩ :=
+    Metric.eventually_nhds_iff.mp hnear
+  exact ⟨ε, hε, fun z hz => hball hz⟩
+
+/-- Every point on Re(s) = 1 has a zero-free disk,
+which also extends to the left of that line. -/
+theorem doorHeckeLFunction15_zero_free_neighbourhood_on_one
+    {s : ℂ} (hs : s.re = 1) :
+    ∃ ε : ℝ, 0 < ε ∧
+      ∀ z : ℂ, dist z s < ε →
+        doorHeckeLFunction15 z ≠ 0 := by
+  apply doorHeckeLFunction15_exists_zero_free_ball
+  apply doorHeckeLFunction15_ne_zero_of_one_le_re
+  exact hs.ge
 
 end HireCharacterReadout
