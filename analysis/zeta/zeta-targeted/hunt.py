@@ -6,6 +6,7 @@ python3 verify.py results/hits.jsonl
 import argparse, json, math, random, sys, time
 from pathlib import Path
 from functools import lru_cache
+from origin_audit import classify_origin, OriginUnresolved
 
 sys.set_int_max_str_digits(0)
 
@@ -76,13 +77,21 @@ def denominator(f):
     assert k%12 in MOD12_OK
     if divisor_count(f)>MAX_DIV:
         raise ValueError('too many divisors')
+    index_primes=tuple(f)
     factors={}
+    unresolved=[]
     for d in divisors(f):
         p=d+1
-        if is_prime(p):
+        state,_detail=classify_origin(p,index_primes)
+        if state=='unresolved':
+            unresolved.append(p)
+        elif state=='prime':
             e=1;t=k
             while t%p==0:t//=p;e+=1
             factors[p]=e
+        # composite: omit only with a proved composite state
+    if unresolved:
+        raise OriginUnresolved(unresolved)
     assert factors.pop(3)==1
     return k,math.prod(p**e for p,e in factors.items()),factors
 
@@ -218,6 +227,14 @@ def main():
                 t=time.monotonic()
                 try:
                     k,d,df=denominator(f)
+                except OriginUnresolved as ex:
+                    row['status']='origin-unresolved'
+                    row['unresolved_count']=len(ex.unresolved)
+                    counts[row['status']]=counts.get(row['status'],0)+1
+                    done.add(str(k))
+                    if args.hits_only:seen_k.open('a').write(str(k)+'\n')
+                    else:append(log,row)
+                    continue
                 except ValueError:
                     row['status']='too-many-divisors'
                     counts[row['status']]=counts.get(row['status'],0)+1
