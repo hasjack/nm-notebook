@@ -1,0 +1,106 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={From the 3-free door to a Hecke $L$-function},pdfauthor={Jack Pickett}}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+
+\title{From the 3-free door to a Hecke $L$-function}
+\author{Jack Pickett \textperiodcentered\ 9th October 2026}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The 3-free door \(m_0(p)=p+\chi_3(p)\) of an odd prime \(p\neq 3\) selects one of the two even neighbours of \(p\). The signed imbalance between the two doors is measured by a Dirichlet character \(C=\chi_3\psi_5\). Absolute norm lifts \(C\) to a multiplicative function \(\eta\) on the nonzero ideals of the Eisenstein integers \(\mathcal{O}_K\) for \(K=\mathbb{Q}(\sqrt{-3})\). The function takes values in the fourth roots of unity, is trivial on the principal ray class \(1+15\mathcal{O}_K\), and therefore descends to a finite-order character of the ray class group modulo \(15\mathcal{O}_K\). The associated ideal series converges absolutely for \(\operatorname{Re}(s)>1\) and admits the factorization
+\[
+L_K(s,\eta)=L(s,C)\,L(s,\mathrm{companion15})
+\]
+as entire functions, where the companion differs from the pure quartic character \(\psi_5\) by the explicit Euler factor \(1+i\,3^{-s}\). In the half-plane \(\operatorname{Re}(s)>0\) the zeros of \(L_K(s,\eta)\) are precisely the zeros of either factor. The resulting Hecke \(L\)-function is admissible for every fixed zero-free half-plane known for finite-order characters of \(K\).
+\end{abstract}
+
+\section{The door character}
+
+Let \(\chi_3\) be the non-principal Dirichlet character modulo \(3\), equivalently the Kronecker symbol \((-3/\cdot)\). For an odd prime \(p\neq 3\) the two even neighbours are
+\[
+m_0(p)=p+\chi_3(p),\qquad m_1(p)=p-\chi_3(p).
+\]
+Exactly one is divisible by \(3\); the other is the 3-free door. The product identity \(m_0(p)m_1(p)=p^2-1\) holds, and both doors are even. The signed imbalance between the doors is recorded by the Dirichlet character
+\[
+C=\chi_3\psi_5,
+\]
+where \(\psi_5\) is the primitive quartic character modulo \(5\). Twisting by \(\chi_3\) produces the companion character, which agrees with \(\psi_5\) away from multiples of \(3\). The two \(L\)-functions therefore differ by the explicit Euler factor at the ramified prime:
+\begin{equation}
+\label{eq:correction}
+L(s,\mathrm{companion15})=(1+i\,3^{-s})L(s,\psi_5).
+\end{equation}
+The correction is holomorphic and non-zero for \(\operatorname{Re}(s)>0\), so the companion and the pure quartic share their zeros in that half-plane.
+
+\section{The ideal character}
+
+Let \(K=\mathbb{Q}(\sqrt{-3})\) and let \(\mathcal{O}_K\) be its ring of integers, the Eisenstein integers. Absolute norm defines a map from nonzero ideals of \(\mathcal{O}_K\) to positive integers. Composing with \(C\) yields a multiplicative function
+\[
+\eta(I)=C(N(I))
+\]
+on the nonzero integral ideals, with the value zero when the ideal meets the modulus. The same formula extends to fractional ideals coprime to \(15\mathcal{O}_K\).
+
+\begin{lemma}
+For every ideal \(I\) coprime to \(15\mathcal{O}_K\),
+\[
+\eta(I)^4=1.
+\]
+In particular the values are nonzero fourth roots of unity.
+\end{lemma}
+
+\begin{lemma}
+If \(a\in\mathcal{O}_K\) satisfies \(a\equiv 1\pmod{15\mathcal{O}_K}\), then \(\eta((a))=1\).
+\end{lemma}
+
+The two statements supply the data of a finite-order character of the ray class group modulo \(15\mathcal{O}_K\). Extending the values to fractional ideals and verifying invariance under the full ray-class equivalence relation produces a homomorphism from the group of fractional ideals coprime to the modulus onto the fourth roots of unity, trivial on the principal ray class. The resulting character is denoted \(\eta\) below.
+
+\section{The ideal series}
+
+The Hecke series attached to \(\eta\) is
+\[
+L_K(s,\eta)=\sum_{I\neq 0}\frac{\eta(I)}{N(I)^s},
+\]
+summed over the nonzero integral ideals of \(\mathcal{O}_K\). Absolute convergence for \(\operatorname{Re}(s)>1\) follows from the bound \(|\eta(I)|\le 1\) and the linear growth of the ideal-counting function. The number of ideals of norm \(n\) equals the divisor sum
+\begin{equation}
+\label{eq:coeff}
+\#\{I:N(I)=n\}=\sum_{d\mid n}\chi_3(d).
+\end{equation}
+The identity is obtained by combining the exact prime-power counts (split, inert, and ramified) with coprime multiplicativity of the counting function.
+
+\section{Factorization and continuation}
+
+Comparing Euler factors at split, inert, and ramified primes, and using the coefficient identity \eqref{eq:coeff}, yields the factorization
+\begin{equation}
+\label{eq:factor}
+L_K(s,\eta)=L(s,C)\,L(s,\mathrm{companion15})
+\end{equation}
+for \(\operatorname{Re}(s)>1\). The correction \eqref{eq:correction} accounts for the distinction at the ramified prime \(3\). Both sides of \eqref{eq:factor} admit entire continuations, and the continuation is unique. Consequently the identity holds as an equality of entire functions.
+
+\begin{theorem}
+In the half-plane \(\operatorname{Re}(s)>0\) the zeros of \(L_K(s,\eta)\) are precisely the zeros of \(L(s,C)\) or of \(L(s,\psi_5)\). The function \(L_K(s,\eta)\) is non-vanishing for \(\operatorname{Re}(s)\ge 1\), and every point on the line \(\operatorname{Re}(s)=1\) has a zero-free neighbourhood.
+\end{theorem}
+
+The non-vanishing on \(\operatorname{Re}(s)\ge 1\) is inherited from the classical non-vanishing of the Dirichlet factors; the local disks on the boundary follow by continuity.
+
+\section{Admissibility}
+
+The character \(\eta\) is a finite-order Hecke character of \(K\). Every fixed zero-free half-plane established for the family of finite-order Hecke \(L\)-functions over \(K\) therefore applies to \(L_K(s,\eta)\). In particular the half-plane \(\operatorname{Re}(s)>7/8\) and the half-plane \(\operatorname{Re}(s)>47/48\) both exclude zeros of \(L_K(s,\eta)\), and hence exclude zeros of both Dirichlet factors in those regions. The construction supplies an explicit character, originating from the 3-free door, that is admissible for these theorems. No improvement of the exponents is claimed.
+
+\begin{thebibliography}{9}
+\bibitem{openai}
+OpenAI, A zero-free half-plane \(\operatorname{Re}s>7/8\), 30 September 2026.
+\bibitem{kintali}
+S.~Kintali, A short proof of the Quasi-Riemann Hypothesis, 7 October 2026.
+\end{thebibliography}
+
+\end{document}

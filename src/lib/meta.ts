@@ -64,6 +64,11 @@ const pages: Record<string, PageMeta> = {
     title: "A midpoint identity for the complementary torus order",
     description: "Mid-gap is the identity; offset is the series; not an H(X) claim.",
   },
+  "/notes/from-the-3-free-door-to-a-hecke-l-function": {
+    title: "From the 3-free door to a Hecke L-function",
+    description:
+      "The door character lifts to an Eisenstein ideal character. Its series factors as paired Dirichlet L-functions and does not improve their zero-free exponents.",
+  },
   "/notes/zeta-doors": {
     title: "Prime neighbours of zeta denominators",
     description:

@@ -21,6 +21,11 @@ export function NotesIndexPage() {
             A midpoint identity for the complementary torus order
           </Link>
         </li>
+        <li>
+          <Link to="/notes/from-the-3-free-door-to-a-hecke-l-function">
+            From the 3-free door to a Hecke L-function
+          </Link>
+        </li>
       </ul>
     </main>
   );

@@ -53,6 +53,7 @@ import { PaperPage } from "./pages/PaperPage";
 import { WhenGoldDisconnectsPage } from "./pages/WhenGoldDisconnectsPage";
 import { ZetaDoorsNotePage } from "./pages/ZetaDoorsNotePage";
 import { MidGapTorusNotePage } from "./pages/MidGapTorusNotePage";
+import { HeckeLFunctionNotePage } from "./pages/HeckeLFunctionNotePage";
 import { SignedDoorsPage } from "./pages/SignedDoorsPage";
 import { AlphabetSpiralPage } from "./pages/AlphabetSpiralPage";
 import { CountPage } from "./pages/CountPage";
@@ -123,6 +124,10 @@ export default function App() {
         <Route path="/notes/when-gold-disconnects" element={<WhenGoldDisconnectsPage />} />
         <Route path="/notes/zeta-doors" element={<ZetaDoorsNotePage />} />
         <Route path="/notes/mid-gap-and-torus" element={<MidGapTorusNotePage />} />
+        <Route
+          path="/notes/from-the-3-free-door-to-a-hecke-l-function"
+          element={<HeckeLFunctionNotePage />}
+        />
         <Route path="/paper" element={<Navigate to="/notes/hire-graph" replace />} />
         <Route
           path="/when-gold-disconnects"

@@ -52,6 +52,11 @@ const tree: NavGroup[] = [
             label: "A midpoint identity for the complementary torus order",
             icon: "pdf",
           },
+          {
+            to: "/notes/from-the-3-free-door-to-a-hecke-l-function",
+            label: "From the 3-free door to a Hecke L-function",
+            icon: "pdf",
+          },
         ],
       },
     ],
@@ -173,6 +178,11 @@ const tree: NavGroup[] = [
       {
         to: "/notes/mid-gap-and-torus",
         label: "A midpoint identity for the complementary torus order",
+        icon: "pdf",
+      },
+      {
+        to: "/notes/from-the-3-free-door-to-a-hecke-l-function",
+        label: "From the 3-free door to a Hecke L-function",
         icon: "pdf",
       },
     ],
