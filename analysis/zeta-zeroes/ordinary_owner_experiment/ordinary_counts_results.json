@@ -1,0 +1,60 @@
+{
+  "exact_checks": [
+    {
+      "x": 100,
+      "ordinary_count": 5,
+      "prime_power_weighted_count": 6.166666666666667,
+      "higher_power_correction": 1.1666666666666667
+    },
+    {
+      "x": 1000,
+      "ordinary_count": 40,
+      "prime_power_weighted_count": 42.66666666666667,
+      "higher_power_correction": 2.666666666666667
+    },
+    {
+      "x": 10000,
+      "ordinary_count": 304,
+      "prime_power_weighted_count": 311.4333333333334,
+      "higher_power_correction": 7.433333333333334
+    },
+    {
+      "x": 100000,
+      "ordinary_count": 2390,
+      "prime_power_weighted_count": 2408.338095238095,
+      "higher_power_correction": 18.33809523809524
+    },
+    {
+      "x": 1000000,
+      "ordinary_count": 19598,
+      "prime_power_weighted_count": 19644.426984126985,
+      "higher_power_correction": 46.42698412698413
+    }
+  ],
+  "metrics": {
+    "20": {
+      "rms_count_error": 3.462370677184275,
+      "rms_error_relative_to_residual": 0.1757715435048955,
+      "endpoint_predicted": 19605.529030128127,
+      "endpoint_actual": 19598
+    },
+    "40": {
+      "rms_count_error": 2.8472111595597216,
+      "rms_error_relative_to_residual": 0.14454220730842335,
+      "endpoint_predicted": 19605.728889556623,
+      "endpoint_actual": 19598
+    },
+    "80": {
+      "rms_count_error": 2.331082827020185,
+      "rms_error_relative_to_residual": 0.1183403120997741,
+      "endpoint_predicted": 19599.97237778284,
+      "endpoint_actual": 19598
+    }
+  },
+  "integration_grid_rms_difference": 1.2019681320884373e-06,
+  "anchor": {
+    "x": 100,
+    "exact_owner_count": 5
+  },
+  "method": "Partial summation of truncated unsmoothed explicit formula, exact higher-prime-power corrections, exact initial-count anchor at 100. Frequencies and coefficients fixed. Cached critical-line roots are numerical and uncertified."
+}

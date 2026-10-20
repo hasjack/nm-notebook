@@ -1,0 +1,25 @@
+{
+  "limit": 1000000,
+  "observable": "sum_{n<=x} Lambda(n) (K(n)-D(n)) (x-n)",
+  "identity": "K-D = -Re(chi3*psi5)",
+  "zero_count": 108,
+  "cached_zero_max_residual_rechecked": 5.235085955722494e-14,
+  "metrics": {
+    "20": {
+      "zeros_used": 18,
+      "rms_error": 0.005138526716320497,
+      "relative_rms_error": 0.05476638379138885
+    },
+    "40": {
+      "zeros_used": 45,
+      "rms_error": 0.0018408730091744978,
+      "relative_rms_error": 0.01962001236880818
+    },
+    "80": {
+      "zeros_used": 108,
+      "rms_error": 0.0007737419628801647,
+      "relative_rms_error": 0.008246536728126773
+    }
+  },
+  "limitations": "Numerical critical-line zero list; not certified complete. beta=1/2 is an input. Integrated weighted observable, not raw prime counts. Relative RMS measured for x>=1000 after correction removal."
+}
