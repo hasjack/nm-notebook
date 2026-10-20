@@ -1996,4 +1996,98 @@ theorem abs_repeatedDoorPrimeSum_le_two_thirds
       sum_repeatedMultiplierOwnerMass_box_le_two_thirds
         hX (X + 1) (X + 1) (X + 1)
 
+/-- Every valid repeated-factor door is divisible by five. -/
+theorem repeatedDoorData_five_dvd (t : RepeatedDoorData) :
+    5 ∣ t.value := by
+  unfold RepeatedDoorData.value repeatedDoorMultiplier
+  rw [pow_succ]
+  refine ⟨2 ^ (t.a + 1) * 3 ^ t.b *
+    5 ^ t.c * t.u * t.v ^ 2, ?_⟩
+  ring
+
+theorem hasRepeatedDoor_five_dvd
+    {p : ℕ} {kept : Bool}
+    (h : HasRepeatedDoor p kept) :
+    5 ∣ selectedDoorValue p kept := by
+  obtain ⟨t, ht⟩ := h
+  rw [← ht]
+  exact repeatedDoorData_five_dvd t
+
+/-- Full hub-five contribution from one door, with its sign. -/
+noncomputable def hubFiveDoorPrimeSum
+    (X : ℕ) (kept : Bool) : ℝ := by
+  classical
+  exact ∑ p ∈ Finset.range (X + 1),
+    if p.Prime ∧ 5 ∣ selectedDoorValue p kept then
+      signedDoorLog p kept
+    else 0
+
+/-- The contribution from all other factor patterns. -/
+noncomputable def remainingDoorPrimeSum
+    (X : ℕ) (kept : Bool) : ℝ := by
+  classical
+  exact ∑ p ∈ Finset.range (X + 1),
+    if p.Prime ∧
+        5 ∣ selectedDoorValue p kept ∧
+        ¬HasRepeatedDoor p kept then
+      signedDoorLog p kept
+    else 0
+
+/-- Exact decomposition for each door. -/
+theorem hubFiveDoorPrimeSum_eq_repeat_add_remaining
+    (X : ℕ) (kept : Bool) :
+    hubFiveDoorPrimeSum X kept =
+      repeatedDoorPrimeSum X kept +
+        remainingDoorPrimeSum X kept := by
+  classical
+  unfold hubFiveDoorPrimeSum repeatedDoorPrimeSum
+    remainingDoorPrimeSum
+  rw [← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro p hp
+  by_cases hprime : p.Prime
+  · by_cases hrepeat : HasRepeatedDoor p kept
+    · have hfive := hasRepeatedDoor_five_dvd hrepeat
+      simp [hprime, hrepeat, hfive]
+    · by_cases hfive : 5 ∣ selectedDoorValue p kept
+      · simp [hprime, hrepeat, hfive]
+      · simp [hprime, hrepeat, hfive]
+  · simp [hprime]
+
+/-- The full signed hub-five prime sum. -/
+noncomputable def hubFiveSignedPrimeSum (X : ℕ) : ℝ :=
+  hubFiveDoorPrimeSum X true +
+    hubFiveDoorPrimeSum X false
+
+/-- Its repeated-largest-factor contribution. -/
+noncomputable def repeatedSignedPrimeSum (X : ℕ) : ℝ :=
+  repeatedDoorPrimeSum X true +
+    repeatedDoorPrimeSum X false
+
+/-- Its remaining contribution. -/
+noncomputable def remainingSignedPrimeSum (X : ℕ) : ℝ :=
+  remainingDoorPrimeSum X true +
+    remainingDoorPrimeSum X false
+
+theorem hubFiveSignedPrimeSum_split (X : ℕ) :
+    hubFiveSignedPrimeSum X =
+      repeatedSignedPrimeSum X +
+        remainingSignedPrimeSum X := by
+  unfold hubFiveSignedPrimeSum repeatedSignedPrimeSum
+    remainingSignedPrimeSum
+  rw [hubFiveDoorPrimeSum_eq_repeat_add_remaining,
+    hubFiveDoorPrimeSum_eq_repeat_add_remaining]
+  ring
+
+/-- Removing the repeated-factor contribution has a controlled error. -/
+theorem hubFiveSignedPrimeSum_sub_remaining_le
+    {X : ℕ} (hX : 1 ≤ X) :
+    |hubFiveSignedPrimeSum X - remainingSignedPrimeSum X| ≤
+      (4 * Real.rpow ((X : ℝ) + 1) (2 / 3 : ℝ) *
+        Real.log (X : ℝ)) *
+          repeatedDoorGeometricConstant (2 / 3 : ℝ) := by
+  rw [hubFiveSignedPrimeSum_split]
+  simp only [add_sub_cancel_right]
+  exact abs_repeatedDoorPrimeSum_le_two_thirds hX
+
 end HireDoorSieve
